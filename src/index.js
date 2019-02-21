@@ -10,6 +10,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import createSagaMiddleware from "redux-saga";
 import createReducers from "./reducers";
 import { routerMiddleware } from "connected-react-router";
+import rootSaga from "./sagas";
 
 const initialState = Immutable.Map();
 const history = createHistory();
@@ -33,12 +34,13 @@ const composeEnhancers =
         shouldHotReload: false
       })
     : compose;
-
 const store = createStore(
   createReducers(history),
   initialState,
   composeEnhancers(...enhancers)
 );
+
+sagaMiddleware.run(rootSaga);
 
 ReactDOM.render(
   <Provider store={store}>
