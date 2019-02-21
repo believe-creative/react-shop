@@ -1,11 +1,14 @@
 import React, { Component } from "react";
-import Nav from "../NavBar/navbar";
+import Container from "react-bootstrap/Container";
+import "../../scss/home.scss";
 
 export default class Home extends Component {
   render() {
     return (
-      <div>
-        <Nav />
+      <div className="home">
+        <Container>
+          <h1>Home Page</h1>
+        </Container>
       </div>
     );
   }

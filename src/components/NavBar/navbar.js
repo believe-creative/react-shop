@@ -3,41 +3,53 @@ import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
 import logo from "../../images/tshirtshop.png";
 import Image from "react-bootstrap/Image";
+import { LinkContainer } from "react-router-bootstrap";
 import "../../scss/navbar.scss";
 
 export default class NavBar extends Component {
   render() {
     return (
-      <Container>
-        <a className="nav-logo" href="/">
-          <Image src={logo} className="justify-content-start nav-logo" fluid />
-        </a>
-        <Nav className="justify-content-start" activeKey="/home">
-          <Nav.Item>
-            <Nav.Link href="/women">Women</Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="men" href="/men">
-              Men
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="kids" href="Kids">
-              Kids
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="shoes" href="shoes">
-              Shoes
-            </Nav.Link>
-          </Nav.Item>
-          <Nav.Item>
-            <Nav.Link eventKey="brands" href="brands">
-              Brands
-            </Nav.Link>
-          </Nav.Item>
-        </Nav>
-      </Container>
+      <header>
+        <Container>
+          <a className="nav-logo" to="/">
+            <Image
+              src={logo}
+              className="justify-content-start nav-logo"
+              fluid
+            />
+          </a>
+          <Nav className="justify-content-start">
+            <Nav.Item>
+              <LinkContainer to="/women">
+                <Nav.Link>Women</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+
+            <Nav.Item>
+              <LinkContainer to="/men">
+                <Nav.Link eventKey="kids" to="/kids">
+                  Kids
+                </Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer to="/shoes">
+                <Nav.Link eventKey="shoes" to="/shoes">
+                  Shoes
+                </Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer to="/brands">
+                <Nav.Link eventKey="brands" to="/brands">
+                  Brands
+                </Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+          </Nav>
+          <div className="clearfix" />
+        </Container>
+      </header>
     );
   }
 }
