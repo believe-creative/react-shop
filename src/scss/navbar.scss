@@ -1,6 +1,130 @@
 @import "variables.scss";
-.nav-logo {
-  float: left;
-  padding: 8px;
-  width: 190px;
+.header {
+  padding: 20px 0;
+  display: flex;
+  .head-inner {
+    position: relative;
+  }
+  .logo_block {
+    width: auto;
+    float: left;
+    margin-top: 10px;
+    a {
+      font-size: 24px;
+      font-weight: $fw-700;
+      letter-spacing: 0.1em;
+      font-family: $montserrat-font;
+      @media (max-width: 560px) {
+        font-size: 18px;
+      }
+    }
+  }
+  nav {
+    float: left;
+    width: 70%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    @media (max-width: 1199px) {
+      width: 75%;
+    }
+    @media (max-width: 991px) {
+      width: 100%;
+      float: right;
+      display: block;
+    }
+    .navbar-nav {
+      .nav-item.active {
+        .nav-link {
+          color: $red;
+        }
+      }
+      .nav-link {
+        color: $black;
+        font-size: $secondary-font;
+        font-family: $montserrat-font;
+        font-weight: $fw-700;
+        padding: 10px 20px;
+        @media (max-width: 991px) {
+          padding: 10px 0;
+          border-bottom: 1px solid $black;
+        }
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+  }
+  .head-right {
+    width: auto;
+    float: right;
+    margin-top: 8px;
+    @media (max-width: 991px) {
+      position: absolute;
+      right: 35px;
+    }
+    ul {
+      li {
+        float: left;
+        margin-right: 15px;
+        a {
+          color: $black;
+          &:hover,
+          &:focus {
+            color: $red;
+          }
+        }
+      }
+    }
+  }
+  .navbar-toggler {
+    border: none;
+    padding: 12px 0 0 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: -35px;
+    @media (max-width: 560px) {
+      top: -33px;
+    }
+    &:hover,
+    &:focus {
+      outline: none;
+      .toggler-icon {
+        background: $red;
+        cursor: pointer;
+      }
+    }
+    .toggler-icon {
+      width: 20px;
+      height: 2px;
+      background: $gray-dark;
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+  // this css is for close button no need to remove it.
+  //	& .collapsed{
+  //		.toggler-icon{
+  //			&:nth-child(1){
+  //				position: absolute;
+  //				top: 24px;
+  //				-webkit-transform: rotate(135deg);
+  //				transform: rotate(135deg);
+  //			}
+  //			&:nth-child(2){
+  //				visibility: hidden;
+  //    			background-color: transparent;
+  //			}
+  //			&:nth-child(3){
+  //				position: absolute;
+  //				top: 24px;
+  //				-webkit-transform: rotate(-135deg);
+  //				transform: rotate(-135deg);
+  //			}
+  //		}
+  //	}
 }

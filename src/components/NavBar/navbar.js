@@ -10,19 +10,20 @@ import "../../scss/navbar.scss";
 export default class NavBar extends Component {
   render() {
     return (
-      <header>
+      <header className="header bg-white">
         <Container>
-          <a className="nav-logo" to="/">
-            <Image
-              src={logo}
-              className="justify-content-start nav-logo"
-              fluid
-            />
-          </a>
-
-          <Navbar className="justify-content-start" expand="lg">
+          <div className="logo_block">
+            <a className="logo" to="/">
+              <Image
+                src={logo}
+                className="justify-content-start nav-logo"
+                fluid
+              />
+            </a>
+          </div>
+          <Navbar className="" expand="lg">
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
+            <Navbar.Collapse id="basic-navbar-nav" className="">
               <Nav.Item>
                 <LinkContainer to="/women">
                   <Nav.Link>Women</Nav.Link>
@@ -50,14 +51,16 @@ export default class NavBar extends Component {
               </Nav.Item>
             </Navbar.Collapse>
           </Navbar>
-          <div class="head-right">
-            <ul class="list-unstyled">
+          <div className="head-right">
+            <ul className="list-unstyled">
               <li>
-                <a href="" />
+                <a href="">
+                  <i className="fa fa-search" aria-hidden="true" />
+                </a>
               </li>
               <li>
                 <a href="">
-                  <i class="fa fa-shopping-bag" aria-hidden="true" />
+                  <i className="fa fa-shopping-bag" aria-hidden="true" />
                 </a>
               </li>
             </ul>

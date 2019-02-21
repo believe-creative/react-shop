@@ -1,0 +1,166 @@
+@import "variables.scss";
+/*
+
+General Styles
+
+*/
+
+body {
+  background: $bg-light;
+  font-family: $default-font;
+  font-size: $base-font;
+  font-weight: $fw-400;
+  color: $gray-dark;
+  line-height: $lh-150;
+}
+
+* focus {
+  outline: none;
+  border: none;
+}
+
+a {
+  color: $red;
+  @include transition(all 0.25s ease);
+  &:hover,
+  &:active {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+.heading-small {
+  font-size: $base-font-small;
+  line-height: $lh-200;
+}
+
+.top-bar {
+  font-family: $montserrat-font;
+  font-weight: $fw-700;
+  font-size: $secondary-font;
+  line-height: $lh-240;
+  color: $black;
+}
+
+// Heading Styles
+
+h1,
+.h1 {
+  font-family: $playfair-display-font;
+  font-size: $heading1;
+  font-weight: $fw-700;
+  line-height: $lh-150;
+  color: $black;
+  @media (max-width: 767px) {
+    font-size: 36px;
+  }
+}
+
+h2,
+.h2,
+h3,
+.h3 {
+  font-family: $montserrat-font;
+  font-size: $heading2;
+  font-weight: $fw-700;
+  line-height: $lh-150;
+  color: $black;
+  @media (max-width: 767px) {
+    font-size: 22px;
+  }
+}
+
+h3,
+.h3 {
+  font-size: $heading3;
+  @media (max-width: 767px) {
+    font-size: $heading3;
+  }
+}
+
+// Color Styles
+
+.bg-white {
+  background: $white;
+  color: $black;
+}
+.bg-black {
+  background: $bg-black;
+  color: $white;
+}
+.bg-red {
+  background: $bg-red;
+  color: $white;
+}
+.bg-blue {
+  background: $bg-blue;
+  color: $black;
+}
+.bg-orange {
+  background: $bg-orange;
+  color: $black;
+}
+.bg-light {
+  background: $bg-light;
+  color: $black;
+}
+.bg-teal {
+  background: $bg-teal;
+  color: $black;
+}
+.bg-yellow {
+  background: $bg-yellow;
+  color: $black;
+}
+.bg-green {
+  background: $green;
+}
+.bg-purple {
+  background: $purple;
+}
+.bg-yellow-dark {
+  background: $yellow;
+}
+
+.black {
+  color: $black;
+}
+.gray-dark {
+  color: $gray-dark;
+}
+.gray-light {
+  color: $gray-light;
+}
+.red {
+  color: $red;
+}
+.white {
+  color: $white;
+}
+
+// Button Styles
+
+.btn {
+  background: $bg-red;
+  color: $white;
+  cursor: pointer;
+  @include border-radius(20px);
+  @include transition(all 0.35s ease);
+  &:hover,
+  &:focus {
+    background: $white;
+    color: $red;
+    outline: none;
+    @include box-shadow(none);
+  }
+}
+.btn-lg {
+  padding: 0.5rem 2rem;
+}
+.btn-md {
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+.btn-sm {
+  padding: 0.5rem 1rem;
+}
