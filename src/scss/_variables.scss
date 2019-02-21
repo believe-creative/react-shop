@@ -1,1 +1,77 @@
-$primaryColor: #bada55;
+/* 
+
+General variables 
+
+*/
+
+// Fonts
+$default-font: 'Open Sans', sans-serif;
+$playfair-display-font: 'Playfair Display', serif;
+$montserrat-font: 'Montserrat', sans-serif;
+
+// BG Colors
+$bg-black: #2E2E2E;
+$bg-red: #F62F5E;
+$bg-blue: #6EB2FB;
+$bg-orange: #F1AD3D;
+$bg-light: #F7F7F7;
+$bg-teal: #00D3CA;
+$bg-yellow: #EFFC90;
+
+// Colors
+$black: #2E2E2E;
+$gray-dark: #6C6C6C;
+$gray-light: #B4B4B4;
+$red: #F62F5E;
+$white: #fff;
+$green: #77db77;
+$purple: #9013fe;
+$yellow: #f8e71c;
+
+// Font-weight
+$fw-300: 300;
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+
+// Font Sizes
+$base-font: 16px;
+$base-font-small: 12px;
+$secondary-font: 15px;
+$heading1: 48px;
+$heading2: 24px;
+$heading3: 16px;
+
+// Lineheight
+$lh-150: 150%;
+$lh-200: 200%;
+$lh-240: 240%;
+
+
+/*
+
+Mixins for multiple times usage
+
+*/
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+     -moz-border-radius: $radius;
+      -ms-border-radius: $radius;
+          border-radius: $radius;
+}
+@mixin transition($transition...){
+    -webkit-transition: $transition;
+       -moz-transition: $transition;
+        -ms-transition: $transition;
+         -o-transition: $transition;
+            transition: $transition;
+}
+@mixin box-shadow($box-shadow...){
+    -webkit-box-shadow: $box-shadow;
+       -moz-box-shadow: $box-shadow;
+        -ms-box-shadow: $box-shadow;
+         -o-box-shadow: $box-shadow;
+            box-shadow: $box-shadow;
+}
