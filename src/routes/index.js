@@ -1,8 +1,9 @@
 import React from "react";
 import { Switch, Route } from "react-router";
 import Nav from "../components/NavBar/navbar";
-import Home from "../components/Home/home";
+import Home from "../containers/Home/home";
 import Footer from "../components/Footer/footer";
+import Category from "../containers/Category/category";
 
 const routes = (
   <React.Fragment>
@@ -10,7 +11,7 @@ const routes = (
     <div id="main">
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route exact path="/men" component={Home} />
+        <Route exact path="/:category" component={Category} />
       </Switch>
     </div>
     <Footer />

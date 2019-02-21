@@ -24,26 +24,24 @@ export default class NavBar extends Component {
                 <Nav.Link>Women</Nav.Link>
               </LinkContainer>
             </Nav.Item>
-
             <Nav.Item>
               <LinkContainer to="/men">
-                <Nav.Link eventKey="kids" to="/kids">
-                  Kids
-                </Nav.Link>
+                <Nav.Link eventKey="men">Men</Nav.Link>
+              </LinkContainer>
+            </Nav.Item>
+            <Nav.Item>
+              <LinkContainer to="/kids">
+                <Nav.Link eventKey="kids">Kids</Nav.Link>
               </LinkContainer>
             </Nav.Item>
             <Nav.Item>
               <LinkContainer to="/shoes">
-                <Nav.Link eventKey="shoes" to="/shoes">
-                  Shoes
-                </Nav.Link>
+                <Nav.Link eventKey="shoes">Shoes</Nav.Link>
               </LinkContainer>
             </Nav.Item>
             <Nav.Item>
               <LinkContainer to="/brands">
-                <Nav.Link eventKey="brands" to="/brands">
-                  Brands
-                </Nav.Link>
+                <Nav.Link eventKey="brands">Brands</Nav.Link>
               </LinkContainer>
             </Nav.Item>
           </Nav>
