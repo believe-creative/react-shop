@@ -6,10 +6,16 @@ import "./scss/App.scss";
 import { ConnectedRouter } from "connected-react-router/immutable";
 import routes from "./routes";
 import * as Actions from "./actions";
+import {setCookie,getCookie,deleteCookie} from "./services/helpers"
 
 class App extends Component {
   componentDidMount() {
-    this.props.productRequest();
+    var c=getCookie("s-atk");
+    console.log("lllll",c)
+    if(c)
+    {
+      this.props.checkUserLogin(c);
+    }
   }
   render() {
     return (
@@ -21,6 +27,7 @@ class App extends Component {
 }
 
 const productRequest = Actions.products.request;
+const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
   isProductsLoading: state.products.isLoading,
@@ -28,7 +35,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  productRequest
+  productRequest,
+  checkUserLogin 
 };
 
 export default connect(

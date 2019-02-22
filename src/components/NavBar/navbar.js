@@ -9,11 +9,13 @@ import "../../scss/navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
+import UserBlock from "../UserBlock/userblock";
 
 export default class NavBar extends Component {
   render() {
     return (
       <header className="header bg-white">
+        <UserBlock/>
         <Container>
           <div className="logo_block">
             <a className="logo" to="/">

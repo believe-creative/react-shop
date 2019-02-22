@@ -11,6 +11,13 @@ function createRequestTypes(base) {
 
 export const PRODUCTS = createRequestTypes("PRODUCTS");
 export const PRODUCT = createRequestTypes("PRODUCT");
+export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
+export const SETUSER = "SETUSER";
+
+
+export function setUser(payload) {
+  return { type: "SETUSER", payload };
+}
 
 function action(type, payload = {}) {
   return { type, ...payload };
@@ -28,4 +35,11 @@ export const products = {
   success: (category, response) =>
     action(PRODUCTS[SUCCESS], { category, response }),
   failure: (category, error) => action(PRODUCTS[FAILURE], { category, error })
+};
+
+export const checkUserLogin = {
+  request: token => action(CHECKUSERLOGIN[REQUEST], { token }),
+  success: (token,response) =>
+    action(CHECKUSERLOGIN[SUCCESS], {response}),
+  failure: (token,error) => action(CHECKUSERLOGIN[FAILURE], { error })
 };
