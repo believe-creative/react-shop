@@ -65,6 +65,43 @@ app.get('/api/get-category-products', (req, res) => {
    .then(category_products=>res.json(category_products));
  });
 
+/*
+
+Parameters{inProductId}
+*/
+app.post('/api/get-product-attributes',(req,res)=>{
+    let inProductId=req.body.inProductId;
+    sequelize
+      .query('CALL catalog_get_product_attributes(:inProductId)',{replacements:{inProductId:inProductId}}).then(
+        product_attribute=>res.json(product_attribute));
+});
+
+/*
+To add Selected Product to Cart insert or update Cart details.
+Parameters{inCartId,inProductId,inAttributes}
+*/
+app.post('/api/add-product-to-cart',(req,res)=>{
+  let inCartId=req.body.inCartId;
+  let inProductId=req.body.inProductId;
+  let inAttributes=req.body.inAttributes;
+  sequelize
+    .query('CALL shopping_cart_add_product(:inCartId,:inProductId,:inAttributes)',{replacements:{inCartId:inCartId,inProductId:inProductId, inAttributes:inAttributes}}).then(
+      add_product_to_cart=>res.json(add_product_to_cart));
+});
+
+/*
+To get all Product to Cart
+Parameters{inCartId}
+*/
+app.post('/api/get-shopping-cart-products',(req,res)=>{
+  let inCartId=req.body.inCartId;
+  sequelize
+    .query('CALL shopping_cart_get_products(:inCartId)',{replacements:{inCartId:inCartId,}}).then(
+      get_cart_product=>res.json(get_cart_product));
+});
+
+
+
 app.listen(port, () => {
     console.log(`Running on http://localhost:${port}`)
 })
