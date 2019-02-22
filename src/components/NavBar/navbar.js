@@ -72,7 +72,7 @@ export default class NavBar extends Component {
                 </a>
               </li>
               <li>
-                <a href="">
+                <a href="/cart">
                   <FontAwesomeIcon icon={faShoppingBag} />
                 </a>
                 <Route exact path="/cart" component={Cart} />
