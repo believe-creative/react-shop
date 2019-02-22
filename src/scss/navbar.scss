@@ -1,6 +1,6 @@
 @import "variables.scss";
+
 .header {
-  padding: 20px 0;
   display: flex;
   .head-inner {
     position: relative;
@@ -9,6 +9,7 @@
     width: auto;
     float: left;
     margin-top: 10px;
+    cursor: pointer;
     a {
       font-size: 24px;
       font-weight: $fw-700;
@@ -18,23 +19,28 @@
         font-size: 18px;
       }
     }
+    img {
+      padding: 10px;
+      max-width: 70%;
+    }
   }
   nav {
     float: left;
-    width: 70%;
+    width: 66%;
     padding: 0;
-    margin: 0;
+    margin: 20px 0 0 -90px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
     @media (max-width: 1199px) {
-      width: 75%;
+      width: 70%;
     }
     @media (max-width: 991px) {
       width: 100%;
       float: right;
       display: block;
+      margin: 0;
     }
     .navbar-nav {
       .nav-item.active {
@@ -44,7 +50,7 @@
       }
       .nav-link {
         color: $black;
-        font-size: $secondary-font;
+        font-size: 18px;
         font-family: $montserrat-font;
         font-weight: $fw-700;
         padding: 10px 20px;
@@ -61,8 +67,13 @@
   .head-right {
     width: auto;
     float: right;
-    margin-top: 8px;
+    margin-top: 28px;
     @media (max-width: 991px) {
+      position: absolute;
+      right: 50px;
+    }
+
+    @media (max-width: 560px) {
       position: absolute;
       right: 35px;
     }
@@ -86,9 +97,9 @@
     cursor: pointer;
     position: absolute;
     right: 0;
-    top: -35px;
+    top: -68px;
     @media (max-width: 560px) {
-      top: -33px;
+      top: -68px;
     }
     &:hover,
     &:focus {
