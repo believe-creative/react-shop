@@ -130,6 +130,49 @@ app.post('/api/get-order-shipping-info',(req,res)=>{
       shipping_info=>res.json(shipping_info));
 });
 
+/**************** Orders API Calls *****************/
+/*
+* To get customer order list
+* Parameters {inCustomerId}
+*/
+app.post('/api/get-order-details', (req, res)=>{
+  let inCustomerId = req.body.inCustomerId;
+  sequelize.query('CALL orders_get_by_customer_id(:inCustomerId)',
+                  {replacements:{inCustomerId:inCustomerId}})
+           .then(customer_order_list=>res.json(customer_order_list));
+});
+/*
+* To get order details
+* Parameters {inOrderId}
+*/
+app.post('/api/get-order-details', (req, res)=>{
+  let inOrderId = req.body.inOrderId;
+  sequelize.query('CALL orders_get_order_details(:inOrderId)',
+                  {replacements:{inOrderId:inOrderId}})
+           .then(order_details=>res.json(order_details));
+});
+
+/*
+* To get order information
+* Parameters {inOrderId}
+*/
+app.post('/api/get-order-info', (req, res)=>{
+  let inOrderId = req.body.inOrderId;
+  sequelize.query('CALL orders_get_order_info(:inOrderId)',
+                  {replacements:{inOrderId:inOrderId}})
+           .then(order_info=>res.json(order_info));
+});
+
+/*
+* To get order short details
+* Parameters {inOrderId}
+*/
+app.post('/api/get-order-short-details', (req, res)=>{
+  let inOrderId = req.body.inOrderId;
+  sequelize.query('CALL orders_get_order_short_details(:inOrderId)',
+                  {replacements:{inOrderId:inOrderId}})
+           .then(order_short_details=>res.json(order_short_details));
+});
 
 app.listen(port, () => {
     console.log(`Running on http://localhost:${port}`)
