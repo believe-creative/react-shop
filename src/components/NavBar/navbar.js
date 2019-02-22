@@ -6,6 +6,9 @@ import Image from "react-bootstrap/Image";
 import { LinkContainer } from "react-router-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import "../../scss/navbar.scss";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 
 export default class NavBar extends Component {
   render() {
@@ -55,12 +58,12 @@ export default class NavBar extends Component {
             <ul className="list-unstyled">
               <li>
                 <a href="">
-                  <i className="fa fa-search" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faSearch} />
                 </a>
               </li>
               <li>
                 <a href="">
-                  <i className="fa fa-shopping-bag" aria-hidden="true" />
+                  <FontAwesomeIcon icon={faShoppingBag} />
                 </a>
               </li>
             </ul>
