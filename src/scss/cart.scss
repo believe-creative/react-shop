@@ -1,1 +1,48 @@
 @import "variables.scss";
+
+.checkout_information {
+  background: #fff;
+  padding: 60px;
+  position: relative;
+  -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+  background: $white;
+  ul {
+    li {
+      display: inline;
+      list-style-type: none;
+      padding-right: 80px;
+      float: left;
+    }
+    .dot {
+      margin-right: 138px;
+      position: relative;
+      padding-right: 0;
+      margin-bottom: 30px;
+      &::after {
+        content: "";
+        position: absolute;
+        background: red;
+        left: 23px;
+        top: 6px;
+        width: 132px;
+        height: 8px;
+        &::last-child {
+          display: none;
+        }
+      }
+    }
+  }
+}
+.checkout_next {
+  background-color: $gray-light;
+  padding: 30px;
+  .back {
+    margin-left: 30px;
+  }
+  .next_step {
+    float: right;
+    margin-right: 30px;
+  }
+}

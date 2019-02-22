@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Switch, Route } from "react-router";
 import Container from "react-bootstrap/Container";
 import bag from "../../images/bag.png";
 import pop_image from "../../images/pop_image.png";
@@ -40,7 +41,7 @@ export default class Home extends Component {
                   enough perfectly placed.
                 </p>
                 <p>
-                  <a href="#" className="btn btn-lg">
+                  <a href="/checkout" className="btn btn-lg">
                     Shop Now
                   </a>
                 </p>
