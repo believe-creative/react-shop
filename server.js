@@ -60,9 +60,9 @@ app.get('/api/get-category-products', (req, res) => {
   let inStartItem = req.body.inStartItem;
  sequelize
    .query('CALL catalog_get_products_in_category (:inCategoryId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem )',
-         {replacements: { inCategoryId: 6, inShortProductDescriptionLength: inShortProductDescriptionLength,
+         {replacements: { inCategoryId: inCategoryId, inShortProductDescriptionLength: inShortProductDescriptionLength,
            inProductsPerPage:inProductsPerPage, inStartItem:inStartItem}})
-   .then(cat_products=>res.json(cat_products));
+   .then(category_products=>res.json(category_products));
  });
 
 app.listen(port, () => {
