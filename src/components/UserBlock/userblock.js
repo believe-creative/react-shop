@@ -53,26 +53,49 @@ class UserBlock extends Component {
       
     
     return (
-        <Container>
-          <div>
-          {name
-            ? 
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <img src={photo} alt={name} />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item ><h4>{name}</h4></Dropdown.Item>
-                  <Dropdown.Item onClick={this.logout.bind(this)}>Logout</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
-            : <LinkContainer to="/login">
-                <Nav.Link>Login</Nav.Link>
-              </LinkContainer>
-          }
+          <div class="topbar">
+          <div class="container">
+            <div class="register-block">
+            Hi! 
+              {name
+              ? 
+                <Dropdown>
+                  <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    <img src={photo} alt={name} style={{"width":"30px"}}/>
+                  </Dropdown.Toggle>
+                  <Dropdown.Menu>
+                    <Dropdown.Item ><h4>{name}</h4></Dropdown.Item>
+                    <Dropdown.Item onClick={this.logout.bind(this)}>Logout</Dropdown.Item>
+                  </Dropdown.Menu>
+              </Dropdown>
+              : <LinkContainer to="/login">
+                  <Nav.Link>Sign in</Nav.Link>
+                </LinkContainer>
+            }
+            </div>
+            <div class="topbar-menu">
+              <ul class="list-unstyled">
+                <li>
+                  <a href="#">Daily Deals</a>
+                </li>
+                <li>
+                  <a href="#">Sell</a>
+                </li>
+                <li>
+                  <a href="#">Help &amp; Contact</a>
+                </li>
+              </ul>
+            </div>
+            <div class="currency-block">&#163; GBP</div>
+            <div class="price-block">
+              <a href="">
+                <i class="fa fa-shopping-bag" aria-hidden="true" />
+              </a>{" "}
+              Your bag: &#163;3.99
+            </div>
+            <div class="clearfix" />
+          </div>
         </div>
-          <div className="clearfix" />
-        </Container>
     );
   }
 }

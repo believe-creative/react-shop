@@ -17,7 +17,6 @@ export default class NavBar extends Component {
     console.log(this.props);
     return (
       <header className="header bg-white">
-        <UserBlock/>
         <Container className="head-inner">
           <div className="logo_block">
             <LinkContainer className="logo" to="/">

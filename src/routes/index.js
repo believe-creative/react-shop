@@ -5,9 +5,10 @@ import Home from "../containers/Home/home";
 import Footer from "../components/Footer/footer";
 import Category from "../containers/Category/category";
 import Login from "../containers/Login/login";
-
+import UserBlock from "../components/UserBlock/userblock"
 const routes = (
   <React.Fragment>
+    <UserBlock/>
     <Nav />
     <div id="main">
       <Switch>
