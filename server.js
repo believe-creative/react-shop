@@ -66,6 +66,7 @@ app.post('/api/get-category-products', (req, res) => {
  });
 
 /*
+*To get product attributes.
 * Parameters{inProductId}
 */
 app.post('/api/get-product-attributes',(req,res)=>{
@@ -89,7 +90,7 @@ app.post('/api/add-product-to-cart',(req,res)=>{
 });
 
 /*
-* To get all Product to Cart
+* To get all Product to Cart.
 * Parameters{inCartId}
 */
 app.post('/api/get-shopping-cart-products',(req,res)=>{
@@ -99,6 +100,35 @@ app.post('/api/get-shopping-cart-products',(req,res)=>{
       get_cart_product=>res.json(get_cart_product));
 });
 
+/*
+*To delete Product Items from Cart.
+*Parameters{inCartId}
+*/
+app.post('/api/shopping-cart-empty',(req,res)=>{
+  let inCartId=req.body.inCartId;
+  sequelize
+    .query('CALL shopping_cart_empty(:inCartId)',{replacements:{inCartId:inCartId}}).then(
+      empty_cart=>res.json(empty_cart));
+});
+/*
+*To get Customer Regions.
+*Parameters not required
+*/
+app.get('/api/get-customer-shipping-regions',(req,res)=>{
+  sequelize
+    .query('CALL customer_get_shipping_regions()').then(
+      customer_regions=>res.json(customer_regions));
+});
+/*
+*To get shipping information.
+*Parameters{inShippingRegionId}
+*/
+app.post('/api/get-order-shipping-info',(req,res)=>{
+  let inShippingRegionId=req.body.inShippingRegionId;
+  sequelize
+    .query('CALL orders_get_shipping_info(:inShippingRegionId)',{replacements:{inShippingRegionId:inShippingRegionId}}).then(
+      shipping_info=>res.json(shipping_info));
+});
 
 
 app.listen(port, () => {
