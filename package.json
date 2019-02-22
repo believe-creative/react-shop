@@ -16,6 +16,8 @@
     "express-session": "^1.15.6",
     "immutable": "^4.0.0-rc.12",
     "mongoose": "^5.4.14",
+    "mysql": "^2.16.0",
+    "mysql2": "^1.6.5",
     "node-sass": "^4.11.0",
     "querystringify": "^2.1.0",
     "react": "^16.8.2",
@@ -29,13 +31,15 @@
     "react-scripts": "2.1.5",
     "redux": "^4.0.1",
     "redux-immutable": "^4.0.0",
-    "redux-saga": "^1.0.1"
+    "redux-saga": "^1.0.1",
+    "sequelize": "^4.42.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "server": "node server.js"
   },
   "eslintConfig": {
     "extends": "react-app"
