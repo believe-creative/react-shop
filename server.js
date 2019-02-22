@@ -13,6 +13,8 @@ const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
   dialect: 'mysql',
   port:3306
 });
+
+/***********Products API Calls ***************/
 /*
 * To get all departments
 */
@@ -90,7 +92,29 @@ app.post('/api/add-product-to-cart',(req,res)=>{
 });
 
 /*
-* To get all Product to Cart.
+* To get product reviews
+* Parameters{inProductId}
+*/
+app.post('/api/get-product-reviews',(req,res)=>{
+  let inProductId=req.body.inProductId;
+  sequelize
+    .query('CALL catalog_get_product_reviews(:inProductId)',{replacements:{inProductId:inProductId}}).then(
+      product_reviews=>res.json(product_reviews));
+});
+
+/*
+* To get attributes
+* Parameters not required
+*/
+app.get('/api/get-attributes',(req,res)=>{
+  sequelize
+    .query('CALL catalog_get_attributes()').then(
+      get_attributes=>res.json(get_attributes));
+});
+
+/**************** Shopping cart API Calls *****************/
+/*
+* To get all products from Cart.
 * Parameters{inCartId}
 */
 app.post('/api/get-shopping-cart-products',(req,res)=>{
@@ -101,8 +125,8 @@ app.post('/api/get-shopping-cart-products',(req,res)=>{
 });
 
 /*
-*To delete Product Items from Cart.
-*Parameters{inCartId}
+* To delete Product Items from Cart.
+* Parameters{inCartId}
 */
 app.post('/api/shopping-cart-empty',(req,res)=>{
   let inCartId=req.body.inCartId;
@@ -111,23 +135,13 @@ app.post('/api/shopping-cart-empty',(req,res)=>{
       empty_cart=>res.json(empty_cart));
 });
 /*
-*To get Customer Regions.
-*Parameters not required
+* To get shipping Regions.
+* Parameters not required
 */
 app.get('/api/get-customer-shipping-regions',(req,res)=>{
   sequelize
     .query('CALL customer_get_shipping_regions()').then(
       customer_regions=>res.json(customer_regions));
-});
-/*
-*To get shipping information.
-*Parameters{inShippingRegionId}
-*/
-app.post('/api/get-order-shipping-info',(req,res)=>{
-  let inShippingRegionId=req.body.inShippingRegionId;
-  sequelize
-    .query('CALL orders_get_shipping_info(:inShippingRegionId)',{replacements:{inShippingRegionId:inShippingRegionId}}).then(
-      shipping_info=>res.json(shipping_info));
 });
 
 /**************** Orders API Calls *****************/
@@ -172,6 +186,16 @@ app.post('/api/get-order-short-details', (req, res)=>{
   sequelize.query('CALL orders_get_order_short_details(:inOrderId)',
                   {replacements:{inOrderId:inOrderId}})
            .then(order_short_details=>res.json(order_short_details));
+});
+/*
+* To get order shipping information.
+* Parameters{inShippingRegionId}
+*/
+app.post('/api/get-order-shipping-info',(req,res)=>{
+  let inShippingRegionId=req.body.inShippingRegionId;
+  sequelize
+    .query('CALL orders_get_shipping_info(:inShippingRegionId)',{replacements:{inShippingRegionId:inShippingRegionId}}).then(
+      shipping_info=>res.json(shipping_info));
 });
 
 app.listen(port, () => {
