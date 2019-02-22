@@ -10,6 +10,7 @@ import "../../scss/navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Cart from "../Cart/cart";
+import UserBlock from "../UserBlock/userblock"
 export default class NavBar extends Component {
   SearchIcon() {}
   render() {

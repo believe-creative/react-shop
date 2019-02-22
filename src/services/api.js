@@ -1,11 +1,11 @@
-const API_ROOT = "https://reactshop.amoha.co:5000/api/";
+import { API_ROOT } from "./constants";
 
-function callAPI(endpoint, schema) {
+function callAPI(endpoint,headers, schema) {
   console.log("call api");
   const fullURL =
     endpoint.indexOf(API_ROOT) === -1 ? API_ROOT + endpoint : endpoint;
 
-  return fetch(fullURL).then(response =>
+  return fetch(fullURL,{headers}).then(response =>
     response
       .json()
       .then(json => ({ json, response }))
@@ -24,4 +24,6 @@ function callAPI(endpoint, schema) {
 
 export const getProducts = category => callAPI(`products/`);
 export const getProduct = productId => callAPI(`product/${productId}`);
-export const getUser = userId => callAPI(`user/${userId}`);
+export const checkUser = token => callAPI(`checkuser/`,{"Authorization" : `Bearer ${token}`});
+
+

@@ -6,42 +6,20 @@ import "./scss/App.scss";
 import { ConnectedRouter } from "connected-react-router/immutable";
 import routes from "./routes";
 import * as Actions from "./actions";
+import {setCookie,getCookie,deleteCookie} from "./services/helpers"
 
 class App extends Component {
   componentDidMount() {
-    this.props.productRequest();
+    var c=getCookie("s-atk");
+    console.log("lllll",c)
+    if(c)
+    {
+      this.props.checkUserLogin(c);
+    }
   }
   render() {
     return (
       <div className="App">
-        <div class="topbar">
-          <div class="container">
-            <div class="register-block">
-              Hi! <a href="#">Sign in</a> or <a href="#">Register</a>
-            </div>
-            <div class="topbar-menu">
-              <ul class="list-unstyled">
-                <li>
-                  <a href="#">Daily Deals</a>
-                </li>
-                <li>
-                  <a href="#">Sell</a>
-                </li>
-                <li>
-                  <a href="#">Help &amp; Contact</a>
-                </li>
-              </ul>
-            </div>
-            <div class="currency-block">&#163; GBP</div>
-            <div class="price-block">
-              <a href="">
-                <i class="fa fa-shopping-bag" aria-hidden="true" />
-              </a>{" "}
-              Your bag: &#163;3.99
-            </div>
-            <div class="clearfix" />
-          </div>
-        </div>
         <ConnectedRouter history={this.props.history}>{routes}</ConnectedRouter>
       </div>
     );
@@ -49,6 +27,7 @@ class App extends Component {
 }
 
 const productRequest = Actions.products.request;
+const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
   isProductsLoading: state.products.isLoading,
@@ -56,7 +35,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-  productRequest
+  productRequest,
+  checkUserLogin 
 };
 
 export default connect(
