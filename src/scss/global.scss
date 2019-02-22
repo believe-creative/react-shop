@@ -644,6 +644,11 @@ form {
       margin-bottom: 5px;
     }
   }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
   // this css is for close button no need to remove it.
   //	& .collapsed{
   //		.toggler-icon{

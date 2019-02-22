@@ -9,10 +9,11 @@ import Navbar from "react-bootstrap/Navbar";
 import "../../scss/navbar.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import Cart from "../Cart/cart";
 export default class NavBar extends Component {
+  SearchIcon() {}
   render() {
+    console.log(this.props);
     return (
       <header className="header bg-white">
         <Container className="head-inner">
@@ -67,15 +68,16 @@ export default class NavBar extends Component {
           <div className="head-right">
             <ul className="list-unstyled">
               <li>
-                <a href="">
-                  <FontAwesomeIcon icon={faSearch} />
-                </a>
+                <span className="search_input">
+                  <form id="search_icon">
+                    <input type="search" placeholder="" className="search" />
+                  </form>
+                </span>
               </li>
               <li>
                 <a href="/cart">
-                  <FontAwesomeIcon icon={faShoppingBag} />
+                  <Cart cartItems={"6"} />
                 </a>
-                <Route exact path="/cart" component={Cart} />
               </li>
             </ul>
           </div>
