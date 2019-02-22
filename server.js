@@ -26,7 +26,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all categories using departmentid
  * Parameters {inDepartmentId}
  */
- app.get('/api/get-department-categories', (req, res)=>{
+ app.post('/api/get-department-categories', (req, res)=>{
    let inDepartmentId = req.body.inDepartmentId;
    sequelize.query('CALL catalog_get_department_categories(:inDepartmentId)',
    {replacements: {inDepartmentId:inDepartmentId}})
@@ -37,7 +37,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all products using department id
  * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
  */
- app.get('/api/get-department-products', (req, res)=>{
+ app.post('/api/get-department-products', (req, res)=>{
    let inDepartmentId = req.body.inDepartmentId;
    let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
    let inProductsPerPage = req.body.inProductsPerPage;
@@ -53,7 +53,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all category related products using category id.
  * Parameters {inCategoryId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
  */
-app.get('/api/get-category-products', (req, res) => {
+app.post('/api/get-category-products', (req, res) => {
   let inCategoryId = req.body.inCategoryId;
   let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
   let inProductsPerPage = req.body.inProductsPerPage;
@@ -66,8 +66,7 @@ app.get('/api/get-category-products', (req, res) => {
  });
 
 /*
-
-Parameters{inProductId}
+* Parameters{inProductId}
 */
 app.post('/api/get-product-attributes',(req,res)=>{
     let inProductId=req.body.inProductId;
@@ -77,8 +76,8 @@ app.post('/api/get-product-attributes',(req,res)=>{
 });
 
 /*
-To add Selected Product to Cart insert or update Cart details.
-Parameters{inCartId,inProductId,inAttributes}
+* To add Selected Product to Cart insert or update Cart details.
+* Parameters{inCartId,inProductId,inAttributes}
 */
 app.post('/api/add-product-to-cart',(req,res)=>{
   let inCartId=req.body.inCartId;
@@ -90,13 +89,13 @@ app.post('/api/add-product-to-cart',(req,res)=>{
 });
 
 /*
-To get all Product to Cart
-Parameters{inCartId}
+* To get all Product to Cart
+* Parameters{inCartId}
 */
 app.post('/api/get-shopping-cart-products',(req,res)=>{
   let inCartId=req.body.inCartId;
   sequelize
-    .query('CALL shopping_cart_get_products(:inCartId)',{replacements:{inCartId:inCartId,}}).then(
+    .query('CALL shopping_cart_get_products(:inCartId)',{replacements:{inCartId:inCartId}}).then(
       get_cart_product=>res.json(get_cart_product));
 });
 
