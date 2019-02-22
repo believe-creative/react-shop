@@ -13,22 +13,93 @@ const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
   dialect: 'mysql',
   port:3306
 });
-
-app.get('/api/product', (req, res) => {
+/*
+* To get all departments
+*/
+app.get('/api/get-departments', (req, res) => {
   sequelize
-    .query('CALL catalog_get_product_details (3)')
-    .then(product=>res.json(product));
- })
- // sequelize
- //   .query('CALL catalog_get_product_details (:product_id)',
- //         {replacements: { product_id: 3}})
- //   .then(product=>console.log(product));
-app.get('/api/products', (req, res) => {
+    .query('CALL catalog_get_departments()')
+    .then(departments=>res.json(departments));
+ });
+
+ /*
+ * To get all categories using departmentid
+ * Parameters {inDepartmentId}
+ */
+ app.post('/api/get-department-categories', (req, res)=>{
+   let inDepartmentId = req.body.inDepartmentId;
+   sequelize.query('CALL catalog_get_department_categories(:inDepartmentId)',
+   {replacements: {inDepartmentId:inDepartmentId}})
+   .then(department_categories=>res.json(department_categories));
+ });
+
+ /*
+ * To get all products using department id
+ * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+ */
+ app.post('/api/get-department-products', (req, res)=>{
+   let inDepartmentId = req.body.inDepartmentId;
+   let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
+   let inProductsPerPage = req.body.inProductsPerPage;
+   let inStartItem = req.body.inStartItem;
+   sequelize
+         .query('CALL catalog_get_products_on_department(:inDepartmentId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem)',
+               {replacements: {inDepartmentId:inDepartmentId, inShortProductDescriptionLength:inShortProductDescriptionLength,
+                 inProductsPerPage:inProductsPerPage, inStartItem:inStartItem}})
+         .then(department_products=>res.json(department_products));
+ });
+
+ /*
+ * To get all category related products using category id.
+ * Parameters {inCategoryId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+ */
+app.post('/api/get-category-products', (req, res) => {
+  let inCategoryId = req.body.inCategoryId;
+  let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
+  let inProductsPerPage = req.body.inProductsPerPage;
+  let inStartItem = req.body.inStartItem;
  sequelize
    .query('CALL catalog_get_products_in_category (:inCategoryId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem )',
-         {replacements: { inCategoryId: 6, inShortProductDescriptionLength: 10, inProductsPerPage:10, inStartItem:1}})
-   .then(cat_products=>res.json(cat_products));
+         {replacements: { inCategoryId: inCategoryId, inShortProductDescriptionLength: inShortProductDescriptionLength,
+           inProductsPerPage:inProductsPerPage, inStartItem:inStartItem}})
+   .then(category_products=>res.json(category_products));
  });
+
+/*
+* Parameters{inProductId}
+*/
+app.post('/api/get-product-attributes',(req,res)=>{
+    let inProductId=req.body.inProductId;
+    sequelize
+      .query('CALL catalog_get_product_attributes(:inProductId)',{replacements:{inProductId:inProductId}}).then(
+        product_attribute=>res.json(product_attribute));
+});
+
+/*
+* To add Selected Product to Cart insert or update Cart details.
+* Parameters{inCartId,inProductId,inAttributes}
+*/
+app.post('/api/add-product-to-cart',(req,res)=>{
+  let inCartId=req.body.inCartId;
+  let inProductId=req.body.inProductId;
+  let inAttributes=req.body.inAttributes;
+  sequelize
+    .query('CALL shopping_cart_add_product(:inCartId,:inProductId,:inAttributes)',{replacements:{inCartId:inCartId,inProductId:inProductId, inAttributes:inAttributes}}).then(
+      add_product_to_cart=>res.json(add_product_to_cart));
+});
+
+/*
+* To get all Product to Cart
+* Parameters{inCartId}
+*/
+app.post('/api/get-shopping-cart-products',(req,res)=>{
+  let inCartId=req.body.inCartId;
+  sequelize
+    .query('CALL shopping_cart_get_products(:inCartId)',{replacements:{inCartId:inCartId}}).then(
+      get_cart_product=>res.json(get_cart_product));
+});
+
+
 
 app.listen(port, () => {
     console.log(`Running on http://localhost:${port}`)
