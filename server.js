@@ -13,20 +13,55 @@ const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
   dialect: 'mysql',
   port:3306
 });
-
-app.get('/api/product', (req, res) => {
+/*
+* To get all departments
+*/
+app.get('/api/get-departments', (req, res) => {
   sequelize
-    .query('CALL catalog_get_product_details (3)')
-    .then(product=>res.json(product));
- })
- // sequelize
- //   .query('CALL catalog_get_product_details (:product_id)',
- //         {replacements: { product_id: 3}})
- //   .then(product=>console.log(product));
-app.get('/api/products', (req, res) => {
+    .query('CALL catalog_get_departments()')
+    .then(departments=>res.json(departments));
+ });
+
+ /*
+ * To get all categories using departmentid
+ * Parameters {inDepartmentId}
+ */
+ app.get('/api/get-department-categories', (req, res)=>{
+   let inDepartmentId = req.body.inDepartmentId;
+   sequelize.query('CALL catalog_get_department_categories(:inDepartmentId)',
+   {replacements: {inDepartmentId:inDepartmentId}})
+   .then(department_categories=>res.json(department_categories));
+ });
+
+ /*
+ * To get all products using department id
+ * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+ */
+ app.get('/api/get-department-products', (req, res)=>{
+   let inDepartmentId = req.body.inDepartmentId;
+   let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
+   let inProductsPerPage = req.body.inProductsPerPage;
+   let inStartItem = req.body.inStartItem;
+   sequelize
+         .query('CALL catalog_get_products_on_department(:inDepartmentId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem)',
+               {replacements: {inDepartmentId:inDepartmentId, inShortProductDescriptionLength:inShortProductDescriptionLength,
+                 inProductsPerPage:inProductsPerPage, inStartItem:inStartItem}})
+         .then(department_products=>res.json(department_products));
+ });
+
+ /*
+ * To get all category related products using category id.
+ * Parameters {inCategoryId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+ */
+app.get('/api/get-category-products', (req, res) => {
+  let inCategoryId = req.body.inCategoryId;
+  let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
+  let inProductsPerPage = req.body.inProductsPerPage;
+  let inStartItem = req.body.inStartItem;
  sequelize
    .query('CALL catalog_get_products_in_category (:inCategoryId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem )',
-         {replacements: { inCategoryId: 6, inShortProductDescriptionLength: 10, inProductsPerPage:10, inStartItem:1}})
+         {replacements: { inCategoryId: 6, inShortProductDescriptionLength: inShortProductDescriptionLength,
+           inProductsPerPage:inProductsPerPage, inStartItem:inStartItem}})
    .then(cat_products=>res.json(cat_products));
  });
 
