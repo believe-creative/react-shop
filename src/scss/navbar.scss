@@ -8,6 +8,9 @@
   min-height: 50px;
   .register-block {
     float: left;
+    a{
+      display: inline-block;
+    }
     @media (max-width: 767px) {
       text-align: center;
       width: 100%;

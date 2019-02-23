@@ -12,7 +12,8 @@ export default class Checkout extends Component {
     return (
       <React.Fragment>
         <Container>
-          <Row className="checkout_information">
+        <div className="checkout_information">
+          <Row className="checkout_block">
             <Col sm={6} md={12}>
               <h2>Checkout</h2>
               <ul className="list-unstyled color-codes">
@@ -113,34 +114,55 @@ export default class Checkout extends Component {
                         />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="country">
+                    <div class="col-md-12">
+                      <div class="form-group country">
+                        <label >
                           {"Country:"}
                           <h3>{"Greate Britain *"}</h3>
                         </label>
                       </div>
+                        <div class="form-group form-check">
+                      <div class="radio-checkbox-block">
+                				<p><input type="checkbox" for="male" /><span></span><label for="male"><h3>
+                          My billing information is the same as my delivery
+                          information{" "}
+                        </h3></label></p>
+                			</div>
+                      </div>
+
+                      <div class="form-group delivery_options">
+                        <label class="form-check-label" for="exampleCheck1"><h2>
+                          Delivery Options{" "}
+                        </h2></label>
+                        <div class="row radio-checkbox-block">
+                          <div class="col-md-6">
+                  				    <p><input type="radio" for="option1" checked /><span></span><label for="option1"><h3>Standard Shipping:</h3>(free, 2-3 business days)</label></p>
+                  				</div>
+                          <div class="col-md-6">
+                              <p><input type="radio" for="option2" /><span></span><label for="option2"><h3>Express Shipping:</h3>(28 Dollar, 1-2 business days)</label></p>
+                  			  </div>
+                        </div>
+                      </div>
                     </div>
+
+
                   </div>
 
-                  <div class="note">
-                    <h3>
-                      My billing information is the same as my delivery
-                      information{" "}
-                    </h3>
-                  </div>
-                  <div className="checkout_next">
-                    <button type="button" class="btn btn-lg back">
-                      Back
-                    </button>
-                    <button type="button" class="btn btn-lg next_step">
-                      Next Step
-                    </button>
-                  </div>
+
                 </div>
               </form>
             </Col>
+
           </Row>
+          <div className="checkout_next">
+            <button type="button" class="btn btn-lg back">
+              Back
+            </button>
+            <button type="button" class="btn btn-lg next_step">
+              Next Step
+            </button>
+          </div>
+            </div>
         </Container>
       </React.Fragment>
     );
