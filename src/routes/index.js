@@ -16,11 +16,8 @@ const routes = (
     <div id="main">
       <Switch>
         <Route exact path="/" component={Home} />
-
         <Route exact path="/checkout" component={Checkout} />
-        
-
-        <Route exact path="/category/:category" component={Category} />
+        <Route exact path="/categories/:category" component={Category} />
         <Route exact path="/login" component={Login} />
       </Switch>
     </div>

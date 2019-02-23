@@ -1,18 +1,19 @@
 import React, { Component } from "react";
 import Nav from "react-bootstrap/Nav";
-import { Switch, Route } from "react-router";
 import Container from "react-bootstrap/Container";
 import logo from "../../images/tshirtshop.png";
 import Image from "react-bootstrap/Image";
-import { LinkContainer, Link } from "react-router-bootstrap";
+import * as Actions from "../../actions";
+import { LinkContainer } from "react-router-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
-import "../../scss/navbar.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import Cart from "../Cart/cart";
-import UserBlock from "../UserBlock/userblock"
-export default class NavBar extends Component {
-  SearchIcon() {}
+import { connect } from "react-redux";
+
+import "../../scss/navbar.scss";
+class NavBar extends Component {
+  componentDidMount() {
+    this.props.loadCategories();
+  }
   render() {
     console.log(this.props);
     return (
@@ -37,32 +38,17 @@ export default class NavBar extends Component {
             />
             <Navbar.Collapse id="basic-navbar-nav" className="">
               <ul className="navbar-nav mr-auto mt-2 mt-lg-0 list-unstyled">
-                <li className="nav-item">
-                  <LinkContainer to="/women">
-                    <Nav.Link>Women</Nav.Link>
-                  </LinkContainer>
-                </li>
-
-                <li className="nav-item">
-                  <LinkContainer to="/men">
-                    <Nav.Link eventKey="men">Men</Nav.Link>
-                  </LinkContainer>
-                </li>
-                <li className="nav-item">
-                  <LinkContainer to="/kids">
-                    <Nav.Link eventKey="women">Women</Nav.Link>
-                  </LinkContainer>
-                </li>
-                <li className="nav-item">
-                  <LinkContainer to="/shoes">
-                    <Nav.Link eventKey="shoes">Shoes</Nav.Link>
-                  </LinkContainer>
-                </li>
-                <li className="nav-item">
-                  <LinkContainer to="/brands">
-                    <Nav.Link eventKey="brands">Brands</Nav.Link>
-                  </LinkContainer>
-                </li>
+                {this.props.categories &&
+                  this.props.categories.map(category => {
+                    var link = "/categories/" + category.name.toLowerCase();
+                    return (
+                      <li className="nav-item" key={category.name}>
+                        <LinkContainer to={link}>
+                          <Nav.Link>{category.name}</Nav.Link>
+                        </LinkContainer>
+                      </li>
+                    );
+                  })}
               </ul>
             </Navbar.Collapse>
           </Navbar>
@@ -88,3 +74,19 @@ export default class NavBar extends Component {
     );
   }
 }
+
+const mapStateToProps = state => {
+  console.log(state.get("products").categories);
+  return {
+    categories: state.get("products").categories
+  };
+};
+
+const mapStateToDispatch = dispatch => ({
+  loadCategories: () => dispatch(Actions.getCategories.request())
+});
+
+export default connect(
+  mapStateToProps,
+  mapStateToDispatch
+)(NavBar);

@@ -26,6 +26,11 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
+    case ActionTypes.CATEGORIES.SUCCESS:
+      return {
+        ...state,
+        categories: action.response
+      };
     default:
       return state;
   }

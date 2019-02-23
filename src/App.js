@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-import { Route, Switch } from "react-router";
 import { connect } from "react-redux";
 
 import "./scss/App.scss";
 import { ConnectedRouter } from "connected-react-router/immutable";
 import routes from "./routes";
 import * as Actions from "./actions";
-import {setCookie,getCookie,deleteCookie} from "./services/helpers"
+import { setCookie, getCookie, deleteCookie } from "./services/helpers";
 
 class App extends Component {
   componentDidMount() {
-    var c=getCookie("s-atk");
-    console.log("lllll",c)
-    if(c)
-    {
+    var c = getCookie("s-atk");
+    console.log("lllll", c);
+    if (c) {
       this.props.checkUserLogin(c);
     }
   }
@@ -36,7 +34,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
   productRequest,
-  checkUserLogin 
+  checkUserLogin
 };
 
 export default connect(

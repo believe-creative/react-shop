@@ -5,7 +5,10 @@ import { connectRouter } from "connected-react-router";
 import productReducer from "./products";
 import userReducer from "./user";
 
-
 export default function createReducers(history) {
-  return combineReducers({ router: connectRouter(history), productReducer,user:userReducer });
+  return combineReducers({
+    router: connectRouter(history),
+    products: productReducer,
+    user: userReducer
+  });
 }
