@@ -1,39 +1,44 @@
 let jwt = require('jsonwebtoken');
+const {checkUserWithEmail} = require('../server')
   exports.facebook = (req, res) => {
     const io = req.app.get('io')
     const displayName= req.user.displayName
     const user = { 
       name: displayName,
-      photo: req.user.photos[0].value
+      photo: req.user.photos[0].value,
+      email:req.user.emails[0].value
     }
     console.log("got in ---------------------------------------------------------")
     req.session.user=user
-    let token = jwt.sign({email:req.user.email,user: user},
+    let token = jwt.sign({email:user.email,user: user},
         'thisisasecret',
         { expiresIn: '2h'
         }
       );
-    io.in(req.session.socketId).emit('facebook', {user:user,token:token})
-    res.redirect("/loginsuccess");
+    io.in(req.session.socketId).emit('facebook', {user:user,token:token});
+    res.redirect("/setpassword");
+    
   }
 
   exports.google = (req, res) => {
     const io = req.app.get('io')
     const displayName= req.user.displayName
+    console.log(req.user);
     const user = { 
       name: displayName,
-      photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250')
+      photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250'),
+      email:req.user.emails[0].value
     }
     console.log("got in ---------------------------------------------------------")
     req.session.user=user
-    req.session.user=user
-    let token = jwt.sign({email:req.user.email,user: user},
+    let token = jwt.sign({email:user.email,user: user},
         'thisisasecret',
         { expiresIn: '2h'
         }
       );
     io.in(req.session.socketId).emit('google', {user:user,token:token})
-    res.redirect("/loginsuccess");
+    res.redirect("/setpassword");
+  
   }
    
 

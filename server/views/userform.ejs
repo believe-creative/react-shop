@@ -1,0 +1,29 @@
+<% include header %>
+
+<h2>Set your own password</h2>
+<% if(errors){ %>
+    <% for(var i=0;i<errors.length;i++) { %>
+          <p class="alert alert-danger"><%= errors[i].msg %></p>
+    <% } %>
+<% } %>
+  <form method="post" action="">
+    <div class="form-group">
+        <label for="email">Display name:</label>
+        <input type="text" class="form-control" id="displayname" value="<%= user.name %>" placeholder="Display name" name="name" >
+    </div>
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="email" value="<%= user.email %>" placeholder="Enter email" name="email" readonly>
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" value="<%= user.pwd %>" placeholder="Enter password" name="pwd">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Re-Enter Password:</label>
+        <input type="password" class="form-control" id="pwd" value="<%= user.pwd %>" placeholder="Re-Enter password" name="rpwd">
+    </div>
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+
+<% include footer %>

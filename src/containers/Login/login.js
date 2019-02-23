@@ -8,7 +8,7 @@ import { API_ROOT } from "../../services/constants";
 import { setUser } from "../../actions";
 import {setCookie,getCookie,deleteCookie} from "../../services/helpers"
 
-const socket = io("http://localhost:5000");
+const socket = io(API_ROOT.split("/api/")[0]);
 
  class Login extends Component {
   constructor(props)

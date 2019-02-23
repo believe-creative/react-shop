@@ -5,7 +5,7 @@ const authController = require('./auth.controller')
 
 // Setting up the passport middleware for each of the OAuth providers
 const facebookAuth = passport.authenticate('facebook')
-const googleAuth = passport.authenticate('google', { scope: ['profile'] })
+const googleAuth = passport.authenticate('google', { scope: ['profile','email'] })
 
 // This custom middleware allows us to attach the socket id to the session.
 // With the socket id attached we can send back the right user info to 
