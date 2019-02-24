@@ -5,6 +5,7 @@ const path = require('path')
 const fs = require('fs')
 const https = require('https')
 const Sequelize = require('sequelize')
+let jwt = require('jsonwebtoken');
 
 var http = require('http');
 const session = require('express-session');
@@ -73,8 +74,52 @@ app.get('/loginsuccess', function (req, res) {
     res.render('success');
 });
 
+app.post('/api/login',jsonParser, function (req, res) {
+  console.log(req.body);
+    let email=req.body.email;
+    let pwd=req.body.pwd;
+    sequelize
+    .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:email}}).then(
+      data=>{ 
+        console.log(data);
+        if(data.length>0){
+          comparePassword(pwd,data[0].password,function(error,result){
+            console.log("came back",error,result);
+            if(error)
+            {
+              console.log(error);
+              return res.json({status:"error",msg:"Incorrect password."});
+            }
+            else if(result==false)
+            {
+              return res.json({status:"error",msg:"Incorrect password."});
+            }
+            else if(result)
+              {
+                sequelize
+                  .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:data[0].customer_id}}).then(function(totaldata){
+                    console.log(totaldata);
+                    let user={name:totaldata[0].name,email:email};
+                    let token = jwt.sign({email:email,user: user},
+                      'thisisasecret',
+                      { expiresIn: '2h'
+                      }
+                    );
+                    return res.json({status:"success",user:user,token:token})
+                  })
+               
+              }
+          });
+        }
+        else
+        {
+          return res.json({status:"error",msg:"Seems like you haven't registered.Please signup through other means."});
+        }
+        
+    });
+});
+
 app.get('/setpassword', function (req, res) {
-  console.log("came here get ---------------------");
   sequelize
     .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:req.session.user.email}}).then(
       data=>{ 
@@ -165,6 +210,7 @@ app.get('/api/get-departments', (req, res) => {
  */
  app.post('/api/get-department-categories', (req, res)=>{
    let inDepartmentId = req.body.inDepartmentId;
+   console.log(inDepartmentId);
    sequelize.query('CALL catalog_get_department_categories(:inDepartmentId)',
    {replacements: {inDepartmentId:inDepartmentId}})
    .then(department_categories=>res.json(department_categories));

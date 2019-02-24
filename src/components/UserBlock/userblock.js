@@ -27,12 +27,10 @@ class UserBlock extends Component {
     this.props.setUser({ name: null, photo: null });
   }
   render() {
-    console.log(this.props, "dsfdsfdsfsdfsdfdsfdsfds");
     let name = null;
     let photo = null;
     if (this.props.user) {
       name = this.props.user.name;
-      photo = this.props.user.photo;
     }
 
     return (
@@ -43,12 +41,9 @@ class UserBlock extends Component {
             {name ? (
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <img src={photo} alt={name} style={{ width: "30px" }} />
+                <h4>{name}</h4>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item>
-                    <h4>{name}</h4>
-                  </Dropdown.Item>
                   <Dropdown.Item onClick={this.logout.bind(this)}>
                     Logout
                   </Dropdown.Item>
@@ -88,7 +83,6 @@ class UserBlock extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     user: state.get("user")
   };
