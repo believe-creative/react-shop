@@ -29,7 +29,7 @@ const options = {
   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
   };
 
-const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
+export const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
   host: 'localhost',
   dialect: 'mysql',
   port:3306
@@ -601,6 +601,9 @@ app.post('/api/get-order-shipping-info',(req,res)=>{
     .query('CALL orders_get_shipping_info(:inShippingRegionId)',{replacements:{inShippingRegionId:inShippingRegionId}}).then(
       shipping_info=>res.json(shipping_info));
 });
+
+
+
 
 
 

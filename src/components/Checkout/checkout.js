@@ -8,6 +8,7 @@ import "../../scss/cart.scss";
 import Delivery from "./delivery";
 import Conformation from "./conformation";
 import Payment from "./payment";
+import {StripeProvider,Elements,CardNumberElement,CardExpiryElement,CardCVCElement} from 'react-stripe-elements';
 
 export default class Checkout extends Component {
   render() {
@@ -174,8 +175,12 @@ export default class Checkout extends Component {
                 </Col>
 
                 <Col sm={6} md={12}>
-
-                  <Payment />
+                <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
+                      <Elements>
+                        <Payment />
+                      </Elements>
+                </StripeProvider>
+                  
 
                 </Col>
               </Row>
