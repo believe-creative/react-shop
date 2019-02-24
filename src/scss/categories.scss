@@ -2,4 +2,24 @@
   background-size: cover;
   background-position: center;
   min-height: 500px;
+  position: relative;
+  .category-list {
+    position: relative;
+    padding: 50px 0;
+    color: white;
+    .category-header {
+      text-transform: capitalize;
+      color: white;
+    }
+  }
+}
+
+.hero-section.categories:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
 }

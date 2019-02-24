@@ -15,6 +15,8 @@ export const PRODUCT = createRequestTypes("PRODUCT");
 export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
+export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
+export const CATEGORYPRODUCTS = createRequestTypes("CATEGORYPRODUCTS");
 
 export function setUser(payload) {
   return { type: "SETUSER", payload };
@@ -48,4 +50,19 @@ export const getCategories = {
   request: () => action(CATEGORIES[REQUEST]),
   success: (id, response) => action(CATEGORIES[SUCCESS], { response }),
   failure: (id, error) => action(CATEGORIES[FAILURE], { error })
+};
+
+export const getSubCategories = {
+  request: departmentId => action(SUBCATEGORIES[REQUEST], { departmentId }),
+  success: (departmentId, response) =>
+    action(SUBCATEGORIES[SUCCESS], { departmentId, response }),
+  failure: (departmentId, error) =>
+    action(SUBCATEGORIES[FAILURE], { departmentId, error })
+};
+
+export const getCategoryProducts = {
+  request: data => action(CATEGORYPRODUCTS[REQUEST], { data }),
+  success: (data, response) =>
+    action(CATEGORYPRODUCTS[SUCCESS], { data, response }),
+  failure: (data, error) => action(CATEGORYPRODUCTS[FAILURE], { data, error })
 };
