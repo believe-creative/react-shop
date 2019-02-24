@@ -3,6 +3,7 @@
 .checkout_information {
   .checkout_block{
       padding: 60px;
+      margin-top: 60px;
   }
   background: #fff;
 
@@ -12,31 +13,34 @@
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   background: $white;
   ul {
+    padding-top: 20px;
     li {
       display: inline;
       list-style-type: none;
-      padding-right: 80px;
+      padding-right: 16%;
       float: left;
+
+    }
+    .bar {
+      position: relative;
+      margin: 0 5px 30px;
+      border-radius: 0;
+      content: "";
+      background: #b4b4b4;
+      left: 0px;
+      top: 6px;
+      width: 218px;
+      height: 8px;
     }
     .dot {
-      margin-right: 138px;
-      position: relative;
+      background: #b4b4b4;
       padding-right: 0;
-      margin-bottom: 30px;
-      &::after {
-        content: "";
-        position: absolute;
-        background: red;
-        left: 23px;
-        top: 6px;
-        width: 132px;
-        height: 8px;
-        &::last-child {
-          display: none;
-        }
-      }
+      margin: 0;
     }
   }
+}
+.active_next{
+  background: red !important;
 }
 .checkout_next {
   background-color: $gray-light;
@@ -65,5 +69,44 @@
   h3{
     display: inline-block;
     padding: 0 10px;
+  }
+}
+.delivery_block,.conformation_block{
+  padding-top: 45px;
+}
+
+table.order_summery {
+  border-collapse: collapse;
+  width: 100%;
+  th, td {
+    padding: 8px;
+    text-align: left;
+
+  }
+  tr:hover {background-color:#f5f5f5;}
+}
+.payment_block{
+  .validthru{
+    min-width: 50px;
+  }
+  .paypal{
+    width: 50%;
+    margin: 30px 0;
+    border: 1px solid;
+    .radio-checkbox-block{
+      justify-content: center;
+    }
+    .paypal_img{
+      img{
+        padding-top: 25px;
+        width: 25%;
+        height: 25%;
+      }
+      display: flex;
+      justify-content: center;
+    }
+  }
+  .cvv_text{
+    padding-top: 30px;
   }
 }
