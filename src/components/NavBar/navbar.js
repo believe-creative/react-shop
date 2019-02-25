@@ -16,6 +16,7 @@ class NavBar extends Component {
       if(cart)
       {
          cart=JSON.parse(cart);
+         console.log(cart.inCartId);
          this.props.getCartProducts(cart.inCartId);
       }
   }
@@ -69,9 +70,9 @@ class NavBar extends Component {
                 </span>
               </li>
               <li>
-                <a href="/cart">
-                  <Cart cartItems={cart.count} />
-                </a>
+                <LinkContainer to={"/cart"} className="btn btn-md btn-white">
+                  <Nav.Link><Cart cartItems={cart.count} /></Nav.Link>
+                </LinkContainer>
               </li>
             </ul>
           </div>
@@ -91,7 +92,7 @@ const mapStateToProps = state => {
 };
 
 const mapStateToDispatch = dispatch => ({
-  getCartProducts: () => dispatch(Actions.getCartProducts.request())
+  getCartProducts: (inCartId) => dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(
