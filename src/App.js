@@ -10,12 +10,14 @@ import { setCookie, getCookie, deleteCookie } from "./services/helpers";
 class App extends Component {
   componentDidMount() {
     var c = getCookie("s-atk");
-    console.log("lllll", c);
     if (c) {
       this.props.checkUserLogin(c);
     }
+    this.props.loadCategories();
   }
+
   render() {
+    console.log("getCategories", this.props);
     return (
       <div className="App">
         <ConnectedRouter history={this.props.history}>{routes}</ConnectedRouter>
@@ -32,10 +34,11 @@ const mapStateToProps = state => ({
   products: state.products.products
 });
 
-const mapDispatchToProps = {
+const mapDispatchToProps = dispatch => ({
   productRequest,
-  checkUserLogin
-};
+  checkUserLogin,
+  loadCategories: () => dispatch(Actions.getCategories.request())
+});
 
 export default connect(
   null,

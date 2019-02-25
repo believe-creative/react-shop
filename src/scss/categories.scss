@@ -1,3 +1,5 @@
+@import "variables.scss";
+
 .hero-section.categories {
   background-size: cover;
   background-position: center;
@@ -5,7 +7,7 @@
   position: relative;
   .category-list {
     position: relative;
-    padding: 50px 0;
+    padding: 50px 30px;
     color: white;
     .category-header {
       text-transform: capitalize;
@@ -22,4 +24,90 @@
   top: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.7);
+}
+
+.shop_brand_panel {
+  background-color: #ccc;
+  .shop_brand_block {
+    padding: 60px;
+  }
+}
+.hot_brand_panel {
+  padding: 0 0 30px 0;
+  .hot_block {
+    position: relative;
+    -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    background: $white;
+    padding: 25px;
+    text-align: center;
+    .hot {
+      position: absolute;
+      text-align: left;
+    }
+  }
+}
+.product_filter_panel {
+  .filter_block {
+    padding: 30px 0;
+  }
+  .filter_items {
+    position: relative;
+    -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    background: $white;
+    padding: 30px;
+  }
+  .filter_apply {
+    display: flex;
+    .red {
+      padding: 7px;
+      margin-left: 20px;
+    }
+  }
+}
+.items_block {
+  padding: 30px 0 0px 30px;
+  .hot_block {
+    position: relative;
+    -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    background: $white;
+    padding: 25px;
+    text-align: center;
+    .hot {
+      position: absolute;
+      text-align: left;
+    }
+  }
+  .item {
+    margin-bottom: 30px;
+  }
+}
+.category_subscribe {
+  padding: 15px;
+  .subscribe_for_shop {
+    display: flex;
+    align-items: center;
+    h3 {
+      float: left;
+      margin: 0;
+    }
+    .input_search {
+      padding-left: 30px;
+      float: right;
+    }
+    input {
+      margin-bottom: 0;
+      margin-right: 20px;
+    }
+  }
+}
+.sub_categories {
+  .category_name {
+    color: $white;
+  }
 }

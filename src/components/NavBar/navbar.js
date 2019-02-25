@@ -11,9 +11,7 @@ import { connect } from "react-redux";
 
 import "../../scss/navbar.scss";
 class NavBar extends Component {
-  componentDidMount() {
-    this.props.loadCategories();
-  }
+  componentDidMount() {}
   render() {
     console.log(this.props);
     return (
@@ -88,5 +86,5 @@ const mapStateToDispatch = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapStateToDispatch
+  null
 )(NavBar);

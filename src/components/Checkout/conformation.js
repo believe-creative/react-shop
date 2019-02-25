@@ -11,96 +11,86 @@ export default class Conformation extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-          <Row className="conformation_block">
-            <Col sm={6} md={12}>
-                <div class="form-content form-check">
-                  <div class="row">
-                    <div class="col-md-8">
-                      <div class="form-group">
-                        <label class=""><h3>
-                        {"Order summery"}
-                      </h3></label>
-                      <table className="order_summery">
+        <Row className="conformation_block">
+          <Col sm={6} md={12}>
+            <div className="form-content form-check">
+              <div className="row">
+                <div className="col-md-8">
+                  <div className="form-group">
+                    <label className="">
+                      <h3>{"Order summery"}</h3>
+                    </label>
+                    <table className="order_summery">
                       <tr>
-                      <th>Item</th>
-                      <th>Qty</th>
-                      <th>Price</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Price</th>
                       </tr>
                       <tr>
-                      <td>Green Tshit 2016 Men BK3569</td>
-                      <td>2</td>
-                      <td>$100</td>
+                        <td>Green Tshit 2016 Men BK3569</td>
+                        <td>2</td>
+                        <td>$100</td>
                       </tr>
                       <tr>
-                      <td>Green Tshit 2016 Men BK3569</td>
-                      <td>1</td>
-                      <td>$150</td>
+                        <td>Green Tshit 2016 Men BK3569</td>
+                        <td>1</td>
+                        <td>$150</td>
                       </tr>
                       <tr>
-                      <td>Green Tshit 2016 Men BK3569</td>
-                      <td>2</td>
-                      <td>$300</td>
+                        <td>Green Tshit 2016 Men BK3569</td>
+                        <td>2</td>
+                        <td>$300</td>
                       </tr>
                       <tr>
-                      <td>Green Tshit 2016 Men BK3569</td>
-                      <td>1</td>
-                      <td>$250</td>
+                        <td>Green Tshit 2016 Men BK3569</td>
+                        <td>1</td>
+                        <td>$250</td>
                       </tr>
-                      </table>
-                      </div>
+                    </table>
+                  </div>
+                </div>
+                <div className="col-md-4">
+                  <div className="form-group">
+                    <label className="">
+                      <h3>{"Delivery"}</h3>
+                    </label>
+                    <div className="address">
+                      <h3>{"Address"}</h3>
+                      <p>Office 64,8 Colmore Row</p>
+                      <p>Birmingham,England,42000</p>
                     </div>
-                    <div class="col-md-4">
-                      <div class="form-group">
-                        <label class=""><h3>{"Delivery"}</h3></label>
-                        <div className="address">
-                        <h3>{"Address"}</h3>
-                        <p>Office 64,8 Colmore Row</p>
-                        <p>Birmingham,England,42000</p>
-                        </div>
-                        <div className="delivery_opts">
-                        <h3>{"Delivery options"}</h3>
-                        <p>Standard delivery</p>
-                        <p>(free,2-3 days)</p>
-                        </div>
-                      </div>
+                    <div className="delivery_opts">
+                      <h3>{"Delivery options"}</h3>
+                      <p>Standard delivery</p>
+                      <p>(free,2-3 days)</p>
                     </div>
                   </div>
                 </div>
-                      <div class="form-group  delivery_options pt-4">
-                        <div class="row">
-                          <div class="col-md-4">
-                          <button type="button" class="btn btn-lg back">
-                            NewYear 8%
-                          </button>
-                          </div>
-                          <div class="col-md-2">
-                              <h3>
-                              {"Subtotal"}
-                            </h3>
-                              <h3>
-                                {"$368"}
-                              </h3>
-                          </div>
-                          <div class="col-md-2">
-                              <h3>
-                                {"Shipping"}
-                                </h3>
-                              <h3>
-                                {"free"}
-                              </h3>
-                          </div>
-                          <div class="col-md-2">
-                                <h3>
-                              {"Grandtotal"}
-                              </h3>
-                              <h3>
-                                {"$340"}
-                              </h3>
-                          </div>
-                        </div>
-                      </div>
-            </Col>
-          </Row>
+              </div>
+            </div>
+            <div className="form-group  delivery_options pt-4">
+              <div className="row">
+                <div className="col-md-4">
+                  <button type="button" className="btn btn-lg back">
+                    NewYear 8%
+                  </button>
+                </div>
+                <div className="col-md-2">
+                  <h3>{"Subtotal"}</h3>
+                  <h3>{"$368"}</h3>
+                </div>
+                <div className="col-md-2">
+                  <h3>{"Shipping"}</h3>
+                  <h3>{"free"}</h3>
+                </div>
+                <div className="col-md-2">
+                  <h3>{"Grandtotal"}</h3>
+                  <h3>{"$340"}</h3>
+                </div>
+              </div>
+            </div>
+          </Col>
+        </Row>
       </React.Fragment>
     );
   }
