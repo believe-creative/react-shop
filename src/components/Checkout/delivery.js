@@ -13,7 +13,7 @@ export default class Delivery extends Component {
       <React.Fragment>
         <Container>
           <Row className="delivery_block">
-            <Col sm={6} md={12}>
+            <Col md={12}>
               <div className="form-content">
                 <div className="row">
                   <div className="col-md-6">

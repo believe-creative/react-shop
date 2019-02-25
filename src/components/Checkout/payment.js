@@ -62,7 +62,7 @@ class Payment extends Component {
     return (
       <React.Fragment>
         <Row className="payment_block">
-          <Col sm={6} md={12}>
+          <Col md={12}>
             {/* <div className="paypal">
               <div className="paypal_img">
                 <img src={paypal} />
@@ -79,7 +79,7 @@ class Payment extends Component {
             </div> */}
           </Col>
 
-          <Col sm={6} md={12}>
+          <Col md={12}>
             <form onSubmit={this.handleSubmit}>
               <div className="form-content">
                 <div className="row">

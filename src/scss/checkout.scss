@@ -96,6 +96,16 @@
 .conformation_block {
   padding-top: 45px;
 }
+.delivery_block {
+  .form-group {
+    input {
+      min-width: auto;
+      @media (max-width: 767px) {
+        width: 100%;
+      }
+    }
+  }
+}
 
 table.order_summery {
   border-collapse: collapse;

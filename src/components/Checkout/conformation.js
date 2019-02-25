@@ -12,7 +12,7 @@ export default class Conformation extends Component {
     return (
       <React.Fragment>
         <Row className="conformation_block">
-          <Col sm={6} md={12}>
+          <Col md={12}>
             <div className="form-content form-check">
               <div className="row">
                 <div className="col-md-8">
