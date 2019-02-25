@@ -30,16 +30,22 @@ class Product extends Component {
   }
   render() {
     return (
-      <div class="col-md-4 item">
-        <div class="hot_block">
+      <div className="col-md-4 item">
+        <div className="hot_block">
           <img
             src={require(`../../images/product_images/${
               this.props.product.thumbnail
             }`)}
           />
-          <h3 class="black">{this.props.product.name}</h3>
-          <p class="red">{"$" + this.props.product.price}</p>
-          <button onClick={this.addtoCart.bind(this)}>Add to cart</button>
+          <h3 className="black">{this.props.product.name}</h3>
+          <p className="red">{"$" + this.props.product.price}</p>
+          <button className="btn btn-sm" onClick={this.addtoCart.bind(this)}>
+            Add to cart
+          </button>
+          {}
+          <span className="green">
+            <i class="fas fa-check" />
+          </span>
         </div>
       </div>
     );

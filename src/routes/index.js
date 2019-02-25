@@ -5,7 +5,7 @@ import Home from "../containers/Home/home";
 import Footer from "../components/Footer/footer";
 import Category from "../containers/Category/category";
 import Checkout from "../components/Checkout/checkout";
-
+import Items from "../components/Items/items";
 import Login from "../containers/Login/login";
 import UserBlock from "../components/UserBlock/userblock";
 
@@ -16,6 +16,7 @@ const routes = (
     <div id="main">
       <Switch>
         <Route exact path="/" component={Home} />
+        <Route exact path="/cart" component={Items} />
         <Route exact path="/checkout" component={Checkout} />
         <Route exact path="/categories/:category" component={Category} />
         <Route exact path="/login" component={Login} />
