@@ -13,21 +13,21 @@ export default class Cart extends Component {
   render() {
     return (
       <Container>
-        <div id="main" class="mt-5 mb-5">
-          <div class="container">
-            <div class="product-block bg-white">
-              <div class="row">
-                <div class="col-md-6 item-left-block">
-                  <div class="top-image text-center">
+        <div id="main" className="mt-5 mb-5">
+          <div className="container">
+            <div className="product-block bg-white">
+              <div className="row">
+                <div className="col-md-6 item-left-block">
+                  <div className="top-image text-center">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Image"
                       title="Image"
                     />
                   </div>
-                  <div class="colors-selection-block">
-                    <ul class="list-unstyled">
-                      <li class="active">
+                  <div className="colors-selection-block">
+                    <ul className="list-unstyled">
+                      <li className="active">
                         <a href="#">
                           <img
                             src="images/adoration-of-the-kings.gif"
@@ -57,9 +57,9 @@ export default class Cart extends Component {
                     </ul>
                   </div>
                 </div>
-                <div class="col-md-6 item-right-block">
-                  <div class="breadcrumbs">
-                    <ul class="list-unstyled">
+                <div className="col-md-6 item-right-block">
+                  <div className="breadcrumbs">
+                    <ul className="list-unstyled">
                       <li>
                         <a href="#">Home</a>
                       </li>
@@ -70,14 +70,14 @@ export default class Cart extends Component {
                         <a href="#">Men's Clothing &amp; Accessories</a>
                       </li>
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="starts-block pt-3 pb-3">
-                    <ul class="list-unstyled">
-                      <li class="active">
+                  <div className="starts-block pt-3 pb-3">
+                    <ul className="list-unstyled">
+                      <li className="active">
                         <a href="">&#9733;</a>
                       </li>
-                      <li class="active">
+                      <li className="active">
                         <a href="">&#9733;</a>
                       </li>
                       <li>
@@ -90,35 +90,35 @@ export default class Cart extends Component {
                         <a href="">&#9733;</a>
                       </li>
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="item-title">
+                  <div className="item-title">
                     <h2>Super Oversized T-Shirt With Raw Sleeves In Brown</h2>
                   </div>
-                  <div class="amount-block pt-3 pb-3">&#163;13.99</div>
-                  <div class="d-md-none text-center pt-3 pb-3">
+                  <div className="amount-block pt-3 pb-3">&#163;13.99</div>
+                  <div className="d-md-none text-center pt-3 pb-3">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Image"
                       title="Image"
                     />
                   </div>
-                  <div class="color-codes pt-3 pb-2">
-                    <h3 class="gray-dark pb-3">Color</h3>
-                    <ul class="list-unstyled">
-                      <li class="bg-blue" />
-                      <li class="bg-teal" />
-                      <li class="active bg-red" />
-                      <li class="bg-orange" />
-                      <li class="bg-yellow-dark" />
-                      <li class="bg-green" />
-                      <li class="bg-purple" />
+                  <div className="color-codes pt-3 pb-2">
+                    <h3 className="gray-dark pb-3">Color</h3>
+                    <ul className="list-unstyled">
+                      <li className="bg-blue" />
+                      <li className="bg-teal" />
+                      <li className="active bg-red" />
+                      <li className="bg-orange" />
+                      <li className="bg-yellow-dark" />
+                      <li className="bg-green" />
+                      <li className="bg-purple" />
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="button-sizes">
-                    <h3 class="gray-dark pt-3 pb-2">Size</h3>
-                    <ul class="list-unstyled">
+                  <div className="button-sizes">
+                    <h3 className="gray-dark pt-3 pb-2">Size</h3>
+                    <ul className="list-unstyled">
                       <li>
                         <a href="">XS</a>
                       </li>
@@ -141,26 +141,26 @@ export default class Cart extends Component {
                         <a href="">XXXL</a>
                       </li>
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="quantity-block">
-                    <h3 class="gray-dark pt-3 pb-2">Quantity</h3>
-                    <ul class="list-unstyled">
+                  <div className="quantity-block">
+                    <h3 className="gray-dark pt-3 pb-2">Quantity</h3>
+                    <ul className="list-unstyled">
                       <li>
                         <a href="#">&#8722;</a>
                       </li>
-                      <li class="number-block">2</li>
+                      <li className="number-block">2</li>
                       <li>
                         <a href="#">&#43;</a>
                       </li>
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="pt-5 btn-block">
-                    <button type="button" class="btn btn-lg">
+                  <div className="pt-5 btn-block">
+                    <button type="button" className="btn btn-lg">
                       Add to cart
                     </button>
-                    <div class="wish-list">
+                    <div className="wish-list">
                       <a href="#">
                         <span>&#9825;</span> Add to wish list
                       </a>
@@ -170,20 +170,20 @@ export default class Cart extends Component {
               </div>
             </div>
           </div>
-          <div class="container">
-            <div class="review-block bg-gray pt-5 pb-5">
-              <div class="row">
-                <div class="col-md-10 offset-md-1">
-                  <div class="review-top-block">
-                    <h2 class="pb-4">Product reviews</h2>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="starts-block pb-2">
-                          <ul class="list-unstyled">
-                            <li class="active">
+          <div className="container">
+            <div className="review-block bg-gray pt-5 pb-5">
+              <div className="row">
+                <div className="col-md-10 offset-md-1">
+                  <div className="review-top-block">
+                    <h2 className="pb-4">Product reviews</h2>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <div className="starts-block pb-2">
+                          <ul className="list-unstyled">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
                             <li>
@@ -196,45 +196,48 @@ export default class Cart extends Component {
                               <a href="">&#9733;</a>
                             </li>
                           </ul>
-                          <div class="clearfix" />
+                          <div className="clearfix" />
                         </div>
-                        <div class="author-block">
+                        <div className="author-block">
                           <h6>
                             <strong>Pablo Permins</strong>
                           </h6>
                           <span>one hour ago</span>
                         </div>
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <p>
                           Nulla in metus vitae leo lobortis faucibus ac sed mi.
                           Sed elit nisl, vehicula eu nisi id, porttitor auctor
                           ipsum.
                         </p>
-                        <ul class="list-unstyled comment-block">
+                        <ul className="list-unstyled comment-block">
                           <li>
                             <span>&#9825;</span> 113
                           </li>
                           <li>
                             <span>
-                              <i class="fa fa-comment-o" aria-hidden="true" />
+                              <i
+                                className="fa fa-comment-o"
+                                aria-hidden="true"
+                              />
                             </span>{" "}
                             6
                           </li>
                         </ul>
-                        <div class="clearfix" />
+                        <div className="clearfix" />
                       </div>
                     </div>
                   </div>
-                  <hr class="mt-5 mb-5" />
-                  <div class="review-bot-block">
-                    <h2 class="pb-4">Add a review</h2>
+                  <hr className="mt-5 mb-5" />
+                  <div className="review-bot-block">
+                    <h2 className="pb-4">Add a review</h2>
                     <form action="#" method="post">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="nickname">Choose a nickname</label>
                         <input type="text" />
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="review">Your review</label>
                         <textarea />
                         <span>
@@ -242,17 +245,17 @@ export default class Cart extends Component {
                           <a href="#">Full review guidelines</a>
                         </span>
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="review">Overall rating</label>
-                        <div class="starts-block pb-2">
-                          <ul class="list-unstyled">
-                            <li class="active">
+                        <div className="starts-block pb-2">
+                          <ul className="list-unstyled">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
                             <li>
@@ -262,12 +265,12 @@ export default class Cart extends Component {
                               <a href="">&#9733;</a>
                             </li>
                           </ul>
-                          <div class="clearfix" />
+                          <div className="clearfix" />
                         </div>
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label />
-                        <button type="submit" class="btn btn-lg mb-2">
+                        <button type="submit" className="btn btn-lg mb-2">
                           Submit
                         </button>
                       </div>
@@ -277,58 +280,58 @@ export default class Cart extends Component {
               </div>
             </div>
           </div>
-          <div class="container related-block mt-5">
-            <h2 class="pb-4">You may also like</h2>
-            <div class="row">
-              <div class="col-sm-6 col-lg-3">
+          <div className="container related-block mt-5">
+            <h2 className="pb-4">You may also like</h2>
+            <div className="row">
+              <div className="col-sm-6 col-lg-3">
                 <a href="#">
-                  <div class="product-image-block bg-white">
+                  <div className="product-image-block bg-white">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Iamge"
                       title="Image"
                     />
-                    <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                    <div class="price pt-3">&#163;14.99</div>
+                    <h3 className="pt-3">New Look T-Shirt In Gradient Fade</h3>
+                    <div className="price pt-3">&#163;14.99</div>
                   </div>
                 </a>
               </div>
-              <div class="col-sm-6 col-lg-3">
+              <div className="col-sm-6 col-lg-3">
                 <a href="#">
-                  <div class="product-image-block bg-white">
+                  <div className="product-image-block bg-white">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Iamge"
                       title="Image"
                     />
-                    <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                    <div class="price pt-3">&#163;14.99</div>
+                    <h3 className="pt-3">New Look T-Shirt In Gradient Fade</h3>
+                    <div className="price pt-3">&#163;14.99</div>
                   </div>
                 </a>
               </div>
-              <div class="col-sm-6 col-lg-3">
+              <div className="col-sm-6 col-lg-3">
                 <a href="#">
-                  <div class="product-image-block bg-white">
+                  <div className="product-image-block bg-white">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Iamge"
                       title="Image"
                     />
-                    <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                    <div class="price pt-3">&#163;14.99</div>
+                    <h3 className="pt-3">New Look T-Shirt In Gradient Fade</h3>
+                    <div className="price pt-3">&#163;14.99</div>
                   </div>
                 </a>
               </div>
-              <div class="col-sm-6 col-lg-3">
+              <div className="col-sm-6 col-lg-3">
                 <a href="#">
-                  <div class="product-image-block bg-white">
+                  <div className="product-image-block bg-white">
                     <img
                       src="images/adoration-of-the-kings.gif"
                       alt="Iamge"
                       title="Image"
                     />
-                    <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                    <div class="price pt-3">&#163;14.99</div>
+                    <h3 className="pt-3">New Look T-Shirt In Gradient Fade</h3>
+                    <div className="price pt-3">&#163;14.99</div>
                   </div>
                 </a>
               </div>

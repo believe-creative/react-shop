@@ -37,10 +37,12 @@ export default (state = intialState, action) => {
       };
     case ActionTypes.SUBCATEGORIES.SUCCESS:
       let categoryName = getCategoryName(state.categories, action.departmentId);
+      console.log(state.subCategories, "state sub category");
       let subCategories = state.subCategories
-        ? JSON.parse(JSON.stringify(state.subCategories))
+        ? Object.assign({}, state.subCategories)
         : [];
       subCategories[categoryName.toLowerCase()] = action.response;
+      console.log("subCategories REDUCERS", subCategories);
       return {
         ...state,
         subCategories

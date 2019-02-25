@@ -2,17 +2,39 @@ import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
-
+import bag from "../../images/bag.png";
 import "../../scss/categories.scss";
 
 class Category extends Component {
+  componentDidMount() {
+    this.checkAndLoadSubCategories(this.props);
+  }
   componentWillReceiveProps(props) {
-    //this.checkAndLoadSubCategories(categoryName);
-    const categoryName = this.props.match.params.category;
-    this.checkAndLoadSubCategories(categoryName, props);
+    this.checkAndLoadSubCategories(props);
+    const categoryName = props.match.params.category;
+    const getsubCategories = props.subCategories
+      ? props.subCategories[categoryName]
+      : [];
+    console.log(
+      "category componentWillRecieveProps",
+      categoryName,
+      props.subCategories,
+      getsubCategories
+    );
   }
   render() {
     const categoryName = this.props.match.params.category;
+    const getsubCategories = this.props.subCategories
+      ? this.props.subCategories[categoryName]
+      : [];
+
+    console.log(
+      "get sub categories:",
+      this.props.subCategories,
+      getsubCategories
+    );
+    console.log("get categoryName:", categoryName);
+
     let backgroundImageURL = require(`../../images/category_${categoryName}.jpg`);
     let heroStyle = {
       backgroundImage: `url(${backgroundImageURL})`
@@ -25,29 +47,100 @@ class Category extends Component {
               <h1 className="category-header">
                 {this.props.match.params.category}
               </h1>
+              <ul className="sub_categories list-unstyled">
+                {getsubCategories
+                  ? getsubCategories.map((category, index) => {
+                      return (
+                        <li>
+                          <h2 className="category_name">{category.name}</h2>
+                        </li>
+                      );
+                    })
+                  : ""}
+              </ul>
             </div>
           </div>
         </section>
-        <section>
-          {<ProductList products={this.props.categoryProducts} />}
-        </section>
+
+        <div className="container">
+          <div className="product_filter_panel">
+            <div className="row">
+              <div className="col-md-12 items_block">
+                <section>
+                  {<ProductList products={this.props.categoryProducts} />}
+                </section>
+              </div>
+            </div>
+          </div>
+
+          <div className="shop_brand_panel">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="shop_brand_block">
+                  <h1 className="white">Converse</h1>
+                  <h2 className="white">
+                    Explore styles tough enough to handle all your workouts
+                  </h2>
+                  <p>
+                    <a href="#" className="btn btn-lg">
+                      Shop Now
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="subscribe_panel category_subscribe">
+          <div className="container">
+            <div className="row">
+              <div className="col-md-12 subscribe_for_shop">
+                <h3>SUBSCRIBE FOR SHOP NEWS,UPDATES AND SPECIAL OFFERS</h3>
+                <div className="input_search">
+                  {" "}
+                  <form action="#" method="post">
+                    {" "}
+                    <i className="fas fa-envelope" />
+                    <input
+                      type="text"
+                      value=""
+                      placeholder="your email here"
+                      className="search"
+                    />
+                    <a href="#" className="btn btn-md">
+                      Subscribe
+                    </a>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
-  checkAndLoadSubCategories(categoryName, props) {
-    var categoryNameLoawerCase = categoryName.toLowerCase();
+  checkAndLoadSubCategories(props) {
+    const categoryName = props.match.params.category;
+    var categoryNameLowerCase = categoryName.toLowerCase();
+
     if (props.categories) {
       var matchedDepartments = props.categories.filter(
-        category => category.name.toLowerCase() == categoryNameLoawerCase
+        category => category.name.toLowerCase() == categoryNameLowerCase
       );
+      console.log("category Name", matchedDepartments);
       var departmentId;
       if (matchedDepartments.length > 0) {
         departmentId = matchedDepartments[0].department_id;
       }
-      if (!props.subCategories) {
+      console.log("departmentId", departmentId);
+
+      if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
+        console.log("departmentId", props.subCategories);
         props.loadSubCategories(departmentId);
       }
+
       if (!props.categoryProducts) {
+        console.log("this.props.categories", props);
         props.loadCategoryProducts({
           departmentId: departmentId,
           descriptionLength: 120
