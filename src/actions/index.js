@@ -12,6 +12,8 @@ function createRequestTypes(base) {
 //Action Types
 export const PRODUCTS = createRequestTypes("PRODUCTS");
 export const PRODUCT = createRequestTypes("PRODUCT");
+export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
+export const GETCARTPRODUCTS = createRequestTypes("GETCARTPRODUCTS");
 export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
@@ -38,6 +40,19 @@ export const products = {
   success: (category, response) =>
     action(PRODUCTS[SUCCESS], { category, response }),
   failure: (category, error) => action(PRODUCTS[FAILURE], { category, error })
+};
+
+export const AddToCart = {
+  request: data => action(ADDPRODUCTTOCART[REQUEST], {data}),
+  success: (data, response) =>
+    action(ADDPRODUCTTOCART[SUCCESS], { data, response }),
+  failure: (data, error) => action(ADDPRODUCTTOCART[FAILURE], {data, error })
+};
+export const getCartProducts = {
+  request: inCartId => action(GETCARTPRODUCTS[REQUEST], {inCartId}),
+  success: (inCartId, response) =>
+    action(GETCARTPRODUCTS[SUCCESS], { inCartId, response }),
+  failure: (inCartId, error) => action(GETCARTPRODUCTS[FAILURE], {inCartId, error })
 };
 
 export const checkUserLogin = {

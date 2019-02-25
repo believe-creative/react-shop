@@ -27,6 +27,7 @@
     "passport-google-oauth": "^1.0.0",
     "sequelize": "^4.42.0",
     "socket.io": "^2.2.0",
-    "stripe": "^6.25.1"
+    "stripe": "^6.25.1",
+    "unique-string": "^1.0.0"
   }
 }

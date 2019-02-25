@@ -9,6 +9,8 @@ const {
   checkUserLogin,
   getCategories,
   getSubCategories,
+  AddToCart,
+  getCartProducts,
   getCategoryProducts
 } = actions;
 
@@ -26,6 +28,8 @@ function* fetchEntity(entity, apiFn, id, url) {
 export const fetchProduct = fetchEntity.bind(null, product, api.getProduct);
 export const fetchProducts = fetchEntity.bind(null, products, api.getProducts);
 export const checkUser = fetchEntity.bind(null, checkUserLogin, api.checkUser);
+export const addProductToCart = fetchEntity.bind(null, AddToCart, api.AddToCart);
+export const getProductsfromCart = fetchEntity.bind(null, getCartProducts, api.getCartProducts);
 export const fetchCategories = fetchEntity.bind(
   null,
   getCategories,
@@ -41,6 +45,17 @@ export const fetchCategoryProducts = fetchEntity.bind(
   getCategoryProducts,
   api.getCategoryProducts
 );
+
+
+function* loadUpadtedCart(action) {
+  console.log("load dsfdfdsfdfsdf fff");
+  yield call(addProductToCart, action.data);
+}
+
+function* loadProductsfromCart(action) {
+  console.log("load dsfdfdsfdfsdf fff");
+  yield call(getProductsfromCart, action.inCartId);
+}
 
 function* loadProducts(action) {
   console.log("load products", action.category);
@@ -88,10 +103,19 @@ function* watchLoadCategoryProducts() {
   yield takeLatest(actions.CATEGORYPRODUCTS.REQUEST, loadCategoryProducts);
 }
 
+function* watchloadUpadtedCart() {
+  yield takeLatest(actions.ADDPRODUCTTOCART.REQUEST, loadUpadtedCart);
+}
+function* watchloadProductsfromCart() {
+  yield takeLatest(actions.GETCARTPRODUCTS.REQUEST, loadProductsfromCart);
+}
+
 export default function*() {
   yield fork(watchLoadProducts);
   yield fork(watchLoadUser);
   yield fork(watchLoadCategories);
   yield fork(watchLoadSubCategories);
   yield fork(watchLoadCategoryProducts);
+  yield fork(watchloadUpadtedCart);
+  yield fork(watchloadProductsfromCart);
 }

@@ -32,8 +32,17 @@ function getParams(data) {
 
 export const getProducts = category => callAPI(`products/`);
 export const getProduct = productId => callAPI(`product/${productId}`);
-export const checkUser = token =>
-  callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
+export const AddToCart = (data) =>callAPI(`add-product-to-cart/`,{
+  "Content-Type": "application/x-www-form-urlencoded",
+  Accept: "application/json; charset=utf-8"
+},getParams({inCartId:data.inCartId,inProductId:data.inProductId,inAttributes:data.inAttributes}) );
+
+export const getCartProducts = (inCartId) =>callAPI(`get-shopping-cart-products/`,{
+  "Content-Type": "application/x-www-form-urlencoded",
+  Accept: "application/json; charset=utf-8"
+},getParams({inCartId:inCartId}) );
+
+export const checkUser = token =>callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
 export const getDepartments = () => callAPI("get-departments/");
 export const getSubCategories = departmentId =>
   callAPI(

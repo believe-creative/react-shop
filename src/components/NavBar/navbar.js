@@ -11,9 +11,18 @@ import { connect } from "react-redux";
 
 import "../../scss/navbar.scss";
 class NavBar extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+      let cart=localStorage.getItem("react-shop-cart");
+      if(cart)
+      {
+         cart=JSON.parse(cart);
+         this.props.getCartProducts(cart.inCartId);
+      }
+  }
   render() {
-    console.log(this.props);
+    let {cart}=this.props;
+    if(!cart)
+      cart={count:0};
     return (
       <header className="header bg-white">
         <Container className="head-inner">
@@ -61,7 +70,7 @@ class NavBar extends Component {
               </li>
               <li>
                 <a href="/cart">
-                  <Cart cartItems={"6"} />
+                  <Cart cartItems={cart.count} />
                 </a>
               </li>
             </ul>
@@ -76,15 +85,16 @@ class NavBar extends Component {
 const mapStateToProps = state => {
   console.log(state.get("products").categories);
   return {
-    categories: state.get("products").categories
+    categories: state.get("products").categories,
+    cart:state.get("products").cart
   };
 };
 
 const mapStateToDispatch = dispatch => ({
-  loadCategories: () => dispatch(Actions.getCategories.request())
+  getCartProducts: () => dispatch(Actions.getCartProducts.request())
 });
 
 export default connect(
   mapStateToProps,
-  null
+  mapStateToDispatch
 )(NavBar);

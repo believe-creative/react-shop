@@ -10,6 +10,7 @@ function getCategoryName(categories, id) {
 }
 
 export default (state = intialState, action) => {
+  let cart=null;
   switch (action.type) {
     case ActionTypes.PRODUCTS.REQUEST:
       console.log("product request action");
@@ -34,6 +35,43 @@ export default (state = intialState, action) => {
       return {
         ...state,
         categories: action.response
+      };
+      case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
+      console.log("product request success", action);
+      cart=localStorage.getItem("react-shop-cart");
+      if(cart)
+      {
+        cart=JSON.parse(cart);
+      }
+      else
+      {
+        cart={inCartId:null,count:0};
+      }
+      cart.inCartId=action.response.inCartId;
+      cart.count=cart.count+1;
+      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      return {
+        ...state,
+        isLoading: false,
+        cart: cart
+      };
+    case ActionTypes.GETCARTPRODUCTS.SUCCESS:
+      console.log("product request success", action);
+      cart=localStorage.getItem("react-shop-cart");
+      if(cart)
+      {
+        cart=JSON.parse(cart);
+      }
+      else
+      {
+        cart={inCartId:null,count:0,products:[]};
+      }
+      cart.products=action.response;
+      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      return {
+        ...state,
+        isLoading: false,
+        cart: cart
       };
     case ActionTypes.SUBCATEGORIES.SUCCESS:
       let categoryName = getCategoryName(state.categories, action.departmentId);

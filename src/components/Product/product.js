@@ -38,7 +38,7 @@ class Product extends Component {
             }`)}
           />
           <h3 class="black">{this.props.product.name}</h3>
-          <p class="red">{"$" + this.props.product.name}</p>
+          <p class="red">{"$" + this.props.product.price}</p>
           <button onClick={this.addtoCart.bind(this)}>Add to cart</button>
         </div>
       </div>

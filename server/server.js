@@ -18,22 +18,24 @@ const {checklogin} = require('./lib/auth.controller')
 const {checkToken} = require('./lib/middleware')
 const {payment} = require('./lib/payment.controller')
 const {cryptPassword,comparePassword} = require('./lib/pgen')
+const uniqueString = require('unique-string');
 
 const socketio = require('socket.io')
 var passport = require('passport');
 SESSION_SECRET="justfortesting"
 CLIENT_ORIGIN="http://localhost:3000"
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
-  };
+// const options = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
+//   };
 
-export const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
-  host: 'localhost',
+const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
+  host: '192.168.0.135',
   dialect: 'mysql',
   port:3306
 });
+exports.sequelize=sequelize
 const port = 5000
 var app = express();
 app.use(require('morgan')('combined'));
@@ -42,7 +44,11 @@ app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: SESSION_SECRET, resave: true, saveUninitialized: true }));
 
-const httpServer = https.createServer(options, app).listen(5000,() => {
+// const httpServer = https.createServer(options, app).listen(5000,() => {
+//   console.log(`Running on https://reactshop.amoha.co:${port}`)
+// });
+
+const httpServer = http.createServer(app).listen(5000,() => {
   console.log(`Running on https://reactshop.amoha.co:${port}`)
 });
 
@@ -75,19 +81,15 @@ app.get('/loginsuccess', function (req, res) {
 });
 
 app.post('/api/login',jsonParser, function (req, res) {
-  console.log(req.body);
     let email=req.body.email;
     let pwd=req.body.pwd;
     sequelize
     .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:email}}).then(
       data=>{ 
-        console.log(data);
         if(data.length>0){
           comparePassword(pwd,data[0].password,function(error,result){
-            console.log("came back",error,result);
             if(error)
             {
-              console.log(error);
               return res.json({status:"error",msg:"Incorrect password."});
             }
             else if(result==false)
@@ -98,7 +100,6 @@ app.post('/api/login',jsonParser, function (req, res) {
               {
                 sequelize
                   .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:data[0].customer_id}}).then(function(totaldata){
-                    console.log(totaldata);
                     let user={name:totaldata[0].name,email:email};
                     let token = jwt.sign({email:email,user: user},
                       'thisisasecret',
@@ -429,9 +430,11 @@ app.post('/api/add-product-to-cart',(req,res)=>{
   let inCartId=req.body.inCartId;
   let inProductId=req.body.inProductId;
   let inAttributes=req.body.inAttributes;
+  if(!inCartId || inCartId=="null" || inCartId==null)
+    inCartId=uniqueString();
   sequelize
     .query('CALL shopping_cart_add_product(:inCartId,:inProductId,:inAttributes)',{replacements:{inCartId:inCartId,inProductId:inProductId, inAttributes:inAttributes}}).then(
-      add_product_to_cart=>res.json(add_product_to_cart));
+      add_product_to_cart=>res.json({inCartId:inCartId}));
 });
 /*
 * To get all products from Cart.
@@ -454,16 +457,6 @@ app.post('/api/save-product-for-later',(req,res)=>{
   sequelize
     .query('CALL shopping_cart_save_product_for_later(:inItemId)',{replacements:{inItemId:inItemId}}).then(
       product_for_later=>res.json(product_for_later));
-});
-/*
-* /api/get-saved-products.
-* Parameters{inCartId}
-*/
-app.post('/api/get-saved-products',(req,res)=>{
-  let inCartId=req.body.inCartId;
-  sequelize
-    .query('CALL shopping_cart_save_product_for_later(:inCartId)',{replacements:{inCartId:inCartId}}).then(
-      save_product_for_later=>res.json(save_product_for_later));
 });
 /*
 * To get saved cart products.
@@ -602,6 +595,20 @@ app.post('/api/get-order-shipping-info',(req,res)=>{
       shipping_info=>res.json(shipping_info));
 });
 
+
+/*
+* To create a cart add a product to it.
+* Parameters{inItemId}
+*/
+app.post('/api/add-product-to-empty-cart',(req,res)=>{
+  let inItemId=req.body.inItemId;
+  sequelize
+    .query('CALL shopping_cart_move_product_to_cart(:inItemId)',{replacements:{inItemId:inItemId}}).then(
+      cartId=>{
+        console.log(cartId);
+        res.json(cartId);
+      });
+});
 
 
 
