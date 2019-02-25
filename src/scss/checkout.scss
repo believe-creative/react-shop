@@ -4,14 +4,26 @@
   .checkout_block {
     padding: 60px;
     margin-top: 60px;
+    @media (max-width: 767px) {
+      padding: 15px;
+    }
+    .progress-txt {
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
   }
   background: #fff;
-
   position: relative;
   -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
   background: $white;
+  .success-block {
+    @media (max-width: 767px) {
+      padding: 15px;
+    }
+  }
   ul {
     padding-top: 20px;
     li {
@@ -28,8 +40,17 @@
       background: #b4b4b4;
       left: 0px;
       top: 6px;
-      width: 218px;
+      width: 28%;
       height: 8px;
+      @media (max-width: 992px) {
+        width: 26%;
+      }
+      @media (max-width: 767px) {
+        width: 24.5%;
+      }
+      @media (max-width: 480px) {
+        width: 18%;
+      }
     }
     .dot {
       background: #b4b4b4;

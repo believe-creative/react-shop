@@ -8,6 +8,8 @@ import "../../scss/checkout.scss";
 import Delivery from "./delivery";
 import Conformation from "./conformation";
 import Payment from "./payment";
+import Image from "react-bootstrap/Image";
+import successimage from "../../images/success-image.png";
 import {
   StripeProvider,
   Elements,
@@ -25,7 +27,7 @@ export default class Checkout extends Component {
           <div className="checkout_information">
             <form>
               <Row className="checkout_block">
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <h2>Checkout</h2>
                   <ul className="list-unstyled color-codes">
                     <li className="bg-red dot  active_next" />
@@ -37,8 +39,8 @@ export default class Checkout extends Component {
                     <li className="bg-red dot" />
                   </ul>
                 </Col>
-                <Col sm={6} md={12}>
-                  <ul className="list-unstyled">
+                <Col md={12}>
+                  <ul className="list-unstyled progress-txt">
                     <li>
                       <a href="#">
                         <h3>Delivery</h3>
@@ -62,15 +64,15 @@ export default class Checkout extends Component {
                   </ul>
                 </Col>
 
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <Delivery />
                 </Col>
               </Row>
               <div className="checkout_next">
-                <button type="button" className="btn btn-lg btn-white back">
+                <button type="button" className="btn btn-md btn-white back">
                   Back
                 </button>
-                <button type="button" className="btn btn-lg next_step">
+                <button type="button" className="btn btn-md next_step">
                   Next Step
                 </button>
               </div>
@@ -79,7 +81,7 @@ export default class Checkout extends Component {
           <div className="checkout_information">
             <form>
               <Row className="checkout_block">
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <h2>Checkout</h2>
                   <ul className="list-unstyled color-codes">
                     <li className="bg-red dot  active_next" />
@@ -91,8 +93,8 @@ export default class Checkout extends Component {
                     <li className="bg-red dot" />
                   </ul>
                 </Col>
-                <Col sm={6} md={12}>
-                  <ul className="list-unstyled">
+                <Col md={12}>
+                  <ul className="list-unstyled progress-txt">
                     <li>
                       <a href="#">
                         <h3>Delivery</h3>
@@ -116,15 +118,15 @@ export default class Checkout extends Component {
                   </ul>
                 </Col>
 
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <Conformation />
                 </Col>
               </Row>
               <div className="checkout_next">
-                <button type="button" className="btn btn-lg btn-white back">
+                <button type="button" className="btn btn-md btn-white back">
                   Back
                 </button>
-                <button type="button" className="btn btn-lg next_step">
+                <button type="button" className="btn btn-md next_step">
                   Next Step
                 </button>
               </div>
@@ -133,7 +135,7 @@ export default class Checkout extends Component {
           <div className="checkout_information">
             <form>
               <Row className="checkout_block">
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <h2>Checkout</h2>
                   <ul className="list-unstyled color-codes">
                     <li className="bg-red dot  active_next" />
@@ -145,8 +147,8 @@ export default class Checkout extends Component {
                     <li className="bg-red dot" />
                   </ul>
                 </Col>
-                <Col sm={6} md={12}>
-                  <ul className="list-unstyled">
+                <Col md={12}>
+                  <ul className="list-unstyled progress-txt">
                     <li>
                       <a href="#">
                         <h3>Delivery</h3>
@@ -170,7 +172,7 @@ export default class Checkout extends Component {
                   </ul>
                 </Col>
 
-                <Col sm={6} md={12}>
+                <Col md={12}>
                   <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
                     <Elements>
                       <Payment />
@@ -179,13 +181,78 @@ export default class Checkout extends Component {
                 </Col>
               </Row>
               <div className="checkout_next">
-                <button type="button" className="btn btn-lg btn-white back">
+                <button type="button" className="btn btn-md btn-white back">
                   Back
                 </button>
-                <button type="button" className="btn btn-lg next_step">
-                  Finish
+                <button type="button" className="btn btn-md next_step">
+                  Pay
                 </button>
               </div>
+            </form>
+          </div>
+          <div className="checkout_information mb-5">
+            <form>
+              <Row className="checkout_block">
+                <Col md={12}>
+                  <h2>Checkout</h2>
+                  <ul className="list-unstyled color-codes">
+                    <li className="bg-red dot  active_next" />
+                    <li className="bar active_next" />
+                    <li className="bg-red dot active_next" />
+                    <li className="bar active_next" />
+                    <li className="bg-red dot active_next" />
+                    <li className="bar active_next" />
+                    <li className="bg-red dot active_next" />
+                  </ul>
+                </Col>
+                <Col md={12}>
+                  <ul className="list-unstyled progress-txt">
+                    <li>
+                      <a href="#">
+                        <h3>Delivery</h3>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <h3>Conformation</h3>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <h3>Payment</h3>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="#">
+                        <h3>Finish</h3>
+                      </a>
+                    </li>
+                  </ul>
+                </Col>
+              </Row>
+              <Row className="success-block">
+                <Col
+                  md={6}
+                  lg={4}
+                  className="offset-md-3 offset-lg-4 pb-5 text-center"
+                >
+                  <div>
+                    <Image
+                      src={successimage}
+                      className="justify-content-start nav-logo"
+                      fluid
+                    />
+                    <h1>Success!</h1>
+                    <p>
+                      Your items will be shipped shortly, you will get email
+                      with details.
+                    </p>
+                  </div>
+                  <button type="button" className="btn btn-md next_step mt-4">
+                    Back to shop
+                  </button>
+                </Col>
+              </Row>
             </form>
           </div>
         </Container>
