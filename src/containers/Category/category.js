@@ -17,9 +17,8 @@ class Category extends Component {
       : [];
     console.log(
       "category componentWillRecieveProps",
-      categoryName,
-      props.subCategories,
-      getsubCategories
+
+      props
     );
   }
   render() {
@@ -67,7 +66,15 @@ class Category extends Component {
             <div className="row">
               <div className="col-md-12 items_block">
                 <section>
-                  {<ProductList products={this.props.categoryProducts} />}
+                  {
+                    <ProductList
+                      products={
+                        this.props.categoryProducts
+                          ? this.props.categoryProducts[categoryName]
+                          : []
+                      }
+                    />
+                  }
                 </section>
               </div>
             </div>
@@ -132,15 +139,17 @@ class Category extends Component {
       if (matchedDepartments.length > 0) {
         departmentId = matchedDepartments[0].department_id;
       }
-      console.log("departmentId", departmentId);
 
       if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
-        console.log("departmentId", props.subCategories);
         props.loadSubCategories(departmentId);
       }
-
-      if (!props.categoryProducts) {
+      console.log("departmentId", departmentId);
+      if (
+        !props.categoryProducts ||
+        !props.categoryProducts[categoryNameLowerCase]
+      ) {
         console.log("this.props.categories", props);
+        console.log("departmentId", departmentId);
         props.loadCategoryProducts({
           departmentId: departmentId,
           descriptionLength: 120

@@ -48,13 +48,17 @@ export default (state = intialState, action) => {
         subCategories
       };
     case ActionTypes.CATEGORYPRODUCTS.SUCCESS:
-      console.log(action);
+      console.log("CATEGORYPRODUCTS", action);
       categoryName = getCategoryName(
         state.categories,
         action.data.departmentId
       );
-      let categoryProducts = state.categoryProducts || [];
-      categoryProducts = [...categoryProducts, ...action.response];
+
+      let categoryProducts = state.categoryProducts
+        ? Object.assign({}, state.categoryProducts)
+        : [];
+      console.log("CATEGORYPRODUCTS", categoryName, categoryProducts);
+      categoryProducts[categoryName.toLowerCase()] = action.response;
       console.log(categoryProducts, "cate products");
       return {
         ...state,
