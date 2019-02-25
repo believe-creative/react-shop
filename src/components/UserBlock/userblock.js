@@ -41,7 +41,7 @@ class UserBlock extends Component {
             {name ? (
               <Dropdown>
                 <Dropdown.Toggle variant="success" id="dropdown-basic">
-                <h4>{name}</h4>
+                  <h4>{name}</h4>
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
                   <Dropdown.Item onClick={this.logout.bind(this)}>
@@ -55,7 +55,7 @@ class UserBlock extends Component {
               </LinkContainer>
             )}
           </div>
-          <div class="topbar-menu">
+          {/* <div class="topbar-menu">
             <ul class="list-unstyled">
               <li>
                 <a href="#">Daily Deals</a>
@@ -68,7 +68,7 @@ class UserBlock extends Component {
               </li>
             </ul>
           </div>
-          <div class="currency-block">&#163; GBP</div>
+          <div class="currency-block">&#163; GBP</div> */}
           <div class="price-block">
             <a href="">
               <i class="fa fa-shopping-bag" aria-hidden="true" />

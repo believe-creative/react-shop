@@ -8,12 +8,12 @@
   min-height: 50px;
   .register-block {
     float: left;
-    a{
+    a {
       display: inline-block;
     }
     @media (max-width: 767px) {
       text-align: center;
-      width: 100%;
+      width: auto;
     }
   }
   .topbar-menu {
@@ -58,6 +58,7 @@
   }
   .price-block {
     float: right;
+    margin-top: 0.5rem;
     a {
       color: $black;
       &:hover,
@@ -127,6 +128,12 @@
         }
         &:hover {
           color: $red;
+        }
+      }
+      .nav-item:last-child {
+        a {
+          border: none;
+          padding-bottom: 50px;
         }
       }
     }
