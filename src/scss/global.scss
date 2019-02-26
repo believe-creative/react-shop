@@ -242,6 +242,10 @@ h3,
   &:focus {
     background: $red;
     color: $white;
+    &:hover {
+      background: $white;
+      color: $red;
+    }
   }
 }
 .btn-white {
