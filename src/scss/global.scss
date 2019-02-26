@@ -239,6 +239,10 @@ h3,
     outline: none;
     @include box-shadow(none);
   }
+  &:focus {
+    background: $red;
+    color: $white;
+  }
 }
 .btn-white {
   background: $white;
