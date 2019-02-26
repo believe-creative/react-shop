@@ -42,6 +42,8 @@ export const getCartProducts = (inCartId) =>callAPI(`get-shopping-cart-products/
   Accept: "application/json; charset=utf-8"
 },getParams({inCartId:inCartId}) );
 
+export const getShippingRegions = () => callAPI(`get-customer-shipping-regions/`);
+
 export const checkUser = token =>callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
 export const getDepartments = () => callAPI("get-departments/");
 export const getSubCategories = departmentId =>

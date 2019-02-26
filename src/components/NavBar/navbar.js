@@ -12,12 +12,12 @@ import { connect } from "react-redux";
 import "../../scss/navbar.scss";
 class NavBar extends Component {
   componentDidMount() {
-    let cart = localStorage.getItem("react-shop-cart");
-    if (cart) {
-      cart = JSON.parse(cart);
-      console.log(cart.inCartId);
-      this.props.getCartProducts(cart.inCartId);
-    }
+    // let cart = localStorage.getItem("react-shop-cart");
+    // if (cart) {
+    //   cart = JSON.parse(cart);
+    //   console.log(cart.inCartId);
+    //   this.props.getCartProducts(cart.inCartId);
+    // }
   }
   render() {
     let { cart } = this.props;

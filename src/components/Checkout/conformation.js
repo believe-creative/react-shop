@@ -5,13 +5,27 @@ import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
+import { connect } from "react-redux";
 
-export default class Conformation extends Component {
+class Conformation extends Component {
+  constructor(props)
+  {
+      super(props);
+  }
+
+  componentDidMount()
+  {
+
+  }
+
   render() {
     console.log(this.props);
+    let cart={count:0,products:[]};
+    if(this.props.cart)
+      cart=this.props.cart;
     return (
       <React.Fragment>
-        <div className="conformation_block">
+        <Row className="conformation_block">
           <Col md={12}>
             <div className="form-content form-check">
               <div className="row">
@@ -21,31 +35,24 @@ export default class Conformation extends Component {
                       <h3>{"Order summery"}</h3>
                     </label>
                     <table className="order_summery">
+                      <tbody>
                       <tr>
                         <th>Item</th>
                         <th>Qty</th>
                         <th>Price</th>
                       </tr>
-                      <tr>
-                        <td>Green Tshit 2016 Men BK3569</td>
-                        <td>2</td>
-                        <td>$100</td>
-                      </tr>
-                      <tr>
-                        <td>Green Tshit 2016 Men BK3569</td>
-                        <td>1</td>
-                        <td>$150</td>
-                      </tr>
-                      <tr>
-                        <td>Green Tshit 2016 Men BK3569</td>
-                        <td>2</td>
-                        <td>$300</td>
-                      </tr>
-                      <tr>
-                        <td>Green Tshit 2016 Men BK3569</td>
-                        <td>1</td>
-                        <td>$250</td>
-                      </tr>
+                      {
+                        cart.products.map(function(product){
+                          return(
+                            <tr>
+                            <td>{product.name}</td>
+                            <td>{product.quantity}</td>
+                            <td>{product.price}</td>
+                          </tr>
+                          )
+                        })
+                      }
+                      </tbody>
                     </table>
                   </div>
                 </div>
@@ -70,6 +77,11 @@ export default class Conformation extends Component {
             </div>
             <div className="form-group  delivery_options pt-4">
               <div className="row">
+                <div className="col-md-4">
+                  <button type="button" className="btn btn-lg back">
+                    NewYear 8%
+                  </button>
+                </div>
                 <div className="col-md-2">
                   <h3>{"Subtotal"}</h3>
                   <h3>{"$368"}</h3>
@@ -85,8 +97,20 @@ export default class Conformation extends Component {
               </div>
             </div>
           </Col>
-        </div>
+        </Row>
       </React.Fragment>
     );
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    cart:state.get("products").cart
+  };
+};
+
+
+export default connect(
+  mapStateToProps,
+  null
+)(Conformation);

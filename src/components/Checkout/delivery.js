@@ -5,10 +5,32 @@ import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
+import * as Actions from "../../actions";
 
-export default class Delivery extends Component {
+import { connect } from "react-redux";
+
+class Delivery extends Component {
+  constructor(props)
+  {
+      super(props);
+      this.state={
+        region:null
+      }   
+  }
+  componentDidMount(){
+    this.props.getShippingRegions();
+   }
+
+  changeRegion(e)
+   {
+      let state=this.state;
+      state["region"]=e.currentTarget.value;
+      this.setState(state);
+   }
   render() {
-    console.log(this.props);
+    let regions=[];
+    if(this.props.regions)
+        regions=this.props.regions
     return (
       <React.Fragment>
         <Container>
@@ -18,7 +40,7 @@ export default class Delivery extends Component {
                 <div className="row">
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label className="">First name*</label>
+                      <label className="">Name*</label>
                       <input
                         type="text"
                         className="form-control"
@@ -27,7 +49,7 @@ export default class Delivery extends Component {
                       />
                     </div>
                     <div className="form-group">
-                      <label className="">Last name*</label>
+                      <label className="">Address 2</label>
                       <input
                         type="text"
                         className="form-control"
@@ -38,7 +60,7 @@ export default class Delivery extends Component {
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
-                      <label className="">Address *</label>
+                      <label className="">Address 1*</label>
                       <input
                         type="text"
                         className="form-control"
@@ -48,17 +70,6 @@ export default class Delivery extends Component {
                     </div>
                     <div className="form-group">
                       <label className="">City *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value=""
-                      />
-                    </div>
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">State *</label>
                       <input
                         type="text"
                         className="form-control"
@@ -81,34 +92,51 @@ export default class Delivery extends Component {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group country">
-                      {"Country:"}
-                      <h3 className="pb-3">{"Greate Britain *"}</h3>
+                      <label>
+                        {"Country:"}
+                      </label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder=""
+                        value=""
+                      />
                     </div>
                     <div className="form-group form-check">
                       <div className="radio-checkbox-block">
                         <p>
-                          <input type="checkbox" for="male" />
                           <span />
                           <label for="male">
                             <h3>
-                              My billing information is the same as my delivery
-                              information{" "}
+                              Region *
                             </h3>
                           </label>
+                          <select className="selectpicker" value={this.state.region} onChange={this.changeRegion.bind(this)}>
+                              {regions.map(function(region){
+                                  return(
+                                    <option value={region.shipping_region_id}>
+                                        {region.shipping_region}
+                                    </option>
+                                  )
+
+                              })}
+                          </select>
                         </p>
                       </div>
                     </div>
 
                     <div className="form-group delivery_options">
-                      <h2 className="pb-3">Delivery Options</h2>
+                      <label className="form-check-label" for="exampleCheck1">
+                        <h2>Delivery Options </h2>
+                      </label>
                       <div className="row radio-checkbox-block">
                         <div className="col-md-6">
                           <p>
                             <input type="radio" for="option1" checked />
                             <span />
                             <label for="option1">
-                              <strong>Standard Shipping:</strong>(free, 2-3
-                              business days)
+                              <h3>Standard Shipping:</h3>(free, 2-3 business
+                              days)
                             </label>
                           </p>
                         </div>
@@ -117,8 +145,8 @@ export default class Delivery extends Component {
                             <input type="radio" for="option2" />
                             <span />
                             <label for="option2">
-                              <strong>Express Shipping:</strong>(28 Dollar, 1-2
-                              business days)
+                              <h3>Express Shipping:</h3>(28 Dollar, 1-2 business
+                              days)
                             </label>
                           </p>
                         </div>
@@ -134,3 +162,21 @@ export default class Delivery extends Component {
     );
   }
 }
+const mapStateToProps = state => {
+  console.log(state.get("shipping"),state.get("products"),"hehe ----------------------");
+  return {
+    cart:state.get("products").cart,
+    regions:state.get("shipping").regions
+  };
+};
+
+function mapDispatchToProps(dispatch) {
+  return {
+    getShippingRegions: () => dispatch(Actions.getShippingRegions.request())
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Delivery);

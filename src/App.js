@@ -14,6 +14,13 @@ class App extends Component {
       this.props.checkUserLogin(c);
     }
     this.props.loadCategories();
+    let cart=localStorage.getItem("react-shop-cart");
+    if(cart)
+    {
+       cart=JSON.parse(cart);
+       console.log(cart.inCartId);
+       this.props.getCartProducts(cart.inCartId);
+    }
   }
 
   render() {
@@ -30,17 +37,17 @@ const productRequest = Actions.products.request;
 const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
-  isProductsLoading: state.products.isLoading,
-  products: state.products.products
+  cart:state.get("products").cart
 });
 
 const mapDispatchToProps = dispatch => ({
   productRequest,
   checkUserLogin,
-  loadCategories: () => dispatch(Actions.getCategories.request())
+  loadCategories: () => dispatch(Actions.getCategories.request()),
+  getCartProducts: (inCartId) => dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(App);

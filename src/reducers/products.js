@@ -66,6 +66,13 @@ export default (state = intialState, action) => {
       {
         cart={inCartId:null,count:0,products:[]};
       }
+      
+      let count=0;
+      for(var i=0;i<action.response.length;i++)
+      {
+        count=count+action.response[i].quantity;
+      }
+      cart.count=count;
       cart.products=action.response;
       localStorage.setItem("react-shop-cart",JSON.stringify(cart));
       return {

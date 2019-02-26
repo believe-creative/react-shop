@@ -46,13 +46,6 @@ class Checkout extends Component {
       ]
     };
   }
-  componentDidMount() {
-    let cart = localStorage.getItem("react-shop-cart");
-    if (cart) {
-      cart = JSON.parse(cart);
-      this.props.getCartProducts(cart.inCartId);
-    }
-  }
   showstages() {
     if (this.state.stage == 0) {
       return <Delivery />;

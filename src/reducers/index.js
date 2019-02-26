@@ -4,11 +4,13 @@ import { LOCATION_CHANGE } from "react-router-redux";
 import { connectRouter } from "connected-react-router";
 import productReducer from "./products";
 import userReducer from "./user";
+import shippingReducer from "./shipping";
 
 export default function createReducers(history) {
   return combineReducers({
     router: connectRouter(history),
     products: productReducer,
-    user: userReducer
+    user: userReducer,
+    shipping: shippingReducer
   });
 }

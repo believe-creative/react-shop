@@ -11,6 +11,7 @@ const {
   getSubCategories,
   AddToCart,
   getCartProducts,
+  getShippingRegions,
   getCategoryProducts
 } = actions;
 
@@ -30,6 +31,7 @@ export const fetchProducts = fetchEntity.bind(null, products, api.getProducts);
 export const checkUser = fetchEntity.bind(null, checkUserLogin, api.checkUser);
 export const addProductToCart = fetchEntity.bind(null, AddToCart, api.AddToCart);
 export const getProductsfromCart = fetchEntity.bind(null, getCartProducts, api.getCartProducts);
+export const getAllShippingRegions = fetchEntity.bind(null, getShippingRegions, api.getShippingRegions);
 export const fetchCategories = fetchEntity.bind(
   null,
   getCategories,
@@ -48,13 +50,15 @@ export const fetchCategoryProducts = fetchEntity.bind(
 
 
 function* loadUpadtedCart(action) {
-  console.log("load dsfdfdsfdfsdf fff");
   yield call(addProductToCart, action.data);
 }
 
 function* loadProductsfromCart(action) {
-  console.log("load dsfdfdsfdfsdf fff");
   yield call(getProductsfromCart, action.inCartId);
+}
+
+function* loadgetAllShippingRegions(action) {
+  yield call(getAllShippingRegions);
 }
 
 function* loadProducts(action) {
@@ -110,6 +114,10 @@ function* watchloadProductsfromCart() {
   yield takeLatest(actions.GETCARTPRODUCTS.REQUEST, loadProductsfromCart);
 }
 
+function* watchloadgetAllShippingRegions() {
+  yield takeLatest(actions.GETSHIPPINGREGIONS.REQUEST, loadgetAllShippingRegions);
+}
+
 export default function*() {
   yield fork(watchLoadProducts);
   yield fork(watchLoadUser);
@@ -118,4 +126,5 @@ export default function*() {
   yield fork(watchLoadCategoryProducts);
   yield fork(watchloadUpadtedCart);
   yield fork(watchloadProductsfromCart);
+  yield fork(watchloadgetAllShippingRegions);
 }

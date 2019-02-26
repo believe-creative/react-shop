@@ -14,6 +14,7 @@ export const PRODUCTS = createRequestTypes("PRODUCTS");
 export const PRODUCT = createRequestTypes("PRODUCT");
 export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
 export const GETCARTPRODUCTS = createRequestTypes("GETCARTPRODUCTS");
+export const GETSHIPPINGREGIONS = createRequestTypes("GETSHIPPINGREGIONS");
 export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
@@ -53,6 +54,15 @@ export const getCartProducts = {
   success: (inCartId, response) =>
     action(GETCARTPRODUCTS[SUCCESS], { inCartId, response }),
   failure: (inCartId, error) => action(GETCARTPRODUCTS[FAILURE], {inCartId, error })
+};
+
+export const getShippingRegions = {
+  request: () => action(GETSHIPPINGREGIONS[REQUEST], {}),
+  success: (status,response) =>{
+    return action(GETSHIPPINGREGIONS[SUCCESS], { response })
+  }
+    ,
+  failure: (error) => action(GETSHIPPINGREGIONS[FAILURE], {error })
 };
 
 export const checkUserLogin = {

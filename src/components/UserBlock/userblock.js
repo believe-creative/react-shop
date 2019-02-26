@@ -29,8 +29,18 @@ class UserBlock extends Component {
   render() {
     let name = null;
     let photo = null;
+    let totalAmount=0;
     if (this.props.user) {
       name = this.props.user.name;
+      
+    }
+    if(this.props.cart)
+    {
+      let cart=this.props.cart
+      for(var i=0;i<cart.products.length;i++)
+      {
+        totalAmount=totalAmount+cart.products[i].price*cart.products[i].quantity;
+      }
     }
 
     return (
@@ -73,7 +83,7 @@ class UserBlock extends Component {
             <a href="">
               <i class="fa fa-shopping-bag" aria-hidden="true" />
             </a>{" "}
-            Your bag: &#163;3.99
+            Your bag: &#163;{totalAmount}
           </div>
           <div class="clearfix" />
         </div>
@@ -84,7 +94,8 @@ class UserBlock extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.get("user")
+    user: state.get("user"),
+    cart:state.get("products").cart
   };
 };
 
