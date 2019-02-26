@@ -10,14 +10,12 @@ import { LinkContainer } from "react-router-bootstrap";
 import Nav from "react-bootstrap/Nav";
 
 class Items extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
   }
   render() {
-    let cart={count:0,products:[]};
-    if(this.props.cart)
-      cart=this.props.cart;
+    let cart = { count: 0, products: [] };
+    if (this.props.cart) cart = this.props.cart;
     return (
       <React.Fragment>
         <div id="main" class="mt-5 mb-5">
@@ -36,42 +34,43 @@ class Items extends Component {
                     <div class="clearfix" />
                   </div>
                   <div class="cart-bot-block">
-                    {cart.products.map(function(product){
-
+                    {cart.products.map(function(product) {
                       return (
                         <div class="cart-single-block">
-                        <ul class="list-unstyled">
-                          <li class="img-block">
-                            <img
-                              src="images/adoration-of-the-kings.gif"
-                              alt="Image"
-                              title="Image"
-                            />
-                            <span>
-                              <h3>{product.name}</h3>
-                              <p>Men BK3569</p>
-                              <p class="remove">
-                                <a href="#">
-                                  <span>&#10005;</span> Remove
-                                </a>
-                              </p>
-                            </span>
-                          </li>
-                          <li>XXL</li>
-                          <li class="quantity-block">
-                            <span>
-                              <a href="#">&#8722;</a>
-                            </span>
-                            <span class="number-block">{product.quantity}</span>
-                            <span>
-                              <a href="#">&#43;</a>
-                            </span>
-                          </li>
-                          <li class="price">&#163;{product.price}</li>
-                        </ul>
-                        <div class="clearfix" />
-                      </div>
-                      )
+                          <ul class="list-unstyled">
+                            <li class="img-block">
+                              <img
+                                src="images/adoration-of-the-kings.gif"
+                                alt="Image"
+                                title="Image"
+                              />
+                              <span>
+                                <h3>{product.name}</h3>
+                                <p>Men BK3569</p>
+                                <p class="remove">
+                                  <a href="#">
+                                    <span>&#10005;</span> Remove
+                                  </a>
+                                </p>
+                              </span>
+                            </li>
+                            <li>XXL</li>
+                            <li class="quantity-block">
+                              <span>
+                                <a href="#">&#8722;</a>
+                              </span>
+                              <span class="number-block">
+                                {product.quantity}
+                              </span>
+                              <span>
+                                <a href="#">&#43;</a>
+                              </span>
+                            </li>
+                            <li class="price">&#163;{product.price}</li>
+                          </ul>
+                          <div class="clearfix" />
+                        </div>
+                      );
                     })}
                   </div>
                 </div>
@@ -80,12 +79,12 @@ class Items extends Component {
             <div class="container cart-bottom-block">
               <div class="row">
                 <div class="col-md-10 offset-md-1">
-                <LinkContainer to={"/"} className="btn btn-md btn-white">
-                  <Nav.Link>Back to Shop</Nav.Link>
-                </LinkContainer>
-                <LinkContainer to={"/checkout"} className="btn btn-md">
-                  <Nav.Link>Checkout</Nav.Link>
-                </LinkContainer>
+                  <LinkContainer to={"/"} className="btn btn-md btn-white">
+                    <a>Back to Shop</a>
+                  </LinkContainer>
+                  <LinkContainer to={"/checkout"} className="btn btn-md">
+                    <a>Checkout</a>
+                  </LinkContainer>
                 </div>
               </div>
             </div>
