@@ -8,21 +8,16 @@ import "../../scss/cart.scss";
 import { connect } from "react-redux";
 
 class Conformation extends Component {
-  constructor(props)
-  {
-      super(props);
+  constructor(props) {
+    super(props);
   }
 
-  componentDidMount()
-  {
-
-  }
+  componentDidMount() {}
 
   render() {
     console.log(this.props);
-    let cart={count:0,products:[]};
-    if(this.props.cart)
-      cart=this.props.cart;
+    let cart = { count: 0, products: [] };
+    if (this.props.cart) cart = this.props.cart;
     return (
       <React.Fragment>
         <Row className="conformation_block">
@@ -36,22 +31,20 @@ class Conformation extends Component {
                     </label>
                     <table className="order_summery">
                       <tbody>
-                      <tr>
-                        <th>Item</th>
-                        <th>Qty</th>
-                        <th>Price</th>
-                      </tr>
-                      {
-                        cart.products.map(function(product){
-                          return(
+                        <tr>
+                          <th>Item</th>
+                          <th>Qty</th>
+                          <th>Price</th>
+                        </tr>
+                        {cart.products.map(function(product) {
+                          return (
                             <tr>
-                            <td>{product.name}</td>
-                            <td>{product.quantity}</td>
-                            <td>{product.price}</td>
-                          </tr>
-                          )
-                        })
-                      }
+                              <td>{product.name}</td>
+                              <td>{product.quantity}</td>
+                              <td>{product.price}</td>
+                            </tr>
+                          );
+                        })}
                       </tbody>
                     </table>
                   </div>
@@ -77,11 +70,11 @@ class Conformation extends Component {
             </div>
             <div className="form-group  delivery_options pt-4">
               <div className="row">
-                <div className="col-md-4">
+                {/* <div className="col-md-4">
                   <button type="button" className="btn btn-lg back">
                     NewYear 8%
                   </button>
-                </div>
+                </div> */}
                 <div className="col-md-2">
                   <h3>{"Subtotal"}</h3>
                   <h3>{"$368"}</h3>
@@ -105,10 +98,9 @@ class Conformation extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart:state.get("products").cart
+    cart: state.get("products").cart
   };
 };
-
 
 export default connect(
   mapStateToProps,
