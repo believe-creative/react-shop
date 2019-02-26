@@ -23,7 +23,7 @@
   right: 0;
   top: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.5);
 }
 
 .shop_brand_panel {
@@ -69,7 +69,7 @@
   }
 }
 .items_block {
-  padding: 30px 0 0px 30px;
+  padding-top: 30px;
   .hot_block {
     position: relative;
     -moz-box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
@@ -110,4 +110,18 @@
   .category_name {
     color: $white;
   }
+}
+.add_to_cart {
+  display: flex;
+  justify-content: center;
+  h3 {
+    opacity: 0;
+    margin-bottom: 0;
+    font-size: 12px;
+    transition: all 0.5s;
+  }
+}
+.show {
+  display: block !important;
+  opacity: 1 !important;
 }

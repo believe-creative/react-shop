@@ -29,17 +29,15 @@ class UserBlock extends Component {
   render() {
     let name = null;
     let photo = null;
-    let totalAmount=0;
+    let totalAmount = 0;
     if (this.props.user) {
       name = this.props.user.name;
-      
     }
-    if(this.props.cart)
-    {
-      let cart=this.props.cart
-      for(var i=0;i<cart.products.length;i++)
-      {
-        totalAmount=totalAmount+cart.products[i].price*cart.products[i].quantity;
+    if (this.props.cart) {
+      let cart = this.props.cart;
+      for (var i = 0; i < cart.products.length; i++) {
+        totalAmount =
+          totalAmount + cart.products[i].price * cart.products[i].quantity;
       }
     }
 
@@ -95,7 +93,7 @@ class UserBlock extends Component {
 const mapStateToProps = state => {
   return {
     user: state.get("user"),
-    cart:state.get("products").cart
+    cart: state.get("products").cart
   };
 };
 

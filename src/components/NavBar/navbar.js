@@ -19,6 +19,7 @@ class NavBar extends Component {
     //   this.props.getCartProducts(cart.inCartId);
     // }
   }
+
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };

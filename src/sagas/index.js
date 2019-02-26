@@ -1,4 +1,12 @@
-import { takeLatest, put, call, fork, select, all } from "redux-saga/effects";
+import {
+  takeLatest,
+  takeEvery,
+  put,
+  call,
+  fork,
+  select,
+  all
+} from "redux-saga/effects";
 import { api } from "../services";
 import * as actions from "../actions";
 import { getProduct, getProducts } from "../reducers/selectors";
@@ -29,9 +37,21 @@ function* fetchEntity(entity, apiFn, id, url) {
 export const fetchProduct = fetchEntity.bind(null, product, api.getProduct);
 export const fetchProducts = fetchEntity.bind(null, products, api.getProducts);
 export const checkUser = fetchEntity.bind(null, checkUserLogin, api.checkUser);
-export const addProductToCart = fetchEntity.bind(null, AddToCart, api.AddToCart);
-export const getProductsfromCart = fetchEntity.bind(null, getCartProducts, api.getCartProducts);
-export const getAllShippingRegions = fetchEntity.bind(null, getShippingRegions, api.getShippingRegions);
+export const addProductToCart = fetchEntity.bind(
+  null,
+  AddToCart,
+  api.AddToCart
+);
+export const getProductsfromCart = fetchEntity.bind(
+  null,
+  getCartProducts,
+  api.getCartProducts
+);
+export const getAllShippingRegions = fetchEntity.bind(
+  null,
+  getShippingRegions,
+  api.getShippingRegions
+);
 export const fetchCategories = fetchEntity.bind(
   null,
   getCategories,
@@ -47,7 +67,6 @@ export const fetchCategoryProducts = fetchEntity.bind(
   getCategoryProducts,
   api.getCategoryProducts
 );
-
 
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
@@ -104,7 +123,7 @@ function* watchLoadSubCategories() {
 }
 
 function* watchLoadCategoryProducts() {
-  yield takeLatest(actions.CATEGORYPRODUCTS.REQUEST, loadCategoryProducts);
+  yield takeEvery(actions.CATEGORYPRODUCTS.REQUEST, loadCategoryProducts);
 }
 
 function* watchloadUpadtedCart() {
@@ -115,7 +134,10 @@ function* watchloadProductsfromCart() {
 }
 
 function* watchloadgetAllShippingRegions() {
-  yield takeLatest(actions.GETSHIPPINGREGIONS.REQUEST, loadgetAllShippingRegions);
+  yield takeLatest(
+    actions.GETSHIPPINGREGIONS.REQUEST,
+    loadgetAllShippingRegions
+  );
 }
 
 export default function*() {

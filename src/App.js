@@ -14,22 +14,30 @@ class App extends Component {
       this.props.checkUserLogin(c);
     }
     this.props.loadCategories();
-    let cart=localStorage.getItem("react-shop-cart");
-    if(cart)
-    {
-       cart=JSON.parse(cart);
-       console.log(cart.inCartId);
-       this.props.getCartProducts(cart.inCartId);
+    let cart = localStorage.getItem("react-shop-cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      console.log(cart.inCartId);
+      this.props.getCartProducts(cart.inCartId);
     }
   }
 
   render() {
     console.log("getCategories", this.props);
-    return (
-      <div className="App">
-        <ConnectedRouter history={this.props.history}>{routes}</ConnectedRouter>
-      </div>
-    );
+    if (this.props.categories && this.props.categories.length > 0) {
+      return (
+        <div className="App">
+          <ConnectedRouter
+            history={this.props.history}
+            getcategories={this.props.categories}
+          >
+            {routes}
+          </ConnectedRouter>
+        </div>
+      );
+    } else {
+      return <div />;
+    }
   }
 }
 
@@ -37,14 +45,16 @@ const productRequest = Actions.products.request;
 const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
-  cart:state.get("products").cart
+  categories: state.get("products").categories,
+  cart: state.get("products").cart
 });
 
 const mapDispatchToProps = dispatch => ({
   productRequest,
   checkUserLogin,
   loadCategories: () => dispatch(Actions.getCategories.request()),
-  getCartProducts: (inCartId) => dispatch(Actions.getCartProducts.request(inCartId))
+  getCartProducts: inCartId =>
+    dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(
