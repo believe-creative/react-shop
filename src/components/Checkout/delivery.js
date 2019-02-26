@@ -81,10 +81,8 @@ export default class Delivery extends Component {
                   </div>
                   <div className="col-md-12">
                     <div className="form-group country">
-                      <label>
-                        {"Country:"}
-                        <h3>{"Greate Britain *"}</h3>
-                      </label>
+                      {"Country:"}
+                      <h3 className="pb-3">{"Greate Britain *"}</h3>
                     </div>
                     <div className="form-group form-check">
                       <div className="radio-checkbox-block">
@@ -102,17 +100,15 @@ export default class Delivery extends Component {
                     </div>
 
                     <div className="form-group delivery_options">
-                      <label className="form-check-label" for="exampleCheck1">
-                        <h2>Delivery Options </h2>
-                      </label>
+                      <h2 className="pb-3">Delivery Options</h2>
                       <div className="row radio-checkbox-block">
                         <div className="col-md-6">
                           <p>
                             <input type="radio" for="option1" checked />
                             <span />
                             <label for="option1">
-                              <h3>Standard Shipping:</h3>(free, 2-3 business
-                              days)
+                              <strong>Standard Shipping:</strong>(free, 2-3
+                              business days)
                             </label>
                           </p>
                         </div>
@@ -121,8 +117,8 @@ export default class Delivery extends Component {
                             <input type="radio" for="option2" />
                             <span />
                             <label for="option2">
-                              <h3>Express Shipping:</h3>(28 Dollar, 1-2 business
-                              days)
+                              <strong>Express Shipping:</strong>(28 Dollar, 1-2
+                              business days)
                             </label>
                           </p>
                         </div>

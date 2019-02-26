@@ -12,18 +12,16 @@ import { connect } from "react-redux";
 import "../../scss/navbar.scss";
 class NavBar extends Component {
   componentDidMount() {
-      let cart=localStorage.getItem("react-shop-cart");
-      if(cart)
-      {
-         cart=JSON.parse(cart);
-         console.log(cart.inCartId);
-         this.props.getCartProducts(cart.inCartId);
-      }
+    let cart = localStorage.getItem("react-shop-cart");
+    if (cart) {
+      cart = JSON.parse(cart);
+      console.log(cart.inCartId);
+      this.props.getCartProducts(cart.inCartId);
+    }
   }
   render() {
-    let {cart}=this.props;
-    if(!cart)
-      cart={count:0};
+    let { cart } = this.props;
+    if (!cart) cart = { count: 0 };
     return (
       <header className="header bg-white">
         <Container className="head-inner">
@@ -70,8 +68,10 @@ class NavBar extends Component {
                 </span>
               </li>
               <li>
-                <LinkContainer to={"/cart"} className="btn btn-md btn-white">
-                  <Nav.Link><Cart cartItems={cart.count} /></Nav.Link>
+                <LinkContainer to={"/cart"} className="">
+                  <a>
+                    <Cart cartItems={cart.count} />
+                  </a>
                 </LinkContainer>
               </li>
             </ul>
@@ -87,12 +87,13 @@ const mapStateToProps = state => {
   console.log(state.get("products").categories);
   return {
     categories: state.get("products").categories,
-    cart:state.get("products").cart
+    cart: state.get("products").cart
   };
 };
 
 const mapStateToDispatch = dispatch => ({
-  getCartProducts: (inCartId) => dispatch(Actions.getCartProducts.request(inCartId))
+  getCartProducts: inCartId =>
+    dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(

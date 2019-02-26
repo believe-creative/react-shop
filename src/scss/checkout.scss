@@ -1,6 +1,7 @@
 @import "variables.scss";
 
 .checkout_information {
+  margin-bottom: 60px;
   .checkout_block {
     padding: 60px;
     margin-top: 60px;
@@ -49,7 +50,7 @@
         width: 24.5%;
       }
       @media (max-width: 480px) {
-        width: 18%;
+        width: 17%;
       }
     }
     .dot {
@@ -63,14 +64,23 @@
   background: $red !important;
 }
 .checkout_next {
-  background-color: $gray-light;
+  background-color: #efefef;
   padding: 45px;
+  @media (max-width: 767px) {
+    padding: 15px;
+  }
   .back {
     margin-left: 30px;
+    @media (max-width: 767px) {
+      margin-left: 0;
+    }
   }
   .next_step {
     float: right;
     margin-right: 30px;
+    @media (max-width: 767px) {
+      margin-right: 0;
+    }
   }
 }
 .form-check {
@@ -102,6 +112,12 @@
       min-width: auto;
       @media (max-width: 767px) {
         width: 100%;
+      }
+    }
+    .radio-checkbox-block {
+      label {
+        display: block;
+        margin-left: 30px;
       }
     }
   }
