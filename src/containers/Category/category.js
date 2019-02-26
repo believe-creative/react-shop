@@ -98,7 +98,7 @@ class Category extends Component {
             </div>
           </div>
         </div>
-        <div className="subscribe_panel category_subscribe">
+        {/* <div className="subscribe_panel category_subscribe">
           <div className="container">
             <div className="row">
               <div className="col-md-12 subscribe_for_shop">
@@ -122,7 +122,7 @@ class Category extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

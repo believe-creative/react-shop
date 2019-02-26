@@ -78,7 +78,7 @@ export default class Home extends Component {
             </div>
           </div>
         </Container>
-        <div className="subscribe_panel">
+        {/* <div className="subscribe_panel">
           <div className="row">
             <div className="col-md-6 offset-md-3 subscribe_block">
               <h2 className="red">10% Discount for your subscription</h2>
@@ -104,7 +104,7 @@ export default class Home extends Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   }

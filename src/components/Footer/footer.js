@@ -8,7 +8,7 @@ import "../../scss/footer.scss";
 export default class SiteFooter extends Component {
   render() {
     return (
-      <footer className="bg-white">
+      <footer className="bg-white mt-5">
         <Container>
           <Row>
             <Col sm={6} lg={3}>
