@@ -24,7 +24,12 @@ const socketio = require('socket.io')
 var passport = require('passport');
 SESSION_SECRET="justfortesting"
 CLIENT_ORIGIN="http://localhost:3000"
+let secret_key = 'Amoha_secret_key';
+module.exports = {
+  secret_key
+}
 
+// exports.secret_key = secret_key;
 // const options = {
 //   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
 //   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
@@ -77,7 +82,10 @@ var jsonParser = bodyParser.json()
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
+app.get('/api/get_token', (req, res)=>{
+  let token = jwt.sign({}, secret_key, { expiresIn: '2h'});
+  return res.json({status:"success",token:token})
+});
 
 // Define routes.
 app.get('/api/checkuser',checkToken,checklogin);
@@ -191,7 +199,7 @@ app.post('/setpassword', [
 /*
 * To get all departments
 */
-app.get('/api/get-departments', (req, res) => {
+app.get('/api/get-departments', checkToken, (req, res) => {
   sequelize
     .query('CALL catalog_get_departments()')
     .then(departments=>res.json(departments));

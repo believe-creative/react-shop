@@ -1,9 +1,10 @@
 let jwt = require('jsonwebtoken');
-const {checkUserWithEmail} = require('../server')
+const {checkUserWithEmail, secret_key} = require('../server')
+let secret_key = 'Amoha_secret_key';
   exports.facebook = (req, res) => {
     const io = req.app.get('io')
     const displayName= req.user.displayName
-    const user = { 
+    const user = {
       name: displayName,
       photo: req.user.photos[0].value,
       email:req.user.emails[0].value
@@ -11,20 +12,20 @@ const {checkUserWithEmail} = require('../server')
     console.log("got in ---------------------------------------------------------")
     req.session.user=user
     let token = jwt.sign({email:user.email,user: user},
-        'thisisasecret',
+        secret_key,
         { expiresIn: '2h'
         }
       );
     io.in(req.session.socketId).emit('facebook', {user:user,token:token});
     res.redirect("/setpassword");
-    
+
   }
 
   exports.google = (req, res) => {
     const io = req.app.get('io')
     const displayName= req.user.displayName
     console.log(req.user);
-    const user = { 
+    const user = {
       name: displayName,
       photo: req.user.photos[0].value.replace(/sz=50/gi, 'sz=250'),
       email:req.user.emails[0].value
@@ -32,15 +33,15 @@ const {checkUserWithEmail} = require('../server')
     console.log("got in ---------------------------------------------------------")
     req.session.user=user
     let token = jwt.sign({email:user.email,user: user},
-        'thisisasecret',
+        secret_key,
         { expiresIn: '2h'
         }
       );
     io.in(req.session.socketId).emit('google', {user:user,token:token})
     res.redirect("/setpassword");
-  
+
   }
-   
+
 
   exports.checklogin = (req, res) => {
       if(req.decoded)
