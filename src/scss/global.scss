@@ -274,7 +274,7 @@ form {
     background: $white;
     border: 1px solid $gray-light;
     color: $gray-dark;
-    min-width: 350px;
+    //min-width: 350px;
     font-weight: $fw-600;
     @include border-radius(10px);
     @media (max-width: 576px) {
@@ -289,6 +289,10 @@ form {
     padding: 15px;
     min-height: 150px;
   }
+}
+input.form-control:focus {
+  outline: none;
+  box-shadow: none;
 }
 .success {
   border: 1px solid $green;

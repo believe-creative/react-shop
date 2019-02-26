@@ -142,7 +142,7 @@ class Login extends Component {
                     </div>
                     <button
                       type="button"
-                      className="btn btn-default mb-3"
+                      className="btn btn-md mb-3"
                       onClick={this.login.bind(this)}
                     >
                       Submit
