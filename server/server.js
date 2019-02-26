@@ -93,7 +93,7 @@ app.post('/api/login',jsonParser, function (req, res) {
     let pwd=req.body.pwd;
     sequelize
     .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:email}}).then(
-      data=>{ 
+      data=>{
         if(data.length>0){
           comparePassword(pwd,data[0].password,function(error,result){
             if(error)
@@ -116,7 +116,7 @@ app.post('/api/login',jsonParser, function (req, res) {
                     );
                     return res.json({status:"success",user:user,token:token})
                   })
-               
+
               }
           });
         }
@@ -124,14 +124,14 @@ app.post('/api/login',jsonParser, function (req, res) {
         {
           return res.json({status:"error",msg:"Seems like you haven't registered.Please signup through other means."});
         }
-        
+
     });
 });
 
 app.get('/setpassword', function (req, res) {
   sequelize
     .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:req.session.user.email}}).then(
-      data=>{ 
+      data=>{
         console.log(data);
         if(data.length>0){
           return res.redirect('loginsuccess');
@@ -140,13 +140,13 @@ app.get('/setpassword', function (req, res) {
         {
           return res.render('userform',{errors:null,user:{name:req.session.user.name,email:req.session.user.email}});
         }
-        
+
     });
- 
+
 });
 
 app.get('/forbidden', function (req, res) {
-  
+
   res.render('forbidden');
 });
 
@@ -176,15 +176,15 @@ app.post('/setpassword', [
           }
 
       });
-      
+
     }
   }
   else
   {
     res.redirect('forbidden');
   }
-  
-  
+
+
 });
 
 
@@ -335,8 +335,8 @@ app.post('/api/search',(req,res)=>{
   let inProductsPerPage=req.body.inProductsPerPage;
   let inStartItem=req.body.inStartItem;
   sequelize
-    .query('CALL catalog_search(:inProductId,:inAllWords,:inShortProductDescriptionLength,:inProductsPerPage,:inStartItem)',
-    {replacements:{inProductId:inProductId,inAllWords:inAllWords,inShortProductDescriptionLength:inShortProductDescriptionLength,inProductsPerPage:inProductsPerPage,inStartItem:inStartItem}}).then(
+    .query('CALL catalog_search(:inSearchString,:inAllWords,:inShortProductDescriptionLength,:inProductsPerPage,:inStartItem)',
+    {replacements:{inSearchString:inSearchString,inAllWords:inAllWords,inShortProductDescriptionLength:inShortProductDescriptionLength,inProductsPerPage:inProductsPerPage,inStartItem:inStartItem}}).then(
       catalog_search_value=>res.json(catalog_search_value));
 });
 
@@ -617,12 +617,3 @@ app.post('/api/add-product-to-empty-cart',(req,res)=>{
         res.json(cartId);
       });
 });
-
-
-
-
-
-
-
-
-
