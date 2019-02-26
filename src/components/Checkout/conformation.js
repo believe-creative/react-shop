@@ -11,7 +11,7 @@ export default class Conformation extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-        <Row className="conformation_block">
+        <div className="conformation_block">
           <Col md={12}>
             <div className="form-content form-check">
               <div className="row">
@@ -70,11 +70,6 @@ export default class Conformation extends Component {
             </div>
             <div className="form-group  delivery_options pt-4">
               <div className="row">
-                <div className="col-md-4">
-                  <button type="button" className="btn btn-lg back">
-                    NewYear 8%
-                  </button>
-                </div>
                 <div className="col-md-2">
                   <h3>{"Subtotal"}</h3>
                   <h3>{"$368"}</h3>
@@ -90,7 +85,7 @@ export default class Conformation extends Component {
               </div>
             </div>
           </Col>
-        </Row>
+        </div>
       </React.Fragment>
     );
   }

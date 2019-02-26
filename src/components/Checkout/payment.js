@@ -61,7 +61,7 @@ class Payment extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-        <Row className="payment_block">
+        <div className="payment_block">
           <Col md={12}>
             {/* <div className="paypal">
               <div className="paypal_img">
@@ -126,7 +126,7 @@ class Payment extends Component {
               </div>
             </form>
           </Col>
-        </Row>
+        </div>
       </React.Fragment>
     );
   }
