@@ -2,9 +2,11 @@
 
 .checkout_information {
   margin-bottom: 60px;
+  margin-top: 60px;
+  display: inline-block;
   .checkout_block {
     padding: 60px;
-    margin-top: 60px;
+    //margin-top: 60px;
     @media (max-width: 767px) {
       padding: 15px;
     }

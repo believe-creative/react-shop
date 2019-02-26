@@ -85,7 +85,7 @@ class Login extends Component {
       name = this.props.user.name;
     }
     return (
-      <div className="signin-form mt-5 mb-5">
+      <div className="signin-form pt-5">
         <Container>
           <Row>
             <Col md={6} className="offset-md-3">

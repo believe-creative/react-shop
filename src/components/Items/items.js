@@ -18,7 +18,7 @@ class Items extends Component {
     if (this.props.cart) cart = this.props.cart;
     return (
       <React.Fragment>
-        <div id="main" class="mt-5 mb-5">
+        <div class="pt-5 mb-5">
           <div class="container">
             <div class="bg-white cart-block">
               <div class="row">
