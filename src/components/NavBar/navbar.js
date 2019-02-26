@@ -11,14 +11,6 @@ import { connect } from "react-redux";
 
 import "../../scss/navbar.scss";
 class NavBar extends Component {
-  componentDidMount() {
-    // let cart = localStorage.getItem("react-shop-cart");
-    // if (cart) {
-    //   cart = JSON.parse(cart);
-    //   console.log(cart.inCartId);
-    //   this.props.getCartProducts(cart.inCartId);
-    // }
-  }
   searchItems(e) {
     this.props.getSearchItems(e.target.value);
   }
@@ -92,7 +84,6 @@ class NavBar extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.get("products").categories);
   return {
     categories: state.get("products").categories,
     cart: state.get("products").cart

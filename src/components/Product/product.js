@@ -12,7 +12,6 @@ class Product extends Component {
   addtoCart(e) {
     let cart = localStorage.getItem("react-shop-cart");
     let props = this.props;
-    console.log(this.props.product);
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
@@ -34,11 +33,9 @@ class Product extends Component {
         show: ""
       });
     }, 1000);
-    console.log("got in");
   }
 
   render() {
-    console.log(this.props);
 
     return (
       <div className="col-md-3 item">

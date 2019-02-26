@@ -15,11 +15,6 @@ class Category extends Component {
     const getsubCategories = props.subCategories
       ? props.subCategories[categoryName]
       : [];
-    console.log(
-      "category componentWillRecieveProps",
-
-      props
-    );
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -27,12 +22,6 @@ class Category extends Component {
       ? this.props.subCategories[categoryName]
       : [];
 
-    console.log(
-      "get sub categories:",
-      this.props.subCategories,
-      getsubCategories
-    );
-    console.log("get categoryName:", categoryName);
 
     let backgroundImageURL = require(`../../images/category_${categoryName}.jpg`);
     let heroStyle = {
@@ -134,7 +123,6 @@ class Category extends Component {
       var matchedDepartments = props.categories.filter(
         category => category.name.toLowerCase() == categoryNameLowerCase
       );
-      console.log("category Name", matchedDepartments);
       var departmentId;
       if (matchedDepartments.length > 0) {
         departmentId = matchedDepartments[0].department_id;
@@ -143,13 +131,10 @@ class Category extends Component {
       if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
         props.loadSubCategories(departmentId);
       }
-      console.log("departmentId", departmentId);
       if (
         !props.categoryProducts ||
         !props.categoryProducts[categoryNameLowerCase]
       ) {
-        console.log("this.props.categories", props);
-        console.log("departmentId", departmentId);
         props.loadCategoryProducts({
           departmentId: departmentId,
           descriptionLength: 120
@@ -160,7 +145,6 @@ class Category extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     subCategories: state.get("products").subCategories,
     categories: state.get("products").categories,

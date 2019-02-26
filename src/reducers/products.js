@@ -13,13 +13,11 @@ export default (state = intialState, action) => {
   let cart = null;
   switch (action.type) {
     case ActionTypes.PRODUCTS.REQUEST:
-      console.log("product request action");
       return {
         ...state,
         isLoading: true
       };
     case ActionTypes.PRODUCTS.SUCCESS:
-      console.log("product request success", action);
       return {
         ...state,
         isLoading: false,
@@ -37,7 +35,6 @@ export default (state = intialState, action) => {
         categories: action.response
       };
     case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
-      console.log("product request success", action);
       cart = localStorage.getItem("react-shop-cart");
       if (cart) {
         cart = JSON.parse(cart);
@@ -53,7 +50,6 @@ export default (state = intialState, action) => {
         cart: cart
       };
     case ActionTypes.GETCARTPRODUCTS.SUCCESS:
-      console.log("product request success", action);
       cart = localStorage.getItem("react-shop-cart");
       if (cart) {
         cart = JSON.parse(cart);
@@ -75,12 +71,10 @@ export default (state = intialState, action) => {
       };
     case ActionTypes.SUBCATEGORIES.SUCCESS:
       let categoryName = getCategoryName(state.categories, action.departmentId);
-      console.log(state.subCategories, "state sub category");
       let subCategories = state.subCategories
         ? Object.assign({}, state.subCategories)
         : [];
       subCategories[categoryName.toLowerCase()] = action.response;
-      console.log("subCategories REDUCERS", subCategories);
       return {
         ...state,
         subCategories
@@ -123,7 +117,6 @@ export default (state = intialState, action) => {
         cart: cart
       };
     case ActionTypes.CATEGORYPRODUCTS.SUCCESS:
-      console.log("CATEGORYPRODUCTS", action);
       categoryName = getCategoryName(
         state.categories,
         action.data.departmentId
@@ -132,15 +125,12 @@ export default (state = intialState, action) => {
       let categoryProducts = state.categoryProducts
         ? Object.assign({}, state.categoryProducts)
         : [];
-      console.log("CATEGORYPRODUCTS", categoryName, categoryProducts);
       categoryProducts[categoryName.toLowerCase()] = action.response;
-      console.log(categoryProducts, "cate products");
       return {
         ...state,
         categoryProducts
       };
     case ActionTypes.SEARCH.SUCCESS:
-      console.log("SEARCH", action);
       return {
         ...state,
         searchItem: action.response

@@ -16,7 +16,6 @@ class Items extends Component {
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
-    console.log(cart);
     return (
       <React.Fragment>
         <div class="pt-5 mb-5">

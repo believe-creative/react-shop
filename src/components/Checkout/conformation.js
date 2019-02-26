@@ -15,7 +15,6 @@ class Conformation extends Component {
   componentDidMount() {}
 
   render() {
-    console.log(this.props);
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
     return (

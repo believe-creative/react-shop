@@ -7,7 +7,6 @@ const intialState = {
 
 
 export default (state = intialState, action) => {
-    console.log(action,"state hhhhh");
   switch (action.type) {
     case ActionTypes.GETSHIPPINGREGIONS.SUCCESS:
         return {

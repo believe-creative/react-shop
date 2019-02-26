@@ -17,13 +17,11 @@ class App extends Component {
     let cart = localStorage.getItem("react-shop-cart");
     if (cart) {
       cart = JSON.parse(cart);
-      console.log(cart.inCartId);
       this.props.getCartProducts(cart.inCartId);
     }
   }
 
   render() {
-    console.log("getCategories", this.props);
     if (this.props.categories && this.props.categories.length > 0) {
       return (
         <div className="App">

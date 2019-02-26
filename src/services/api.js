@@ -3,7 +3,6 @@ import { API_ROOT } from "./constants";
 function callAPI(endpoint, headers, body, schema) {
   const fullURL =
     endpoint.indexOf(API_ROOT) === -1 ? API_ROOT + endpoint : endpoint;
-  console.log(endpoint, headers, body);
   return fetch(fullURL, { headers, body, method: body ? "POST" : "GET" }).then(
     response =>
       response

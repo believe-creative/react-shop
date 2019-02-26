@@ -8,7 +8,6 @@ import "../../scss/cart.scss";
 
 export default class Cart extends Component {
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
         <FontAwesomeIcon icon={faShoppingBag} />

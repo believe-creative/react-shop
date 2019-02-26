@@ -25,6 +25,7 @@ class Delivery extends Component {
    {
       let state=this.state;
       state["region"]=e.currentTarget.value;
+      state["regionName"]=e.currentTarget.querySelectorAll("option[value='"+e.currentTarget.value+"']")[0].innerText;
       this.setState(state);
 
       this.props.setRegion(state["region"]);
@@ -176,7 +177,6 @@ class Delivery extends Component {
   }
 }
 const mapStateToProps = state => {
-  console.log(state.get("shipping"),state.get("products"),"hehe ----------------------");
   return {
     cart:state.get("products").cart,
     regions:state.get("shipping").regions,

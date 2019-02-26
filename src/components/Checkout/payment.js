@@ -42,10 +42,8 @@ class Payment extends Component {
             pwd: this.state.pwd
           })
           .then(function(response) {
-            console.log(response);
             if (response.data.status == "error") {
               this_ref.setState({ errors: response.data.msg });
-              console.log(this_ref.state);
             } else {
               setCookie("s-atk", response.data.token, 0.2);
               props.setUser(response.data.user);
@@ -53,12 +51,10 @@ class Payment extends Component {
             }
           })
           .catch(function(error) {
-            console.log(error);
           });
       });
   }
   render() {
-    console.log(this.props);
     return (
       <React.Fragment>
         <div className="payment_block">

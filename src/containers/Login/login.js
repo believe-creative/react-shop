@@ -33,10 +33,8 @@ class Login extends Component {
         pwd: this.state.pwd
       })
       .then(function(response) {
-        console.log(response);
         if (response.data.status == "error") {
           this_ref.setState({ errors: response.data.msg });
-          console.log(this_ref.state);
         } else {
           setCookie("s-atk", response.data.token, 0.2);
           props.setUser(response.data.user);
@@ -44,7 +42,6 @@ class Login extends Component {
         }
       })
       .catch(function(error) {
-        console.log(error);
       });
   }
   change(e) {
@@ -61,11 +58,8 @@ class Login extends Component {
     var props = this.props;
     var this_ref = this;
     PROVIDERS.map(provider => {
-      console.log(provider);
       socket.on(provider, data => {
-        console.log(data);
         if (data.token) {
-          console.log(data.user);
           setCookie("s-atk", data.token, 0.2);
           props.setUser(data.user);
         }

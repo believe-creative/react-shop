@@ -27,7 +27,6 @@ const {
 
 //reusable fetch subroutine.
 function* fetchEntity(entity, apiFn, id, url) {
-  console.log(id);
   const { response, error } = yield call(apiFn, url || id);
   if (response) {
     yield put(entity.success(id, response));
@@ -98,18 +97,15 @@ function* loadgetRegionShippingOption(action) {
 }
 
 function* loadProducts(action) {
-  console.log("load products", action.category);
 
   yield call(fetchProducts, action.category);
 }
 
 function* loadUser(action) {
-  console.log("check user login");
   yield call(checkUser, action.token);
 }
 
 function* loadCategories(action) {
-  console.log("loading categories");
   yield call(fetchCategories);
 }
 

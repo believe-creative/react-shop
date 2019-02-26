@@ -7,9 +7,7 @@ import "../../scss/categories.scss";
 
 class Categories extends Component {
   componentDidMount() {
-    console.log(this.props, this.props.categories);
     if (this.props.categories) {
-      console.log("loadCategoryProducts");
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
           departmentId: category.department_id,
@@ -20,7 +18,6 @@ class Categories extends Component {
   }
 
   render() {
-    // console.log(this);
     let productsList = [];
     let productCategoriesList = this.props.categoryProducts
       ? Object.values(this.props.categoryProducts)
@@ -30,7 +27,6 @@ class Categories extends Component {
         productsList.push(item);
       });
     });
-    // console.log("productsList", productsList);
     return (
       <div className="container">
         <div className="product_filter_panel">
@@ -51,7 +47,6 @@ class Categories extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log(state.get("products").categories);
   return {
     subCategories: state.get("products").subCategories,
     categories: state.get("products").categories,

@@ -12,6 +12,7 @@ import Payment from "./payment";
 import Image from "react-bootstrap/Image";
 import successimage from "../../images/success-image.png";
 import * as Actions from "../../actions";
+import axios from "axios";
 
 import { connect } from "react-redux";
 
@@ -115,35 +116,67 @@ class Checkout extends Component {
     this.setState(state);
   }
   nextStage() {
-    // if(){
-    //   if(!state["delivery"]["address1"])
-    //   {
-    //       state["delivery"]["errors"].push("Name is required");
-    //   }
-    //   if(!state["delivery"]["city"])
-    //   {
-    //       state["delivery"]["errors"].push("City is required");
-    //   }
-    //   if(!state["delivery"]["zip"])
-    //   {
-    //       state["delivery"]["errors"].push("Zip code is required");
-    //   }
-    //   if(!state["delivery"]["country"])
-    //   {
-    //       state["delivery"]["errors"].push("Country code is required");
-    //   }
-    //   if(!state["delivery"]["region"])
-    //   {
-    //       state["delivery"]["errors"].push("Should select a region");
-    //   }
-    //   if(!state["delivery"]["shippingOption"])
-    //   {
-    //       state["delivery"]["errors"].push("Should select a delivery option.");
-    //   }
-    // }
-    let state = this.state;
-    state["stage"] = state["stage"] + 1;
-    this.setState(state);
+    let state=this.state;
+    state["delivery"]["errors"]=[];
+    if(this.state.stage==0){
+      if(!state["delivery"]["address1"])
+      {
+          state["delivery"]["errors"].push("Name is required");
+      }
+      if(!state["delivery"]["city"])
+      {
+          state["delivery"]["errors"].push("City is required");
+      }
+      if(!state["delivery"]["zip"])
+      {
+          state["delivery"]["errors"].push("Zip code is required");
+      }
+      if(!state["delivery"]["country"])
+      {
+          state["delivery"]["errors"].push("Country code is required");
+      }
+      if(!state["delivery"]["region"])
+      {
+          state["delivery"]["errors"].push("Should select a region");
+      }
+      if(!state["delivery"]["shippingOption"])
+      {
+          state["delivery"]["errors"].push("Should select a delivery option.");
+      }
+      if(state["delivery"]["errors"]<=0)
+      {
+        let state = this.state;
+        state["stage"] = state["stage"] + 1;
+        this.setState(state);
+      }
+      else
+      {
+        axios
+        .post(API_ROOT + "customer_update_address", {
+          inEmail: this.state.email,
+          inAddress1: state["delivery"]["address1"],
+          inAddress2: state["delivery"]["address2"],
+          inCity:state["delivery"]["city"],
+          inRegion:state["inRegion"]["regionName"],
+          inPostalCode:state["inRegion"]["zip"],
+          inCountry:state["inRegion"]["country"],
+          inShippingRegionId:state["inRegion"]["region"]
+        })
+        .then(function(response) {
+
+        })
+        .catch(function(error) {
+
+        });
+      }
+    }
+    else
+    {
+      let state = this.state;
+      state["stage"] = state["stage"] + 1;
+      this.setState(state);
+    }
+    
   }
 
   showErrors() {
@@ -160,7 +193,6 @@ class Checkout extends Component {
   }
 
   render() {
-    console.log(this.props);
     let finalstage = false;
     if (this.state.stage >= 3) finalstage = true;
     return (
