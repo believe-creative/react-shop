@@ -187,22 +187,6 @@ app.post('/setpassword', [
 
 });
 
-
-app.get('/api/product', (req, res) => {
-  sequelize
-    .query('CALL catalog_get_product_details (3)')
-    .then(product=>res.json(product));
-  })
-app.get('/api/products', (req, res) => {
-  sequelize
-    .query('CALL catalog_get_products_in_category (:inCategoryId, :inShortProductDescriptionLength, :inProductsPerPage, :inStartItem )',
-          {replacements: { inCategoryId: 6, inShortProductDescriptionLength: 10, inProductsPerPage:10, inStartItem:1}})
-    .then(cat_products=>res.json(cat_products));
-  });
-
-app.use('/api/sociallogin', authRouter)
-
-
 /***********Products API Calls ***************/
 /*
 * To get all departments
