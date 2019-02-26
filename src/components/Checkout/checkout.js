@@ -64,6 +64,15 @@ class Checkout extends Component {
 
     this.setState(state);
   }
+  componentDidMount()
+  {
+      if(!this.props.user)
+      { 
+          this.props.history.push('/login');
+          localStorage.set("nextRoute","/checkout");
+      }
+      
+  }
   showstages() {
     if (this.state.stage == 0) {
       return (
@@ -163,7 +172,7 @@ class Checkout extends Component {
           inShippingRegionId:state["inRegion"]["region"]
         })
         .then(function(response) {
-
+            
         })
         .catch(function(error) {
 
@@ -307,7 +316,8 @@ class Checkout extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    user: state.get("user")
   };
 };
 
