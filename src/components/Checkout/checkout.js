@@ -30,25 +30,42 @@ class Checkout extends Component {
       stages: [
         {
           next: "Next step",
-          back: "Back"
+          back: "Back",
+          name:"delivery"
         },
         {
           next: "Next step",
-          back: "Back"
+          back: "Back",
+          name:"conformation"
         },
         {
           next: "Pay",
-          back: "Back"
+          back: "Back",
+          name:"payment"
         },
         {
-          next: "Back to Shop"
+          next: "Back to Shop",
+          name:"finish"
         }
-      ]
+      ],
+      delivery:{},
+      conformation:{},
+      payment:{},
+      finish:{},
+      errors:[]
     };
+  }
+  setDelivarydetails(e,child)
+  {
+    let state=this.state;
+    state["delivery"]=child;
+    state["delivery"]["errors"]=[]
+    
+    this.setState(state);
   }
   showstages() {
     if (this.state.stage == 0) {
-      return <Delivery />;
+      return <Delivery setDelivarydetails={this.setDelivarydetails.bind(this)}/>;
     } else if (this.state.stage == 1) {
       return <Conformation />;
     } else if (this.state.stage == 2) {
@@ -91,14 +108,58 @@ class Checkout extends Component {
     let state = this.state;
     state["stage"] = state["stage"] - 1;
     this.setState(state);
-    console.log(this.state.stages[this.state.stage]);
   }
   nextStage() {
+    // if(){
+    //   if(!state["delivery"]["address1"])
+    //   {
+    //       state["delivery"]["errors"].push("Name is required");
+    //   }
+    //   if(!state["delivery"]["city"])
+    //   {
+    //       state["delivery"]["errors"].push("City is required");
+    //   }
+    //   if(!state["delivery"]["zip"])
+    //   {
+    //       state["delivery"]["errors"].push("Zip code is required");
+    //   }
+    //   if(!state["delivery"]["country"])
+    //   {
+    //       state["delivery"]["errors"].push("Country code is required");
+    //   }
+    //   if(!state["delivery"]["region"])
+    //   {
+    //       state["delivery"]["errors"].push("Should select a region");
+    //   }
+    //   if(!state["delivery"]["shippingOption"])
+    //   {
+    //       state["delivery"]["errors"].push("Should select a delivery option.");
+    //   }
+    // }
     let state = this.state;
     state["stage"] = state["stage"] + 1;
     this.setState(state);
-    console.log(this.state.stages[this.state.stage]);
   }
+
+  showErrors()
+  {
+      let errors=this.state[this.state.stages[this.state.stage].name]["errors"]
+      if(errors)
+      {
+          return(
+            <div>
+              {
+                errors.map(function(error){
+                  return(
+                    <div className="alert alert-danger">{error}</div>
+                  )
+                })
+              }
+            </div>
+          )
+      }
+  }
+
   render() {
     console.log(this.props);
     let finalstage = false;
@@ -110,6 +171,7 @@ class Checkout extends Component {
             <form>
               <Row className="checkout_block">
                 <Col md={12}>
+                  {this.showErrors()}
                   <h2>Checkout</h2>
                   <ul className="list-unstyled color-codes">
                     <li

@@ -15,8 +15,11 @@ export const PRODUCT = createRequestTypes("PRODUCT");
 export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
 export const GETCARTPRODUCTS = createRequestTypes("GETCARTPRODUCTS");
 export const GETSHIPPINGREGIONS = createRequestTypes("GETSHIPPINGREGIONS");
+export const GETSHIPPINGOPTIONS = createRequestTypes("GETSHIPPINGOPTIONS");
 export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
+export const SETREGION = "SETREGION";
+export const SETSHIPPINGOPTION = "SETSHIPPINGOPTION";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
 export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
 export const CATEGORYPRODUCTS = createRequestTypes("CATEGORYPRODUCTS");
@@ -24,6 +27,16 @@ export const CATEGORYPRODUCTS = createRequestTypes("CATEGORYPRODUCTS");
 export function setUser(payload) {
   return { type: "SETUSER", payload };
 }
+
+export function setRegion(payload) {
+  return { type: "SETREGION", payload };
+}
+
+export function setShippingOption(payload) {
+  return { type: "SETSHIPPINGOPTION", payload };
+}
+
+
 
 function action(type, payload = {}) {
   return { type, ...payload };
@@ -63,6 +76,15 @@ export const getShippingRegions = {
   }
     ,
   failure: (error) => action(GETSHIPPINGREGIONS[FAILURE], {error })
+};
+
+export const getShippingOptions = {
+  request: (inShippingRegionId) => action(GETSHIPPINGOPTIONS[REQUEST], {inShippingRegionId}),
+  success: (inShippingRegionId,response) =>{
+    return action(GETSHIPPINGOPTIONS[SUCCESS], { inShippingRegionId,response })
+  }
+    ,
+  failure: (inShippingRegionId,error) => action(GETSHIPPINGOPTIONS[FAILURE], {inShippingRegionId,error })
 };
 
 export const checkUserLogin = {

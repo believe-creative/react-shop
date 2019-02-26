@@ -40,6 +40,7 @@ class UserBlock extends Component {
           totalAmount + cart.products[i].price * cart.products[i].quantity;
       }
     }
+    totalAmount=Math.round(totalAmount * 100) / 100;
 
     return (
       <div class="topbar">

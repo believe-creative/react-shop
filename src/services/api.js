@@ -55,6 +55,16 @@ export const getSubCategories = departmentId =>
     },
     getParams({ inDepartmentId: departmentId })
   );
+
+export const getShippingOptions = inShippingRegionId =>
+  callAPI(
+    "get-order-shipping-info/",
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({ inShippingRegionId: inShippingRegionId })
+  );
 export const getCategoryProducts = data =>
   callAPI(
     "get-department-products/",

@@ -92,6 +92,43 @@ export default (state = intialState, action) => {
         ...state,
         subCategories
       };
+
+    case ActionTypes.SETREGION:
+      cart=localStorage.getItem("react-shop-cart");
+      if(cart)
+      {
+        cart=JSON.parse(cart);
+      }
+      else
+      {
+        cart={inCartId:null,count:0,products:[],region:null};
+      }
+      
+      cart.region=action.payload;
+      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      return {
+        ...state,
+        isLoading: false,
+        cart:cart
+      };
+    case ActionTypes.SETSHIPPINGOPTION:
+      cart=localStorage.getItem("react-shop-cart");
+      if(cart)
+      {
+        cart=JSON.parse(cart);
+      }
+      else
+      {
+        cart={inCartId:null,count:0,products:[],region:null,shippingoption:null};
+      }
+      
+      cart.shippingoption=action.payload;
+      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      return {
+        ...state,
+        isLoading: false,
+        cart:cart
+      };
     case ActionTypes.CATEGORYPRODUCTS.SUCCESS:
       console.log("CATEGORYPRODUCTS", action);
       categoryName = getCategoryName(

@@ -1,12 +1,4 @@
-import {
-  takeLatest,
-  takeEvery,
-  put,
-  call,
-  fork,
-  select,
-  all
-} from "redux-saga/effects";
+import { takeLatest,takeEvery, put, call, fork, select, all } from "redux-saga/effects";
 import { api } from "../services";
 import * as actions from "../actions";
 import { getProduct, getProducts } from "../reducers/selectors";
@@ -19,6 +11,7 @@ const {
   getSubCategories,
   AddToCart,
   getCartProducts,
+  getShippingOptions,
   getShippingRegions,
   getCategoryProducts
 } = actions;
@@ -37,21 +30,10 @@ function* fetchEntity(entity, apiFn, id, url) {
 export const fetchProduct = fetchEntity.bind(null, product, api.getProduct);
 export const fetchProducts = fetchEntity.bind(null, products, api.getProducts);
 export const checkUser = fetchEntity.bind(null, checkUserLogin, api.checkUser);
-export const addProductToCart = fetchEntity.bind(
-  null,
-  AddToCart,
-  api.AddToCart
-);
-export const getProductsfromCart = fetchEntity.bind(
-  null,
-  getCartProducts,
-  api.getCartProducts
-);
-export const getAllShippingRegions = fetchEntity.bind(
-  null,
-  getShippingRegions,
-  api.getShippingRegions
-);
+export const addProductToCart = fetchEntity.bind(null, AddToCart, api.AddToCart);
+export const getProductsfromCart = fetchEntity.bind(null, getCartProducts, api.getCartProducts);
+export const getAllShippingRegions = fetchEntity.bind(null, getShippingRegions, api.getShippingRegions);
+export const getRegionShippingOption = fetchEntity.bind(null, getShippingOptions, api.getShippingOptions);
 export const fetchCategories = fetchEntity.bind(
   null,
   getCategories,
@@ -68,6 +50,7 @@ export const fetchCategoryProducts = fetchEntity.bind(
   api.getCategoryProducts
 );
 
+
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
 }
@@ -78,6 +61,10 @@ function* loadProductsfromCart(action) {
 
 function* loadgetAllShippingRegions(action) {
   yield call(getAllShippingRegions);
+}
+
+function* loadgetRegionShippingOption(action) {
+  yield call(getRegionShippingOption,action.inShippingRegionId);
 }
 
 function* loadProducts(action) {
@@ -134,10 +121,11 @@ function* watchloadProductsfromCart() {
 }
 
 function* watchloadgetAllShippingRegions() {
-  yield takeLatest(
-    actions.GETSHIPPINGREGIONS.REQUEST,
-    loadgetAllShippingRegions
-  );
+  yield takeLatest(actions.GETSHIPPINGREGIONS.REQUEST, loadgetAllShippingRegions);
+}
+
+function* watchloadgetRegionShippingOption() {
+  yield takeLatest(actions.GETSHIPPINGOPTIONS.REQUEST, loadgetRegionShippingOption);
 }
 
 export default function*() {
@@ -149,4 +137,5 @@ export default function*() {
   yield fork(watchloadUpadtedCart);
   yield fork(watchloadProductsfromCart);
   yield fork(watchloadgetAllShippingRegions);
+  yield fork(watchloadgetRegionShippingOption);
 }
