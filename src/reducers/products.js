@@ -10,7 +10,7 @@ function getCategoryName(categories, id) {
 }
 
 export default (state = intialState, action) => {
-  let cart=null;
+  let cart = null;
   switch (action.type) {
     case ActionTypes.PRODUCTS.REQUEST:
       console.log("product request action");
@@ -36,20 +36,17 @@ export default (state = intialState, action) => {
         ...state,
         categories: action.response
       };
-      case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
+    case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
       console.log("product request success", action);
-      cart=localStorage.getItem("react-shop-cart");
-      if(cart)
-      {
-        cart=JSON.parse(cart);
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = { inCartId: null, count: 0 };
       }
-      else
-      {
-        cart={inCartId:null,count:0};
-      }
-      cart.inCartId=action.response.inCartId;
-      cart.count=cart.count+1;
-      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      cart.inCartId = action.response.inCartId;
+      cart.count = cart.count + 1;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
@@ -57,24 +54,20 @@ export default (state = intialState, action) => {
       };
     case ActionTypes.GETCARTPRODUCTS.SUCCESS:
       console.log("product request success", action);
-      cart=localStorage.getItem("react-shop-cart");
-      if(cart)
-      {
-        cart=JSON.parse(cart);
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = { inCartId: null, count: 0, products: [] };
       }
-      else
-      {
-        cart={inCartId:null,count:0,products:[]};
+
+      let count = 0;
+      for (var i = 0; i < action.response.length; i++) {
+        count = count + action.response[i].quantity;
       }
-      
-      let count=0;
-      for(var i=0;i<action.response.length;i++)
-      {
-        count=count+action.response[i].quantity;
-      }
-      cart.count=count;
-      cart.products=action.response;
-      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+      cart.count = count;
+      cart.products = action.response;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
@@ -94,40 +87,40 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.SETREGION:
-      cart=localStorage.getItem("react-shop-cart");
-      if(cart)
-      {
-        cart=JSON.parse(cart);
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = { inCartId: null, count: 0, products: [], region: null };
       }
-      else
-      {
-        cart={inCartId:null,count:0,products:[],region:null};
-      }
-      
-      cart.region=action.payload;
-      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+
+      cart.region = action.payload;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
-        cart:cart
+        cart: cart
       };
     case ActionTypes.SETSHIPPINGOPTION:
-      cart=localStorage.getItem("react-shop-cart");
-      if(cart)
-      {
-        cart=JSON.parse(cart);
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = {
+          inCartId: null,
+          count: 0,
+          products: [],
+          region: null,
+          shippingoption: null
+        };
       }
-      else
-      {
-        cart={inCartId:null,count:0,products:[],region:null,shippingoption:null};
-      }
-      
-      cart.shippingoption=action.payload;
-      localStorage.setItem("react-shop-cart",JSON.stringify(cart));
+
+      cart.shippingoption = action.payload;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
-        cart:cart
+        cart: cart
       };
     case ActionTypes.CATEGORYPRODUCTS.SUCCESS:
       console.log("CATEGORYPRODUCTS", action);
@@ -145,6 +138,12 @@ export default (state = intialState, action) => {
       return {
         ...state,
         categoryProducts
+      };
+    case ActionTypes.SEARCH.SUCCESS:
+      console.log("SEARCH", action);
+      return {
+        ...state,
+        searchItem: action.response
       };
     default:
       return state;

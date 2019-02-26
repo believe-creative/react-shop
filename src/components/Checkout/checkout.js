@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
+import { LinkContainer } from "react-router-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,41 +32,42 @@ class Checkout extends Component {
         {
           next: "Next step",
           back: "Back",
-          name:"delivery"
+          name: "delivery"
         },
         {
           next: "Next step",
           back: "Back",
-          name:"conformation"
+          name: "conformation"
         },
         {
           next: "Pay",
           back: "Back",
-          name:"payment"
+          name: "payment"
         },
         {
           next: "Back to Shop",
-          name:"finish"
+          name: "finish"
         }
       ],
-      delivery:{},
-      conformation:{},
-      payment:{},
-      finish:{},
-      errors:[]
+      delivery: {},
+      conformation: {},
+      payment: {},
+      finish: {},
+      errors: []
     };
   }
-  setDelivarydetails(e,child)
-  {
-    let state=this.state;
-    state["delivery"]=child;
-    state["delivery"]["errors"]=[]
-    
+  setDelivarydetails(e, child) {
+    let state = this.state;
+    state["delivery"] = child;
+    state["delivery"]["errors"] = [];
+
     this.setState(state);
   }
   showstages() {
     if (this.state.stage == 0) {
-      return <Delivery setDelivarydetails={this.setDelivarydetails.bind(this)}/>;
+      return (
+        <Delivery setDelivarydetails={this.setDelivarydetails.bind(this)} />
+      );
     } else if (this.state.stage == 1) {
       return <Conformation />;
     } else if (this.state.stage == 2) {
@@ -96,9 +98,12 @@ class Checkout extends Component {
                 details.
               </p>
             </div>
-            <button type="button" className="btn btn-md next_step mt-4">
-              Back to shop
-            </button>
+            <LinkContainer
+              className="btn btn-md next_step mt-4"
+              to={"/categories"}
+            >
+              <a>{"Back to shop"}</a>
+            </LinkContainer>
           </Col>
         </Row>
       );
@@ -141,23 +146,17 @@ class Checkout extends Component {
     this.setState(state);
   }
 
-  showErrors()
-  {
-      let errors=this.state[this.state.stages[this.state.stage].name]["errors"]
-      if(errors)
-      {
-          return(
-            <div>
-              {
-                errors.map(function(error){
-                  return(
-                    <div className="alert alert-danger">{error}</div>
-                  )
-                })
-              }
-            </div>
-          )
-      }
+  showErrors() {
+    let errors = this.state[this.state.stages[this.state.stage].name]["errors"];
+    if (errors) {
+      return (
+        <div>
+          {errors.map(function(error) {
+            return <div className="alert alert-danger">{error}</div>;
+          })}
+        </div>
+      );
+    }
   }
 
   render() {

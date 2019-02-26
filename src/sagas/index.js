@@ -1,4 +1,12 @@
-import { takeLatest,takeEvery, put, call, fork, select, all } from "redux-saga/effects";
+import {
+  takeLatest,
+  takeEvery,
+  put,
+  call,
+  fork,
+  select,
+  all
+} from "redux-saga/effects";
 import { api } from "../services";
 import * as actions from "../actions";
 import { getProduct, getProducts } from "../reducers/selectors";
@@ -13,7 +21,8 @@ const {
   getCartProducts,
   getShippingOptions,
   getShippingRegions,
-  getCategoryProducts
+  getCategoryProducts,
+  getSearchItems
 } = actions;
 
 //reusable fetch subroutine.
@@ -30,10 +39,26 @@ function* fetchEntity(entity, apiFn, id, url) {
 export const fetchProduct = fetchEntity.bind(null, product, api.getProduct);
 export const fetchProducts = fetchEntity.bind(null, products, api.getProducts);
 export const checkUser = fetchEntity.bind(null, checkUserLogin, api.checkUser);
-export const addProductToCart = fetchEntity.bind(null, AddToCart, api.AddToCart);
-export const getProductsfromCart = fetchEntity.bind(null, getCartProducts, api.getCartProducts);
-export const getAllShippingRegions = fetchEntity.bind(null, getShippingRegions, api.getShippingRegions);
-export const getRegionShippingOption = fetchEntity.bind(null, getShippingOptions, api.getShippingOptions);
+export const addProductToCart = fetchEntity.bind(
+  null,
+  AddToCart,
+  api.AddToCart
+);
+export const getProductsfromCart = fetchEntity.bind(
+  null,
+  getCartProducts,
+  api.getCartProducts
+);
+export const getAllShippingRegions = fetchEntity.bind(
+  null,
+  getShippingRegions,
+  api.getShippingRegions
+);
+export const getRegionShippingOption = fetchEntity.bind(
+  null,
+  getShippingOptions,
+  api.getShippingOptions
+);
 export const fetchCategories = fetchEntity.bind(
   null,
   getCategories,
@@ -50,6 +75,11 @@ export const fetchCategoryProducts = fetchEntity.bind(
   api.getCategoryProducts
 );
 
+export const fetchSearchItems = fetchEntity.bind(
+  null,
+  getSearchItems,
+  api.getSearchItems
+);
 
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
@@ -64,7 +94,7 @@ function* loadgetAllShippingRegions(action) {
 }
 
 function* loadgetRegionShippingOption(action) {
-  yield call(getRegionShippingOption,action.inShippingRegionId);
+  yield call(getRegionShippingOption, action.inShippingRegionId);
 }
 
 function* loadProducts(action) {
@@ -89,6 +119,10 @@ function* loadSubCategories(action) {
 
 function* loadCategoryProducts(action) {
   yield call(fetchCategoryProducts, action.data);
+}
+
+function* loadSearchItems(action) {
+  yield call(fetchSearchItems, action.data);
 }
 
 //+++++++++++++++++//
@@ -121,11 +155,21 @@ function* watchloadProductsfromCart() {
 }
 
 function* watchloadgetAllShippingRegions() {
-  yield takeLatest(actions.GETSHIPPINGREGIONS.REQUEST, loadgetAllShippingRegions);
+  yield takeLatest(
+    actions.GETSHIPPINGREGIONS.REQUEST,
+    loadgetAllShippingRegions
+  );
 }
 
 function* watchloadgetRegionShippingOption() {
-  yield takeLatest(actions.GETSHIPPINGOPTIONS.REQUEST, loadgetRegionShippingOption);
+  yield takeLatest(
+    actions.GETSHIPPINGOPTIONS.REQUEST,
+    loadgetRegionShippingOption
+  );
+}
+
+function* watchloadSearchItems() {
+  yield takeLatest(actions.SEARCH.REQUEST, loadSearchItems);
 }
 
 export default function*() {
@@ -138,4 +182,5 @@ export default function*() {
   yield fork(watchloadProductsfromCart);
   yield fork(watchloadgetAllShippingRegions);
   yield fork(watchloadgetRegionShippingOption);
+  yield fork(watchloadSearchItems);
 }

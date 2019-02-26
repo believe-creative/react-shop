@@ -19,7 +19,9 @@ class NavBar extends Component {
     //   this.props.getCartProducts(cart.inCartId);
     // }
   }
-
+  searchItems(e) {
+    this.props.getSearchItems(e.target.value);
+  }
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };
@@ -64,7 +66,12 @@ class NavBar extends Component {
               <li>
                 <span className="search_input">
                   <form id="search_icon">
-                    <input type="search" placeholder="" className="search" />
+                    <input
+                      type="search"
+                      placeholder=""
+                      className="search"
+                      onChange={this.searchItems.bind(this)}
+                    />
                   </form>
                 </span>
               </li>
@@ -94,7 +101,9 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({
   getCartProducts: inCartId =>
-    dispatch(Actions.getCartProducts.request(inCartId))
+    dispatch(Actions.getCartProducts.request(inCartId)),
+  getSearchItems: searchitem =>
+    dispatch(Actions.getSearchItems.request(searchitem))
 });
 
 export default connect(

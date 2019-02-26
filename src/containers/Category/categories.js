@@ -55,7 +55,8 @@ const mapStateToProps = state => {
   return {
     subCategories: state.get("products").subCategories,
     categories: state.get("products").categories,
-    categoryProducts: state.get("products").categoryProducts
+    categoryProducts: state.get("products").categoryProducts,
+    searchitem: state.get("products").searchItem
   };
 };
 

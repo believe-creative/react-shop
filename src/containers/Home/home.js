@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Switch, Route } from "react-router";
+import { LinkContainer } from "react-router-bootstrap";
 import Container from "react-bootstrap/Container";
 import bag from "../../images/bag.png";
 import pop_image from "../../images/pop_image.png";
@@ -18,9 +19,9 @@ export default class Home extends Component {
                 development
               </h2>
               <p>
-                <a href="#" className="btn btn-lg">
-                  View All
-                </a>
+                <LinkContainer to="/categories" className="btn btn-lg">
+                  <a>View All</a>
+                </LinkContainer>
               </p>
             </div>
           </Container>

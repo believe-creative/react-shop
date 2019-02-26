@@ -32,19 +32,35 @@ function getParams(data) {
 
 export const getProducts = category => callAPI(`products/`);
 export const getProduct = productId => callAPI(`product/${productId}`);
-export const AddToCart = (data) =>callAPI(`add-product-to-cart/`,{
-  "Content-Type": "application/x-www-form-urlencoded",
-  Accept: "application/json; charset=utf-8"
-},getParams({inCartId:data.inCartId,inProductId:data.inProductId,inAttributes:data.inAttributes}) );
+export const AddToCart = data =>
+  callAPI(
+    `add-product-to-cart/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({
+      inCartId: data.inCartId,
+      inProductId: data.inProductId,
+      inAttributes: data.inAttributes
+    })
+  );
 
-export const getCartProducts = (inCartId) =>callAPI(`get-shopping-cart-products/`,{
-  "Content-Type": "application/x-www-form-urlencoded",
-  Accept: "application/json; charset=utf-8"
-},getParams({inCartId:inCartId}) );
+export const getCartProducts = inCartId =>
+  callAPI(
+    `get-shopping-cart-products/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({ inCartId: inCartId })
+  );
 
-export const getShippingRegions = () => callAPI(`get-customer-shipping-regions/`);
+export const getShippingRegions = () =>
+  callAPI(`get-customer-shipping-regions/`);
 
-export const checkUser = token =>callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
+export const checkUser = token =>
+  callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
 export const getDepartments = () => callAPI("get-departments/");
 export const getSubCategories = departmentId =>
   callAPI(
@@ -74,5 +90,20 @@ export const getCategoryProducts = data =>
       inShortProductDescriptionLength: data.descriptionLength,
       inProductsPerPage: 10,
       inStartItem: 0
+    })
+  );
+export const getSearchItems = searchTerm =>
+  callAPI(
+    `search/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({
+      inSearchString: searchTerm,
+      inAllWords: "on",
+      inShortProductDescriptionLength: "100",
+      inProductsPerPage: "1",
+      inStartItem: "1"
     })
   );

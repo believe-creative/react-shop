@@ -16,6 +16,7 @@ class Items extends Component {
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
+    console.log(cart);
     return (
       <React.Fragment>
         <div class="pt-5 mb-5">
@@ -40,9 +41,11 @@ class Items extends Component {
                           <ul class="list-unstyled">
                             <li class="img-block">
                               <img
-                                src="images/adoration-of-the-kings.gif"
-                                alt="Image"
-                                title="Image"
+                                src={require(`../../images/product_images/${
+                                  product.thumbnail
+                                    ? product.thumbnail
+                                    : "afghan-flower-2.gif"
+                                }`)}
                               />
                               <span>
                                 <h3>{product.name}</h3>
