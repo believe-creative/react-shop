@@ -9,8 +9,16 @@
       padding: 15px;
     }
     .progress-txt {
+      display: flex;
       @media (max-width: 767px) {
         display: none;
+      }
+      li {
+        width: 100%;
+        padding-right: 0;
+        &:last-child {
+          width: 27%;
+        }
       }
     }
   }
