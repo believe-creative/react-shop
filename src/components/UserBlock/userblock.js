@@ -13,7 +13,7 @@ class UserBlock extends Component {
     super(props);
     this.state = {
       user: {},
-      cart:{}
+      cart: {}
     };
   }
   componentDidMount() {
@@ -40,7 +40,6 @@ class UserBlock extends Component {
          this.setState({cart:props.cart});
       }
     }
-     
   }
   logout() {
     deleteCookie("s-atk");
@@ -55,16 +54,14 @@ class UserBlock extends Component {
     }
     if (this.props.cart) {
       let cart = this.props.cart;
-      if(cart.products)
-      { 
+      if (cart.products) {
         for (var i = 0; i < cart.products.length; i++) {
           totalAmount =
             totalAmount + cart.products[i].price * cart.products[i].quantity;
         }
       }
-      
     }
-    totalAmount=Math.round(totalAmount * 100) / 100;
+    totalAmount = Math.round(totalAmount * 100) / 100;
 
     return (
       <div className="topbar">
@@ -102,6 +99,7 @@ class UserBlock extends Component {
             </ul>
           </div>
           <div className="currency-block">&#163; GBP</div> */}
+
           <div className="price-block">
             <a href="">
               <i className="fa fa-shopping-bag" aria-hidden="true" />
