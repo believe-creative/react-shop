@@ -13,7 +13,7 @@ import Image from "react-bootstrap/Image";
 import successimage from "../../images/success-image.png";
 import * as Actions from "../../actions";
 import axios from "axios";
-
+import { API_ROOT } from "../../services/constants";
 import { connect } from "react-redux";
 
 import {
@@ -64,14 +64,11 @@ class Checkout extends Component {
 
     this.setState(state);
   }
-  componentDidMount()
-  {
-      if(!this.props.user)
-      { 
-          this.props.history.push('/login');
-          localStorage.set("nextRoute","/checkout");
-      }
-      
+  componentDidMount() {
+    if (!this.props.user) {
+      this.props.history.push("/login");
+      localStorage.set("nextRoute", "/checkout");
+    }
   }
   showstages() {
     if (this.state.stage == 0) {
@@ -125,67 +122,51 @@ class Checkout extends Component {
     this.setState(state);
   }
   nextStage() {
-    let state=this.state;
-    state["delivery"]["errors"]=[];
-    if(this.state.stage==0){
-      if(!state["delivery"]["address1"])
-      {
-          state["delivery"]["errors"].push("Name is required");
+    let state = this.state;
+    state["delivery"]["errors"] = [];
+    if (this.state.stage == 0) {
+      if (!state["delivery"]["address1"]) {
+        state["delivery"]["errors"].push("Name is required");
       }
-      if(!state["delivery"]["city"])
-      {
-          state["delivery"]["errors"].push("City is required");
+      if (!state["delivery"]["city"]) {
+        state["delivery"]["errors"].push("City is required");
       }
-      if(!state["delivery"]["zip"])
-      {
-          state["delivery"]["errors"].push("Zip code is required");
+      if (!state["delivery"]["zip"]) {
+        state["delivery"]["errors"].push("Zip code is required");
       }
-      if(!state["delivery"]["country"])
-      {
-          state["delivery"]["errors"].push("Country code is required");
+      if (!state["delivery"]["country"]) {
+        state["delivery"]["errors"].push("Country code is required");
       }
-      if(!state["delivery"]["region"])
-      {
-          state["delivery"]["errors"].push("Should select a region");
+      if (!state["delivery"]["region"]) {
+        state["delivery"]["errors"].push("Should select a region");
       }
-      if(!state["delivery"]["shippingOption"])
-      {
-          state["delivery"]["errors"].push("Should select a delivery option.");
+      if (!state["delivery"]["shippingOption"]) {
+        state["delivery"]["errors"].push("Should select a delivery option.");
       }
-      if(state["delivery"]["errors"]<=0)
-      {
+      if (state["delivery"]["errors"] <= 0) {
         let state = this.state;
         state["stage"] = state["stage"] + 1;
         this.setState(state);
-      }
-      else
-      {
+      } else {
         axios
-        .post(API_ROOT + "customer_update_address", {
-          inEmail: this.state.email,
-          inAddress1: state["delivery"]["address1"],
-          inAddress2: state["delivery"]["address2"],
-          inCity:state["delivery"]["city"],
-          inRegion:state["inRegion"]["regionName"],
-          inPostalCode:state["inRegion"]["zip"],
-          inCountry:state["inRegion"]["country"],
-          inShippingRegionId:state["inRegion"]["region"]
-        })
-        .then(function(response) {
-            
-        })
-        .catch(function(error) {
-
-        });
+          .post(API_ROOT + "customer_update_address", {
+            inEmail: this.state.email,
+            inAddress1: state["delivery"]["address1"],
+            inAddress2: state["delivery"]["address2"],
+            inCity: state["delivery"]["city"],
+            inRegion: state["inRegion"]["regionName"],
+            inPostalCode: state["inRegion"]["zip"],
+            inCountry: state["inRegion"]["country"],
+            inShippingRegionId: state["inRegion"]["region"]
+          })
+          .then(function(response) {})
+          .catch(function(error) {});
       }
-    }
-    else
-    {
+    } else {
       let state = this.state;
       state["stage"] = state["stage"] + 1;
       this.setState(state);
     }
-    
   }
 
   showErrors() {

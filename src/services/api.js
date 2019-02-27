@@ -102,7 +102,7 @@ export const getSearchItems = searchTerm =>
       inSearchString: searchTerm,
       inAllWords: "on",
       inShortProductDescriptionLength: "100",
-      inProductsPerPage: "1",
+      inProductsPerPage: "15",
       inStartItem: "1"
     })
   );
