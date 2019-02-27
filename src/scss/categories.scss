@@ -107,6 +107,11 @@
   }
 }
 .sub_categories {
+  li {
+    a {
+      padding: 0;
+    }
+  }
   .category_name {
     color: $white;
   }

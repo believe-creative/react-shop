@@ -26,6 +26,7 @@ export const SETSHIPPINGOPTION = "SETSHIPPINGOPTION";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
 export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
 export const CATEGORYPRODUCTS = createRequestTypes("CATEGORYPRODUCTS");
+export const SUBCATEGORYPRODUCTS = createRequestTypes("SUBCATEGORYPRODUCTS");
 export const SEARCH = createRequestTypes("SEARCH");
 
 export function setUser(payload) {
@@ -66,10 +67,16 @@ export const AddToCart = {
 };
 
 export const removeFromCart = {
-  request: inItemId =>{console.log(inItemId); return action(REMOVEFROMCART[REQUEST], { inItemId })},
-  success: (inItemId, response) =>{ console.log(response);
-    return action(REMOVEFROMCART[SUCCESS], { inItemId, response })},
-  failure: (inItemId, error) => action(REMOVEFROMCART[FAILURE], { inItemId, error })
+  request: inItemId => {
+    console.log(inItemId);
+    return action(REMOVEFROMCART[REQUEST], { inItemId });
+  },
+  success: (inItemId, response) => {
+    console.log(response);
+    return action(REMOVEFROMCART[SUCCESS], { inItemId, response });
+  },
+  failure: (inItemId, error) =>
+    action(REMOVEFROMCART[FAILURE], { inItemId, error })
 };
 
 export const updateProductQuantity = {
@@ -142,6 +149,13 @@ export const getCategoryProducts = {
   failure: (data, error) => action(CATEGORYPRODUCTS[FAILURE], { data, error })
 };
 
+export const getSubCategoryProducts = {
+  request: data => action(SUBCATEGORYPRODUCTS[REQUEST], { data }),
+  success: (data, response) =>
+    action(SUBCATEGORYPRODUCTS[SUCCESS], { data, response }),
+  failure: (data, error) =>
+    action(SUBCATEGORYPRODUCTS[FAILURE], { data, error })
+};
 export const getSearchItems = {
   request: data => action(SEARCH[REQUEST], { data }),
   success: (data, response) => action(SEARCH[SUCCESS], { data, response }),

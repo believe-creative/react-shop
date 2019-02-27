@@ -22,6 +22,7 @@ const {
   getShippingOptions,
   getShippingRegions,
   getCategoryProducts,
+  getSubCategoryProducts,
   removeFromCart,
   getCustomerInfo,
   updateProductQuantity,
@@ -76,14 +77,18 @@ export const fetchCategoryProducts = fetchEntity.bind(
   getCategoryProducts,
   api.getCategoryProducts
 );
-
+export const fetchSubCategoryProducts = fetchEntity.bind(
+  null,
+  getSubCategoryProducts,
+  api.getSubCategoryProducts
+);
 export const fetchSearchItems = fetchEntity.bind(
   null,
   getSearchItems,
   api.getSearchItems
 );
 
-export const  updateQuantity= fetchEntity.bind(
+export const updateQuantity = fetchEntity.bind(
   null,
   updateProductQuantity,
   api.updateProductQuantity
@@ -131,7 +136,6 @@ function* loadgetRegionShippingOption(action) {
 }
 
 function* loadProducts(action) {
-
   yield call(fetchProducts, action.category);
 }
 
@@ -150,7 +154,9 @@ function* loadSubCategories(action) {
 function* loadCategoryProducts(action) {
   yield call(fetchCategoryProducts, action.data);
 }
-
+function* loadSubCategoryProducts(action) {
+  yield call(fetchSubCategoryProducts, action.data);
+}
 function* loadSearchItems(action) {
   yield call(fetchSearchItems, action.data);
 }
@@ -176,7 +182,9 @@ function* watchLoadSubCategories() {
 function* watchLoadCategoryProducts() {
   yield takeEvery(actions.CATEGORYPRODUCTS.REQUEST, loadCategoryProducts);
 }
-
+function* watchLoadSubCategoryProducts() {
+  yield takeEvery(actions.SUBCATEGORYPRODUCTS.REQUEST, loadSubCategoryProducts);
+}
 function* watchloadUpadtedCart() {
   yield takeLatest(actions.ADDPRODUCTTOCART.REQUEST, loadUpadtedCart);
 }
@@ -203,17 +211,11 @@ function* watchloadSearchItems() {
 }
 
 function* watchloadremoveProduct() {
-  yield takeLatest(
-    actions.REMOVEFROMCART.REQUEST,
-    loadremoveProduct
-  );
+  yield takeLatest(actions.REMOVEFROMCART.REQUEST, loadremoveProduct);
 }
 
 function* watchloadupdateQuantity() {
-  yield takeLatest(
-    actions.UPDATEQUANTITY.REQUEST,
-    loadupdateQuantity
-  );
+  yield takeLatest(actions.UPDATEQUANTITY.REQUEST, loadupdateQuantity);
 }
 
 function* watchloadgetCustomerInfo() {
@@ -229,6 +231,7 @@ export default function*() {
   yield fork(watchLoadCategories);
   yield fork(watchLoadSubCategories);
   yield fork(watchLoadCategoryProducts);
+  yield fork(watchLoadSubCategoryProducts);
   yield fork(watchloadUpadtedCart);
   yield fork(watchloadProductsfromCart);
   yield fork(watchloadgetAllShippingRegions);

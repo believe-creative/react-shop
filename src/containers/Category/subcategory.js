@@ -4,9 +4,8 @@ import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
 import bag from "../../images/bag.png";
 import "../../scss/categories.scss";
-import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
-class Category extends Component {
+
+class SubCategory extends Component {
   componentDidMount() {
     this.checkAndLoadSubCategories(this.props);
   }
@@ -28,12 +27,6 @@ class Category extends Component {
       backgroundImage: `url(${backgroundImageURL})`
     };
     console.log("CATEGORIES:", this.props);
-    let categoryProducts = this.props.categoryProducts
-      ? this.props.categoryProducts[categoryName]
-      : [];
-    let subcategoryProducts = this.props.subCategoryProducts
-      ? this.props.subCategoryProducts[categoryName]
-      : [];
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -45,14 +38,9 @@ class Category extends Component {
               <ul className="sub_categories list-unstyled">
                 {getsubCategories
                   ? getsubCategories.map((category, index) => {
-                      var subCategoryName = category.name.toLowerCase();
                       return (
                         <li>
-                          <LinkContainer to={subCategoryName}>
-                            <Nav.Link>
-                              <h2 className="category_name">{category.name}</h2>
-                            </Nav.Link>
-                          </LinkContainer>
+                          <h2 className="category_name">{category.name}</h2>
                         </li>
                       );
                     })
@@ -70,9 +58,9 @@ class Category extends Component {
                   {
                     <ProductList
                       products={
-                        categoryProducts == undefined
-                          ? subcategoryProducts
-                          : categoryProducts
+                        this.props.categoryProducts
+                          ? this.props.categoryProducts[categoryName]
+                          : []
                       }
                     />
                   }
@@ -135,7 +123,6 @@ class Category extends Component {
       var matchedDepartments = props.categories.filter(
         category => category.name.toLowerCase() == categoryNameLowerCase
       );
-
       var departmentId;
       if (matchedDepartments.length > 0) {
         departmentId = matchedDepartments[0].department_id;
@@ -144,38 +131,12 @@ class Category extends Component {
       if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
         props.loadSubCategories(departmentId);
       }
-
       if (
         !props.categoryProducts ||
         !props.categoryProducts[categoryNameLowerCase]
       ) {
         props.loadCategoryProducts({
           departmentId: departmentId,
-          descriptionLength: 120
-        });
-      }
-    }
-    if (props.subCategories) {
-      var categoryId;
-      var allSubCategories = [];
-      Object.values(props.subCategories).map(subCategory => {
-        allSubCategories = [...allSubCategories, ...subCategory];
-      });
-      console.log(allSubCategories);
-      var matchedCategories = allSubCategories.filter(
-        category => category.name.toLowerCase() == categoryNameLowerCase
-      );
-      console.log(matchedCategories);
-
-      if (matchedCategories.length > 0) {
-        categoryId = matchedCategories[0].category_id;
-        console.log(categoryId);
-      }
-
-      if (!props.subCategoryProducts) {
-        console.log(categoryId);
-        props.loadSubCategoryProducts({
-          categoryId: 1,
           descriptionLength: 120
         });
       }
@@ -187,8 +148,7 @@ const mapStateToProps = state => {
   return {
     subCategories: state.get("products").subCategories,
     categories: state.get("products").categories,
-    categoryProducts: state.get("products").categoryProducts,
-    subCategoryProducts: state.get("products").subCategoryProducts
+    categoryProducts: state.get("products").categoryProducts
   };
 };
 
@@ -196,12 +156,10 @@ const mapStateToDispatch = dispatch => ({
   loadSubCategories: categoryId =>
     dispatch(Actions.getSubCategories.request(categoryId)),
   loadCategoryProducts: data =>
-    dispatch(Actions.getCategoryProducts.request(data)),
-  loadSubCategoryProducts: data =>
-    dispatch(Actions.getSubCategoryProducts.request(data))
+    dispatch(Actions.getCategoryProducts.request(data))
 });
 
 export default connect(
   mapStateToProps,
   mapStateToDispatch
-)(Category);
+)(SubCategory);

@@ -45,7 +45,7 @@ export const AddToCart = data =>
     })
   );
 
-  export const removeFromCart = inItemId =>
+export const removeFromCart = inItemId =>
   callAPI(
     `remove-product-from-cart/`,
     {
@@ -57,7 +57,7 @@ export const AddToCart = data =>
     })
   );
 
-  export const updateProductQuantity = data =>
+export const updateProductQuantity = data =>
   callAPI(
     `cart-update/`,
     {
@@ -66,7 +66,7 @@ export const AddToCart = data =>
     },
     getParams({
       inItemId: data.inItemId,
-      inQuantity:data.inQuantity
+      inQuantity: data.inQuantity
     })
   );
 
@@ -123,6 +123,17 @@ export const getCategoryProducts = data =>
     { "Content-Type": "application/x-www-form-urlencoded" },
     getParams({
       inDepartmentId: data.departmentId,
+      inShortProductDescriptionLength: data.descriptionLength,
+      inProductsPerPage: 10,
+      inStartItem: 0
+    })
+  );
+export const getSubCategoryProducts = data =>
+  callAPI(
+    "get-category-products/",
+    { "Content-Type": "application/x-www-form-urlencoded" },
+    getParams({
+      inCategoryId: data.categoryId,
       inShortProductDescriptionLength: data.descriptionLength,
       inProductsPerPage: 10,
       inStartItem: 0

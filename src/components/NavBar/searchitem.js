@@ -28,7 +28,7 @@ class SearchItem extends Component {
               <div className="row">
                 <div className="col-md-12 items_block">
                   <div className="pb-3">
-                    <h2>SEARCH RESULTS FOR "{this.state.searchResult}"</h2>
+                    <h2>Search Results For "{this.state.searchResult}"</h2>
                   </div>
                   <section>
                     {
@@ -49,7 +49,7 @@ class SearchItem extends Component {
       return (
         <div className="container">
           <div className="pt-5">
-            <h2>NO SEARCH RESULTS FOR "{this.state.searchResult}"</h2>
+            <h2>No Search Results For "{this.state.searchResult}"</h2>
           </div>
         </div>
       );

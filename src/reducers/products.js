@@ -1,5 +1,5 @@
 import * as ActionTypes from "../actions";
-import {store} from "../index"
+import { store } from "../index";
 
 const intialState = {
   loading: false,
@@ -7,9 +7,14 @@ const intialState = {
 };
 
 function getCategoryName(categories, id) {
-  return categories.filter(category => category.department_id === id)[0].name;
+  let categoriesdata = categories.filter(
+    category => category.department_id === id
+  );
+  return categoriesdata[0] ? categoriesdata[0].name : "";
 }
-
+function getSubCategoryName(subcategories, id) {
+  return subcategories.filter(category => category.category_id === id)[0].name;
+}
 export default (state = intialState, action) => {
   let cart = null;
   switch (action.type) {
@@ -45,7 +50,7 @@ export default (state = intialState, action) => {
       }
       cart.count = cart.count - 1;
       localStorage.setItem("react-shop-cart", JSON.stringify(cart));
-      console.log(cart,"fghhfghfghgfhfghfg");
+      console.log(cart, "fghhfghfghgfhfghfg");
       return {
         ...state,
         isLoading: false,
@@ -161,6 +166,25 @@ export default (state = intialState, action) => {
       return {
         ...state,
         categoryProducts
+      };
+    case ActionTypes.SUBCATEGORYPRODUCTS.SUCCESS:
+      var allSubCategories = [];
+      Object.values(state.subCategories).map(subCategory => {
+        allSubCategories = [...allSubCategories, ...subCategory];
+      });
+      console.log(allSubCategories, action.data.categoryId);
+      let subCategoryName = getSubCategoryName(
+        allSubCategories,
+        action.data.categoryId
+      );
+      console.log(subCategoryName);
+      let subCategoryProducts = state.subCategoryProducts
+        ? Object.assign({}, state.subCategoryProducts)
+        : [];
+      subCategoryProducts[subCategoryName.toLowerCase()] = action.response;
+      return {
+        ...state,
+        subCategoryProducts
       };
     case ActionTypes.SEARCH.SUCCESS:
       return {
