@@ -83,7 +83,7 @@ class Category extends Component {
                   ? getsubCategories.map((category, index) => {
                       var subCategoryName = category.name.toLowerCase();
                       return (
-                        <li>
+                        <li key={index}>
                           <form action={"/categories/" + subCategoryName}>
                             <a
                               className="sub_categories_submit"

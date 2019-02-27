@@ -13,7 +13,7 @@ class UserBlock extends Component {
     super(props);
     this.state = {
       user: {},
-      cart:{}
+      cart: {}
     };
   }
   componentDidMount() {
@@ -23,25 +23,18 @@ class UserBlock extends Component {
       this.props.checkUserLogin(c);
     }
   }
-  componentWillReceiveProps(props,b,c)
-  {
+  componentWillReceiveProps(props, b, c) {
     console.log(props);
-    if(props.cart)
-    {
-      if(props.cart.count)
-      {
-         if(!this.state.cart.count)
-         {
-             this.props.getCartProducts(props.cart.inCartId);
-         }
-         else if(props.cart.count!=this.state.cart.count)
-         {
-           this.props.getCartProducts(props.cart.inCartId);
-         }
-         this.setState({cart:props.cart});
+    if (props.cart) {
+      if (props.cart.count) {
+        if (!this.state.cart.count) {
+          this.props.getCartProducts(props.cart.inCartId);
+        } else if (props.cart.count != this.state.cart.count) {
+          this.props.getCartProducts(props.cart.inCartId);
+        }
+        this.setState({ cart: props.cart });
       }
     }
-     
   }
   logout() {
     deleteCookie("s-atk");
@@ -56,21 +49,19 @@ class UserBlock extends Component {
     }
     if (this.props.cart) {
       let cart = this.props.cart;
-      if(cart.products)
-      { 
+      if (cart.products) {
         for (var i = 0; i < cart.products.length; i++) {
           totalAmount =
             totalAmount + cart.products[i].price * cart.products[i].quantity;
         }
       }
-      
     }
-    totalAmount=Math.round(totalAmount * 100) / 100;
+    totalAmount = Math.round(totalAmount * 100) / 100;
 
     return (
-      <div class="topbar">
-        <div class="container">
-          <div class="register-block">
+      <div className="topbar">
+        <div className="container">
+          <div className="register-block">
             Hi!
             {name ? (
               <Dropdown>
@@ -103,13 +94,13 @@ class UserBlock extends Component {
             </ul>
           </div>
           <div class="currency-block">&#163; GBP</div> */}
-          <div class="price-block">
+          <div className="price-block">
             <a href="">
-              <i class="fa fa-shopping-bag" aria-hidden="true" />
+              <i className="fa fa-shopping-bag" aria-hidden="true" />
             </a>{" "}
             Your bag: &#163;{totalAmount}
           </div>
-          <div class="clearfix" />
+          <div className="clearfix" />
         </div>
       </div>
     );
