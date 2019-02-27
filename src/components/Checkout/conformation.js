@@ -16,7 +16,31 @@ class Conformation extends Component {
 
   render() {
     let cart = { count: 0, products: [] };
-    if (this.props.cart) cart = this.props.cart;
+    let customer={};
+    let shippingoption={shipping_type:"",shipping_cost:""}
+    if (this.props.cart)
+    {
+      cart = this.props.cart;
+      if(cart.shippingoption)
+      {
+        shippingoption=cart.shippingoption;
+      }
+    } 
+    let totalAmount = 0;
+    if (this.props.cart) {
+      let cart = this.props.cart;
+      if(cart.products)
+      { 
+        for (var i = 0; i < cart.products.length; i++) {
+          totalAmount =
+            totalAmount + cart.products[i].price * cart.products[i].quantity;
+        }
+      }
+      
+    }
+    totalAmount=Math.round(totalAmount * 100) / 100;
+    if (this.props.customer) customer = this.props.customer;
+    console.log(customer,"sdfdsfds");
     return (
       <React.Fragment>
         <Row className="conformation_block">
@@ -55,13 +79,21 @@ class Conformation extends Component {
                     </label>
                     <div className="address">
                       <h3>{"Address"}</h3>
-                      <p>Office 64,8 Colmore Row</p>
-                      <p>Birmingham,England,42000</p>
+                      {
+                        Object.keys(customer).map(function(key){
+                          if(key=="address_1" || key=="address_2" || key=="city" || key=="country")
+                          {
+                            return(
+                              <p>{customer[key]}</p>
+                            )
+                          }
+                            
+                        })
+                      }
                     </div>
                     <div className="delivery_opts">
                       <h3>{"Delivery options"}</h3>
-                      <p>Standard delivery</p>
-                      <p>(free,2-3 days)</p>
+                      {shippingoption.shipping_type}
                     </div>
                   </div>
                 </div>
@@ -76,15 +108,15 @@ class Conformation extends Component {
                 </div> */}
                 <div className="col-md-2">
                   <h3>{"Subtotal"}</h3>
-                  <h3>{"$368"}</h3>
+                  <h3>{totalAmount}</h3>
                 </div>
                 <div className="col-md-2">
                   <h3>{"Shipping"}</h3>
-                  <h3>{"free"}</h3>
+                  <h3>{shippingoption.shipping_cost}</h3>
                 </div>
                 <div className="col-md-2">
                   <h3>{"Grandtotal"}</h3>
-                  <h3>{"$340"}</h3>
+                  <h3>{totalAmount+parseInt(shippingoption.shipping_cost)}</h3>
                 </div>
               </div>
             </div>
@@ -97,7 +129,8 @@ class Conformation extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    customer:state.get("user").customer,
   };
 };
 

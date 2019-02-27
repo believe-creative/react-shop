@@ -15,6 +15,7 @@ export const PRODUCT = createRequestTypes("PRODUCT");
 export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
 export const REMOVEFROMCART = createRequestTypes("REMOVEFROMCART");
 export const UPDATEQUANTITY = createRequestTypes("UPDATEQUANTITY");
+export const CUSTOMERINFO = createRequestTypes("CUSTOMERINFO");
 export const GETCARTPRODUCTS = createRequestTypes("GETCARTPRODUCTS");
 export const GETSHIPPINGREGIONS = createRequestTypes("GETSHIPPINGREGIONS");
 export const GETSHIPPINGOPTIONS = createRequestTypes("GETSHIPPINGOPTIONS");
@@ -76,6 +77,13 @@ export const updateProductQuantity = {
   success: (data, response) =>
     action(UPDATEQUANTITY[SUCCESS], { data, response }),
   failure: (data, error) => action(UPDATEQUANTITY[FAILURE], { data, error })
+};
+
+export const getCustomerInfo = {
+  request: inEmail => action(CUSTOMERINFO[REQUEST], { inEmail }),
+  success: (inEmail, response) =>
+    action(CUSTOMERINFO[SUCCESS], { inEmail, response }),
+  failure: (inEmail, error) => action(CUSTOMERINFO[FAILURE], { inEmail, error })
 };
 
 export const getCartProducts = {

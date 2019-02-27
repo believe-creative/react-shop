@@ -30,6 +30,12 @@ export default function(state = initialState, action) {
         isLoading: false,
         ...action.payload
       };
+    case Actions.CUSTOMERINFO.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        customer:action.response[0]
+      };
     default:
       return state;
   }

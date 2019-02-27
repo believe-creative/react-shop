@@ -14,36 +14,64 @@ class Delivery extends Component {
   {
       super(props);
       this.state={
-        region:null
+        region:null,
+        customer:{}
       }   
   }
   componentDidMount(){
     this.props.getShippingRegions();
    }
-
+   componentWillReceiveProps(props)
+   {
+     console.log(props.user);
+      if(props.user)
+      {
+        console.log("11");
+        if(props.user.email)
+        {
+          console.log("111");
+          if(props.customer)
+          {
+            console.log("1111");
+              if(props.customer!=this.state.customer)
+              {
+                  this.setState({customer:props.customer});
+              }
+              console.log(this.state);
+          }
+          else
+          {
+            console.log("11111",props.user.email);
+              props.getCustomerInfo(props.user.email);
+          }
+        }
+        
+      }
+   }
   changeRegion(e)
    {
       let state=this.state;
       state["region"]=e.currentTarget.value;
       state["regionName"]=e.currentTarget.querySelectorAll("option[value='"+e.currentTarget.value+"']")[0].innerText;
+      state["completeRegion"]=JSON.parse(e.currentTarget.querySelectorAll("option[value='"+e.currentTarget.value+"']")[0].getAttribute("data-region"));
       this.setState(state);
-
-      this.props.setRegion(state["region"]);
+      this.props.setDelivarydetails(this.state,this.state);
+      this.props.setRegion(state["completeRegion"]);
       this.props.getShippingOptions(state["region"]);
    }
    setShippingOption(e)
    {
       let state=this.state;
-      state["shippingOption"]=e.currentTarget.getAttribute("data-value");
+      state["shippingOption"]=JSON.parse(e.currentTarget.getAttribute("data-option"));
       this.setState(state);
-
+      this.props.setDelivarydetails(this.state,this.state);
       this.props.setShippingOption(state["shippingOption"]);
    }
 
   changed(e)
   {
       let state=this.state;
-      state[e.currentTarget.name]=e.currentTarget.value;
+      state["customer"][e.currentTarget.name]=e.currentTarget.value;
       this.setState(state);
       this.props.setDelivarydetails(this.state,this.state);
   }
@@ -56,6 +84,14 @@ class Delivery extends Component {
         regions=this.props.regions
     if(this.props.shippingOptions)
       shippingOptions=this.props.shippingOptions
+    let customer={address1:"",address2:"",city:"",zip:"",country:""};
+    if(this.state.customer)
+    {
+      if(this.state.customer.name)
+      {
+        customer=this.state.customer;
+      }
+    }
     return (
       <React.Fragment>
         <Container>
@@ -70,7 +106,7 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
-                        value={this.state.name}
+                        value={customer.address_1}
                         name="address1"
                         onChange={this.changed.bind(this)}
                       />
@@ -81,7 +117,7 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
-                        value={this.state.address2}
+                        value={customer.address_2}
                         name="address2"
                         onChange={this.changed.bind(this)}
                       />
@@ -94,7 +130,7 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
-                        value={this.state.city}
+                        value={customer.city}
                         name="city"
                         onChange={this.changed.bind(this)}
                       />
@@ -106,7 +142,7 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
-                        value={this.state.zip}
+                        value={customer.postal_code}
                         name="zip"
                         onChange={this.changed.bind(this)}
                       />
@@ -121,7 +157,7 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
-                        value={this.state.country}
+                        value={customer.country}
                         name="country"
                         onChange={this.changed.bind(this)}
                       />
@@ -137,7 +173,7 @@ class Delivery extends Component {
                           <select className="selectpicker" value={this.state.region} onChange={this_ref.changeRegion.bind(this_ref)}>
                               {regions.map(function(region){
                                   return(
-                                    <option value={region.shipping_region_id}>
+                                    <option data-region={JSON.stringify(region)} value={region.shipping_region_id}>
                                         {region.shipping_region}
                                     </option>
                                   )
@@ -155,7 +191,7 @@ class Delivery extends Component {
                         return(
                           <div className="col-md-6">
                             <p>
-                              <input type="radio" data-value={option.shipping_id} name="shippingoption" for={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
+                              <input type="radio" data-option={JSON.stringify(option)} data-value={option.shipping_id} name="shippingoption" for={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
                               <span />
                               <label for={"option"+option.shipping_id}>
                                 <h3>{option.shipping_type}</h3>
@@ -181,7 +217,9 @@ const mapStateToProps = state => {
   return {
     cart:state.get("products").cart,
     regions:state.get("shipping").regions,
-    shippingOptions:state.get("shipping").shippingOptions
+    shippingOptions:state.get("shipping").shippingOptions,
+    user:state.get("user"),
+    customer:state.get("user").customer,
   };
 };
 
@@ -190,7 +228,8 @@ function mapDispatchToProps(dispatch) {
     getShippingRegions: () => dispatch(Actions.getShippingRegions.request()),
     setRegion:(regionId) => dispatch(setRegion(regionId)),
     setShippingOption:(inShippingId) => dispatch(setShippingOption(inShippingId)),
-    getShippingOptions:(inShippingRegionId) => dispatch(Actions.getShippingOptions.request(inShippingRegionId))
+    getCustomerInfo:(inEmail) => dispatch(Actions.getCustomerInfo.request(inEmail)),
+    getShippingOptions: (inShippingRegionId) => dispatch(Actions.getShippingOptions.request(inShippingRegionId)),
   };
 }
 

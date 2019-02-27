@@ -76,6 +76,55 @@ class Checkout extends Component {
           localStorage.setItem("nextRoute","/checkout");
       }
   }
+  handleSubmit(ev) {
+    console.log("sdfdsfdfdsf");
+    ev.preventDefault();
+    let this_ref = this;
+    let props = this.props;
+    // We don't want to let default form submission happen here, which would refresh the page.
+    let totalAmount = 0;
+    if (this.props.cart) {
+      let cart = this.props.cart;
+      if(cart.products)
+      { 
+        for (var i = 0; i < cart.products.length; i++) {
+          totalAmount =
+            totalAmount + cart.products[i].price * cart.products[i].quantity;
+        }
+      }
+      
+    }
+    totalAmount=Math.round(totalAmount * 100) / 100;
+    // Within the context of `Elements`, this call to createToken knows which Element to
+    // tokenize, since there's only one in this group.
+    this.props.stripe
+      .createToken({ name: this.props.user.name })
+      .then(({ token }) => {
+        console.log(token);
+        axios
+          .post(API_ROOT + "payment", {
+            email: this.props.user.email,
+            id: token.card_id,
+            inCartId:this.props.cart.inCartId,
+            inCustomerId:this.props.customer.customer_id,
+            inShippingId:this.props.cart.shippingOption.shipping_id,
+            amount:totalAmount+this.props.cart.shippingOption.cost,
+            inTaxId:0
+          })
+          .then(function(response) {
+            if (response.data.status == "error") {
+              this_ref.setState({ errors: response.data.msg });
+            } else {
+              this_ref.setState({ errors: null });
+              let state = this_ref.state;
+              state["stage"] = state["stage"] + 1;
+              this_ref.setState(state);
+            }
+          })
+          .catch(function(error) {
+          });
+      });
+  }
   showstages() {
     if (this.state.stage == 0) {
       return (
@@ -87,7 +136,10 @@ class Checkout extends Component {
       return (
         <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
           <Elements>
-            <Payment />
+          
+                
+                    <Payment user={this.props.user} cart={this.props.cart} customer={this.props.customer} backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} back={"back"} next={"pay"}   />
+                  
           </Elements>
         </StripeProvider>
       );
@@ -127,22 +179,22 @@ class Checkout extends Component {
     state["stage"] = state["stage"] - 1;
     this.setState(state);
   }
-  nextStage() {
+  nextStage(e) {
     let state=this.state;
     let this_ref=this;
     state["delivery"]["errors"]=[];
     if(this.state.stage==0){
-      if(!state["delivery"]["address1"])
+      if(!state["delivery"]["customer"]["address_1"])
       {
           state["delivery"]["errors"].push("Name is required");
       }
-      if (!state["delivery"]["city"]) {
+      if (!state["delivery"]["customer"]["city"]) {
         state["delivery"]["errors"].push("City is required");
       }
-      if (!state["delivery"]["zip"]) {
+      if (!state["delivery"]["customer"]["postal_code"]) {
         state["delivery"]["errors"].push("Zip code is required");
       }
-      if (!state["delivery"]["country"]) {
+      if (!state["delivery"]["customer"]["country"]) {
         state["delivery"]["errors"].push("Country code is required");
       }
       if (!state["delivery"]["region"]) {
@@ -154,14 +206,14 @@ class Checkout extends Component {
       if(state["delivery"]["errors"]<=0)
       {
         axios
-        .post(API_ROOT + "customer_update_address", {
-          inEmail: this.state.email,
-          inAddress1: state["delivery"]["address1"],
-          inAddress2: state["delivery"]["address2"],
-          inCity:state["delivery"]["city"],
+        .post(API_ROOT + "update-address", {
+          inEmail: this.props.user.email,
+          inAddress1: state["delivery"]["customer"]["address_1"],
+          inAddress2: state["delivery"]["customer"]["address_2"],
+          inCity:state["delivery"]["customer"]["city"],
           inRegion:state["delivery"]["regionName"],
-          inPostalCode:state["delivery"]["zip"],
-          inCountry:state["delivery"]["country"],
+          inPostalCode:state["delivery"]["customer"]["postal_code"],
+          inCountry:state["delivery"]["customer"]["country"],
           inShippingRegionId:state["delivery"]["region"]
         })
         .then(function(response) {
@@ -179,6 +231,14 @@ class Checkout extends Component {
         
       }
       this_ref.setState(state);
+    }
+    else if(this.state.stage==2)
+    { 
+      console.log("created");
+      let state = this_ref.state;
+      state["stage"] = state["stage"] + 1;
+      this_ref.setState(state);
+      localStorage.removeItem("react-shop-cart");
     }
     else
     {
@@ -203,7 +263,7 @@ class Checkout extends Component {
 
   render() {
     let finalstage = false;
-    if (this.state.stage >= 3) finalstage = true;
+    if (this.state.stage >= 2) finalstage = true;
     return (
       <React.Fragment>
         <Container>
@@ -322,7 +382,8 @@ const mapStateToProps = state => {
 };
 
 const mapStateToDispatch = dispatch => ({
-  getCartProducts: () => dispatch(Actions.getCartProducts.request())
+  getCartProducts: () => dispatch(Actions.getCartProducts.request()),
+  
 });
 
 export default connect(

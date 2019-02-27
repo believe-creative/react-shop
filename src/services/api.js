@@ -70,6 +70,18 @@ export const AddToCart = data =>
     })
   );
 
+  export const getCustomerInfo = inEmail =>
+  callAPI(
+    `get-customer/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({
+      inEmail: inEmail
+    })
+  );
+
 export const getCartProducts = inCartId =>
   callAPI(
     `get-shopping-cart-products/`,
