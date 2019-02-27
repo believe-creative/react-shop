@@ -107,7 +107,7 @@ class Delivery extends Component {
                         className="form-control"
                         placeholder=""
                         value={customer.address_1}
-                        name="address1"
+                        name="address_1"
                         onChange={this.changed.bind(this)}
                       />
                     </div>
@@ -118,7 +118,7 @@ class Delivery extends Component {
                         className="form-control"
                         placeholder=""
                         value={customer.address_2}
-                        name="address2"
+                        name="address_2"
                         onChange={this.changed.bind(this)}
                       />
                     </div>
@@ -143,7 +143,7 @@ class Delivery extends Component {
                         className="form-control"
                         placeholder=""
                         value={customer.postal_code}
-                        name="zip"
+                        name="postal_code"
                         onChange={this.changed.bind(this)}
                       />
                     </div>
@@ -191,7 +191,7 @@ class Delivery extends Component {
                         return(
                           <div className="col-md-6">
                             <p>
-                              <input type="radio" data-option={JSON.stringify(option)} data-value={option.shipping_id} name="shippingoption" for={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
+                              <input type="radio" data-option={JSON.stringify(option)} data-value={option.shipping_id} name="shippingoption" id={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
                               <span />
                               <label for={"option"+option.shipping_id}>
                                 <h3>{option.shipping_type}</h3>
