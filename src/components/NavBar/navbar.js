@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Nav from "react-bootstrap/Nav";
+import { Switch, Route } from "react-router";
 import Container from "react-bootstrap/Container";
 import logo from "../../images/tshirtshop.png";
 import Image from "react-bootstrap/Image";
@@ -7,16 +8,38 @@ import * as Actions from "../../actions";
 import { LinkContainer } from "react-router-bootstrap";
 import Navbar from "react-bootstrap/Navbar";
 import Cart from "../Cart/cart";
+import SearchItem from "./searchitem";
 import { connect } from "react-redux";
 
 import "../../scss/navbar.scss";
 class NavBar extends Component {
-  searchItems(e) {
-    this.props.getSearchItems(e.target.value);
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchitem: ""
+    };
   }
+  searchItems(e) {
+    this.setState({ searchitem: e.target.value });
+  }
+
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };
+    console.log(this.props.searchItems);
+    let searchBlock = "";
+    if (this.props.searchItems && this.props.searchItems.length > 0) {
+      searchBlock = (
+        <div className="search_block">
+          <ul className="searchItem list-unstyled">
+            {this.props.searchItems.map((item, ind) => {
+              return <li>{item.name}</li>;
+            })}
+          </ul>
+        </div>
+      );
+    }
+
     return (
       <header className="header bg-white">
         <Container className="head-inner">
@@ -42,8 +65,13 @@ class NavBar extends Component {
                 {this.props.categories &&
                   this.props.categories.map(category => {
                     var link = "/categories/" + category.name.toLowerCase();
+                    var location_path =
+                      this.props.location.pathname == link ? "active" : "";
                     return (
-                      <li className="nav-item" key={category.name}>
+                      <li
+                        className={"nav-item" + " " + location_path}
+                        key={category.name}
+                      >
                         <LinkContainer to={link}>
                           <Nav.Link>{category.name}</Nav.Link>
                         </LinkContainer>
@@ -57,7 +85,10 @@ class NavBar extends Component {
             <ul className="list-unstyled">
               <li>
                 <span className="search_input">
-                  <form id="search_icon">
+                  <form
+                    action={"/search/" + this.state.searchitem}
+                    id="search_icon"
+                  >
                     <input
                       type="search"
                       placeholder=""
@@ -86,15 +117,14 @@ class NavBar extends Component {
 const mapStateToProps = state => {
   return {
     categories: state.get("products").categories,
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    location: state.get("router").location
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   getCartProducts: inCartId =>
-    dispatch(Actions.getCartProducts.request(inCartId)),
-  getSearchItems: searchitem =>
-    dispatch(Actions.getSearchItems.request(searchitem))
+    dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(
