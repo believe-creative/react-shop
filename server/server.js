@@ -24,12 +24,8 @@ const socketio = require('socket.io')
 var passport = require('passport');
 SESSION_SECRET="justfortesting"
 CLIENT_ORIGIN="http://localhost:3000"
-let secret_key = 'Amoha_secret_key';
-module.exports = {
-  secret_key
-}
+let secret_key = require('./config.js').secret_key;
 
-// exports.secret_key = secret_key;
 // const options = {
 //   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
 //   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
@@ -209,7 +205,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all categories using departmentid
  * Parameters {inDepartmentId}
  */
- app.post('/api/get-department-categories', (req, res)=>{
+ app.post('/api/get-department-categories', checkToken, (req, res)=>{
    let inDepartmentId = req.body.inDepartmentId;
    console.log(inDepartmentId);
    sequelize.query('CALL catalog_get_department_categories(:inDepartmentId)',
@@ -222,7 +218,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all products using department id
  * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
  */
- app.post('/api/get-department-products', (req, res)=>{
+ app.post('/api/get-department-products', checkToken, (req, res)=>{
    let inDepartmentId = req.body.inDepartmentId;
    let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
    let inProductsPerPage = req.body.inProductsPerPage;
@@ -238,7 +234,7 @@ app.get('/api/get-departments', (req, res) => {
  * To get all category related products using category id.
  * Parameters {inCategoryId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
  */
-app.post('/api/get-category-products', (req, res) => {
+app.post('/api/get-category-products', checkToken, (req, res) => {
   let inCategoryId = req.body.inCategoryId;
   let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
   let inProductsPerPage = req.body.inProductsPerPage;
@@ -254,7 +250,7 @@ app.post('/api/get-category-products', (req, res) => {
 *To get product attributes.
 * Parameters{inProductId}
 */
-app.post('/api/get-product-attributes',(req,res)=>{
+app.post('/api/get-product-attributes', checkToken, (req,res)=>{
     let inProductId=req.body.inProductId;
     sequelize
       .query('CALL catalog_get_product_attributes(:inProductId)',{replacements:{inProductId:inProductId}}).then(
@@ -266,17 +262,17 @@ app.post('/api/get-product-attributes',(req,res)=>{
 * To get attributes
 * Parameters not required
 */
-app.get('/api/get-attributes',(req,res)=>{
+app.get('/api/get-attributes', checkToken, (req,res)=>{
   sequelize
     .query('CALL catalog_get_attributes()').then(
       get_attributes=>res.json(get_attributes));
 });
 
 /*
-* To get attributes values
+* To get attribute details
 * Parameters {inAttributeId}
 */
-app.get('/api/get-attribute-values',(req,res)=>{
+app.post('/api/get-attribute-values', checkToken, (req,res)=>{
   let inAttributeId=req.body.inAttributeId
   sequelize
     .query('CALL catalog_get_attribute_values(:inAttributeId)',{replacements:{inAttributeId:inAttributeId}}).then(
@@ -284,13 +280,13 @@ app.get('/api/get-attribute-values',(req,res)=>{
 });
 
 /*
-* To get All Products
+* To get product details
 * Parameters {inProductId}
 */
-app.get('/api/product',(req,res)=>{
+app.post('/api/product', checkToken, (req,res)=>{
   let inProductId=req.body.inProductId
   sequelize
-    .query('CALL catalog_get_product_info(:inAttributeId)',{replacements:{inProductId:inProductId}}).then(
+    .query('CALL catalog_get_product_info(:inProductId)',{replacements:{inProductId:inProductId}}).then(
       get_product_info=>res.json(get_product_info));
 });
 
@@ -298,7 +294,7 @@ app.get('/api/product',(req,res)=>{
 * To get product reviews
 * Parameters{inProductId}
 */
-app.post('/api/get-product-reviews',(req,res)=>{
+app.post('/api/get-product-reviews', checkToken, (req,res)=>{
   let inProductId=req.body.inProductId;
   sequelize
     .query('CALL catalog_get_product_reviews(:inProductId)',{replacements:{inProductId:inProductId}}).then(
@@ -307,9 +303,9 @@ app.post('/api/get-product-reviews',(req,res)=>{
 
 /*
 * To get product recommendations
-* Parameters{inProductId}
+* Parameters{inProductId, inShortProductDescriptionLength}
 */
-app.post('/api/get-product-recommendations',(req,res)=>{
+app.post('/api/get-product-recommendations', checkToken, (req,res)=>{
   let inProductId=req.body.inProductId;
   let inShortProductDescriptionLength=req.body.inShortProductDescriptionLength;
   sequelize
@@ -320,7 +316,7 @@ app.post('/api/get-product-recommendations',(req,res)=>{
 * To get catalog search results
 * Parameters{inSearchString,inAllWords,inShortProductDescriptionLength,inProductsPerPage,inStartItem}
 */
-app.post('/api/search',(req,res)=>{
+app.post('/api/search', checkToken, (req,res)=>{
   let inSearchString=req.body.inSearchString;
   let inAllWords=req.body.inAllWords;
   let inShortProductDescriptionLength=req.body.inShortProductDescriptionLength;
@@ -339,11 +335,10 @@ app.post('/api/search',(req,res)=>{
 * creating customer
 * Parameters {inName,inEmail,inPassword}
 */
-app.post('/api/create-customer',(req,res)=>{
+app.post('/api/create-customer', checkToken, (req,res)=>{
   let inName = req.body.inName;
   let inEmail = req.body.inEmail;
   let inPassword = req.body.inPassword;
-  console.log(req.body);
   sequelize
     .query('CALL customer_add(:inName,:inEmail,:inPassword)',{replacements:{inName:inName,inEmail:inEmail,inPassword:inPassword}}).then(
       create_customer=>res.json(create_customer));
@@ -352,17 +347,34 @@ app.post('/api/create-customer',(req,res)=>{
 * To get customer
 * Parameters {inCustomerId}
 */
-app.post('/api/get-customer',(req,res)=>{
+app.post('/api/get-customer', checkToken, (req,res)=>{
   let inCustomerId = req.body.inCustomerId;
-  sequelize
+  let inEmail = req.body.inEmail;
+  if(inCustomerId)
+  {
+    sequelize
     .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:inCustomerId}}).then(
       get_customer=>res.json(get_customer));
+  }
+  else
+  {
+    sequelize
+    .query('CALL customer_get_login_info(:inEmail)',
+    {replacements:{inEmail:inEmail}}).then(
+      customer_info=>{
+        sequelize
+    .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:customer_info.customer_id}}).then(
+      get_customer=>res.json(get_customer));
+
+      });
+  }
+  
 });
 /*
 * To Check User Exist or Not, using given email
 * Parameters {inCustomerId}
 */
-app.post('/api/check-user',(req,res)=>{
+app.post('/api/check-user', checkToken, (req,res)=>{
   let inEmail = req.body.inEmail;
   sequelize
     .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:inEmail}}).then(
@@ -373,7 +385,7 @@ app.post('/api/check-user',(req,res)=>{
 * To Update Customer Account
 * Parameters {inCustomerId,inName,inEmail,inPassword,inDayPhone,inEvePhone,inMobPhone}
 */
-app.post('/api/update-account',(req,res)=>{
+app.post('/api/update-account', checkToken, (req,res)=>{
   let inCustomerId = req.body.inCustomerId;
   let inName = req.body.inName;
   let inEmail = req.body.inEmail;
@@ -389,28 +401,35 @@ app.post('/api/update-account',(req,res)=>{
 });
 /*
 * To Update Customer Address
-* Parameters {:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,inShippingRegionId}
+* Parameters {inCustomerId,inAddress1,inAddress2,inCity,inRegion,inPostalCode,inCountry,inShippingRegionId}
 */
-app.post('/api/update-address',(req,res)=>{
-  let inCustomerId = req.body.inCustomerId;
+app.post('/api/update-address', checkToken, (req,res)=>{
   let inAddress1 = req.body.inAddress1;
   let inAddress2 = req.body.inAddress2;
   let inCity = req.body.inCity;
+  let inEmail = req.body.inEmail;
   let inRegion = req.body.inRegion;
   let inPostalCode = req.body.inPostalCode;
   let inCountry = req.body.inCountry;
   let inShippingRegionId = req.body.inShippingRegionId;
   sequelize
-    .query('CALL customer_update_address(:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId)',
-    {replacements:{inCustomerId:inCustomerId,inAddress1:inAddress1,inAddress2:inAddress2,inCity:inCity,inRegion:inRegion,inPostalCode:inPostalCode,inCountry:inCountry,inShippingRegionId:inShippingRegionId}}).then(
-      update_account=>res.json(update_account));
+    .query('CALL customer_get_login_info(:inEmail)',
+    {replacements:{inEmail:inEmail}}).then(
+      customer_info=>{
+        sequelize
+        .query('CALL customer_update_address(:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId)',
+        {replacements:{inCustomerId:customer_info.customer_id,inAddress1:inAddress1,inAddress2:inAddress2,inCity:inCity,inRegion:inRegion,inPostalCode:inPostalCode,inCountry:inCountry,inShippingRegionId:inShippingRegionId}}).then(
+          update_account=>res.json(update_account));
+
+      });
+  
 });
 
 /*
 * To Update Creditcard
-* Parameters {:inCustomerId,:inCreditCard}
+* Parameters {inCustomerId,inCreditCard}
 */
-app.post('/api/update-credit-card',(req,res)=>{
+app.post('/api/update-credit-card', checkToken, (req,res)=>{
   let inCustomerId = req.body.inCustomerId;
   let inCreditCard = req.body.inCreditCard;
   sequelize
@@ -426,7 +445,7 @@ app.post('/api/update-credit-card',(req,res)=>{
 * To add Selected Product to Cart insert or update Cart details.
 * Parameters{inCartId,inProductId,inAttributes}
 */
-app.post('/api/add-product-to-cart',(req,res)=>{
+app.post('/api/add-product-to-cart', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   let inProductId=req.body.inProductId;
   let inAttributes=req.body.inAttributes;
@@ -440,7 +459,7 @@ app.post('/api/add-product-to-cart',(req,res)=>{
 * To get all products from Cart.
 * Parameters{inCartId}
 */
-app.post('/api/get-shopping-cart-products',(req,res)=>{
+app.post('/api/get-shopping-cart-products', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   sequelize
     .query('CALL shopping_cart_get_products(:inCartId)',{replacements:{inCartId:inCartId}}).then(
@@ -452,7 +471,7 @@ app.post('/api/get-shopping-cart-products',(req,res)=>{
 * Save product for later(Wishlist).
 * Parameters{inItemId}
 */
-app.post('/api/save-product-for-later',(req,res)=>{
+app.post('/api/save-product-for-later', checkToken, (req,res)=>{
   let inItemId=req.body.inItemId;
   sequelize
     .query('CALL shopping_cart_save_product_for_later(:inItemId)',{replacements:{inItemId:inItemId}}).then(
@@ -462,17 +481,17 @@ app.post('/api/save-product-for-later',(req,res)=>{
 * To get saved cart products.
 * Parameters{inCartId}
 */
-app.post('/api/get-saved-products',(req,res)=>{
+app.post('/api/get-saved-products', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   sequelize
     .query('CALL shopping_cart_save_product_for_later(:inCartId)',{replacements:{inCartId:inCartId}}).then(
       save_product_for_later=>res.json(save_product_for_later));
 });
 /*
-*To create order using shopping cart items.
+* To create order using shopping cart items.
 * Parameters{inCartId,inCustomerId,inShippingId,inTaxId}
 */
-app.post('/api/create-order',(req,res)=>{
+app.post('/api/create-order', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   let inCustomerId=req.body.inCustomerId;
   let inShippingId=req.body.inShippingId;
@@ -486,7 +505,7 @@ app.post('/api/create-order',(req,res)=>{
 *To remove product from cart.
 * Parameters{inItemId}
 */
-app.post('/api/remove-product-from-cart',(req,res)=>{
+app.post('/api/remove-product-from-cart', checkToken, (req,res)=>{
   let inItemId=req.body.inItemId;
   sequelize
     .query('CALL shopping_cart_remove_product(:inItemId)',
@@ -494,10 +513,10 @@ app.post('/api/remove-product-from-cart',(req,res)=>{
       remove_product_from_cart=>res.json("removed from cart"));
 });
 /*
-*To update the shopping by increasing the quantity.
+* To update the shopping by increasing the quantity.
 * Parameters{inItemId,inQuantity}
 */
-app.post('/api/cart-update',(req,res)=>{
+app.post('/api/cart-update', checkToken, (req,res)=>{
   let inItemId=req.body.inItemId;
   let inQuantity=req.body.inQuantity;
   sequelize
@@ -506,10 +525,10 @@ app.post('/api/cart-update',(req,res)=>{
       cart_update=>res.json("updated cart"));
 });
 /*
-*To get cart total amount.
+* To get cart total amount.
 * Parameters{inCartId}
 */
-app.post('/api/get-cart-total',(req,res)=>{
+app.post('/api/get-cart-total', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   sequelize
     .query('CALL shopping_cart_get_total_amount(:inCartId)',
@@ -521,7 +540,7 @@ app.post('/api/get-cart-total',(req,res)=>{
 * To delete Product Items from Cart.
 * Parameters{inCartId}
 */
-app.post('/api/shopping-cart-empty',(req,res)=>{
+app.post('/api/shopping-cart-empty', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
   sequelize
     .query('CALL shopping_cart_empty(:inCartId)',{replacements:{inCartId:inCartId}}).then(
@@ -531,7 +550,7 @@ app.post('/api/shopping-cart-empty',(req,res)=>{
 * To get shipping Regions.
 * Parameters not required
 */
-app.get('/api/get-customer-shipping-regions',(req,res)=>{
+app.get('/api/get-customer-shipping-regions', checkToken, (req,res)=>{
   sequelize
     .query('CALL customer_get_shipping_regions()').then(
       customer_regions=>res.json(customer_regions));
@@ -546,7 +565,7 @@ app.get('/api/get-customer-shipping-regions',(req,res)=>{
 * To get customer order list
 * Parameters {inCustomerId}
 */
-app.post('/api/get-order-details', (req, res)=>{
+app.post('/api/get-customer-orders-list', checkToken, (req, res)=>{
   let inCustomerId = req.body.inCustomerId;
   sequelize.query('CALL orders_get_by_customer_id(:inCustomerId)',
                   {replacements:{inCustomerId:inCustomerId}})
@@ -556,7 +575,7 @@ app.post('/api/get-order-details', (req, res)=>{
 * To get order details
 * Parameters {inOrderId}
 */
-app.post('/api/get-order-details', (req, res)=>{
+app.post('/api/get-order-details', checkToken, (req, res)=>{
   let inOrderId = req.body.inOrderId;
   sequelize.query('CALL orders_get_order_details(:inOrderId)',
                   {replacements:{inOrderId:inOrderId}})
@@ -567,7 +586,7 @@ app.post('/api/get-order-details', (req, res)=>{
 * To get order information
 * Parameters {inOrderId}
 */
-app.post('/api/get-order-info', (req, res)=>{
+app.post('/api/get-order-info', checkToken, (req, res)=>{
   let inOrderId = req.body.inOrderId;
   sequelize.query('CALL orders_get_order_info(:inOrderId)',
                   {replacements:{inOrderId:inOrderId}})
@@ -578,7 +597,7 @@ app.post('/api/get-order-info', (req, res)=>{
 * To get order short details
 * Parameters {inOrderId}
 */
-app.post('/api/get-order-short-details', (req, res)=>{
+app.post('/api/get-order-short-details', checkToken, (req, res)=>{
   let inOrderId = req.body.inOrderId;
   sequelize.query('CALL orders_get_order_short_details(:inOrderId)',
                   {replacements:{inOrderId:inOrderId}})
@@ -588,7 +607,7 @@ app.post('/api/get-order-short-details', (req, res)=>{
 * To get order shipping information.
 * Parameters{inShippingRegionId}
 */
-app.post('/api/get-order-shipping-info',(req,res)=>{
+app.post('/api/get-order-shipping-info', checkToken, (req,res)=>{
   let inShippingRegionId=req.body.inShippingRegionId;
   sequelize
     .query('CALL orders_get_shipping_info(:inShippingRegionId)',{replacements:{inShippingRegionId:inShippingRegionId}}).then(
@@ -600,12 +619,11 @@ app.post('/api/get-order-shipping-info',(req,res)=>{
 * To create a cart add a product to it.
 * Parameters{inItemId}
 */
-app.post('/api/add-product-to-empty-cart',(req,res)=>{
+app.post('/api/add-product-to-empty-cart', checkToken, (req,res)=>{
   let inItemId=req.body.inItemId;
   sequelize
     .query('CALL shopping_cart_move_product_to_cart(:inItemId)',{replacements:{inItemId:inItemId}}).then(
       cartId=>{
-        console.log(cartId);
         res.json(cartId);
       });
 });

@@ -26,18 +26,22 @@ class UserBlock extends Component {
   componentWillReceiveProps(props,b,c)
   {
     console.log(props);
-     if(props.cart.count)
-     {
-        if(!this.state.cart.count)
-        {
-            this.props.getCartProducts(props.cart.inCartId);
-        }
-        else if(props.cart.count!=this.state.cart.count)
-        {
-          this.props.getCartProducts(props.cart.inCartId);
-        }
-        this.setState({cart:props.cart});
-     }
+    if(props.cart)
+    {
+      if(props.cart.count)
+      {
+         if(!this.state.cart.count)
+         {
+             this.props.getCartProducts(props.cart.inCartId);
+         }
+         else if(props.cart.count!=this.state.cart.count)
+         {
+           this.props.getCartProducts(props.cart.inCartId);
+         }
+         this.setState({cart:props.cart});
+      }
+    }
+     
   }
   logout() {
     deleteCookie("s-atk");

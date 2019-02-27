@@ -1,7 +1,5 @@
-
 let jwt = require('jsonwebtoken');
-//const {secret_key} = require('../server');
-let secret_key = 'Amoha_secret_key';
+let secret_key = require('../config.js').secret_key;
 let checkToken = (req, res, next) => {
   let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
   if (token) {
@@ -9,8 +7,7 @@ let checkToken = (req, res, next) => {
       // Remove Bearer from string
       token = token.slice(7, token.length);
     }
-    jwt.verify(token, secret_key, (err, decoded) => {
-      console.log(secret_key);
+    jwt.verify(token, secret_key, (err, decoded) => {      
       if (err) {
         return res.json({
           success: false,

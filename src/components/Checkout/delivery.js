@@ -49,6 +49,7 @@ class Delivery extends Component {
   }
 
   render() {
+    let this_ref=this;
     let regions=[];
     let shippingOptions=[];
     if(this.props.regions)
@@ -133,7 +134,7 @@ class Delivery extends Component {
                               Region *
                             </h3>
                           </label>
-                          <select className="selectpicker" value={this.state.region} onChange={this.changeRegion.bind(this)}>
+                          <select className="selectpicker" value={this.state.region} onChange={this_ref.changeRegion.bind(this_ref)}>
                               {regions.map(function(region){
                                   return(
                                     <option value={region.shipping_region_id}>
@@ -154,7 +155,7 @@ class Delivery extends Component {
                         return(
                           <div className="col-md-6">
                             <p>
-                              <input type="radio" data-value={option.shipping_id} name="shippingoption" for={"option"+option.shipping_id} onClick={this.setShippingOption.bind(this)} />
+                              <input type="radio" data-value={option.shipping_id} name="shippingoption" for={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
                               <span />
                               <label for={"option"+option.shipping_id}>
                                 <h3>{option.shipping_type}</h3>
