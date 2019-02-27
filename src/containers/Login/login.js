@@ -56,20 +56,15 @@ class Login extends Component {
       this.props.checkUserLogin(c);
     }
     var props = this.props;
+    
     var this_ref = this;
     PROVIDERS.map(provider => {
       socket.on(provider, data => {
         if (data.token) {
           setCookie("s-atk", data.token, 0.2);
           props.setUser(data.user);
-          let route=localStorage.get("nextRoute");
-          if(route)
-          {
-            if(route.length>0)
-            {
-                props.history.push(route);
-            }
-          }
+          let route=localStorage.getItem("nextRoute");
+          
             
         }
       });
@@ -84,8 +79,24 @@ class Login extends Component {
   }
   render() {
     let name = null;
+    const props=this.props;
     if (this.props.user) {
       name = this.props.user.name;
+    }
+    if(props.user)
+    {
+      if(props.user.email)
+      {
+        let route=localStorage.getItem("nextRoute");
+        if(route)
+        {
+          if(route.length>0)
+          {
+            localStorage.setItem("nextRoute","");
+              props.history.push(route);
+          }
+        }
+      }
     }
     return (
       <div className="signin-form pt-5">

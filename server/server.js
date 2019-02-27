@@ -349,9 +349,26 @@ app.post('/api/create-customer', checkToken, (req,res)=>{
 */
 app.post('/api/get-customer', checkToken, (req,res)=>{
   let inCustomerId = req.body.inCustomerId;
-  sequelize
+  let inEmail = req.body.inEmail;
+  if(inCustomerId)
+  {
+    sequelize
     .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:inCustomerId}}).then(
       get_customer=>res.json(get_customer));
+  }
+  else
+  {
+    sequelize
+    .query('CALL customer_get_login_info(:inEmail)',
+    {replacements:{inEmail:inEmail}}).then(
+      customer_info=>{
+        sequelize
+    .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:customer_info.customer_id}}).then(
+      get_customer=>res.json(get_customer));
+
+      });
+  }
+  
 });
 /*
 * To Check User Exist or Not, using given email
@@ -387,18 +404,25 @@ app.post('/api/update-account', checkToken, (req,res)=>{
 * Parameters {inCustomerId,inAddress1,inAddress2,inCity,inRegion,inPostalCode,inCountry,inShippingRegionId}
 */
 app.post('/api/update-address', checkToken, (req,res)=>{
-  let inCustomerId = req.body.inCustomerId;
   let inAddress1 = req.body.inAddress1;
   let inAddress2 = req.body.inAddress2;
   let inCity = req.body.inCity;
+  let inEmail = req.body.inEmail;
   let inRegion = req.body.inRegion;
   let inPostalCode = req.body.inPostalCode;
   let inCountry = req.body.inCountry;
   let inShippingRegionId = req.body.inShippingRegionId;
   sequelize
-    .query('CALL customer_update_address(:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId)',
-    {replacements:{inCustomerId:inCustomerId,inAddress1:inAddress1,inAddress2:inAddress2,inCity:inCity,inRegion:inRegion,inPostalCode:inPostalCode,inCountry:inCountry,inShippingRegionId:inShippingRegionId}}).then(
-      update_account=>res.json(update_account));
+    .query('CALL customer_get_login_info(:inEmail)',
+    {replacements:{inEmail:inEmail}}).then(
+      customer_info=>{
+        sequelize
+        .query('CALL customer_update_address(:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId)',
+        {replacements:{inCustomerId:customer_info.customer_id,inAddress1:inAddress1,inAddress2:inAddress2,inCity:inCity,inRegion:inRegion,inPostalCode:inPostalCode,inCountry:inCountry,inShippingRegionId:inShippingRegionId}}).then(
+          update_account=>res.json(update_account));
+
+      });
+  
 });
 
 /*

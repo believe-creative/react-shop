@@ -20,14 +20,34 @@ class Items extends Component {
       cart:{}
     }
   }
+  componentDidMount()
+  {
+    const props=this.props;
+    let state=this.state;
+    console.log(this.props);
+    state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
+    if(props.cart)
+    {
+      if(props.cart.count!=undefined && props.cart.count!=null)
+      {
+         if(props.cart.count<=0)
+         {
+           
+           state["buttonStyles"]={pointerEvents: "none"};
+         }
+         state["cart"]=props.cart;
+      }
+    }
+    
+    this.setState(state);
+  }
   componentWillReceiveProps(props)
   {
     let state=this.state;
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
-    console.log(props.cart.count,this.state.cart.count)
-    if(props.cart.count)
+    if(props.cart.count!=undefined && props.cart.count!=null)
      {
-        if(!this.state.cart.count)
+        if(this.state.cart.count==undefined || this.state.cart.count==null)
         {
             this.props.getCartProducts(props.cart.inCartId);
         }
@@ -35,10 +55,15 @@ class Items extends Component {
         {
           this.props.getCartProducts(props.cart.inCartId);
         }
+        if(props.cart.count<=0)
+        {
+          
+          state["buttonStyles"]={pointerEvents: "none"};
+        }
         state["cart"]=props.cart;
      }
     this.setState(state);
-
+     console.log(this.state);
   }
   remove(e)
   {
@@ -90,6 +115,7 @@ class Items extends Component {
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
+    
     let this_ref=this;
     return (
       <React.Fragment>
@@ -159,7 +185,7 @@ class Items extends Component {
                   <LinkContainer to={"/"} className="btn btn-md btn-white">
                     <a>Back to Shop</a>
                   </LinkContainer>
-                  <LinkContainer to={"/checkout"} className="btn btn-md">
+                  <LinkContainer style={this.state.buttonStyles} to={"/checkout"} className="btn btn-md">
                     <a>Checkout</a>
                   </LinkContainer>
                 </div>
