@@ -7,8 +7,16 @@ import "../../scss/categories.scss";
 import Nav from "react-bootstrap/Nav";
 import { LinkContainer } from "react-router-bootstrap";
 class Category extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showSubCategory: false
+    };
+    this.callSubCategories = this.callSubCategories.bind(this);
+  }
   componentDidMount() {
     this.checkAndLoadSubCategories(this.props);
+    this.setState({ showSubCategory: false });
   }
   componentWillReceiveProps(props) {
     this.checkAndLoadSubCategories(props);
@@ -16,6 +24,34 @@ class Category extends Component {
     const getsubCategories = props.subCategories
       ? props.subCategories[categoryName]
       : [];
+  }
+  callSubCategories(subcategoryName) {
+    console.log(subcategoryName.target);
+    var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
+    if (this.props.subCategories) {
+      var categoryId;
+      var allSubCategories = [];
+      Object.values(this.props.subCategories).map(subCategory => {
+        allSubCategories = [...allSubCategories, ...subCategory];
+      });
+      console.log(allSubCategories);
+      var matchedCategories = allSubCategories.filter(
+        category => category.name.toLowerCase() == categoryNameLowerCase
+      );
+      console.log(matchedCategories);
+      if (matchedCategories.length > 0) {
+        categoryId = matchedCategories[0].category_id;
+        console.log(categoryId);
+      }
+      if (!this.props.subCategoryProducts) {
+        console.log(categoryId);
+        this.props.loadSubCategoryProducts({
+          categoryId: categoryId,
+          descriptionLength: 120
+        });
+      }
+    }
+    this.setState({ showSubCategory: true });
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -48,11 +84,20 @@ class Category extends Component {
                       var subCategoryName = category.name.toLowerCase();
                       return (
                         <li>
-                          <LinkContainer to={subCategoryName}>
-                            <Nav.Link>
-                              <h2 className="category_name">{category.name}</h2>
-                            </Nav.Link>
-                          </LinkContainer>
+                          <form action={"/categories/" + subCategoryName}>
+                            <a
+                              className="sub_categories_submit"
+                              onClick={this.callSubCategories.bind(this)}
+                            >
+                              {" "}
+                              <h2
+                                className="category_name"
+                                id={subCategoryName}
+                              >
+                                {category.name}
+                              </h2>
+                            </a>
+                          </form>
                         </li>
                       );
                     })
@@ -151,31 +196,6 @@ class Category extends Component {
       ) {
         props.loadCategoryProducts({
           departmentId: departmentId,
-          descriptionLength: 120
-        });
-      }
-    }
-    if (props.subCategories) {
-      var categoryId;
-      var allSubCategories = [];
-      Object.values(props.subCategories).map(subCategory => {
-        allSubCategories = [...allSubCategories, ...subCategory];
-      });
-      console.log(allSubCategories);
-      var matchedCategories = allSubCategories.filter(
-        category => category.name.toLowerCase() == categoryNameLowerCase
-      );
-      console.log(matchedCategories);
-
-      if (matchedCategories.length > 0) {
-        categoryId = matchedCategories[0].category_id;
-        console.log(categoryId);
-      }
-
-      if (!props.subCategoryProducts) {
-        console.log(categoryId);
-        props.loadSubCategoryProducts({
-          categoryId: 1,
           descriptionLength: 120
         });
       }
