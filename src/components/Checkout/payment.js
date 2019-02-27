@@ -36,7 +36,6 @@ class Payment extends Component {
       this.setState(state);
   }
   handleSubmit(ev) {
-    console.log("sdfdsfdfdsf");
     ev.preventDefault();
     let this_ref = this;
     let props = this.props;
@@ -63,27 +62,39 @@ class Payment extends Component {
         if(token)
         {
           this_ref.setState({errors:null});
-          console.log(token.id);
+
           axios
-          .post(API_ROOT + "payment", {
-            email: this.props.user.email,
-            id: token.id,
-            inCartId:this.props.cart.inCartId,
-            inCustomerId:null,
-            inShippingId:this.props.cart.shippingoption.shipping_id,
-            amount:totalAmount+parseInt(this.props.cart.shippingoption.shipping_cost),
-            inTaxId:0
-          })
+          .get(API_ROOT + "get_token")
           .then(function(response) {
-            if (response.data.status == "error") {
-              this_ref.setState({ errors: response.data.msg });
-            } else {
-              this_ref.setState({ errors: null });
-              this_ref.props.nextStage();
-            }
+
+            axios
+            .post(API_ROOT + "payment", {
+              email: this_ref.props.user.email,
+              id: token.id,
+              inCartId:this_ref.props.cart.inCartId,
+              inCustomerId:null,
+              inShippingId:this_ref.props.cart.shippingoption.shipping_id,
+              amount:totalAmount+parseInt(this_ref.props.cart.shippingoption.shipping_cost),
+              inTaxId:0
+            },{Authorization: `Bearer ${response.data.token}`})
+            .then(function(res) {
+              if (res.data.status == "error") {
+                this_ref.setState({ errors: res.data.msg });
+              } else {
+                this_ref.setState({ errors: null });
+                this_ref.props.nextStage();
+              }
+            })
+            .catch(function(error) {
+            });
+
           })
           .catch(function(error) {
           });
+
+
+
+          
         }
         else
         {
@@ -96,7 +107,7 @@ class Payment extends Component {
   {
       if(this.state.errors)
       {
-        return(<div class="alert alert-danger">{this.state.errors}</div>)
+        return(<div className="alert alert-danger">{this.state.errors}</div>)
       }
       else
       {

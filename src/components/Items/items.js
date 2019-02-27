@@ -24,7 +24,6 @@ class Items extends Component {
   {
     const props=this.props;
     let state=this.state;
-    console.log(this.props);
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
     if(props.cart)
     {
@@ -63,7 +62,6 @@ class Items extends Component {
         state["cart"]=props.cart;
      }
     this.setState(state);
-     console.log(this.state);
   }
   remove(e)
   {
@@ -119,27 +117,27 @@ class Items extends Component {
     let this_ref=this;
     return (
       <React.Fragment>
-        <div class="pt-5 mb-5">
-          <div class="container">
-            <div class="bg-white cart-block">
-              <div class="row">
-                <div class="col-md-10 offset-md-1">
+        <div className="pt-5 mb-5">
+          <div className="container">
+            <div className="bg-white cart-block">
+              <div className="row">
+                <div className="col-md-10 offset-md-1">
                   <h2>{cart.count} Items In Your Cart</h2>
-                  <div class="cart-top-block pt-2 pb-2 mb-3">
-                    <ul class="list-unstyled">
+                  <div className="cart-top-block pt-2 pb-2 mb-3">
+                    <ul className="list-unstyled">
                       <li>Item</li>
                       <li>Size</li>
                       <li>Quantity</li>
                       <li>Price</li>
                     </ul>
-                    <div class="clearfix" />
+                    <div className="clearfix" />
                   </div>
-                  <div class="cart-bot-block">
-                    {cart.products.map(function(product) {
+                  <div className="cart-bot-block">
+                    {cart.products.map(function(product,key) {
                       return (
-                        <div class="cart-single-block">
-                          <ul class="list-unstyled">
-                            <li class="img-block">
+                        <div key={key} className="cart-single-block">
+                          <ul className="list-unstyled">
+                            <li className="img-block">
                               <img
                                 src={require(`../../images/product_images/${
                                   product.thumbnail
@@ -150,7 +148,7 @@ class Items extends Component {
                               <span>
                                 <h3>{product.name}</h3>
                                 <p>Men BK3569</p>
-                                <p class="remove">
+                                <p className="remove">
                                   <a data-item={product.item_id} data-name={product.name} style={this_ref.state.buttonStyles} onClick={this_ref.remove.bind(this_ref)}>
                                     <span>&#10005;</span> Remove
                                   </a>
@@ -158,20 +156,20 @@ class Items extends Component {
                               </span>
                             </li>
                             <li>XXL</li>
-                            <li class="quantity-block">
+                            <li className="quantity-block">
                               <span>
                                 <a data-param="-1" data-item={product.item_id} data-quantity={product.quantity} style={this_ref.state.buttonStyles} onClick={this_ref.update.bind(this_ref)} >&#8722;</a>
                               </span>
-                              <span class="number-block">
+                              <span className="number-block">
                                 {product.quantity}
                               </span>
                               <span>
                                 <a data-param="1" data-item={product.item_id} style={this_ref.state.buttonStyles} data-quantity={product.quantity} onClick={this_ref.update.bind(this_ref)}  >&#43;</a>
                               </span>
                             </li>
-                            <li class="price">&#163;{product.price}</li>
+                            <li className="price">&#163;{product.price}</li>
                           </ul>
-                          <div class="clearfix" />
+                          <div className="clearfix" />
                         </div>
                       );
                     })}
@@ -179,9 +177,9 @@ class Items extends Component {
                 </div>
               </div>
             </div>
-            <div class="container cart-bottom-block">
-              <div class="row">
-                <div class="col-md-10 offset-md-1">
+            <div className="container cart-bottom-block">
+              <div className="row">
+                <div className="col-md-10 offset-md-1">
                   <LinkContainer to={"/"} className="btn btn-md btn-white">
                     <a>Back to Shop</a>
                   </LinkContainer>

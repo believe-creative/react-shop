@@ -14,7 +14,7 @@ class Delivery extends Component {
   {
       super(props);
       this.state={
-        region:null,
+        region:"",
         customer:{}
       }   
   }
@@ -23,25 +23,19 @@ class Delivery extends Component {
    }
    componentWillReceiveProps(props)
    {
-     console.log(props.user);
       if(props.user)
       {
-        console.log("11");
         if(props.user.email)
         {
-          console.log("111");
           if(props.customer)
           {
-            console.log("1111");
               if(props.customer!=this.state.customer)
               {
                   this.setState({customer:props.customer});
               }
-              console.log(this.state);
           }
           else
           {
-            console.log("11111",props.user.email);
               props.getCustomerInfo(props.user.email);
           }
         }
@@ -163,37 +157,35 @@ class Delivery extends Component {
                       />
                     </div>
                     <div className="form-group form-check">
-                        <p>
                           <span />
-                          <label for="male">
+                          <label htmlFor="male">
                             <h3>
                               Region *
                             </h3>
                           </label>
                           <select className="selectpicker" value={this.state.region} onChange={this_ref.changeRegion.bind(this_ref)}>
-                              {regions.map(function(region){
+                              {regions.map(function(region,index){
                                   return(
-                                    <option data-region={JSON.stringify(region)} value={region.shipping_region_id}>
+                                    <option key={index} data-region={JSON.stringify(region)} value={region.shipping_region_id}>
                                         {region.shipping_region}
                                     </option>
                                   )
 
                               })}
                           </select>
-                        </p>
                     </div>
                     {this.state.region?<div className="form-group delivery_options">
-                      <label className="form-check-label" for="exampleCheck1">
+                      <label className="form-check-label" htmlFor="exampleCheck1">
                         <h2>Delivery Options </h2>
                       </label>
                       <div className="row radio-checkbox-block">
-                      {shippingOptions.map(function(option){
+                      {shippingOptions.map(function(option,index){
                         return(
-                          <div className="col-md-6">
+                          <div key={index} className="col-md-6">
                             <p>
                               <input type="radio" data-option={JSON.stringify(option)} data-value={option.shipping_id} name="shippingoption" id={"option"+option.shipping_id} onClick={this_ref.setShippingOption.bind(this_ref)} />
                               <span />
-                              <label for={"option"+option.shipping_id}>
+                              <label htmlFor={"option"+option.shipping_id}>
                                 <h3>{option.shipping_type}</h3>
                               </label>
                             </p>

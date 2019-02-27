@@ -15,6 +15,7 @@ import * as Actions from "../../actions";
 import axios from "axios";
 import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
+import { clearCart } from "../../actions";
 
 import { connect } from "react-redux";
 
@@ -69,7 +70,6 @@ class Checkout extends Component {
 
   componentDidMount()
   {
-    console.log(this.props.user);
       if(!this.props.user.email)
       { 
           this.props.history.push('/login');
@@ -77,7 +77,6 @@ class Checkout extends Component {
       }
   }
   handleSubmit(ev) {
-    console.log("sdfdsfdfdsf");
     ev.preventDefault();
     let this_ref = this;
     let props = this.props;
@@ -100,7 +99,6 @@ class Checkout extends Component {
     this.props.stripe
       .createToken({ name: this.props.user.name })
       .then(({ token }) => {
-        console.log(token);
         axios
           .post(API_ROOT + "payment", {
             email: this.props.user.email,
@@ -206,24 +204,32 @@ class Checkout extends Component {
       if(state["delivery"]["errors"]<=0)
       {
         axios
-        .post(API_ROOT + "update-address", {
-          inEmail: this.props.user.email,
-          inAddress1: state["delivery"]["customer"]["address_1"],
-          inAddress2: state["delivery"]["customer"]["address_2"],
-          inCity:state["delivery"]["customer"]["city"],
-          inRegion:state["delivery"]["regionName"],
-          inPostalCode:state["delivery"]["customer"]["postal_code"],
-          inCountry:state["delivery"]["customer"]["country"],
-          inShippingRegionId:state["delivery"]["region"]
-        })
+        .get(API_ROOT + "get_token")
         .then(function(response) {
-          let state = this_ref.state;
-          state["stage"] = state["stage"] + 1;
-          this_ref.setState(state);
+          axios
+          .post(API_ROOT + "update-address", {
+            inEmail: this_ref.props.user.email,
+            inAddress1: state["delivery"]["customer"]["address_1"],
+            inAddress2: state["delivery"]["customer"]["address_2"],
+            inCity:state["delivery"]["customer"]["city"],
+            inRegion:state["delivery"]["regionName"],
+            inPostalCode:state["delivery"]["customer"]["postal_code"],
+            inCountry:state["delivery"]["customer"]["country"],
+            inShippingRegionId:state["delivery"]["region"]
+          },{Authorization: `Bearer ${response.data.token}`})
+          .then(function(response) {
+            let state = this_ref.state;
+            state["stage"] = state["stage"] + 1;
+            this_ref.setState(state);
+          })
+          .catch(function(error) {
+  
+          });
         })
         .catch(function(error) {
 
         });
+        
         
       }
       else
@@ -234,11 +240,12 @@ class Checkout extends Component {
     }
     else if(this.state.stage==2)
     { 
-      console.log("created");
       let state = this_ref.state;
       state["stage"] = state["stage"] + 1;
       this_ref.setState(state);
       localStorage.removeItem("react-shop-cart");
+      localStorage.removeItem("nextRoute");
+      this.props.clearCart();
     }
     else
     {
@@ -268,7 +275,6 @@ class Checkout extends Component {
       <React.Fragment>
         <Container>
           <div className="checkout_information">
-            <form>
               <Row className="checkout_block">
                 <Col md={12}>
                   {this.showErrors()}
@@ -366,7 +372,6 @@ class Checkout extends Component {
                   </button>
                 </div>
               )}
-            </form>
           </div>
         </Container>
       </React.Fragment>
@@ -383,6 +388,7 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({
   getCartProducts: () => dispatch(Actions.getCartProducts.request()),
+  clearCart: () => dispatch(clearCart()),
   
 });
 

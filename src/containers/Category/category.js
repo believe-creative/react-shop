@@ -26,7 +26,6 @@ class Category extends Component {
       : [];
   }
   callSubCategories(subcategoryName) {
-    console.log(subcategoryName.target);
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
     if (this.props.subCategories) {
       var categoryId;
@@ -34,17 +33,13 @@ class Category extends Component {
       Object.values(this.props.subCategories).map(subCategory => {
         allSubCategories = [...allSubCategories, ...subCategory];
       });
-      console.log(allSubCategories);
       var matchedCategories = allSubCategories.filter(
         category => category.name.toLowerCase() == categoryNameLowerCase
       );
-      console.log(matchedCategories);
       if (matchedCategories.length > 0) {
         categoryId = matchedCategories[0].category_id;
-        console.log(categoryId);
       }
       if (!this.props.subCategoryProducts) {
-        console.log(categoryId);
         this.props.loadSubCategoryProducts({
           categoryId: categoryId,
           descriptionLength: 120
@@ -63,7 +58,6 @@ class Category extends Component {
     let heroStyle = {
       backgroundImage: `url(${backgroundImageURL})`
     };
-    console.log("CATEGORIES:", this.props);
     let categoryProducts = this.props.categoryProducts
       ? this.props.categoryProducts[categoryName]
       : [];
@@ -83,7 +77,7 @@ class Category extends Component {
                   ? getsubCategories.map((category, index) => {
                       var subCategoryName = category.name.toLowerCase();
                       return (
-                        <li>
+                        <li key={index}>
                           <form action={"/categories/" + subCategoryName}>
                             <a
                               className="sub_categories_submit"

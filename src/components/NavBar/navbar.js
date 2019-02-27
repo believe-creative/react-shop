@@ -26,7 +26,6 @@ class NavBar extends Component {
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };
-    console.log(this.props.searchItems);
     let searchBlock = "";
     if (this.props.searchItems && this.props.searchItems.length > 0) {
       searchBlock = (

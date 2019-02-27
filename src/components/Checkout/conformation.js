@@ -40,7 +40,6 @@ class Conformation extends Component {
     }
     totalAmount=Math.round(totalAmount * 100) / 100;
     if (this.props.customer) customer = this.props.customer;
-    console.log(customer,"sdfdsfds");
     return (
       <React.Fragment>
         <Row className="conformation_block">
@@ -59,9 +58,9 @@ class Conformation extends Component {
                           <th>Qty</th>
                           <th>Price</th>
                         </tr>
-                        {cart.products.map(function(product) {
+                        {cart.products.map(function(product,index) {
                           return (
-                            <tr>
+                            <tr key={index}>
                               <td>{product.name}</td>
                               <td>{product.quantity}</td>
                               <td>{product.price}</td>
@@ -80,11 +79,11 @@ class Conformation extends Component {
                     <div className="address">
                       <h3>{"Address"}</h3>
                       {
-                        Object.keys(customer).map(function(key){
+                        Object.keys(customer).map(function(key,index){
                           if(key=="address_1" || key=="address_2" || key=="city" || key=="country")
                           {
                             return(
-                              <p>{customer[key]}</p>
+                              <p key={index}>{customer[key]}</p>
                             )
                           }
                             

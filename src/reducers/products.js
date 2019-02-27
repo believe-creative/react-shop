@@ -50,7 +50,6 @@ export default (state = intialState, action) => {
       }
       cart.count = cart.count - 1;
       localStorage.setItem("react-shop-cart", JSON.stringify(cart));
-      console.log(cart, "fghhfghfghgfhfghfg");
       return {
         ...state,
         isLoading: false,
@@ -132,6 +131,15 @@ export default (state = intialState, action) => {
         isLoading: false,
         cart: cart
       };
+
+    case ActionTypes.CLEARCART:
+
+      return {
+        ...state,
+        isLoading: false,
+        cart: { inCartId: null, count: 0, products: [], region: null }
+      };
+
     case ActionTypes.SETSHIPPINGOPTION:
       cart = localStorage.getItem("react-shop-cart");
       if (cart) {
@@ -172,12 +180,10 @@ export default (state = intialState, action) => {
       Object.values(state.subCategories).map(subCategory => {
         allSubCategories = [...allSubCategories, ...subCategory];
       });
-      console.log(allSubCategories, action.data.categoryId);
       let subCategoryName = getSubCategoryName(
         allSubCategories,
         action.data.categoryId
       );
-      console.log(subCategoryName);
       let subCategoryProducts = state.subCategoryProducts
         ? Object.assign({}, state.subCategoryProducts)
         : [];

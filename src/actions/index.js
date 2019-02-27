@@ -22,6 +22,7 @@ export const GETSHIPPINGOPTIONS = createRequestTypes("GETSHIPPINGOPTIONS");
 export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
 export const SETREGION = "SETREGION";
+export const CLEARCART = "CLEARCART";
 export const SETSHIPPINGOPTION = "SETSHIPPINGOPTION";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
 export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
@@ -35,6 +36,10 @@ export function setUser(payload) {
 
 export function setRegion(payload) {
   return { type: "SETREGION", payload };
+}
+
+export function clearCart() {
+  return { type: "CLEARCART" };
 }
 
 export function setShippingOption(payload) {
@@ -68,11 +73,9 @@ export const AddToCart = {
 
 export const removeFromCart = {
   request: inItemId => {
-    console.log(inItemId);
     return action(REMOVEFROMCART[REQUEST], { inItemId });
   },
   success: (inItemId, response) => {
-    console.log(response);
     return action(REMOVEFROMCART[SUCCESS], { inItemId, response });
   },
   failure: (inItemId, error) =>

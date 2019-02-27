@@ -19,30 +19,39 @@ class Login extends Component {
     super(props);
     this.state = {
       user: null,
-      email: null,
-      pwd: null,
+      email: "",
+      pwd: "",
       errors: null
     };
   }
   login() {
     let props = this.props;
     let this_ref = this;
+
     axios
-      .post(API_ROOT + "login", {
-        email: this.state.email,
-        pwd: this.state.pwd
-      })
+      .get(API_ROOT + "get_token")
       .then(function(response) {
-        if (response.data.status == "error") {
-          this_ref.setState({ errors: response.data.msg });
-        } else {
-          setCookie("s-atk", response.data.token, 0.2);
-          props.setUser(response.data.user);
-          this_ref.setState({ errors: null });
-        }
+        axios
+        .post(API_ROOT + "login", {
+          email: this_ref.state.email,
+          pwd: this_ref.state.pwd
+        },{Authorization: `Bearer ${response.data.token}`})
+        .then(function(response) {
+          if (response.data.status == "error") {
+            this_ref.setState({ errors: response.data.msg });
+          } else {
+            setCookie("s-atk", response.data.token, 0.2);
+            props.setUser(response.data.user);
+            this_ref.setState({ errors: null });
+          }
+        })
+        .catch(function(error) {
+        });
       })
       .catch(function(error) {
       });
+
+    
   }
   change(e) {
     let state = this.state;
@@ -126,7 +135,7 @@ class Login extends Component {
                   <div className="pt-3">
                     {this.show_errors()}
                     <div className="form-group">
-                      <label for="email">Email:</label>
+                      <label htmlFor="email">Email:</label>
                       <input
                         type="email"
                         className="form-control"
@@ -138,7 +147,7 @@ class Login extends Component {
                       />
                     </div>
                     <div className="form-group">
-                      <label for="pwd">Password:</label>
+                      <label htmlFor="pwd">Password:</label>
                       <input
                         type="password"
                         className="form-control"
@@ -149,10 +158,10 @@ class Login extends Component {
                         onChange={this.change.bind(this)}
                       />
                     </div>
-                    <div class="mb-3 radio-checkbox-block">
+                    <div className="mb-3 radio-checkbox-block">
                       <input type="checkbox" />
                       <span />
-                      <label for="checkbox">Remember</label>
+                      <label htmlFor="checkbox">Remember</label>
                     </div>
                     <button
                       type="button"

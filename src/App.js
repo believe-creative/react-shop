@@ -19,6 +19,7 @@ class App extends Component {
       cart = JSON.parse(cart);
       this.props.getCartProducts(cart.inCartId);
     }
+    productRequest();
   }
 
   render() {

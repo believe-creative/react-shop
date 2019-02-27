@@ -7,7 +7,7 @@ export default class ProductList extends Component {
     return (
       <div className="row items_list">
         {this.props.products &&
-          this.props.products.map(product => <Product product={product} />)}
+          this.props.products.map((product,index) => <Product key={index} product={product} />)}
       </div>
     );
   }

@@ -25,7 +25,6 @@ class UserBlock extends Component {
   }
   componentWillReceiveProps(props,b,c)
   {
-    console.log(props);
     if(props.cart)
     {
       if(props.cart.count)
@@ -68,9 +67,9 @@ class UserBlock extends Component {
     totalAmount=Math.round(totalAmount * 100) / 100;
 
     return (
-      <div class="topbar">
-        <div class="container">
-          <div class="register-block">
+      <div className="topbar">
+        <div className="container">
+          <div className="register-block">
             Hi!
             {name ? (
               <Dropdown>
@@ -89,8 +88,8 @@ class UserBlock extends Component {
               </LinkContainer>
             )}
           </div>
-          {/* <div class="topbar-menu">
-            <ul class="list-unstyled">
+          {/* <div className="topbar-menu">
+            <ul className="list-unstyled">
               <li>
                 <a href="#">Daily Deals</a>
               </li>
@@ -102,14 +101,14 @@ class UserBlock extends Component {
               </li>
             </ul>
           </div>
-          <div class="currency-block">&#163; GBP</div> */}
-          <div class="price-block">
+          <div className="currency-block">&#163; GBP</div> */}
+          <div className="price-block">
             <a href="">
-              <i class="fa fa-shopping-bag" aria-hidden="true" />
+              <i className="fa fa-shopping-bag" aria-hidden="true" />
             </a>{" "}
             Your bag: &#163;{totalAmount}
           </div>
-          <div class="clearfix" />
+          <div className="clearfix" />
         </div>
       </div>
     );
