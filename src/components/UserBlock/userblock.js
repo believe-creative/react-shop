@@ -12,7 +12,8 @@ class UserBlock extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      cart:{}
     };
   }
   componentDidMount() {
@@ -21,6 +22,22 @@ class UserBlock extends Component {
     if (c) {
       this.props.checkUserLogin(c);
     }
+  }
+  componentWillReceiveProps(props,b,c)
+  {
+    console.log(props);
+     if(props.cart.count)
+     {
+        if(!this.state.cart.count)
+        {
+            this.props.getCartProducts(props.cart.inCartId);
+        }
+        else if(props.cart.count!=this.state.cart.count)
+        {
+          this.props.getCartProducts(props.cart.inCartId);
+        }
+        this.setState({cart:props.cart});
+     }
   }
   logout() {
     deleteCookie("s-atk");
@@ -35,10 +52,14 @@ class UserBlock extends Component {
     }
     if (this.props.cart) {
       let cart = this.props.cart;
-      for (var i = 0; i < cart.products.length; i++) {
-        totalAmount =
-          totalAmount + cart.products[i].price * cart.products[i].quantity;
+      if(cart.products)
+      { 
+        for (var i = 0; i < cart.products.length; i++) {
+          totalAmount =
+            totalAmount + cart.products[i].price * cart.products[i].quantity;
+        }
       }
+      
     }
     totalAmount=Math.round(totalAmount * 100) / 100;
 
@@ -101,7 +122,8 @@ const mapStateToProps = state => {
 function mapDispatchToProps(dispatch) {
   return {
     setUser: user => dispatch(setUser(user)),
-    checkUserLogin: token => dispatch(Actions.checkUserLogin.request(token))
+    checkUserLogin: token => dispatch(Actions.checkUserLogin.request(token)),
+    getCartProducts: token => dispatch(Actions.getCartProducts.request(token))
   };
 }
 

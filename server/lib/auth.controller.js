@@ -1,6 +1,5 @@
 let jwt = require('jsonwebtoken');
-const {checkUserWithEmail, secret_key} = require('../server')
-let secret_key = 'Amoha_secret_key';
+const {checkUserWithEmail, secret_key} = require('../server');
   exports.facebook = (req, res) => {
     const io = req.app.get('io')
     const displayName= req.user.displayName

@@ -22,6 +22,8 @@ const {
   getShippingOptions,
   getShippingRegions,
   getCategoryProducts,
+  removeFromCart,
+  updateProductQuantity,
   getSearchItems
 } = actions;
 
@@ -80,12 +82,32 @@ export const fetchSearchItems = fetchEntity.bind(
   api.getSearchItems
 );
 
+export const  updateQuantity= fetchEntity.bind(
+  null,
+  updateProductQuantity,
+  api.updateProductQuantity
+);
+
+export const removeProduct = fetchEntity.bind(
+  null,
+  removeFromCart,
+  api.removeFromCart
+);
+
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
 }
 
+function* loadremoveProduct(action) {
+  yield call(removeProduct, action.inItemId);
+}
+
 function* loadProductsfromCart(action) {
   yield call(getProductsfromCart, action.inCartId);
+}
+
+function* loadupdateQuantity(action) {
+  yield call(updateQuantity, action.data);
 }
 
 function* loadgetAllShippingRegions(action) {
@@ -168,6 +190,20 @@ function* watchloadSearchItems() {
   yield takeLatest(actions.SEARCH.REQUEST, loadSearchItems);
 }
 
+function* watchloadremoveProduct() {
+  yield takeLatest(
+    actions.REMOVEFROMCART.REQUEST,
+    loadremoveProduct
+  );
+}
+
+function* watchloadupdateQuantity() {
+  yield takeLatest(
+    actions.UPDATEQUANTITY.REQUEST,
+    loadupdateQuantity
+  );
+}
+
 export default function*() {
   yield fork(watchLoadProducts);
   yield fork(watchLoadUser);
@@ -179,4 +215,6 @@ export default function*() {
   yield fork(watchloadgetAllShippingRegions);
   yield fork(watchloadgetRegionShippingOption);
   yield fork(watchloadSearchItems);
+  yield fork(watchloadremoveProduct);
+  yield fork(watchloadupdateQuantity);
 }
