@@ -66,13 +66,7 @@ class Checkout extends Component {
 
     this.setState(state);
   }
-<<<<<<< Updated upstream
-  componentDidMount() {
-    if (!this.props.user) {
-      this.props.history.push("/login");
-      localStorage.set("nextRoute", "/checkout");
-    }
-=======
+
   componentDidMount()
   {
     console.log(this.props.user);
@@ -81,8 +75,6 @@ class Checkout extends Component {
           this.props.history.push('/login');
           localStorage.setItem("nextRoute","/checkout");
       }
-      
->>>>>>> Stashed changes
   }
   showstages() {
     if (this.state.stage == 0) {
@@ -190,7 +182,6 @@ class Checkout extends Component {
     }
     else
     {
->>>>>>> Stashed changes
       let state = this.state;
       state["stage"] = state["stage"] + 1;
       this.setState(state);
