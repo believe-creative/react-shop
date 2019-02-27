@@ -108,7 +108,10 @@
 }
 .sub_categories {
   li {
-    a {
+    .sub_categories_submit {
+      background-color: transparent;
+      border: 0;
+      cursor: pointer;
       padding: 0;
     }
   }
