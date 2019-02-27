@@ -1,4 +1,5 @@
 import * as ActionTypes from "../actions";
+import {store} from "../index"
 
 const intialState = {
   loading: false,
@@ -33,6 +34,37 @@ export default (state = intialState, action) => {
       return {
         ...state,
         categories: action.response
+      };
+
+    case ActionTypes.REMOVEFROMCART.SUCCESS:
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = { inCartId: null, count: 0 };
+      }
+      cart.count = cart.count - 1;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      console.log(cart,"fghhfghfghgfhfghfg");
+      return {
+        ...state,
+        isLoading: false,
+        cart: cart
+      };
+
+    case ActionTypes.UPDATEQUANTITY.SUCCESS:
+      cart = localStorage.getItem("react-shop-cart");
+      if (cart) {
+        cart = JSON.parse(cart);
+      } else {
+        cart = { inCartId: null, count: 0 };
+      }
+      cart.count = cart.count - 1;
+      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      return {
+        ...state,
+        isLoading: false,
+        cart: cart
       };
     case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
       cart = localStorage.getItem("react-shop-cart");
