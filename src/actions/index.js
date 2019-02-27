@@ -13,6 +13,8 @@ function createRequestTypes(base) {
 export const PRODUCTS = createRequestTypes("PRODUCTS");
 export const PRODUCT = createRequestTypes("PRODUCT");
 export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
+export const REMOVEFROMCART = createRequestTypes("REMOVEFROMCART");
+export const UPDATEQUANTITY = createRequestTypes("UPDATEQUANTITY");
 export const GETCARTPRODUCTS = createRequestTypes("GETCARTPRODUCTS");
 export const GETSHIPPINGREGIONS = createRequestTypes("GETSHIPPINGREGIONS");
 export const GETSHIPPINGOPTIONS = createRequestTypes("GETSHIPPINGOPTIONS");
@@ -61,6 +63,21 @@ export const AddToCart = {
     action(ADDPRODUCTTOCART[SUCCESS], { data, response }),
   failure: (data, error) => action(ADDPRODUCTTOCART[FAILURE], { data, error })
 };
+
+export const removeFromCart = {
+  request: inItemId =>{console.log(inItemId); return action(REMOVEFROMCART[REQUEST], { inItemId })},
+  success: (inItemId, response) =>{ console.log(response);
+    return action(REMOVEFROMCART[SUCCESS], { inItemId, response })},
+  failure: (inItemId, error) => action(REMOVEFROMCART[FAILURE], { inItemId, error })
+};
+
+export const updateProductQuantity = {
+  request: data => action(UPDATEQUANTITY[REQUEST], { data }),
+  success: (data, response) =>
+    action(UPDATEQUANTITY[SUCCESS], { data, response }),
+  failure: (data, error) => action(UPDATEQUANTITY[FAILURE], { data, error })
+};
+
 export const getCartProducts = {
   request: inCartId => action(GETCARTPRODUCTS[REQUEST], { inCartId }),
   success: (inCartId, response) =>

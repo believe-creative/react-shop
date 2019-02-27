@@ -13,6 +13,8 @@ import Image from "react-bootstrap/Image";
 import successimage from "../../images/success-image.png";
 import * as Actions from "../../actions";
 import axios from "axios";
+import { PROVIDERS } from "../../services/constants";
+import { API_ROOT } from "../../services/constants";
 
 import { connect } from "react-redux";
 

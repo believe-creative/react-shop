@@ -199,7 +199,7 @@ app.post('/setpassword', [
 /*
 * To get all departments
 */
-app.get('/api/get-departments', checkToken, (req, res) => {
+app.get('/api/get-departments', (req, res) => {
   sequelize
     .query('CALL catalog_get_departments()')
     .then(departments=>res.json(departments));
@@ -491,7 +491,7 @@ app.post('/api/remove-product-from-cart',(req,res)=>{
   sequelize
     .query('CALL shopping_cart_remove_product(:inItemId)',
     {replacements:{inItemId:inItemId}}).then(
-      remove_product_from_cart=>res.json(remove_product_from_cart));
+      remove_product_from_cart=>res.json("removed from cart"));
 });
 /*
 *To update the shopping by increasing the quantity.
@@ -501,9 +501,9 @@ app.post('/api/cart-update',(req,res)=>{
   let inItemId=req.body.inItemId;
   let inQuantity=req.body.inQuantity;
   sequelize
-    .query('CALL shopping_cart_update(:inItemId,:inQuantity:)',
+    .query('CALL shopping_cart_update(:inItemId,:inQuantity)',
     {replacements:{inItemId:inItemId,inQuantity:inQuantity}}).then(
-      cart_update=>res.json(cart_update));
+      cart_update=>res.json("updated cart"));
 });
 /*
 *To get cart total amount.

@@ -34,7 +34,7 @@ const composeEnhancers =
         shouldHotReload: false
       })
     : compose;
-const store = createStore(
+export const store = createStore(
   createReducers(history),
   initialState,
   composeEnhancers(...enhancers)

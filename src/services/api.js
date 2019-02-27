@@ -45,6 +45,31 @@ export const AddToCart = data =>
     })
   );
 
+  export const removeFromCart = inItemId =>
+  callAPI(
+    `remove-product-from-cart/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({
+      inItemId: inItemId
+    })
+  );
+
+  export const updateProductQuantity = data =>
+  callAPI(
+    `cart-update/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8"
+    },
+    getParams({
+      inItemId: data.inItemId,
+      inQuantity:data.inQuantity
+    })
+  );
+
 export const getCartProducts = inCartId =>
   callAPI(
     `get-shopping-cart-products/`,
