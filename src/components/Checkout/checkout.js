@@ -75,6 +75,14 @@ class Checkout extends Component {
           this.props.history.push('/login');
           localStorage.setItem("nextRoute","/checkout");
       }
+      if(!this.props.cart)
+      {
+        this.props.history.push('/');
+      }
+      else if(this.props.cart.count<=0)
+      {
+        this.props.history.push('/');
+      }
   }
   handleSubmit(ev) {
     ev.preventDefault();
@@ -173,21 +181,30 @@ class Checkout extends Component {
     }
   }
   backStage(stage) {
-    let state = this.state;
-    state["stage"] = stage - 1;
-    this.setState(state);
+    if(stage>0)
+    {
+      let state = this.state;
+      state["stage"] = stage - 1;
+      this.setState(state);
+    }
+    else
+    {
+       this.props.history.push("/cart");
+    }
+    
   }
   nextStage(stage) {
-    let state = this.state;
-    state["stage"] = stage + 1;
-    this.setState(state);
-    console.log(stage,"dfdsfdfdfdfds")
-    if(stage>=3)
+    if(stage>=2)
     {
       localStorage.removeItem("react-shop-cart");
       localStorage.removeItem("nextRoute");
       this.props.clearCart();
     }
+    let state = this.state;
+    state["stage"] = stage + 1;
+    this.setState(state);
+    console.log(stage,"dfdsfdfdfdfds")
+    
     
   }
 

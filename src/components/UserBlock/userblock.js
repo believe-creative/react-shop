@@ -23,7 +23,7 @@ class UserBlock extends Component {
   }
   componentWillReceiveProps(props, b, c) {
     if (props.cart) {
-      if (props.cart.count) {
+      if (props.cart.count!=null && props.cart.count!=undefined && props.cart.inCartId) {
         if (!this.state.cart.count) {
           this.props.getCartProducts(props.cart.inCartId);
         } else if (props.cart.count !== this.state.cart.count) {
@@ -46,6 +46,7 @@ class UserBlock extends Component {
   render() {
     let name = null;
     let totalAmount = 0;
+    console.log("came",this.props.cart)
     if (this.props.user) {
       name = this.props.user.name;
     }
