@@ -13,6 +13,7 @@ class Category extends Component {
       showSubCategory: false
     };
     this.callSubCategories = this.callSubCategories.bind(this);
+    this.hideSubCategory = this.hideSubCategory.bind(this);
   }
   componentDidMount() {
     this.checkAndLoadSubCategories(this.props);
@@ -21,14 +22,21 @@ class Category extends Component {
   componentWillReceiveProps(props) {
     this.checkAndLoadSubCategories(props);
     const categoryName = props.match.params.category;
+    if(categoryName!==this.previousCategoryName){
+      this.setState({ showSubCategory: false });
+      this.previousCategoryName = categoryName;
+    }
     const getsubCategories = props.subCategories
       ? props.subCategories[categoryName]
       : [];
   }
   callSubCategories(subcategoryName) {
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
+    this.selectedSubCategoryName = categoryNameLowerCase;
     if (this.props.subCategories) {
+
       var categoryId;
+      var categoryName;
       var allSubCategories = [];
       Object.values(this.props.subCategories).map(subCategory => {
         allSubCategories = [...allSubCategories, ...subCategory];
@@ -39,7 +47,7 @@ class Category extends Component {
       if (matchedCategories.length > 0) {
         categoryId = matchedCategories[0].category_id;
       }
-      if (!this.props.subCategoryProducts) {
+      if (!this.props.subCategoryProducts || !this.props.subCategoryProducts[categoryNameLowerCase]) {
         this.props.loadSubCategoryProducts({
           categoryId: categoryId,
           descriptionLength: 120
@@ -47,6 +55,9 @@ class Category extends Component {
       }
     }
     this.setState({ showSubCategory: true });
+  }
+  hideSubCategory(){
+    this.setState({ showSubCategory: false });
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -58,12 +69,14 @@ class Category extends Component {
     let heroStyle = {
       backgroundImage: `url(${backgroundImageURL})`
     };
+
     let categoryProducts = this.props.categoryProducts
       ? this.props.categoryProducts[categoryName]
       : [];
     let subcategoryProducts = this.props.subCategoryProducts
-      ? this.props.subCategoryProducts[categoryName]
+      ? this.props.subCategoryProducts[this.selectedSubCategoryName]
       : [];
+
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -78,7 +91,6 @@ class Category extends Component {
                       var subCategoryName = category.name.toLowerCase();
                       return (
                         <li key={index}>
-                          <form action={"/categories/" + subCategoryName}>
                             <a
                               className="sub_categories_submit"
                               onClick={this.callSubCategories.bind(this)}
@@ -91,7 +103,6 @@ class Category extends Component {
                                 {category.name}
                               </h2>
                             </a>
-                          </form>
                         </li>
                       );
                     })
@@ -104,12 +115,21 @@ class Category extends Component {
         <div className="container">
           <div className="product_filter_panel">
             <div className="row">
+
               <div className="col-md-12 items_block">
+              {
+                this.state.showSubCategory ?
+                  <h4 className="pb-4 breadcrumb-sub-cat-name">
+                  <a onClick={this.hideSubCategory}>{categoryName.charAt(0).toUpperCase()+ categoryName.slice(1)}</a> /&nbsp;
+                   {this.selectedSubCategoryName.charAt(0).toUpperCase()+ this.selectedSubCategoryName.slice(1)}
+                  </h4>
+                :''
+              }
                 <section>
                   {
                     <ProductList
                       products={
-                        categoryProducts == undefined
+                        this.state.showSubCategory
                           ? subcategoryProducts
                           : categoryProducts
                       }
