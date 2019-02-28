@@ -121,7 +121,7 @@
   position: fixed;
   width: 100%;
   z-index: 10;
-  top: 70px;
+  top: 65px;
   @media (max-width: 767px) {
     top: 34px;
   }
@@ -406,7 +406,7 @@ input::-webkit-input-placeholder {
   color: transparent;
 }
 #main {
-  margin-top: 153px;
+  margin-top: 148px;
   @media (max-width: 767px) {
     margin-top: 107px;
   }
