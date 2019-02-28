@@ -70,7 +70,22 @@ class Login extends Component {
         if (data.token) {
           setCookie("s-atk", data.token, 0.2);
           props.setUser(data.user);
-          props.history.push("/");
+          let route = localStorage.getItem("nextRoute");
+          if (route) {
+            if (route.length > 0) {
+              localStorage.setItem("nextRoute", "");
+              props.history.push(route);
+            }
+            else
+            {
+              props.history.push("/");
+            }
+          }
+          else
+          {
+            props.history.push("/");
+          }
+          
         }
       });
       return provider;

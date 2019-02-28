@@ -196,7 +196,6 @@ class Checkout extends Component {
     let state = this.state;
     state["stage"] = stage + 1;
     this.setState(state);
-    console.log(stage,"dfdsfdfdfdfds")
 
 
   }
