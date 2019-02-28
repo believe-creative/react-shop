@@ -10,7 +10,7 @@ import { connect } from "react-redux";
 class Conformation extends Component {
   constructor(props) {
     super(props);
-    this.stage=1;
+    this.stage = 1;
   }
 
   componentDidMount() {}
@@ -19,37 +19,32 @@ class Conformation extends Component {
   }
   nextStage() {
     this.props.nextStage(this.stage);
-    
   }
   render() {
     let cart = { count: 0, products: [] };
-    let customer={};
-    let shippingoption={shipping_type:"",shipping_cost:""}
-    if (this.props.cart)
-    {
+    let customer = {};
+    let shippingoption = { shipping_type: "", shipping_cost: "" };
+    if (this.props.cart) {
       cart = this.props.cart;
-      if(cart.shippingoption)
-      {
-        shippingoption=cart.shippingoption;
+      if (cart.shippingoption) {
+        shippingoption = cart.shippingoption;
       }
-    } 
+    }
     let totalAmount = 0;
     if (this.props.cart) {
       let cart = this.props.cart;
-      if(cart.products)
-      { 
+      if (cart.products) {
         for (var i = 0; i < cart.products.length; i++) {
           totalAmount =
             totalAmount + cart.products[i].price * cart.products[i].quantity;
         }
       }
-      
     }
-    totalAmount=Math.round(totalAmount * 100) / 100;
+    totalAmount = Math.round(totalAmount * 100) / 100;
     if (this.props.customer) customer = this.props.customer;
     return (
       <React.Fragment>
-        <Row className="conformation_block">
+        <div className="conformation_block">
           <Col md={12}>
             <div className="form-content form-check">
               <div className="row">
@@ -65,7 +60,7 @@ class Conformation extends Component {
                           <th>Qty</th>
                           <th>Price</th>
                         </tr>
-                        {cart.products.map(function(product,index) {
+                        {cart.products.map(function(product, index) {
                           return (
                             <tr key={index}>
                               <td>{product.name}</td>
@@ -85,17 +80,16 @@ class Conformation extends Component {
                     </label>
                     <div className="address">
                       <h3>{"Address"}</h3>
-                      {
-                        Object.keys(customer).map(function(key,index){
-                          if(key=="address_1" || key=="address_2" || key=="city" || key=="country")
-                          {
-                            return(
-                              <p key={index}>{customer[key]}</p>
-                            )
-                          }
-                            
-                        })
-                      }
+                      {Object.keys(customer).map(function(key, index) {
+                        if (
+                          key == "address_1" ||
+                          key == "address_2" ||
+                          key == "city" ||
+                          key == "country"
+                        ) {
+                          return <p key={index}>{customer[key]}</p>;
+                        }
+                      })}
                     </div>
                     <div className="delivery_opts">
                       <h3>{"Delivery options"}</h3>
@@ -122,13 +116,16 @@ class Conformation extends Component {
                 </div>
                 <div className="col-md-2">
                   <h3>{"Grandtotal"}</h3>
-                  <h3>{totalAmount+parseInt(shippingoption.shipping_cost)}</h3>
+                  <h3>
+                    {totalAmount + parseInt(shippingoption.shipping_cost)}
+                  </h3>
                 </div>
               </div>
             </div>
           </Col>
-        </Row>
-        <div className="checkout_next">
+        </div>
+        <div className="col-md-12">
+          <div className="checkout_next">
             <button
               onClick={this.backStage.bind(this)}
               type="button"
@@ -143,6 +140,7 @@ class Conformation extends Component {
             >
               Next Step
             </button>
+          </div>
         </div>
       </React.Fragment>
     );
@@ -152,7 +150,7 @@ class Conformation extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
-    customer:state.get("user").customer,
+    customer: state.get("user").customer
   };
 };
 
