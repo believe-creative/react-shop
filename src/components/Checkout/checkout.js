@@ -3,8 +3,6 @@ import Container from "react-bootstrap/Container";
 import { LinkContainer } from "react-router-bootstrap";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/checkout.scss";
 import Delivery from "./delivery";
 import Conformation from "./conformation";
@@ -13,7 +11,6 @@ import Image from "react-bootstrap/Image";
 import successimage from "../../images/success-image.png";
 import * as Actions from "../../actions";
 import axios from "axios";
-import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
 import { clearCart } from "../../actions";
 
@@ -21,10 +18,7 @@ import { connect } from "react-redux";
 
 import {
   StripeProvider,
-  Elements,
-  CardNumberElement,
-  CardExpiryElement,
-  CardCVCElement
+  Elements
 } from "react-stripe-elements";
 
 class Checkout extends Component {
@@ -71,7 +65,7 @@ class Checkout extends Component {
   componentDidMount()
   {
       if(!this.props.user.email)
-      { 
+      {
           this.props.history.push('/login');
           localStorage.setItem("nextRoute","/checkout");
       }
@@ -87,19 +81,18 @@ class Checkout extends Component {
   handleSubmit(ev) {
     ev.preventDefault();
     let this_ref = this;
-    let props = this.props;
     // We don't want to let default form submission happen here, which would refresh the page.
     let totalAmount = 0;
     if (this.props.cart) {
       let cart = this.props.cart;
       if(cart.products)
-      { 
+      {
         for (var i = 0; i < cart.products.length; i++) {
           totalAmount =
             totalAmount + cart.products[i].price * cart.products[i].quantity;
         }
       }
-      
+
     }
     totalAmount=Math.round(totalAmount * 100) / 100;
     // Within the context of `Elements`, this call to createToken knows which Element to
@@ -118,7 +111,7 @@ class Checkout extends Component {
             inTaxId:0
           })
           .then(function(response) {
-            if (response.data.status == "error") {
+            if (response.data.status === "error") {
               this_ref.setState({ errors: response.data.msg });
             } else {
               this_ref.setState({ errors: null });
@@ -132,20 +125,20 @@ class Checkout extends Component {
       });
   }
   showstages() {
-    if (this.state.stage == 0) {
+    if (this.state.stage === 0) {
       return (
         <Delivery backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} setDelivarydetails={this.setDelivarydetails.bind(this)} />
       );
-    } else if (this.state.stage == 1) {
+    } else if (this.state.stage === 1) {
       return <Conformation backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} />;
-    } else if (this.state.stage == 2) {
+    } else if (this.state.stage === 2) {
       return (
         <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
           <Elements>
-          
-                
+
+
                     <Payment user={this.props.user} cart={this.props.cart} customer={this.props.customer} backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} back={"back"} next={"pay"}   />
-                  
+
           </Elements>
         </StripeProvider>
       );
@@ -191,7 +184,7 @@ class Checkout extends Component {
     {
        this.props.history.push("/cart");
     }
-    
+
   }
   nextStage(stage) {
     if(stage>=2)
@@ -204,11 +197,11 @@ class Checkout extends Component {
     state["stage"] = stage + 1;
     this.setState(state);
     console.log(stage,"dfdsfdfdfdfds")
-    
-    
+
+
   }
 
- 
+
   render() {
     let finalstage = false;
     if (this.state.stage >= 2) finalstage = true;
@@ -309,7 +302,7 @@ const mapStateToProps = state => {
 const mapStateToDispatch = dispatch => ({
   getCartProducts: () => dispatch(Actions.getCartProducts.request()),
   clearCart: () => dispatch(clearCart()),
-  
+
 });
 
 export default connect(

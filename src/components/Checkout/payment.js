@@ -1,24 +1,13 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
-import { connect } from "react-redux";
-import paypal from "../../images/paypal.png";
 import {
-  StripeProvider,
-  Elements,
   CardNumberElement,
   CardExpiryElement,
   CardCVCElement
 } from "react-stripe-elements";
 import axios from "axios";
 import { API_ROOT } from "../../services/constants";
-import { setUser } from "../../actions";
-import * as Actions from "../../actions";
-import { setCookie, getCookie, deleteCookie } from "../../services/helpers";
 import { injectStripe } from "react-stripe-elements";
 
 class Payment extends Component {
@@ -44,7 +33,6 @@ class Payment extends Component {
   handleSubmit(ev) {
     ev.preventDefault();
     let this_ref = this;
-    let props = this.props;
     // We don't want to let default form submission happen here, which would refresh the page.
     let totalAmount = 0;
     if (this.props.cart) {
@@ -89,7 +77,7 @@ class Payment extends Component {
                   { Authorization: `Bearer ${response.data.token}` }
                 )
                 .then(function(res) {
-                  if (res.data.status == "error") {
+                  if (res.data.status === "error") {
                     this_ref.setState({ errors: res.data.msg });
                   } else {
                     this_ref.setState({ errors: null });

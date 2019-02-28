@@ -23,7 +23,7 @@ class UserBlock extends Component {
   }
   componentWillReceiveProps(props, b, c) {
     if (props.cart) {
-      if (props.cart.count!=null && props.cart.count!=undefined && props.cart.inCartId) {
+      if (props.cart.count!==null && props.cart.count!==undefined && props.cart.inCartId) {
         if (!this.state.cart.count) {
           this.props.getCartProducts(props.cart.inCartId);
         } else if (props.cart.count !== this.state.cart.count) {

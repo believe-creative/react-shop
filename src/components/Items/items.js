@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import Nav from "react-bootstrap/Nav";
-import { confirmAlert } from 'react-confirm-alert'; 
+import { confirmAlert } from 'react-confirm-alert';
 import * as Actions from "../../actions";
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
@@ -27,36 +21,36 @@ class Items extends Component {
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
     if(props.cart)
     {
-      if(props.cart.count!=undefined && props.cart.count!=null)
+      if(props.cart.count!==undefined && props.cart.count!=null)
       {
          if(props.cart.count<=0)
          {
-           
+
            state["buttonStyles"]={pointerEvents: "none"};
          }
          state["cart"]=props.cart;
       }
     }
-    
+
     this.setState(state);
   }
   componentWillReceiveProps(props)
   {
     let state=this.state;
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
-    if(props.cart.count!=undefined && props.cart.count!=null)
+    if(props.cart.count!==undefined && props.cart.count!==null)
      {
-        if(this.state.cart.count==undefined || this.state.cart.count==null)
+        if(this.state.cart.count===undefined || this.state.cart.count===null)
         {
             this.props.getCartProducts(props.cart.inCartId);
         }
-        else if(props.cart.count!=this.state.cart.count)
+        else if(props.cart.count!==this.state.cart.count)
         {
           this.props.getCartProducts(props.cart.inCartId);
         }
         if(props.cart.count<=0)
         {
-          
+
           state["buttonStyles"]={pointerEvents: "none"};
         }
         state["cart"]=props.cart;
@@ -92,7 +86,6 @@ class Items extends Component {
   update(e)
   {
     let state=this.state;
-    let this_ref=this;
     state["buttonStyles"]={pointerEvents: "none"};
     this.setState(state);
     let count=parseInt(e.currentTarget.getAttribute("data-quantity"));
@@ -108,7 +101,7 @@ class Items extends Component {
     {
       this.props.updateProductQuantity({inItemId:e.currentTarget.getAttribute("data-item"),inQuantity:count});
     }
-    
+
   }
   render() {
     let cart = { count: 0, products: [] };
