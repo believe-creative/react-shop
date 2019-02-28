@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Dropdown from "react-bootstrap/Dropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import "../../scss/navbar.scss";
 import * as Actions from "../../actions";
-import { setCookie, getCookie, deleteCookie } from "../../services/helpers";
+import { getCookie, deleteCookie } from "../../services/helpers";
 import { setUser } from "../../actions";
 import Nav from "react-bootstrap/Nav";
 
@@ -18,7 +17,6 @@ class UserBlock extends Component {
   }
   componentDidMount() {
     var c = getCookie("s-atk");
-    var state = this.state;
     if (c) {
       this.props.checkUserLogin(c);
     }
@@ -28,7 +26,7 @@ class UserBlock extends Component {
       if (props.cart.count) {
         if (!this.state.cart.count) {
           this.props.getCartProducts(props.cart.inCartId);
-        } else if (props.cart.count != this.state.cart.count) {
+        } else if (props.cart.count !== this.state.cart.count) {
           this.props.getCartProducts(props.cart.inCartId);
         }
         this.setState({ cart: props.cart });
@@ -40,8 +38,7 @@ class UserBlock extends Component {
     this.props.setUser({ name: null, photo: null });
   }
   render() {
-    let name = null;
-    let photo = null;
+    let name = null;    
     let totalAmount = 0;
     if (this.props.user) {
       name = this.props.user.name;

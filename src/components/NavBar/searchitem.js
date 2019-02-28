@@ -1,10 +1,5 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
 import * as Actions from "../../actions";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import { connect } from "react-redux";
 import ProductList from "../Product/productlist";
 import "../../scss/cart.scss";

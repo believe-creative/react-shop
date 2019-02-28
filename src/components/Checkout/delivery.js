@@ -2,8 +2,6 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
 import * as Actions from "../../actions";
 import { setRegion,setShippingOption } from "../../actions";
@@ -16,7 +14,7 @@ class Delivery extends Component {
       this.state={
         region:"",
         customer:{}
-      }   
+      }
   }
   componentDidMount(){
     this.props.getShippingRegions();
@@ -29,7 +27,7 @@ class Delivery extends Component {
         {
           if(props.customer)
           {
-              if(props.customer!=this.state.customer)
+              if(props.customer!==this.state.customer)
               {
                   this.setState({customer:props.customer});
               }
@@ -39,7 +37,7 @@ class Delivery extends Component {
               props.getCustomerInfo(props.user.email);
           }
         }
-        
+
       }
    }
   changeRegion(e)
@@ -190,11 +188,11 @@ class Delivery extends Component {
                               </label>
                             </p>
                           </div>
-                        ) 
+                        )
                       })}
                       </div>
                     </div>:<div></div>}
-                    
+
                   </div>
                 </div>
               </div>

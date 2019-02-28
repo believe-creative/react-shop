@@ -1,14 +1,8 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import Nav from "react-bootstrap/Nav";
-import { confirmAlert } from 'react-confirm-alert'; 
+import { confirmAlert } from 'react-confirm-alert';
 import * as Actions from "../../actions";
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
@@ -27,36 +21,36 @@ class Items extends Component {
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
     if(props.cart)
     {
-      if(props.cart.count!=undefined && props.cart.count!=null)
+      if(props.cart.count!==undefined && props.cart.count!==null)
       {
          if(props.cart.count<=0)
          {
-           
+
            state["buttonStyles"]={pointerEvents: "none"};
          }
          state["cart"]=props.cart;
       }
     }
-    
+
     this.setState(state);
   }
   componentWillReceiveProps(props)
   {
     let state=this.state;
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
-    if(props.cart.count!=undefined && props.cart.count!=null)
+    if(props.cart.count!==undefined && props.cart.count!==null)
      {
-        if(this.state.cart.count==undefined || this.state.cart.count==null)
+        if(this.state.cart.count===undefined || this.state.cart.count===null)
         {
             this.props.getCartProducts(props.cart.inCartId);
         }
-        else if(props.cart.count!=this.state.cart.count)
+        else if(props.cart.count!==this.state.cart.count)
         {
           this.props.getCartProducts(props.cart.inCartId);
         }
         if(props.cart.count<=0)
         {
-          
+
           state["buttonStyles"]={pointerEvents: "none"};
         }
         state["cart"]=props.cart;
@@ -92,7 +86,7 @@ class Items extends Component {
   update(e)
   {
     let state=this.state;
-    let this_ref=this;
+    //let this_ref=this;
     state["buttonStyles"]={pointerEvents: "none"};
     this.setState(state);
     let count=parseInt(e.currentTarget.getAttribute("data-quantity"));
@@ -108,12 +102,12 @@ class Items extends Component {
     {
       this.props.updateProductQuantity({inItemId:e.currentTarget.getAttribute("data-item"),inQuantity:count});
     }
-    
+
   }
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
-    
+
     let this_ref=this;
     return (
       <React.Fragment>
@@ -144,12 +138,17 @@ class Items extends Component {
                                     ? product.thumbnail
                                     : "afghan-flower-2.gif"
                                 }`)}
+                                alt={require(`../../images/product_images/${
+                                  product.thumbnail
+                                    ? product.thumbnail
+                                    : "afghan-flower-2.gif"
+                                }`)}
                               />
                               <span>
                                 <h3>{product.name}</h3>
                                 <p>Men BK3569</p>
                                 <p className="remove">
-                                  <a data-item={product.item_id} data-name={product.name} style={this_ref.state.buttonStyles} onClick={this_ref.remove.bind(this_ref)}>
+                                  <a href={product.name} data-item={product.item_id} data-name={product.name} style={this_ref.state.buttonStyles} onClick={this_ref.remove.bind(this_ref)}>
                                     <span>&#10005;</span> Remove
                                   </a>
                                 </p>
@@ -158,13 +157,13 @@ class Items extends Component {
                             <li>XXL</li>
                             <li className="quantity-block">
                               <span>
-                                <a data-param="-1" data-item={product.item_id} data-quantity={product.quantity} style={this_ref.state.buttonStyles} onClick={this_ref.update.bind(this_ref)} >&#8722;</a>
+                                <a href={product.name} data-param="-1" data-item={product.item_id} data-quantity={product.quantity} style={this_ref.state.buttonStyles} onClick={this_ref.update.bind(this_ref)} >&#8722;</a>
                               </span>
                               <span className="number-block">
                                 {product.quantity}
                               </span>
                               <span>
-                                <a data-param="1" data-item={product.item_id} style={this_ref.state.buttonStyles} data-quantity={product.quantity} onClick={this_ref.update.bind(this_ref)}  >&#43;</a>
+                                <a href={product.name} data-param="1" data-item={product.item_id} style={this_ref.state.buttonStyles} data-quantity={product.quantity} onClick={this_ref.update.bind(this_ref)}  >&#43;</a>
                               </span>
                             </li>
                             <li className="price">&#163;{product.price}</li>
@@ -181,10 +180,10 @@ class Items extends Component {
               <div className="row">
                 <div className="col-md-10 offset-md-1">
                   <LinkContainer to={"/"} className="btn btn-md btn-white">
-                    <a>Back to Shop</a>
+                    <a href="/">Back to Shop</a>
                   </LinkContainer>
                   <LinkContainer style={this.state.buttonStyles} to={"/checkout"} className="btn btn-md">
-                    <a>Checkout</a>
+                    <a href="/">Checkout</a>
                   </LinkContainer>
                 </div>
               </div>

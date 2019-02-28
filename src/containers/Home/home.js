@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Switch, Route } from "react-router";
+// import { Switch, Route } from "react-router";
 import { LinkContainer } from "react-router-bootstrap";
 import Container from "react-bootstrap/Container";
 import bag from "../../images/bag.png";
@@ -20,7 +20,7 @@ export default class Home extends Component {
               </h2>
               <p>
                 <LinkContainer to="/categories" className="btn btn-lg">
-                  <a>View All</a>
+                  <a href="/">View All</a>
                 </LinkContainer>
               </p>
             </div>
@@ -31,7 +31,7 @@ export default class Home extends Component {
             <div className="row product_panel">
               <div className="col-md-4 product_img">
                 <div className="sale">SALE</div>
-                <img src={bag} />
+                <img src={bag} alt={bag}/>
               </div>
               <div className="col-md-8 shop_now">
                 <h2>Vera Bradley</h2>
@@ -42,7 +42,7 @@ export default class Home extends Component {
                   enough perfectly placed.
                 </p>
                 <p>
-                  <a href="/checkout" className="btn btn-lg">
+                  <a href="/categories" className="btn btn-lg">
                     Shop Now
                   </a>
                 </p>
@@ -64,12 +64,12 @@ export default class Home extends Component {
               <div className="col-md-8 ">
                 <div className="game_begin_block">
                   <div className="pop">POP</div>
-                  <img src={pop_image} />
+                  <img src={pop_image} alt={pop_image} />
                   <div className="game_sub_block">
                     <h1>Let The Game begin</h1>
                     <h2>Registration is on - get ready for the Open</h2>
                     <p>
-                      <a href="#" className="btn btn-lg">
+                      <a href="/login" className="btn btn-lg">
                         Register
                       </a>
                     </p>

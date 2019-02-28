@@ -8,7 +8,7 @@ import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
 import { setUser } from "../../actions";
 import * as Actions from "../../actions";
-import { setCookie, getCookie, deleteCookie } from "../../services/helpers";
+import { setCookie, getCookie } from "../../services/helpers";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -37,7 +37,7 @@ class Login extends Component {
           pwd: this_ref.state.pwd
         },{Authorization: `Bearer ${response.data.token}`})
         .then(function(response) {
-          if (response.data.status == "error") {
+          if (response.data.status === "error") {
             this_ref.setState({ errors: response.data.msg });
           } else {
             setCookie("s-atk", response.data.token, 0.2);
@@ -51,7 +51,7 @@ class Login extends Component {
       .catch(function(error) {
       });
 
-    
+
   }
   change(e) {
     let state = this.state;
@@ -60,23 +60,19 @@ class Login extends Component {
   }
   componentDidMount() {
     var c = getCookie("s-atk");
-    var state = this.state;
     if (c) {
       this.props.checkUserLogin(c);
     }
     var props = this.props;
-    
-    var this_ref = this;
+
     PROVIDERS.map(provider => {
       socket.on(provider, data => {
         if (data.token) {
           setCookie("s-atk", data.token, 0.2);
           props.setUser(data.user);
-          let route=localStorage.getItem("nextRoute");
-          
-            
         }
       });
+      return provider;
     });
   }
   show_errors() {
@@ -171,7 +167,7 @@ class Login extends Component {
                       Submit
                     </button>
                     <div>
-                      <a href="#">Forgot Password</a>
+                      <a href="/login">Forgot Password</a>
                     </div>
                   </div>
                 </div>

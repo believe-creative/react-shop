@@ -3,13 +3,10 @@ import {
   takeEvery,
   put,
   call,
-  fork,
-  select,
-  all
+  fork
 } from "redux-saga/effects";
 import { api } from "../services";
 import * as actions from "../actions";
-import { getProduct, getProducts } from "../reducers/selectors";
 
 const {
   product,

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
-import bag from "../../images/bag.png";
 import "../../scss/categories.scss";
 
 class Categories extends Component {
@@ -13,6 +12,7 @@ class Categories extends Component {
           departmentId: category.department_id,
           descriptionLength: 120
         });
+        return category;
       });
     }
   }
@@ -25,7 +25,9 @@ class Categories extends Component {
     productCategoriesList.map((category, index) => {
       category.map((item, ind) => {
         productsList.push(item);
+        return item;
       });
+      return category;
     });
     return (
       <div className="container">

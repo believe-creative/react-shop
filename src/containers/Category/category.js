@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
-import bag from "../../images/bag.png";
 import "../../scss/categories.scss";
-import Nav from "react-bootstrap/Nav";
-import { LinkContainer } from "react-router-bootstrap";
 class Category extends Component {
   constructor(props) {
     super(props);
@@ -26,9 +23,6 @@ class Category extends Component {
       this.setState({ showSubCategory: false });
       this.previousCategoryName = categoryName;
     }
-    const getsubCategories = props.subCategories
-      ? props.subCategories[categoryName]
-      : [];
   }
   callSubCategories(subcategoryName) {
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
@@ -36,13 +30,13 @@ class Category extends Component {
     if (this.props.subCategories) {
 
       var categoryId;
-      var categoryName;
       var allSubCategories = [];
       Object.values(this.props.subCategories).map(subCategory => {
         allSubCategories = [...allSubCategories, ...subCategory];
+        return subCategory;
       });
       var matchedCategories = allSubCategories.filter(
-        category => category.name.toLowerCase() == categoryNameLowerCase
+        category => category.name.toLowerCase() === categoryNameLowerCase
       );
       if (matchedCategories.length > 0) {
         categoryId = matchedCategories[0].category_id;
@@ -192,7 +186,7 @@ class Category extends Component {
 
     if (props.categories) {
       var matchedDepartments = props.categories.filter(
-        category => category.name.toLowerCase() == categoryNameLowerCase
+        category => category.name.toLowerCase() === categoryNameLowerCase
       );
 
       var departmentId;

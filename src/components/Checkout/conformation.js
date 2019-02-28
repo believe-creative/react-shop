@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
 import { connect } from "react-redux";
 
@@ -11,8 +8,6 @@ class Conformation extends Component {
   constructor(props) {
     super(props);
   }
-
-  componentDidMount() {}
 
   render() {
     let cart = { count: 0, products: [] };
@@ -25,18 +20,18 @@ class Conformation extends Component {
       {
         shippingoption=cart.shippingoption;
       }
-    } 
+    }
     let totalAmount = 0;
     if (this.props.cart) {
       let cart = this.props.cart;
       if(cart.products)
-      { 
+      {
         for (var i = 0; i < cart.products.length; i++) {
           totalAmount =
             totalAmount + cart.products[i].price * cart.products[i].quantity;
         }
       }
-      
+
     }
     totalAmount=Math.round(totalAmount * 100) / 100;
     if (this.props.customer) customer = this.props.customer;
@@ -80,13 +75,14 @@ class Conformation extends Component {
                       <h3>{"Address"}</h3>
                       {
                         Object.keys(customer).map(function(key,index){
-                          if(key=="address_1" || key=="address_2" || key=="city" || key=="country")
+                          if(key==="address_1" || key==="address_2" || key==="city" || key==="country")
                           {
                             return(
                               <p key={index}>{customer[key]}</p>
                             )
                           }
-                            
+                          return;
+
                         })
                       }
                     </div>

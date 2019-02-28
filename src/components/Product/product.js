@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as Actions from "../../actions";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 
 class Product extends Component {
@@ -42,6 +41,9 @@ class Product extends Component {
         <div className="hot_block">
           <img
             src={require(`../../images/product_images/${
+              this.props.product.thumbnail
+            }`)}
+            alt={require(`../../images/product_images/${
               this.props.product.thumbnail
             }`)}
           />
