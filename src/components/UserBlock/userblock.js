@@ -40,7 +40,6 @@ class UserBlock extends Component {
   render() {
     let name = null;
     let totalAmount = 0;
-    console.log("came",this.props.cart)
     if (this.props.user) {
       name = this.props.user.name;
     }
