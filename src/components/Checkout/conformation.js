@@ -115,7 +115,7 @@ class Conformation extends Component {
                   <h3>{shippingoption.shipping_cost}</h3>
                 </div>
                 <div className="col-md-2">
-                  <h3>{"Grandtotal"}</h3>
+                  <h3>{"Grand Total"}</h3>
                   <h3>
                     {totalAmount + parseInt(shippingoption.shipping_cost)}
                   </h3>
