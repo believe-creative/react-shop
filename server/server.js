@@ -16,7 +16,6 @@ const passportInit = require('./lib/passport.init')
 const authRouter = require('./lib/auth.router')
 const {checklogin} = require('./lib/auth.controller')
 const {checkToken} = require('./lib/middleware')
-const {payment} = require('./lib/payment.controller')
 const {cryptPassword,comparePassword} = require('./lib/pgen')
 const uniqueString = require('unique-string');
 
@@ -91,7 +90,7 @@ app.get('/api/get_token', (req, res)=>{
 app.get('/api/checkuser',checkToken,checklogin);
 
 app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
-    let amount=Math.round(req.body.amount);
+    let amount=Math.round(req.body.amount)*100;
 	console.log(req.body);
     console.log(amount,req.body.id)
     stripe.customers.create({
