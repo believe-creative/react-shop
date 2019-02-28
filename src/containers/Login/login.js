@@ -73,7 +73,7 @@ class Login extends Component {
           let route = localStorage.getItem("nextRoute");
           if (route) {
             if (route.length > 0) {
-              localStorage.setItem("nextRoute", "");
+              localStorage.removeItem("nextRoute");
               props.history.push(route);
             }
             else
@@ -117,17 +117,7 @@ class Login extends Component {
     if (this.props.user) {
       name = this.props.user.name;
     }
-    if (props.user) {
-      if (props.user.email) {
-        let route = localStorage.getItem("nextRoute");
-        if (route) {
-          if (route.length > 0) {
-            localStorage.setItem("nextRoute", "");
-            props.history.push(route);
-          }
-        }
-      }
-    }
+  
     return (
       <div className="signin-form pt-5">
         <Container>

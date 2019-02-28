@@ -35,7 +35,7 @@ class UserBlock extends Component {
   }
   logout() {
     deleteCookie("s-atk");
-    this.props.setUser({ name: null, photo: null });
+    this.props.setUser({ email:null,name: null, photo: null });
   }
   render() {
     let name = null;
