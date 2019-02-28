@@ -189,8 +189,8 @@ app.post('/setpassword', [
   // username must be an email
   check('name').isLength({ min: 1 }).withMessage('Name is required.'),
   check('email').isLength({ min: 1 }).withMessage('Name is required.').isEmail().withMessage('Please provide a valid email address'),
-  check('pwd').isLength({ min: 6 }).withMessage('Password is required.'),
-  check('rpwd').isLength({ min: 6 }).withMessage('Confirm password is required.').custom((value, { req }) => value === req.body.pwd).withMessage('Passwords must matched.')
+  check('pwd').isLength({ min: 0 }).withMessage('Password is required.').isLength({ min: 6 }).withMessage('Minimum 6 characters required.'),
+  check('rpwd').custom((value, { req }) => value === req.body.pwd).withMessage('Passwords must matched.')
 ], function (req, res) {
   console.log("came here post ---------------------");
   if(req.session.user)
@@ -222,7 +222,7 @@ app.post('/setpassword', [
 
 });
 
-app.use('/api/sociallogin',checkToken, authRouter)
+app.use('/api/sociallogin', authRouter)
 
 /***********Products API Calls ***************/
 /*
