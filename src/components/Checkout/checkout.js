@@ -266,7 +266,7 @@ class Checkout extends Component {
                     </li>
                     <li>
                       <a href="#">
-                        <h3>Conformation</h3>
+                        <h3>Confirmation</h3>
                       </a>
                     </li>
                     <li>

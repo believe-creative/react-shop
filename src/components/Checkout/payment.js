@@ -129,7 +129,7 @@ class Payment extends Component {
                   <div className="col-md-6">
                     <div className="form-group">
                       <label className="">Card number*</label>
-                      <CardNumberElement />
+                      <CardNumberElement placeholder="4242 4242 4242 4242" />
                     </div>
                   </div>
                   <div className="col-md-3">

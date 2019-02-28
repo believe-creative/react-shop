@@ -47,7 +47,7 @@ class Conformation extends Component {
                 <div className="col-md-8">
                   <div className="form-group">
                     <label className="">
-                      <h3>{"Order summery"}</h3>
+                      <h3>{"Order summary"}</h3>
                     </label>
                     <table className="order_summery">
                       <tbody>
