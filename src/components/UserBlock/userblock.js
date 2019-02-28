@@ -38,7 +38,7 @@ class UserBlock extends Component {
     this.props.setUser({ name: null, photo: null });
   }
   render() {
-    let name = null;    
+    let name = null;
     let totalAmount = 0;
     if (this.props.user) {
       name = this.props.user.name;
@@ -86,7 +86,7 @@ class UserBlock extends Component {
             <a href="">
               <i className="fa fa-shopping-bag" aria-hidden="true" />
             </a>{" "}
-            <span>Your bag: &#163;{totalAmount}</span>
+            <span>Your bag: ${totalAmount}</span>
             {name ? (
               <div className="signout-block">
                 <LinkContainer to="">
