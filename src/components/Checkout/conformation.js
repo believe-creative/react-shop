@@ -85,7 +85,6 @@ class Conformation extends Component {
                         ) {
                           return <p key={index}>{customer[key]}</p>;
                         }
-                        return key;
                       })}
                     </div>
                     <div className="delivery_opts">
