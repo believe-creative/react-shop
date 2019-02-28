@@ -32,26 +32,26 @@ class Login extends Component {
       .get(API_ROOT + "get_token")
       .then(function(response) {
         axios
-        .post(API_ROOT + "login", {
-          email: this_ref.state.email,
-          pwd: this_ref.state.pwd
-        },{Authorization: `Bearer ${response.data.token}`})
-        .then(function(response) {
-          if (response.data.status === "error") {
-            this_ref.setState({ errors: response.data.msg });
-          } else {
-            setCookie("s-atk", response.data.token, 0.2);
-            props.setUser(response.data.user);
-            this_ref.setState({ errors: null });
-          }
-        })
-        .catch(function(error) {
-        });
+          .post(
+            API_ROOT + "login",
+            {
+              email: this_ref.state.email,
+              pwd: this_ref.state.pwd
+            },
+            { Authorization: `Bearer ${response.data.token}` }
+          )
+          .then(function(response) {
+            if (response.data.status === "error") {
+              this_ref.setState({ errors: response.data.msg });
+            } else {
+              setCookie("s-atk", response.data.token, 0.2);
+              props.setUser(response.data.user);
+              this_ref.setState({ errors: null });
+            }
+          })
+          .catch(function(error) {});
       })
-      .catch(function(error) {
-      });
-
-
+      .catch(function(error) {});
   }
   change(e) {
     let state = this.state;
@@ -84,21 +84,17 @@ class Login extends Component {
   }
   render() {
     let name = null;
-    const props=this.props;
+    const props = this.props;
     if (this.props.user) {
       name = this.props.user.name;
     }
-    if(props.user)
-    {
-      if(props.user.email)
-      {
-        let route=localStorage.getItem("nextRoute");
-        if(route)
-        {
-          if(route.length>0)
-          {
-            localStorage.setItem("nextRoute","");
-              props.history.push(route);
+    if (props.user) {
+      if (props.user.email) {
+        let route = localStorage.getItem("nextRoute");
+        if (route) {
+          if (route.length > 0) {
+            localStorage.setItem("nextRoute", "");
+            props.history.push(route);
           }
         }
       }
@@ -109,7 +105,7 @@ class Login extends Component {
           <Row>
             <Col md={6} className="offset-md-3">
               {name ? (
-                <h4>You have already logged.</h4>
+                <h4 className="text-center">You have already logged.</h4>
               ) : (
                 <div>
                   {PROVIDERS.map((provider, key) => (
