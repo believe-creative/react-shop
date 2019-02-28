@@ -124,6 +124,7 @@ class Login extends Component {
                         socket.id
                       }
                       target="_blank"
+                      ref="noopener noreferrer"
                     >
                       {provider}
                     </a>
@@ -153,7 +154,7 @@ class Login extends Component {
                         name="pwd"
                         onChange={this.change.bind(this)}
                       />
-                    </div>                  
+                    </div>
                     <button
                       type="button"
                       className="btn btn-md mb-3"

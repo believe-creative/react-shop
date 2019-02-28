@@ -5,10 +5,6 @@ import "../../scss/cart.scss";
 import { connect } from "react-redux";
 
 class Conformation extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     let cart = { count: 0, products: [] };
     let customer={};
@@ -81,7 +77,7 @@ class Conformation extends Component {
                               <p key={index}>{customer[key]}</p>
                             )
                           }
-                          return;
+                          return key;
 
                         })
                       }

@@ -5,7 +5,7 @@ import "./scss/App.scss";
 import { ConnectedRouter } from "connected-react-router/immutable";
 import routes from "./routes";
 import * as Actions from "./actions";
-import { setCookie, getCookie, deleteCookie } from "./services/helpers";
+import { getCookie} from "./services/helpers";
 
 class App extends Component {
   componentDidMount() {

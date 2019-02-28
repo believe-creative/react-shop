@@ -148,7 +148,7 @@ class Items extends Component {
                                 <h3>{product.name}</h3>
                                 <p>Men BK3569</p>
                                 <p className="remove">
-                                  <a href={product.name} data-item={product.item_id} data-name={product.name} style={this_ref.state.buttonStyles} onClick={this_ref.remove.bind(this_ref)}>
+                                  <a data-item={product.item_id} data-name={product.name} style={this_ref.state.buttonStyles} onClick={this_ref.remove.bind(this_ref)}>
                                     <span>&#10005;</span> Remove
                                   </a>
                                 </p>
@@ -157,13 +157,13 @@ class Items extends Component {
                             <li>XXL</li>
                             <li className="quantity-block">
                               <span>
-                                <a href={product.name} data-param="-1" data-item={product.item_id} data-quantity={product.quantity} style={this_ref.state.buttonStyles} onClick={this_ref.update.bind(this_ref)} >&#8722;</a>
+                                <a data-param="-1" data-item={product.item_id} data-quantity={product.quantity} style={this_ref.state.buttonStyles} onClick={this_ref.update.bind(this_ref)} >&#8722;</a>
                               </span>
                               <span className="number-block">
                                 {product.quantity}
                               </span>
                               <span>
-                                <a href={product.name} data-param="1" data-item={product.item_id} style={this_ref.state.buttonStyles} data-quantity={product.quantity} onClick={this_ref.update.bind(this_ref)}  >&#43;</a>
+                                <a data-param="1" data-item={product.item_id} style={this_ref.state.buttonStyles} data-quantity={product.quantity} onClick={this_ref.update.bind(this_ref)}  >&#43;</a>
                               </span>
                             </li>
                             <li className="price">&#163;{product.price}</li>
