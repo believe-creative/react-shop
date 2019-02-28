@@ -153,12 +153,7 @@ class Login extends Component {
                         name="pwd"
                         onChange={this.change.bind(this)}
                       />
-                    </div>
-                    <div className="mb-3 radio-checkbox-block">
-                      <input type="checkbox" />
-                      <span />
-                      <label htmlFor="checkbox">Remember</label>
-                    </div>
+                    </div>                  
                     <button
                       type="button"
                       className="btn btn-md mb-3"
@@ -166,9 +161,6 @@ class Login extends Component {
                     >
                       Submit
                     </button>
-                    <div>
-                      <a href="/login">Forgot Password</a>
-                    </div>
                   </div>
                 </div>
               )}
