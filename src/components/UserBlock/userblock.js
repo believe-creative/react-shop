@@ -45,6 +45,12 @@ class UserBlock extends Component {
     deleteCookie("s-atk");
     this.props.setUser({ name: null, photo: null });
   }
+  setNextState(e)
+  {
+      e.preventDefault();
+      localStorage.setItem("nextRoute",this.props.location);
+      this.props.history.push('/login');
+  }
   render() {
     let name = null;
     let photo = null;
@@ -80,8 +86,8 @@ class UserBlock extends Component {
                 </Dropdown.Menu>
               </Dropdown>
             ) : (
-              <LinkContainer to="/login">
-                <Nav.Link>Sign in</Nav.Link>
+              <LinkContainer to="/login"  >
+                <Nav.Link onClick={this.setNextState.bind(this)} >Sign in</Nav.Link>
               </LinkContainer>
             )}
           </div>

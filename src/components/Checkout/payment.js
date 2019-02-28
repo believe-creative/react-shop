@@ -28,12 +28,20 @@ class Payment extends Component {
       name:"",
       errors:null
     }
+    this.stage=2;
   }
   chnagedText(e)
   {
       let state=this.state;
       state[e.currentTarget.name]=e.currentTarget.value;
       this.setState(state);
+  }
+  backStage() {
+    this.props.backStage(this.stage);
+  }
+  nextStage() {
+    this.props.nextStage(this.stage);
+    
   }
   handleSubmit(ev) {
     ev.preventDefault();
@@ -82,7 +90,7 @@ class Payment extends Component {
                 this_ref.setState({ errors: res.data.msg });
               } else {
                 this_ref.setState({ errors: null });
-                this_ref.props.nextStage();
+                this_ref.props.nextStage(this_ref.stage);
               }
             })
             .catch(function(error) {
@@ -90,6 +98,7 @@ class Payment extends Component {
 
           })
           .catch(function(error) {
+            this_ref.setState({errors:error.message});
           });
 
 
@@ -101,6 +110,8 @@ class Payment extends Component {
           this_ref.setState({errors:"Please fill all the feilds."});
         }
         
+      }).catch(function(error) {
+        this_ref.setState({errors:error.message});
       });
   }
   showErrors()
@@ -167,7 +178,7 @@ class Payment extends Component {
                 </div>
               </div>
               <button
-                    onClick={this.props.backStage}
+                    onClick={this.backStage.bind(this)}
                     type="button"
                     className="btn btn-md btn-white back"
                   >

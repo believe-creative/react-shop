@@ -22,7 +22,7 @@ class NavBar extends Component {
   searchItems(e) {
     this.setState({ searchitem: e.target.value });
   }
-
+  
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };

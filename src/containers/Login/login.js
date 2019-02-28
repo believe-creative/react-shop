@@ -86,6 +86,20 @@ class Login extends Component {
       return <div />;
     }
   }
+  openPopup(e) {
+    e.preventDefault();
+    const { provider, socket } = this.props
+    const width = 600, height = 600
+    const left = (window.innerWidth / 2) - (width / 2)
+    const top = (window.innerHeight / 2) - (height / 2)
+    const url = e.currentTarget.getAttribute("href");
+
+    window.open(url, '',       
+      `toolbar=no, location=no, directories=no, status=no, menubar=no, 
+      scrollbars=no, resizable=no, copyhistory=no, width=${width}, 
+      height=${height}, top=${top}, left=${left}`
+    )
+  }
   render() {
     let name = null;
     const props=this.props;
@@ -104,6 +118,14 @@ class Login extends Component {
             localStorage.setItem("nextRoute","");
               props.history.push(route);
           }
+          else
+          {
+            props.history.push("/");
+          }
+        }
+        else
+        {
+          props.history.push("/");
         }
       }
     }
@@ -120,6 +142,7 @@ class Login extends Component {
                     <a
                       key={key}
                       className={provider}
+                      onClick={this.openPopup.bind(this)}
                       href={
                         API_ROOT +
                         "sociallogin/" +

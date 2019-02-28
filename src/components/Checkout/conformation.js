@@ -10,10 +10,17 @@ import { connect } from "react-redux";
 class Conformation extends Component {
   constructor(props) {
     super(props);
+    this.stage=1;
   }
 
   componentDidMount() {}
-
+  backStage() {
+    this.props.backStage(this.stage);
+  }
+  nextStage() {
+    this.props.nextStage(this.stage);
+    
+  }
   render() {
     let cart = { count: 0, products: [] };
     let customer={};
@@ -121,6 +128,22 @@ class Conformation extends Component {
             </div>
           </Col>
         </Row>
+        <div className="checkout_next">
+            <button
+              onClick={this.backStage.bind(this)}
+              type="button"
+              className="btn btn-md btn-white back"
+            >
+              Back
+            </button>
+            <button
+              onClick={this.nextStage.bind(this)}
+              type="button"
+              className="btn btn-md next_step"
+            >
+              Next Step
+            </button>
+        </div>
       </React.Fragment>
     );
   }

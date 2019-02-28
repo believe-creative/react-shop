@@ -8,15 +8,18 @@ import "../../scss/cart.scss";
 import * as Actions from "../../actions";
 import { setRegion,setShippingOption } from "../../actions";
 import { connect } from "react-redux";
-
+import axios from "axios";
+import { API_ROOT } from "../../services/constants";
 class Delivery extends Component {
   constructor(props)
   {
       super(props);
       this.state={
         region:"",
-        customer:{}
-      }   
+        customer:{},
+        errors:{}
+      }
+      this.stage=0;   
   }
   componentDidMount(){
     this.props.getShippingRegions();
@@ -56,10 +59,10 @@ class Delivery extends Component {
    setShippingOption(e)
    {
       let state=this.state;
-      state["shippingOption"]=JSON.parse(e.currentTarget.getAttribute("data-option"));
+      state["shippingoption"]=JSON.parse(e.currentTarget.getAttribute("data-option"));
       this.setState(state);
       this.props.setDelivarydetails(this.state,this.state);
-      this.props.setShippingOption(state["shippingOption"]);
+      this.props.setShippingOption(state["shippingoption"]);
    }
 
   changed(e)
@@ -69,7 +72,92 @@ class Delivery extends Component {
       this.setState(state);
       this.props.setDelivarydetails(this.state,this.state);
   }
-
+  
+  backStage() {
+    this.props.backStage(this.stage);
+  }
+  nextStage(e) {
+    let state=this.state;
+    let this_ref=this;
+    state["errors"]={};
+    let hasErrors=false;
+      if(!state["customer"]["address_1"])
+      {
+        state["errors"]["address_1"]="Name is required";
+        hasErrors=true;
+      }
+      if(!state["customer"]["city"])
+      {
+        state["errors"]["city"]="City is required";
+        hasErrors=true;
+      }
+      if(!state["customer"]["postal_code"])
+      {
+        state["errors"]["postal_code"]="Zip code is required";
+        hasErrors=true;
+      }
+      if(!state["customer"]["country"])
+      {
+        state["errors"]["country"]="Country is required";
+        hasErrors=true;
+      }
+      if(!state["region"])
+      {
+        state["errors"]["region"]="Should select a region";
+        hasErrors=true;
+      }
+      if(!state["region"])
+      {
+        state["errors"]["region"]="Should select a region";
+        hasErrors=true;
+      }
+      if (!state["shippingoption"]) {
+        state["errors"]["shippingoption"]="Should select a delivery option.";
+        hasErrors=true;
+      }
+      if(!hasErrors)
+      {
+        axios
+        .get(API_ROOT + "get_token")
+        .then(function(response) {
+          axios
+          .post(API_ROOT + "update-address", {
+            inEmail: this_ref.props.user.email,
+            inAddress1: state["customer"]["address_1"],
+            inAddress2: state["customer"]["address_2"],
+            inCity:state["customer"]["city"],
+            inRegion:state["regionName"],
+            inPostalCode:state["customer"]["postal_code"],
+            inCountry:state["customer"]["country"],
+            inShippingRegionId:state["region"]
+          },{Authorization: `Bearer ${response.data.token}`})
+          .then(function(response) {
+            this_ref.props.nextStage(this_ref.stage);
+          })
+          .catch(function(error) {
+            this_ref.state["errors"]["general"]=error;
+            this_ref.setState(this_ref.state);
+          });
+        })
+        .catch(function(error) {
+          this_ref.state["errors"]["general"]=error;
+          this_ref.setState(this_ref.state);
+        });
+        
+        
+      }
+      this.setState(state);
+  }
+  showError(opt)
+  {
+      if(this.state["errors"][opt])
+      {
+        return(<div className="alert alert-danger">{this.state["errors"][opt]}</div>);
+      }
+      else{
+        return(<span></span>);
+      }
+  }
   render() {
     let this_ref=this;
     let regions=[];
@@ -91,6 +179,7 @@ class Delivery extends Component {
         <Container>
           <Row className="delivery_block">
             <Col md={12}>
+            {this.showError("general")}
               <div className="form-content">
                 <div className="row">
                   <div className="col-md-6">
@@ -105,6 +194,7 @@ class Delivery extends Component {
                         onChange={this.changed.bind(this)}
                       />
                     </div>
+                    {this.showError("address_1")}
                     <div className="form-group">
                       <label className="">Address</label>
                       <input
@@ -116,6 +206,7 @@ class Delivery extends Component {
                         onChange={this.changed.bind(this)}
                       />
                     </div>
+                    {this.showError("address_2")}
                   </div>
                   <div className="col-md-6">
                     <div className="form-group">
@@ -129,6 +220,7 @@ class Delivery extends Component {
                         onChange={this.changed.bind(this)}
                       />
                     </div>
+                    {this.showError("city")}
                     <div className="form-group">
                       <label className="">Zip-code *</label>
 
@@ -141,6 +233,7 @@ class Delivery extends Component {
                         onChange={this.changed.bind(this)}
                       />
                     </div>
+                    {this.showError("postal_code")}
                   </div>
                   <div className="col-md-12">
                     <div className="form-group country">
@@ -156,6 +249,7 @@ class Delivery extends Component {
                         onChange={this.changed.bind(this)}
                       />
                     </div>
+                    {this.showError("country")}
                     <div className="form-group form-check">
                           <span />
                           <label htmlFor="male">
@@ -173,7 +267,9 @@ class Delivery extends Component {
 
                               })}
                           </select>
+                          {this.showError("region")}
                     </div>
+                    
                     {this.state.region?<div className="form-group delivery_options">
                       <label className="form-check-label" htmlFor="exampleCheck1">
                         <h2>Delivery Options </h2>
@@ -193,6 +289,7 @@ class Delivery extends Component {
                         ) 
                       })}
                       </div>
+                      {this.showError("shippingoption")}
                     </div>:<div></div>}
                     
                   </div>
@@ -201,10 +298,27 @@ class Delivery extends Component {
             </Col>
           </Row>
         </Container>
+        <div className="checkout_next">
+            <button
+              onClick={this.backStage.bind(this)}
+              type="button"
+              className="btn btn-md btn-white back"
+            >
+              Back
+            </button>
+            <button
+              onClick={this.nextStage.bind(this)}
+              type="button"
+              className="btn btn-md next_step"
+            >
+              Next Step
+            </button>
+        </div>
       </React.Fragment>
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
     cart:state.get("products").cart,

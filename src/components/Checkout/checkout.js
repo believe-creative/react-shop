@@ -126,10 +126,10 @@ class Checkout extends Component {
   showstages() {
     if (this.state.stage == 0) {
       return (
-        <Delivery setDelivarydetails={this.setDelivarydetails.bind(this)} />
+        <Delivery backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} setDelivarydetails={this.setDelivarydetails.bind(this)} />
       );
     } else if (this.state.stage == 1) {
-      return <Conformation />;
+      return <Conformation backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} />;
     } else if (this.state.stage == 2) {
       return (
         <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
@@ -172,102 +172,26 @@ class Checkout extends Component {
       );
     }
   }
-  backStage() {
+  backStage(stage) {
     let state = this.state;
-    state["stage"] = state["stage"] - 1;
+    state["stage"] = stage - 1;
     this.setState(state);
   }
-  nextStage(e) {
-    let state=this.state;
-    let this_ref=this;
-    state["delivery"]["errors"]=[];
-    if(this.state.stage==0){
-      if(!state["delivery"]["customer"]["address_1"])
-      {
-          state["delivery"]["errors"].push("Name is required");
-      }
-      if (!state["delivery"]["customer"]["city"]) {
-        state["delivery"]["errors"].push("City is required");
-      }
-      if (!state["delivery"]["customer"]["postal_code"]) {
-        state["delivery"]["errors"].push("Zip code is required");
-      }
-      if (!state["delivery"]["customer"]["country"]) {
-        state["delivery"]["errors"].push("Country code is required");
-      }
-      if (!state["delivery"]["region"]) {
-        state["delivery"]["errors"].push("Should select a region");
-      }
-      if (!state["delivery"]["shippingOption"]) {
-        state["delivery"]["errors"].push("Should select a delivery option.");
-      }
-      if(state["delivery"]["errors"]<=0)
-      {
-        axios
-        .get(API_ROOT + "get_token")
-        .then(function(response) {
-          axios
-          .post(API_ROOT + "update-address", {
-            inEmail: this_ref.props.user.email,
-            inAddress1: state["delivery"]["customer"]["address_1"],
-            inAddress2: state["delivery"]["customer"]["address_2"],
-            inCity:state["delivery"]["customer"]["city"],
-            inRegion:state["delivery"]["regionName"],
-            inPostalCode:state["delivery"]["customer"]["postal_code"],
-            inCountry:state["delivery"]["customer"]["country"],
-            inShippingRegionId:state["delivery"]["region"]
-          },{Authorization: `Bearer ${response.data.token}`})
-          .then(function(response) {
-            let state = this_ref.state;
-            state["stage"] = state["stage"] + 1;
-            this_ref.setState(state);
-          })
-          .catch(function(error) {
-  
-          });
-        })
-        .catch(function(error) {
-
-        });
-        
-        
-      }
-      else
-      {
-        
-      }
-      this_ref.setState(state);
-    }
-    else if(this.state.stage==2)
-    { 
-      let state = this_ref.state;
-      state["stage"] = state["stage"] + 1;
-      this_ref.setState(state);
+  nextStage(stage) {
+    let state = this.state;
+    state["stage"] = stage + 1;
+    this.setState(state);
+    console.log(stage,"dfdsfdfdfdfds")
+    if(stage>=3)
+    {
       localStorage.removeItem("react-shop-cart");
       localStorage.removeItem("nextRoute");
       this.props.clearCart();
     }
-    else
-    {
-      let state = this.state;
-      state["stage"] = state["stage"] + 1;
-      this.setState(state);
-    }
+    
   }
 
-  showErrors() {
-    let errors = this.state[this.state.stages[this.state.stage].name]["errors"];
-    if (errors) {
-      return (
-        <div>
-          {errors.map(function(error) {
-            return <div className="alert alert-danger">{error}</div>;
-          })}
-        </div>
-      );
-    }
-  }
-
+ 
   render() {
     let finalstage = false;
     if (this.state.stage >= 2) finalstage = true;
@@ -277,7 +201,6 @@ class Checkout extends Component {
           <div className="checkout_information">
               <Row className="checkout_block">
                 <Col md={12}>
-                  {this.showErrors()}
                   <h2>Checkout</h2>
                   <ul className="list-unstyled color-codes">
                     <li
@@ -352,26 +275,6 @@ class Checkout extends Component {
 
                 {this.showstages()}
               </Row>
-              {finalstage ? (
-                <div />
-              ) : (
-                <div className="checkout_next">
-                  <button
-                    onClick={this.backStage.bind(this)}
-                    type="button"
-                    className="btn btn-md btn-white back"
-                  >
-                    {this.state.stages[this.state.stage].back}
-                  </button>
-                  <button
-                    onClick={this.nextStage.bind(this)}
-                    type="button"
-                    className="btn btn-md next_step"
-                  >
-                    {this.state.stages[this.state.stage].next}
-                  </button>
-                </div>
-              )}
           </div>
         </Container>
       </React.Fragment>

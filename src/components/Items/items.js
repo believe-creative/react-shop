@@ -113,10 +113,10 @@ class Items extends Component {
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
-    
+    let hasItems=cart.count>0?true:false;
     let this_ref=this;
-    return (
-      <React.Fragment>
+    return (<React.Fragment>
+      {hasItems?
         <div className="pt-5 mb-5">
           <div className="container">
             <div className="bg-white cart-block">
@@ -190,7 +190,28 @@ class Items extends Component {
               </div>
             </div>
           </div>
+        </div>:
+      <div className="pt-5 mb-5">
+        <div className="container">
+          <div className="bg-white cart-block">
+            <div className="row">
+              <div className="col-md-10 offset-md-1">
+                <h2>There no items in the cart.</h2>
+              </div>
+            </div>
+          </div>
+          <div className="container cart-bottom-block">
+            <div className="row">
+              <div className="col-md-10 offset-md-1">
+                <LinkContainer to={"/"} className="btn btn-md btn-white">
+                  <a>Back to Shop</a>
+                </LinkContainer>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    }
       </React.Fragment>
     );
   }
