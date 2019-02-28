@@ -66,3 +66,48 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/de
 ### `npm run build` fails to minify
 
 This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+
+
+######## Backend Functionality #######
+
+Technology : NodeJS
+ORM        : Sequelize
+
+All backend related functionality is available in server folder
+
+Step 1: Install the dependencies
+
+  ### `npm install`
+
+Step 2: Run the server
+
+  ### `node server`
+
+
+Step 3: You have to change the connection details in server.js file.
+
+# If your server is running with https
+
+```javascript
+ const options = {
+   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
+   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
+   };
+
+ const sequelize = new Sequelize('db_name', 'db_user', 'db_password', {
+   host: 'localhost',
+   dialect: 'mysql',
+   port:3306
+ });
+
+ const httpServer = https.createServer(options, app).listen(5000,() => {
+   console.log(`Running on https://reactshop.amoha.co:${port}`)
+ });
+ ```
+
+ # If your server is running with http
+```javascript
+const httpServer = http.createServer(app).listen(5000,() => {
+  console.log(`Running on https://reactshop.amoha.co:${port}`)
+ });
+ ```
