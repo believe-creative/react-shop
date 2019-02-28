@@ -15,13 +15,13 @@ export default class SiteFooter extends Component {
               <h3>QEUSTIONS?</h3>
               <ul className="list-unstyled">
                 <li>
-                  <a href="#">Help</a>
+                  <a href="/">Help</a>
                 </li>
                 <li>
-                  <a href="#">Track Order</a>
+                  <a href="/">Track Order</a>
                 </li>
                 <li>
-                  <a href="#">Returns</a>
+                  <a href="/">Returns</a>
                 </li>
               </ul>
             </Col>
@@ -29,16 +29,16 @@ export default class SiteFooter extends Component {
               <h3>WHAT'S IN STORE</h3>
               <ul className="list-unstyled">
                 <li>
-                  <a href="#">Women</a>
+                  <a href="/">Women</a>
                 </li>
                 <li>
-                  <a href="#">Men</a>
+                  <a href="/">Men</a>
                 </li>
                 <li>
-                  <a href="#">Product A-Z</a>
+                  <a href="/">Product A-Z</a>
                 </li>
                 <li>
-                  <a href="#">Buy Gift Vouchers</a>
+                  <a href="/">Buy Gift Vouchers</a>
                 </li>
               </ul>
             </Col>
@@ -46,13 +46,13 @@ export default class SiteFooter extends Component {
               <h3>FOLLOW US</h3>
               <ul className="list-unstyled">
                 <li>
-                  <a href="#">Facebook</a>
+                  <a href="/">Facebook</a>
                 </li>
                 <li>
-                  <a href="#">Twitter</a>
+                  <a href="/">Twitter</a>
                 </li>
                 <li>
-                  <a href="#">Youtube</a>
+                  <a href="/">Youtube</a>
                 </li>
               </ul>
             </Col>

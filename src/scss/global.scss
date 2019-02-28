@@ -272,31 +272,29 @@ h3,
 
 // Form fields Styles
 
-form {
-  input,
-  select,
-  textarea {
-    min-height: 50px;
-    margin-bottom: 25px;
-    padding: 0 15px;
-    background: $white;
-    border: 1px solid $gray-light;
-    color: $gray-dark;
-    //min-width: 350px;
-    font-weight: $fw-600;
-    @include border-radius(10px);
-    @media (max-width: 576px) {
-      min-width: 100%;
-    }
-    &:focus {
-      outline: none;
-      box-shadow: none;
-    }
+input,
+select,
+textarea {
+  min-height: 50px;
+  margin-bottom: 25px;
+  padding: 0 15px;
+  background: $white;
+  border: 1px solid $gray-light;
+  color: $gray-dark;
+  //min-width: 350px;
+  font-weight: $fw-600;
+  @include border-radius(10px);
+  @media (max-width: 576px) {
+    min-width: 100%;
   }
-  textarea {
-    padding: 15px;
-    min-height: 150px;
+  &:focus {
+    outline: none;
+    box-shadow: none;
   }
+}
+textarea {
+  padding: 15px;
+  min-height: 150px;
 }
 input.form-control:focus {
   outline: none;

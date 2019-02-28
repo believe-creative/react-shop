@@ -1,5 +1,5 @@
 import * as ActionTypes from "../actions";
-import { store } from "../index";
+//import { store } from "../index";
 
 const intialState = {
   loading: false,
@@ -179,6 +179,7 @@ export default (state = intialState, action) => {
       var allSubCategories = [];
       Object.values(state.subCategories).map(subCategory => {
         allSubCategories = [...allSubCategories, ...subCategory];
+        return subCategory;
       });
       let subCategoryName = getSubCategoryName(
         allSubCategories,

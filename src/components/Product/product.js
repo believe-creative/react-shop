@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import * as Actions from "../../actions";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 
 class Product extends Component {
@@ -38,10 +37,13 @@ class Product extends Component {
   render() {
 
     return (
-      <div className="col-md-3 item">
+      <div className="col-md-6 col-lg-3 item">
         <div className="hot_block">
           <img
             src={require(`../../images/product_images/${
+              this.props.product.thumbnail
+            }`)}
+            alt={require(`../../images/product_images/${
               this.props.product.thumbnail
             }`)}
           />

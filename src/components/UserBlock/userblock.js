@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Dropdown from "react-bootstrap/Dropdown";
 import { LinkContainer } from "react-router-bootstrap";
 import "../../scss/navbar.scss";
 import * as Actions from "../../actions";
-import { setCookie, getCookie, deleteCookie } from "../../services/helpers";
+import { getCookie, deleteCookie } from "../../services/helpers";
 import { setUser } from "../../actions";
 import Nav from "react-bootstrap/Nav";
 
@@ -18,26 +17,19 @@ class UserBlock extends Component {
   }
   componentDidMount() {
     var c = getCookie("s-atk");
-    var state = this.state;
     if (c) {
       this.props.checkUserLogin(c);
     }
   }
-  componentWillReceiveProps(props,b,c)
-  {
-    if(props.cart)
-    {
-      if(props.cart.count)
-      {
-         if(!this.state.cart.count)
-         {
-             this.props.getCartProducts(props.cart.inCartId);
-         }
-         else if(props.cart.count!=this.state.cart.count)
-         {
-           this.props.getCartProducts(props.cart.inCartId);
-         }
-         this.setState({cart:props.cart});
+  componentWillReceiveProps(props, b, c) {
+    if (props.cart) {
+      if (props.cart.count) {
+        if (!this.state.cart.count) {
+          this.props.getCartProducts(props.cart.inCartId);
+        } else if (props.cart.count !== this.state.cart.count) {
+          this.props.getCartProducts(props.cart.inCartId);
+        }
+        this.setState({ cart: props.cart });
       }
     }
   }
@@ -53,7 +45,6 @@ class UserBlock extends Component {
   }
   render() {
     let name = null;
-    let photo = null;
     let totalAmount = 0;
     if (this.props.user) {
       name = this.props.user.name;
@@ -75,16 +66,7 @@ class UserBlock extends Component {
           <div className="register-block">
             Hi!
             {name ? (
-              <Dropdown>
-                <Dropdown.Toggle variant="success" id="dropdown-basic">
-                  <h4>{name}</h4>
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  <Dropdown.Item onClick={this.logout.bind(this)}>
-                    Logout
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
+              <h6 className="login-name-block">{name}</h6>
             ) : (
               <LinkContainer to="/login"  >
                 <Nav.Link onClick={this.setNextState.bind(this)} >Sign in</Nav.Link>
@@ -110,7 +92,16 @@ class UserBlock extends Component {
             <a href="">
               <i className="fa fa-shopping-bag" aria-hidden="true" />
             </a>{" "}
-            Your bag: &#163;{totalAmount}
+            <span>Your bag: ${totalAmount}</span>
+            {name ? (
+              <div className="signout-block">
+                <LinkContainer to="">
+                  <Nav.Link onClick={this.logout.bind(this)}>Logout</Nav.Link>
+                </LinkContainer>
+              </div>
+            ) : (
+              <div className="signout-block" />
+            )}
           </div>
           <div className="clearfix" />
         </div>

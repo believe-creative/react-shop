@@ -9,6 +9,9 @@
     position: relative;
     padding: 50px 30px;
     color: white;
+    @media (max-width: 767px) {
+      padding: 25px 0px;
+    }
     .category-header {
       text-transform: capitalize;
       color: white;
@@ -85,6 +88,20 @@
   }
   .item {
     margin-bottom: 30px;
+    display: grid;
+  }
+  .breadcrumb-sub-cat-name {
+    font-size: 18px;
+    a {
+      font-size: 18px;
+      color: $red;
+      font-weight: $fw-700;
+      &:focus,
+      &:hover {
+        color: $black;
+      }
+      cursor: pointer;
+    }
   }
 }
 .category_subscribe {
@@ -113,6 +130,13 @@
       border: 0;
       cursor: pointer;
       padding: 0;
+      &:hover {
+        color: $red;
+        .category_name {
+          color: $red;
+          @include transition(all 0.25s ease);
+        }
+      }
     }
   }
   .category_name {

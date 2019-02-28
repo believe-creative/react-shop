@@ -27,22 +27,22 @@ const stripe = require('stripe')("sk_test_rxGG6bAyvVn3goQP3AimI5dz");
 
 let secret_key = require('./config.js').secret_key;
 
-const options = {
-  key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
-  cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
-  };
+// const options = {
+//   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
+//   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
+//   };
 
-// const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
-//   host: '192.168.0.135',
-//   dialect: 'mysql',
-//   port:3306
-// });
-
-const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
-  host: 'localhost',
+const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
+  host: '192.168.0.135',
   dialect: 'mysql',
   port:3306
 });
+
+// const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
+//   host: 'localhost',
+//   dialect: 'mysql',
+//   port:3306
+// });
 exports.sequelize=sequelize
 const port = 5000
 var app = express();
@@ -52,13 +52,13 @@ app.use(require('cookie-parser')());
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('express-session')({ secret: SESSION_SECRET, resave: true, saveUninitialized: true }));
 
-const httpServer = https.createServer(options, app).listen(5000,() => {
-  console.log(`Running on https://reactshop.amoha.co:${port}`)
-});
-
-// const httpServer = http.createServer(app).listen(5000,() => {
+// const httpServer = https.createServer(options, app).listen(5000,() => {
 //   console.log(`Running on https://reactshop.amoha.co:${port}`)
 // });
+
+const httpServer = http.createServer(app).listen(5000,() => {
+  console.log(`Running on https://reactshop.amoha.co:${port}`)
+});
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');

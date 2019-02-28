@@ -8,7 +8,7 @@ import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
 import { setUser } from "../../actions";
 import * as Actions from "../../actions";
-import { setCookie, getCookie, deleteCookie } from "../../services/helpers";
+import { setCookie, getCookie } from "../../services/helpers";
 import axios from "axios";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -32,26 +32,26 @@ class Login extends Component {
       .get(API_ROOT + "get_token")
       .then(function(response) {
         axios
-        .post(API_ROOT + "login", {
-          email: this_ref.state.email,
-          pwd: this_ref.state.pwd
-        },{Authorization: `Bearer ${response.data.token}`})
-        .then(function(response) {
-          if (response.data.status == "error") {
-            this_ref.setState({ errors: response.data.msg });
-          } else {
-            setCookie("s-atk", response.data.token, 0.2);
-            props.setUser(response.data.user);
-            this_ref.setState({ errors: null });
-          }
-        })
-        .catch(function(error) {
-        });
+          .post(
+            API_ROOT + "login",
+            {
+              email: this_ref.state.email,
+              pwd: this_ref.state.pwd
+            },
+            { Authorization: `Bearer ${response.data.token}` }
+          )
+          .then(function(response) {
+            if (response.data.status === "error") {
+              this_ref.setState({ errors: response.data.msg });
+            } else {
+              setCookie("s-atk", response.data.token, 0.2);
+              props.setUser(response.data.user);
+              this_ref.setState({ errors: null });
+            }
+          })
+          .catch(function(error) {});
       })
-      .catch(function(error) {
-      });
-
-    
+      .catch(function(error) {});
   }
   change(e) {
     let state = this.state;
@@ -60,23 +60,19 @@ class Login extends Component {
   }
   componentDidMount() {
     var c = getCookie("s-atk");
-    var state = this.state;
     if (c) {
       this.props.checkUserLogin(c);
     }
     var props = this.props;
-    
-    var this_ref = this;
+
     PROVIDERS.map(provider => {
       socket.on(provider, data => {
         if (data.token) {
           setCookie("s-atk", data.token, 0.2);
           props.setUser(data.user);
-          let route=localStorage.getItem("nextRoute");
-          
-            
         }
       });
+      return provider;
     });
   }
   show_errors() {
@@ -102,21 +98,17 @@ class Login extends Component {
   }
   render() {
     let name = null;
-    const props=this.props;
+    const props = this.props;
     if (this.props.user) {
       name = this.props.user.name;
     }
-    if(props.user)
-    {
-      if(props.user.email)
-      {
-        let route=localStorage.getItem("nextRoute");
-        if(route)
-        {
-          if(route.length>0)
-          {
-            localStorage.setItem("nextRoute","");
-              props.history.push(route);
+    if (props.user) {
+      if (props.user.email) {
+        let route = localStorage.getItem("nextRoute");
+        if (route) {
+          if (route.length > 0) {
+            localStorage.setItem("nextRoute", "");
+            props.history.push(route);
           }
           else
           {
@@ -135,7 +127,7 @@ class Login extends Component {
           <Row>
             <Col md={6} className="offset-md-3">
               {name ? (
-                <h4>You have already logged.</h4>
+                <h4 className="text-center">You have already logged.</h4>
               ) : (
                 <div>
                   {PROVIDERS.map((provider, key) => (
@@ -151,6 +143,7 @@ class Login extends Component {
                         socket.id
                       }
                       target="_blank"
+                      ref="noopener noreferrer"
                     >
                       {provider}
                     </a>
@@ -181,11 +174,6 @@ class Login extends Component {
                         onChange={this.change.bind(this)}
                       />
                     </div>
-                    <div className="mb-3 radio-checkbox-block">
-                      <input type="checkbox" />
-                      <span />
-                      <label htmlFor="checkbox">Remember</label>
-                    </div>
                     <button
                       type="button"
                       className="btn btn-md mb-3"
@@ -193,9 +181,6 @@ class Login extends Component {
                     >
                       Submit
                     </button>
-                    <div>
-                      <a href="#">Forgot Password</a>
-                    </div>
                   </div>
                 </div>
               )}
