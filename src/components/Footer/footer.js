@@ -12,7 +12,7 @@ export default class SiteFooter extends Component {
         <Container>
           <Row>
             <Col sm={6} lg={3}>
-              <h3>QEUSTIONS?</h3>
+              <h3>QUESTIONS?</h3>
               <ul className="list-unstyled">
                 <li>
                   <a href="/">Help</a>
