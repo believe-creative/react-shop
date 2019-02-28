@@ -1,8 +1,14 @@
 import React, { Component } from "react";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShoppingBag } from "@fortawesome/free-solid-svg-icons";
 import "../../scss/cart.scss";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { confirmAlert } from 'react-confirm-alert';
+import Nav from "react-bootstrap/Nav";
+import { confirmAlert } from 'react-confirm-alert'; 
 import * as Actions from "../../actions";
 import 'react-confirm-alert/src/react-confirm-alert.css'
 
@@ -21,36 +27,36 @@ class Items extends Component {
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
     if(props.cart)
     {
-      if(props.cart.count!==undefined && props.cart.count!==null)
+      if(props.cart.count!=undefined && props.cart.count!=null)
       {
          if(props.cart.count<=0)
          {
-
+           
            state["buttonStyles"]={pointerEvents: "none"};
          }
          state["cart"]=props.cart;
       }
     }
-
+    
     this.setState(state);
   }
   componentWillReceiveProps(props)
   {
     let state=this.state;
     state["buttonStyles"]={pointerEvents: "auto","cursor":"pointer"};
-    if(props.cart.count!==undefined && props.cart.count!==null)
+    if(props.cart.count!=undefined && props.cart.count!=null)
      {
-        if(this.state.cart.count===undefined || this.state.cart.count===null)
+        if(this.state.cart.count==undefined || this.state.cart.count==null)
         {
             this.props.getCartProducts(props.cart.inCartId);
         }
-        else if(props.cart.count!==this.state.cart.count)
+        else if(props.cart.count!=this.state.cart.count)
         {
           this.props.getCartProducts(props.cart.inCartId);
         }
         if(props.cart.count<=0)
         {
-
+          
           state["buttonStyles"]={pointerEvents: "none"};
         }
         state["cart"]=props.cart;
@@ -86,7 +92,7 @@ class Items extends Component {
   update(e)
   {
     let state=this.state;
-    //let this_ref=this;
+    let this_ref=this;
     state["buttonStyles"]={pointerEvents: "none"};
     this.setState(state);
     let count=parseInt(e.currentTarget.getAttribute("data-quantity"));
@@ -102,15 +108,15 @@ class Items extends Component {
     {
       this.props.updateProductQuantity({inItemId:e.currentTarget.getAttribute("data-item"),inQuantity:count});
     }
-
+    
   }
   render() {
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
-
+    let hasItems=cart.count>0?true:false;
     let this_ref=this;
-    return (
-      <React.Fragment>
+    return (<React.Fragment>
+      {hasItems?
         <div className="pt-5 mb-5">
           <div className="container">
             <div className="bg-white cart-block">
@@ -134,11 +140,6 @@ class Items extends Component {
                             <li className="img-block">
                               <img
                                 src={require(`../../images/product_images/${
-                                  product.thumbnail
-                                    ? product.thumbnail
-                                    : "afghan-flower-2.gif"
-                                }`)}
-                                alt={require(`../../images/product_images/${
                                   product.thumbnail
                                     ? product.thumbnail
                                     : "afghan-flower-2.gif"
@@ -180,16 +181,37 @@ class Items extends Component {
               <div className="row">
                 <div className="col-md-10 offset-md-1">
                   <LinkContainer to={"/"} className="btn btn-md btn-white">
-                    <a href="/">Back to Shop</a>
+                    <a>Back to Shop</a>
                   </LinkContainer>
                   <LinkContainer style={this.state.buttonStyles} to={"/checkout"} className="btn btn-md">
-                    <a href="/">Checkout</a>
+                    <a>Checkout</a>
                   </LinkContainer>
                 </div>
               </div>
             </div>
           </div>
+        </div>:
+      <div className="pt-5 mb-5">
+        <div className="container">
+          <div className="bg-white cart-block">
+            <div className="row">
+              <div className="col-md-10 offset-md-1">
+                <h2>There no items in the cart.</h2>
+              </div>
+            </div>
+          </div>
+          <div className="container cart-bottom-block">
+            <div className="row">
+              <div className="col-md-10 offset-md-1">
+                <LinkContainer to={"/"} className="btn btn-md btn-white">
+                  <a>Back to Shop</a>
+                </LinkContainer>
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    }
       </React.Fragment>
     );
   }
