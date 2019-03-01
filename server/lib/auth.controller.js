@@ -9,7 +9,6 @@ let secret_key = require('../config.js').secret_key;
       photo: req.user.photos[0].value,
       email:req.user.emails[0].value
     }
-    console.log("got in ---------------------------------------------------------")
     req.session.user=user
     let token = jwt.sign({email:user.email,user: user},
         secret_key,

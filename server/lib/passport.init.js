@@ -5,7 +5,7 @@ const FACEBOOK_CONFIG={
         clientID: "296478381042343",
         clientSecret:'beeb5f2c2f9a93bb5d7c4a289257f857',
         callbackURL: '/api/sociallogin/facebook/callback',
-        profileFields: ['id', 'displayName', 'photos', 'email']
+        profileFields: ['id', 'displayName', 'photos', 'emails']
       }
       
 const GOOGLE_CONFIG={
