@@ -23,8 +23,15 @@ class UserBlock extends Component {
   }
   componentWillReceiveProps(props, b, c) {
     if (props.cart) {
-      if (props.cart.count!==null && props.cart.count!==undefined && props.cart.inCartId) {
-        if (!this.state.cart.count) {
+      if (
+        props.cart.count !== null &&
+        props.cart.count !== undefined &&
+        props.cart.inCartId
+      ) {
+        if (
+          this.state.cart.count === null ||
+          this.state.cart.count === undefined
+        ) {
           this.props.getCartProducts(props.cart.inCartId);
         } else if (props.cart.count !== this.state.cart.count) {
           this.props.getCartProducts(props.cart.inCartId);
@@ -35,7 +42,7 @@ class UserBlock extends Component {
   }
   logout() {
     deleteCookie("s-atk");
-    this.props.setUser({ email:null,name: null, photo: null });
+    this.props.setUser({ email: null, name: null, photo: null });
   }
   render() {
     let name = null;
@@ -62,8 +69,8 @@ class UserBlock extends Component {
             {name ? (
               <h6 className="login-name-block">{name}</h6>
             ) : (
-              <LinkContainer to="/login"  >
-                <Nav.Link  >Sign in</Nav.Link>
+              <LinkContainer to="/login">
+                <Nav.Link>Sign in</Nav.Link>
               </LinkContainer>
             )}
           </div>

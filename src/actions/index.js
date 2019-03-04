@@ -29,6 +29,9 @@ export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
 export const CATEGORYPRODUCTS = createRequestTypes("CATEGORYPRODUCTS");
 export const SUBCATEGORYPRODUCTS = createRequestTypes("SUBCATEGORYPRODUCTS");
 export const SEARCH = createRequestTypes("SEARCH");
+export const PRODUCTRECOMMENDATIONS = createRequestTypes(
+  "PRODUCTRECOMMENDATIONS"
+);
 
 export function setUser(payload) {
   return { type: "SETUSER", payload };
@@ -163,4 +166,11 @@ export const getSearchItems = {
   request: data => action(SEARCH[REQUEST], { data }),
   success: (data, response) => action(SEARCH[SUCCESS], { data, response }),
   failure: (data, error) => action(SEARCH[FAILURE], { data, error })
+};
+export const getProductRecommendations = {
+  request: data => action(PRODUCTRECOMMENDATIONS[REQUEST], { data }),
+  success: (data, response) =>
+    action(PRODUCTRECOMMENDATIONS[SUCCESS], { data, response }),
+  failure: (data, error) =>
+    action(PRODUCTRECOMMENDATIONS[FAILURE], { data, error })
 };

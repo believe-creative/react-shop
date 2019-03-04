@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
-
+import { LinkContainer } from "react-router-bootstrap";
 class Product extends Component {
   constructor(props) {
     super(props);
@@ -35,19 +35,41 @@ class Product extends Component {
   }
 
   render() {
-
     return (
       <div className="col-md-6 col-lg-3 item">
         <div className="hot_block">
-          <img
-            src={require(`../../images/product_images/${
-              this.props.product.thumbnail
-            }`)}
-            alt={require(`../../images/product_images/${
-              this.props.product.thumbnail
-            }`)}
-          />
-          <h3 className="black pt-3">{this.props.product.name}</h3>
+          <LinkContainer
+            to={
+              "/product/" +
+              this.props.product.product_id +
+              "/" +
+              this.props.product.name
+            }
+          >
+            <a>
+              {" "}
+              <img
+                src={require(`../../images/product_images/${
+                  this.props.product.thumbnail
+                }`)}
+                alt={require(`../../images/product_images/${
+                  this.props.product.thumbnail
+                }`)}
+              />
+            </a>
+          </LinkContainer>
+          <LinkContainer
+            to={
+              "/product/" +
+              this.props.product.product_id +
+              "/" +
+              this.props.product.name
+            }
+          >
+            <a>
+              <h3 className="black pt-3">{this.props.product.name}</h3>{" "}
+            </a>
+          </LinkContainer>
           <h3 className="red">{"$" + this.props.product.price}</h3>
           <button className="btn btn-sm" onClick={this.addtoCart.bind(this)}>
             Add to cart

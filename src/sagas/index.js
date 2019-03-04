@@ -1,10 +1,4 @@
-import {
-  takeLatest,
-  takeEvery,
-  put,
-  call,
-  fork
-} from "redux-saga/effects";
+import { takeLatest, takeEvery, put, call, fork } from "redux-saga/effects";
 import { api } from "../services";
 import * as actions from "../actions";
 
@@ -23,7 +17,8 @@ const {
   removeFromCart,
   getCustomerInfo,
   updateProductQuantity,
-  getSearchItems
+  getSearchItems,
+  getProductRecommendations
 } = actions;
 
 //reusable fetch subroutine.
@@ -103,6 +98,11 @@ export const getCustomer = fetchEntity.bind(
   api.getCustomerInfo
 );
 
+export const fetchProductRecommendations = fetchEntity.bind(
+  null,
+  getProductRecommendations,
+  api.getProductRecommendations
+);
 
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
@@ -136,6 +136,10 @@ function* loadProducts(action) {
   yield call(fetchProducts, action.category);
 }
 
+function* loadProduct(action) {
+  yield call(fetchProduct, action.productId);
+}
+
 function* loadUser(action) {
   yield call(checkUser, action.token);
 }
@@ -158,10 +162,18 @@ function* loadSearchItems(action) {
   yield call(fetchSearchItems, action.data);
 }
 
+function* loadProductRecommendations(action) {
+  yield call(fetchProductRecommendations, action.data);
+}
+
 //+++++++++++++++++//
 
 function* watchLoadProducts() {
   yield takeLatest(actions.PRODUCTS.REQUEST, loadProducts);
+}
+
+function* watchLoadProduct() {
+  yield takeLatest(actions.PRODUCT.REQUEST, loadProduct);
 }
 
 function* watchLoadUser() {
@@ -216,14 +228,17 @@ function* watchloadupdateQuantity() {
 }
 
 function* watchloadgetCustomerInfo() {
+  yield takeLatest(actions.CUSTOMERINFO.REQUEST, loadgetCustomerInfo);
+}
+function* watchloadProductRecommendations() {
   yield takeLatest(
-    actions.CUSTOMERINFO.REQUEST,
-    loadgetCustomerInfo
+    actions.PRODUCTRECOMMENDATIONS.REQUEST,
+    loadProductRecommendations
   );
 }
-
 export default function*() {
   yield fork(watchLoadProducts);
+  yield fork(watchLoadProduct);
   yield fork(watchLoadUser);
   yield fork(watchLoadCategories);
   yield fork(watchLoadSubCategories);
@@ -237,4 +252,5 @@ export default function*() {
   yield fork(watchloadremoveProduct);
   yield fork(watchloadupdateQuantity);
   yield fork(watchloadgetCustomerInfo);
+  yield fork(watchloadProductRecommendations);
 }

@@ -3,7 +3,9 @@ import * as ActionTypes from "../actions";
 
 const intialState = {
   loading: false,
-  products: []
+  products: [],
+  product: [],
+  productrecommendations: []
 };
 
 function getCategoryName(categories, id) {
@@ -18,6 +20,25 @@ function getSubCategoryName(subcategories, id) {
 export default (state = intialState, action) => {
   let cart = null;
   switch (action.type) {
+    case ActionTypes.PRODUCT.REQUEST:
+      console.log(action);
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.PRODUCT.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        product: action.response
+      };
+    case ActionTypes.PRODUCT.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
+
     case ActionTypes.PRODUCTS.REQUEST:
       return {
         ...state,
@@ -35,6 +56,25 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
+
+    case ActionTypes.PRODUCTRECOMMENDATIONS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.PRODUCTRECOMMENDATIONS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        productrecommendations: action.response
+      };
+    case ActionTypes.PRODUCTRECOMMENDATIONS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
+
     case ActionTypes.CATEGORIES.SUCCESS:
       return {
         ...state,
@@ -133,7 +173,6 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.CLEARCART:
-
       return {
         ...state,
         isLoading: false,
