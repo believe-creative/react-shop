@@ -324,6 +324,17 @@ app.post('/api/product', checkToken, (req,res)=>{
 });
 
 /*
+* To get product locations
+* Parameters {inProductId}
+*/
+app.post('/api/get-product-locations', checkToken, (req,res)=>{
+  let inProductId=req.body.inProductId
+  sequelize
+    .query('CALL catalog_get_product_locations(:inProductId)',{replacements:{inProductId:inProductId}}).then(
+      get_product_locations=>res.json(get_product_locations));
+});
+
+/*
 * To get product reviews
 * Parameters{inProductId}
 */
