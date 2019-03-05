@@ -9,11 +9,13 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 class ProductDetails extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       show: "",
       buttonStyles: { cursor: "pointer" },
       cart: {},
-      productImageName: ""
+      productImageName: "",
+      activeClass: "active"
     };
   }
   addtoCart(e) {
@@ -98,11 +100,14 @@ class ProductDetails extends Component {
   }
   handleClick(name) {
     console.log("imageName:", name);
-    this.setState({ productImageName: name });
+    this.setState({ productImageName: name, activeClass: "" });
   }
   render() {
-    let productDetails = this.props.productdetails[0]
-      ? this.props.productdetails[0]
+    let productImg1 = this.props.productdetails[0]
+      ? this.props.productdetails[0].image
+      : "";
+    let productImg2 = this.props.productdetails[0]
+      ? this.props.productdetails[0].image_2
       : "";
     console.log(this.props.productdetails[0]);
     let cart = { count: 0, products: [] };
@@ -112,12 +117,27 @@ class ProductDetails extends Component {
     console.log(this.props);
     return (
       <React.Fragment>
-        <div id="main" class="mt-5 mb-5">
-          <div class="container">
-            <div class="product-block bg-white">
-              <div class="row">
-                <div class="col-md-6 item-left-block">
-                  <div class="top-image text-center">
+        <div id="main" className="mt-5 mb-5">
+          <div className="container">
+            <div className="product-block bg-white">
+              <div className="row">
+                <div className="col-md-12 mb-3 breadcrumbs">
+                  <ul className="list-unstyled">
+                    <li>
+                      <LinkContainer to="/">
+                        <a>Home</a>
+                      </LinkContainer>
+                    </li>
+                    <li>
+                      <LinkContainer to="/categories">
+                        <a>All Categories</a>
+                      </LinkContainer>
+                    </li>
+                  </ul>
+                  <div className="clearfix" />
+                </div>
+                <div className="col-md-6 item-left-block">
+                  <div className="top-image text-center">
                     <img
                       src={require(`../../images/product_images/${
                         this.state.productImageName
@@ -130,9 +150,15 @@ class ProductDetails extends Component {
                       title="Image"
                     />
                   </div>
-                  <div class="colors-selection-block">
-                    <ul class="list-unstyled">
-                      <li class="active">
+                  <div className="colors-selection-block">
+                    <ul className="list-unstyled">
+                      <li
+                        className={
+                          this.state.productImageName == productImg1
+                            ? "active"
+                            : this.state.activeClass
+                        }
+                      >
                         <a
                           onClick={() => {
                             this.handleClick(
@@ -154,7 +180,13 @@ class ProductDetails extends Component {
                         </a>
                       </li>
 
-                      <li>
+                      <li
+                        className={
+                          this.state.productImageName == productImg2
+                            ? "active"
+                            : ""
+                        }
+                      >
                         <a
                           onClick={() => {
                             this.handleClick(
@@ -178,43 +210,9 @@ class ProductDetails extends Component {
                     </ul>
                   </div>
                 </div>
-                <div class="col-md-6 item-right-block">
-                  <div class="breadcrumbs">
-                    <ul class="list-unstyled">
-                      <li>
-                        <LinkContainer to="/">
-                          <a>Home</a>
-                        </LinkContainer>
-                      </li>
-                      <li>
-                        <LinkContainer to="/categories">
-                          <a>All Categories</a>
-                        </LinkContainer>
-                      </li>
-                    </ul>
-                    <div class="clearfix" />
-                  </div>
-                  <div class="starts-block pt-3 pb-3">
-                    <ul class="list-unstyled">
-                      <li class="active">
-                        <a href="">&#9733;</a>
-                      </li>
-                      <li class="active">
-                        <a href="">&#9733;</a>
-                      </li>
-                      <li>
-                        <a href="">&#9733;</a>
-                      </li>
-                      <li>
-                        <a href="">&#9733;</a>
-                      </li>
-                      <li>
-                        <a href="">&#9733;</a>
-                      </li>
-                    </ul>
-                    <div class="clearfix" />
-                  </div>
-                  <div class="item-title">
+                <div className="col-md-6 item-right-block ">
+
+                  <div className="item-title">
                     <h2>
                       {this.props.productdetails[0]
                         ? this.props.productdetails[0].name
@@ -226,16 +224,16 @@ class ProductDetails extends Component {
                         : ""}
                     </p>
                   </div>
-                  <div class="amount-block pt-3 pb-3">
-                    &#163;{" "}
+                  <div className="amount-block pt-3 pb-3">
+                    <h6 className="pricetag"> Price:</h6> &#163;{" "}
                     {this.props.productdetails[0]
                       ? this.props.productdetails[0].price
                       : ""}
-                    {this.props.productdetails[0] ? <p> &#10072;</p> : ""}
+                    {this.props.productdetails[0] ? <p> {""}</p> : ""}
                   </div>
                   {this.props.productdetails[0] ? (
-                    <div class="amount-block pt-3 pb-3">
-                      &#163;{" "}
+                    <div className="amount-block pt-3 pb-3">
+                      <h6 className="pricetag"> Discount Price:</h6> &#163;{" "}
                       {this.props.productdetails[0]
                         ? this.props.productdetails[0].discounted_price
                         : ""}
@@ -245,9 +243,9 @@ class ProductDetails extends Component {
                   )}
                   {cart.products.map(function(product, key) {
                     return (
-                      <div class="quantity-block display_none">
-                        <h3 class="gray-dark pt-3 pb-2">Quantity</h3>
-                        <ul class="list-unstyled">
+                      <div className="quantity-block display_none">
+                        <h3 className="gray-dark pt-3 pb-2">Quantity</h3>
+                        <ul className="list-unstyled">
                           <li className="quantity-block">
                             <span>
                               <a
@@ -276,37 +274,42 @@ class ProductDetails extends Component {
                             </span>
                           </li>
                         </ul>
-                        <div class="clearfix" />
+                        <div className="clearfix" />
                       </div>
                     );
                   })}
-                  <div class="pt-5 btn-block">
-                    <button
-                      type="button"
-                      class="btn btn-lg"
-                      onClick={this.addtoCart.bind(this)}
-                    >
-                      Add to cart
-                    </button>
+                  <div className="pt-5 btn-block">
+                        <button
+                          type="button"
+                          className="btn btn-lg"
+                          onClick={this.addtoCart.bind(this)}
+                        >
+                          Add to cart
+                        </button>
+                        <span className={"add_to_cart mt-2"}>
+                          <h3 className={"addcart" + this.state.show ? this.state.show : ""}>
+                            {"Added to cart"}
+                          </h3>
+                        </span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-          <div class="container display_none">
-            <div class="review-block bg-gray pt-5 pb-5">
-              <div class="row">
-                <div class="col-md-10 offset-md-1">
-                  <div class="review-top-block">
-                    <h2 class="pb-4">Product reviews</h2>
-                    <div class="row">
-                      <div class="col-md-3">
-                        <div class="starts-block pb-2">
-                          <ul class="list-unstyled">
-                            <li class="active">
+          <div className="container display_none">
+            <div className="review-block bg-gray pt-5 pb-5">
+              <div className="row">
+                <div className="col-md-10 offset-md-1">
+                  <div className="review-top-block">
+                    <h2 className="pb-4">Product reviews</h2>
+                    <div className="row">
+                      <div className="col-md-3">
+                        <div className="starts-block pb-2">
+                          <ul className="list-unstyled">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
                             <li>
@@ -319,45 +322,48 @@ class ProductDetails extends Component {
                               <a href="">&#9733;</a>
                             </li>
                           </ul>
-                          <div class="clearfix" />
+                          <div className="clearfix" />
                         </div>
-                        <div class="author-block">
+                        <div className="author-block">
                           <h6>
                             <strong>Pablo Permins</strong>
                           </h6>
                           <span>one hour ago</span>
                         </div>
                       </div>
-                      <div class="col-md-9">
+                      <div className="col-md-9">
                         <p>
                           Nulla in metus vitae leo lobortis faucibus ac sed mi.
                           Sed elit nisl, vehicula eu nisi id, porttitor auctor
                           ipsum.
                         </p>
-                        <ul class="list-unstyled comment-block">
+                        <ul className="list-unstyled comment-block">
                           <li>
                             <span>&#9825;</span> 113
                           </li>
                           <li>
                             <span>
-                              <i class="fa fa-comment-o" aria-hidden="true" />
+                              <i
+                                className="fa fa-comment-o"
+                                aria-hidden="true"
+                              />
                             </span>{" "}
                             6
                           </li>
                         </ul>
-                        <div class="clearfix" />
+                        <div className="clearfix" />
                       </div>
                     </div>
                   </div>
-                  <hr class="mt-5 mb-5" />
-                  <div class="review-bot-block">
-                    <h2 class="pb-4">Add a review</h2>
+                  <hr className="mt-5 mb-5" />
+                  <div className="review-bot-block">
+                    <h2 className="pb-4">Add a review</h2>
                     <form action="#" method="post">
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="nickname">Choose a nickname</label>
                         <input type="text" />
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="review">Your review</label>
                         <textarea />
                         <span>
@@ -365,17 +371,17 @@ class ProductDetails extends Component {
                           <a href="#">Full review guidelines</a>
                         </span>
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label for="review">Overall rating</label>
-                        <div class="starts-block pb-2">
-                          <ul class="list-unstyled">
-                            <li class="active">
+                        <div className="starts-block pb-2">
+                          <ul className="list-unstyled">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
-                            <li class="active">
+                            <li className="active">
                               <a href="">&#9733;</a>
                             </li>
                             <li>
@@ -385,12 +391,12 @@ class ProductDetails extends Component {
                               <a href="">&#9733;</a>
                             </li>
                           </ul>
-                          <div class="clearfix" />
+                          <div className="clearfix" />
                         </div>
                       </div>
-                      <div class="form-group">
+                      <div className="form-group">
                         <label />
-                        <button type="submit" class="btn btn-lg mb-2">
+                        <button type="submit" className="btn btn-lg mb-2">
                           Submit
                         </button>
                       </div>
@@ -401,58 +407,66 @@ class ProductDetails extends Component {
             </div>
           </div>
           {this.props.productrecommendations.length > 0 ? (
-            <div class="container related-block mt-5">
-              <h2 class="pb-4">You may also like</h2>
-              <div class="row">
-                <div class="col-sm-6 col-lg-3">
+            <div className="container related-block mt-5">
+              <h2 className="pb-4">You may also like</h2>
+              <div className="row">
+                <div className="col-sm-6 col-lg-3">
                   <a href="#">
-                    <div class="product-image-block bg-white">
+                    <div className="product-image-block bg-white">
                       <img
                         src="images/adoration-of-the-kings.gif"
                         alt="Iamge"
                         title="Image"
                       />
-                      <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                      <div class="price pt-3">&#163;14.99</div>
+                      <h3 className="pt-3">
+                        New Look T-Shirt In Gradient Fade
+                      </h3>
+                      <div className="price pt-3">&#163;14.99</div>
                     </div>
                   </a>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div className="col-sm-6 col-lg-3">
                   <a href="#">
-                    <div class="product-image-block bg-white">
+                    <div className="product-image-block bg-white">
                       <img
                         src="images/adoration-of-the-kings.gif"
                         alt="Iamge"
                         title="Image"
                       />
-                      <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                      <div class="price pt-3">&#163;14.99</div>
+                      <h3 className="pt-3">
+                        New Look T-Shirt In Gradient Fade
+                      </h3>
+                      <div className="price pt-3">&#163;14.99</div>
                     </div>
                   </a>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div className="col-sm-6 col-lg-3">
                   <a href="#">
-                    <div class="product-image-block bg-white">
+                    <div className="product-image-block bg-white">
                       <img
                         src="images/adoration-of-the-kings.gif"
                         alt="Iamge"
                         title="Image"
                       />
-                      <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                      <div class="price pt-3">&#163;14.99</div>
+                      <h3 className="pt-3">
+                        New Look T-Shirt In Gradient Fade
+                      </h3>
+                      <div className="price pt-3">&#163;14.99</div>
                     </div>
                   </a>
                 </div>
-                <div class="col-sm-6 col-lg-3">
+                <div className="col-sm-6 col-lg-3">
                   <a href="#">
-                    <div class="product-image-block bg-white">
+                    <div className="product-image-block bg-white">
                       <img
                         src="images/adoration-of-the-kings.gif"
                         alt="Iamge"
                         title="Image"
                       />
-                      <h3 class="pt-3">New Look T-Shirt In Gradient Fade</h3>
-                      <div class="price pt-3">&#163;14.99</div>
+                      <h3 className="pt-3">
+                        New Look T-Shirt In Gradient Fade
+                      </h3>
+                      <div className="price pt-3">&#163;14.99</div>
                     </div>
                   </a>
                 </div>

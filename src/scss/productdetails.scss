@@ -5,9 +5,27 @@ img {
   height: auto;
 }
 .product-block {
-  padding: 50px 15px;
+  padding: 20px 15px;
   @media (max-width: 767px) {
     padding: 25px 15px;
+  }
+}
+.breadcrumbs {
+  ul {
+    padding: 0;
+    margin: 0;
+    li {
+      float: left;
+      margin-right: 30px;
+      a {
+        color: $gray-dark;
+        font-weight: $fw-600;
+        &:hover,
+        &:focus {
+          color: $red;
+        }
+      }
+    }
   }
 }
 .item-left-block {
@@ -15,7 +33,19 @@ img {
     display: none;
   }
   .top-image {
-    height: auto;
+    position:relative;
+    height: 75%;
+    img{
+      position: absolute;
+      margin: auto;
+      left: -100%;
+      right: -100%;
+      top: -100%;
+      bottom: -100%;
+      max-width: inherit;
+      height: 100%;
+      width: inherit;
+    }
   }
 
   .colors-selection-block {
@@ -23,6 +53,10 @@ img {
     align-items: center;
     justify-content: center;
     margin-top: 50px;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
     ul {
       padding: 0;
       margin: 0;
@@ -46,26 +80,9 @@ img {
 }
 .item-right-block {
   @media (max-width: 767px) {
-    margin-top: 20px;
+    margin-top: 0px;
   }
-  .breadcrumbs {
-    ul {
-      padding: 0;
-      margin: 0;
-      li {
-        float: left;
-        margin-right: 30px;
-        a {
-          color: $gray-dark;
-          font-weight: $fw-600;
-          &:hover,
-          &:focus {
-            color: $red;
-          }
-        }
-      }
-    }
-  }
+
   .item-title {
     margin-right: 50px;
   }
@@ -74,14 +91,18 @@ img {
     position: relative;
     color: $red;
     font-size: 24px;
+    display: flex;
+    h6.pricetag {
+      color: $black;
+      padding-right: 8px;
+      margin-top: 0.32rem;
+    }
     p {
+      border-bottom: 3px solid black;
+      width: 60px;
       position: absolute;
-      transform: rotate(90deg);
-      top: 16px;
-      left: 43px;
-      font-size: 80px;
-      color: black;
-      font-weight: 300;
+      top: 28px;
+      left: 72px;
     }
   }
   .quantity-block {
@@ -119,6 +140,10 @@ img {
   .btn-block {
     @media (max-width: 560px) {
       text-align: center;
+    }
+    .add_to_cart {
+      display: block;
+      margin-left: 45px;
     }
   }
   .wish-list {
@@ -242,5 +267,11 @@ form {
   }
   &:hover {
     box-shadow: 0px 10px 50px -5px $black;
+  }
+}
+.addtocart_btn {
+  color: $white;
+  &:hover {
+    color: $black;
   }
 }
