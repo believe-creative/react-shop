@@ -5,7 +5,8 @@ const intialState = {
   loading: false,
   products: [],
   product: [],
-  productrecommendations: []
+  productrecommendations: [],
+  productLocations: []
 };
 
 function getCategoryName(categories, id) {
@@ -74,7 +75,23 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
-
+    case ActionTypes.PRODUCTLOCATIONS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.PRODUCTLOCATIONS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        productLocations: action.response
+      };
+    case ActionTypes.PRODUCTLOCATIONS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
     case ActionTypes.CATEGORIES.SUCCESS:
       return {
         ...state,

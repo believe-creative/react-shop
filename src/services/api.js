@@ -334,3 +334,24 @@ export const getProductRecommendations = function(data) {
     }
   );
 };
+export const getProductLocations = function(data) {
+    return callAPI(`get_token`).then(
+      function(response) {
+        console.log(data);
+        return callAPI(
+          `get-product-locations/`,
+          {
+            "Content-Type": "application/x-www-form-urlencoded",
+            Accept: "application/json; charset=utf-8",
+            Authorization: `Bearer ${response.response.token}`
+          },
+          getParams({
+            inProductId: data
+          })
+        );
+      },
+      function(error) {
+        return error;
+      }
+    );
+};

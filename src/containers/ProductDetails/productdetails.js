@@ -47,6 +47,7 @@ class ProductDetails extends Component {
     console.log(this.props.match.params.productid);
     this.props.loadProduct(this.props.match.params.productid);
     this.props.getProductRecommendations(this.props.match.params.productid);
+    this.props.getProductLocations(this.props.match.params.productid);
     const props = this.props;
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
@@ -109,6 +110,9 @@ class ProductDetails extends Component {
     let productImg2 = this.props.productdetails[0]
       ? this.props.productdetails[0].image_2
       : "";
+    let productlocations = this.props.productlocations[0]
+      ? this.props.productlocations[0].department_name.toLowerCase()
+      : "";
     console.log(this.props.productdetails[0]);
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
@@ -129,7 +133,7 @@ class ProductDetails extends Component {
                       </LinkContainer>
                     </li>
                     <li>
-                      <LinkContainer to="/categories">
+                      <LinkContainer to={"/categories/" + productlocations}>
                         <a>All Categories</a>
                       </LinkContainer>
                     </li>
@@ -211,7 +215,6 @@ class ProductDetails extends Component {
                   </div>
                 </div>
                 <div className="col-md-6 item-right-block ">
-
                   <div className="item-title">
                     <h2>
                       {this.props.productdetails[0]
@@ -233,7 +236,7 @@ class ProductDetails extends Component {
                   </div>
                   {this.props.productdetails[0] ? (
                     <div className="amount-block pt-3 pb-3">
-                      <h6 className="pricetag"> Discount Price:</h6> &#163;{" "}
+                      <h6 className="pricetag"> Discounted Price:</h6> &#163;{" "}
                       {this.props.productdetails[0]
                         ? this.props.productdetails[0].discounted_price
                         : ""}
@@ -279,18 +282,22 @@ class ProductDetails extends Component {
                     );
                   })}
                   <div className="pt-5 btn-block">
-                        <button
-                          type="button"
-                          className="btn btn-lg"
-                          onClick={this.addtoCart.bind(this)}
-                        >
-                          Add to cart
-                        </button>
-                        <span className={"add_to_cart mt-2"}>
-                          <h3 className={"addcart" + this.state.show ? this.state.show : ""}>
-                            {"Added to cart"}
-                          </h3>
-                        </span>
+                    <button
+                      type="button"
+                      className="btn btn-lg"
+                      onClick={this.addtoCart.bind(this)}
+                    >
+                      Add to cart
+                    </button>
+                    <span className={"add_to_cart mt-2"}>
+                      <h3
+                        className={
+                          "addcart" + this.state.show ? this.state.show : ""
+                        }
+                      >
+                        {"Added to cart"}
+                      </h3>
+                    </span>
                   </div>
                 </div>
               </div>
@@ -484,7 +491,8 @@ const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
     productdetails: state.get("products").product,
-    productrecommendations: state.get("products").productrecommendations
+    productrecommendations: state.get("products").productrecommendations,
+    productlocations: state.get("products").productLocations
   };
 };
 
@@ -496,7 +504,8 @@ const mapStateToDispatch = dispatch => ({
     dispatch(Actions.updateProductQuantity.request(data)),
   getCartProducts: token => dispatch(Actions.getCartProducts.request(token)),
   getProductRecommendations: data =>
-    dispatch(Actions.getProductRecommendations.request(data))
+    dispatch(Actions.getProductRecommendations.request(data)),
+  getProductLocations: data => dispatch(Actions.productLocations.request(data))
 });
 
 export default connect(

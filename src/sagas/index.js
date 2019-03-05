@@ -18,7 +18,8 @@ const {
   getCustomerInfo,
   updateProductQuantity,
   getSearchItems,
-  getProductRecommendations
+  getProductRecommendations,
+  productLocations
 } = actions;
 
 //reusable fetch subroutine.
@@ -103,6 +104,11 @@ export const fetchProductRecommendations = fetchEntity.bind(
   getProductRecommendations,
   api.getProductRecommendations
 );
+export const fetchProductLocations = fetchEntity.bind(
+  null,
+  productLocations,
+  api.getProductLocations
+);
 
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
@@ -164,6 +170,10 @@ function* loadSearchItems(action) {
 
 function* loadProductRecommendations(action) {
   yield call(fetchProductRecommendations, action.data);
+}
+
+function* loadProductLocations(action) {
+  yield call(fetchProductLocations, action.productId);
 }
 
 //+++++++++++++++++//
@@ -236,6 +246,11 @@ function* watchloadProductRecommendations() {
     loadProductRecommendations
   );
 }
+
+function* watchloadProductLocations() {
+  yield takeLatest(actions.PRODUCTLOCATIONS.REQUEST, loadProductLocations);
+}
+
 export default function*() {
   yield fork(watchLoadProducts);
   yield fork(watchLoadProduct);
@@ -253,4 +268,5 @@ export default function*() {
   yield fork(watchloadupdateQuantity);
   yield fork(watchloadgetCustomerInfo);
   yield fork(watchloadProductRecommendations);
+  yield fork(watchloadProductLocations);
 }

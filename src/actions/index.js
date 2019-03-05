@@ -32,6 +32,7 @@ export const SEARCH = createRequestTypes("SEARCH");
 export const PRODUCTRECOMMENDATIONS = createRequestTypes(
   "PRODUCTRECOMMENDATIONS"
 );
+export const PRODUCTLOCATIONS = createRequestTypes("PRODUCTLOCATIONS");
 
 export function setUser(payload) {
   return { type: "SETUSER", payload };
@@ -65,6 +66,13 @@ export const products = {
   success: (category, response) =>
     action(PRODUCTS[SUCCESS], { category, response }),
   failure: (category, error) => action(PRODUCTS[FAILURE], { category, error })
+};
+
+export const productLocations = {
+  request: productId => action(PRODUCTLOCATIONS[REQUEST], { productId }),
+  success: (productId, response) =>
+    action(PRODUCTLOCATIONS[SUCCESS], { productId, response }),
+  failure: (productId, error) => action(PRODUCTLOCATIONS[FAILURE], { productId, error })
 };
 
 export const AddToCart = {
