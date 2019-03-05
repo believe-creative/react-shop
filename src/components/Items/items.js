@@ -42,11 +42,11 @@ class Items extends Component {
      {
         if(this.state.cart.count===undefined || this.state.cart.count===null)
         {
-            this.props.getCartProducts(props.cart.inCartId);
+            this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
         }
         else if(props.cart.count!==this.state.cart.count)
         {
-          this.props.getCartProducts(props.cart.inCartId);
+          this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
         }
         if(props.cart.count<=0)
         {
@@ -72,7 +72,7 @@ class Items extends Component {
             let state=this_ref.state;
             state["buttonStyles"]={pointerEvents: "none"};
             this_ref.setState(state);
-            return props.removeFromCart(item);
+            return props.removeFromCart({token:props.token,inItemId:item});
 
           }
         },
@@ -99,7 +99,7 @@ class Items extends Component {
     }
     else
     {
-      this.props.updateProductQuantity({inItemId:e.currentTarget.getAttribute("data-item"),inQuantity:count});
+      this.props.updateProductQuantity({token:this.props.token,inItemId:e.currentTarget.getAttribute("data-item"),inQuantity:count});
     }
 
   }
@@ -211,14 +211,15 @@ class Items extends Component {
 }
 const mapStateToProps = state => {
   return {
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    token:state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   updateProductQuantity: (data) => dispatch(Actions.updateProductQuantity.request(data)),
-  removeFromCart:(inItemId) => dispatch(Actions.removeFromCart.request(inItemId)),
-  getCartProducts: token => dispatch(Actions.getCartProducts.request(token))
+  removeFromCart:(data) => dispatch(Actions.removeFromCart.request(data)),
+  getCartProducts: (data) => dispatch(Actions.getCartProducts.request(data))
 
 });
 

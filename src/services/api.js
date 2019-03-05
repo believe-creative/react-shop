@@ -29,50 +29,33 @@ function getParams(data) {
     .join("&");
 }
 
-export const getProducts = function(category) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getProducts = function(data) {
       return callAPI(
         `products/`,
-        { Authorization: `Bearer ${response.response.token}` },
-        { category: category }
+        { Authorization: `Bearer ${data.token}` },
+        getParams({ category: data.category })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getProduct = function(productId) {
-  return callAPI(`get_token`).then(
-    function(response) {
-      console.log(productId);
+export const getProduct = function(data) {
       return callAPI(
         `product/`,
         {
-          Authorization: `Bearer ${response.response.token}`,
+          Authorization: `Bearer ${data.token}`,
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8"
         },
-        getParams({ inProductId: productId })
+        getParams({ inProductId: data.productId })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const AddToCart = function(data) {
-  return callAPI(`get_token`).then(
-    function(response) {
       return callAPI(
         `add-product-to-cart/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
           inCartId: data.inCartId,
@@ -80,278 +63,184 @@ export const AddToCart = function(data) {
           inAttributes: data.inAttributes
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const removeFromCart = function(inItemId) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const removeFromCart = function(data) {
       return callAPI(
         `remove-product-from-cart/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
-          inItemId: inItemId
+          inItemId: data.inItemId
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const updateProductQuantity = function(data) {
-  return callAPI(`get_token`).then(
-    function(response) {
       return callAPI(
         `cart-update/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
           inItemId: data.inItemId,
           inQuantity: data.inQuantity
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getCustomerInfo = function(inEmail) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getCustomerInfo = function(data) {
       return callAPI(
         `get-customer/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
-          inEmail: inEmail
+          inEmail:data.inEmail
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getCartProducts = function(inCartId) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getCartProducts = function(data) {
       return callAPI(
         `get-shopping-cart-products/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
-        getParams({ inCartId: inCartId })
+        getParams({ inCartId: data.inCartId })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getShippingRegions = function() {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getShippingRegions = function(data) {
       return callAPI(`get-customer-shipping-regions/`, {
         "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json; charset=utf-8",
-        Authorization: `Bearer ${response.response.token}`
+        Authorization: `Bearer ${data.token}`
       });
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const checkUser = token =>
   callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
 
-export const getDepartments = function() {
-  return callAPI(`get_token`).then(
-    function(response) {
-      return callAPI("get-departments/", {
-        Authorization: `Bearer ${response.response.token}`
-      });
-    },
-    function(error) {
-      return error;
-    }
-  );
+export const getDepartments = function(data) {
+    return callAPI("get-departments/", {
+      Authorization: `Bearer ${data.token}`
+    });
 };
 
-export const getSubCategories = function(departmentId) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getToken = function() {
+  return callAPI(`get_token/`);
+};
+
+export const getSubCategories = function(data) {
       return callAPI(
         `get-department-categories/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
-        getParams({ inDepartmentId: departmentId })
+        getParams({ inDepartmentId: data.inDepartmentId })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getShippingOptions = function(inShippingRegionId) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getShippingOptions = function(data) {
       return callAPI(
         `get-order-shipping-info/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
-        getParams({ inShippingRegionId: inShippingRegionId })
+        getParams({ inShippingRegionId: data.inShippingRegionId })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const getCategoryProducts = function(data) {
-  return callAPI(`get_token`).then(
-    function(response) {
       return callAPI(
         `get-department-products/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
           inDepartmentId: data.departmentId,
           inShortProductDescriptionLength: data.descriptionLength,
-          inProductsPerPage: 10,
-          inStartItem: 0
+          inProductsPerPage: data.inProductsPerPage | 10,
+          inStartItem: data.inStartItem | 0
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const getSubCategoryProducts = function(data) {
-  return callAPI(`get_token`).then(
-    function(response) {
       return callAPI(
         `get-category-products/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
           inCategoryId: data.categoryId,
           inShortProductDescriptionLength: data.descriptionLength,
-          inProductsPerPage: 10,
-          inStartItem: 0
+          inProductsPerPage: data.inProductsPerPage | 10,
+          inStartItem: data.inStartItem | 0
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
-export const getSearchItems = function(searchTerm) {
-  return callAPI(`get_token`).then(
-    function(response) {
+export const getSearchItems = function(data) {
       return callAPI(
         `search/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
-          inSearchString: searchTerm,
+          inSearchString: data.searchTerm,
           inAllWords: "on",
           inShortProductDescriptionLength: "100",
           inProductsPerPage: "15",
           inStartItem: "1"
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 
 export const getProductRecommendations = function(data) {
-  return callAPI(`get_token`).then(
-    function(response) {
-      console.log(data);
       return callAPI(
         `get-product-recommendations/`,
         {
           "Content-Type": "application/x-www-form-urlencoded",
           Accept: "application/json; charset=utf-8",
-          Authorization: `Bearer ${response.response.token}`
+          Authorization: `Bearer ${data.token}`
         },
         getParams({
-          inProductId: data,
+          inProductId: data.inProductId,
           inShortProductDescriptionLength: "100"
         })
       );
-    },
-    function(error) {
-      return error;
-    }
-  );
 };
 export const getProductLocations = function(data) {
-    return callAPI(`get_token`).then(
-      function(response) {
-        console.log(data);
         return callAPI(
           `get-product-locations/`,
           {
             "Content-Type": "application/x-www-form-urlencoded",
             Accept: "application/json; charset=utf-8",
-            Authorization: `Bearer ${response.response.token}`
+            Authorization: `Bearer ${data.token}`
           },
           getParams({
-            inProductId: data
+            inProductId: data.inProductId
           })
         );
-      },
-      function(error) {
-        return error;
-      }
-    );
 };

@@ -74,7 +74,7 @@ class Payment extends Component {
                       ),
                     inTaxId: 0
                   },
-                  { Authorization: `Bearer ${response.data.token}` }
+                  { Authorization: `Bearer ${this_ref.props.token}` }
                 )
                 .then(function(res) {
                   if (res.data.status === "error") {

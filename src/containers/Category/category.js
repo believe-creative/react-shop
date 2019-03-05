@@ -3,11 +3,15 @@ import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
 import "../../scss/categories.scss";
+import Pagination from "react-js-pagination";
 class Category extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showSubCategory: false
+      showSubCategory: false,
+      activePage:1,
+      categoryId:null,
+      departmentId:null
     };
     this.callSubCategories = this.callSubCategories.bind(this);
     this.hideSubCategory = this.hideSubCategory.bind(this);
@@ -43,15 +47,39 @@ class Category extends Component {
       }
       if (!this.props.subCategoryProducts || !this.props.subCategoryProducts[categoryNameLowerCase]) {
         this.props.loadSubCategoryProducts({
+          token:this.props.token,
           categoryId: categoryId,
-          descriptionLength: 120
+          descriptionLength: 120,
+          inStartItem:0
         });
       }
     }
-    this.setState({ showSubCategory: true });
+    this.setState({ showSubCategory: true ,activePage: 1,categoryId:categoryId});
   }
   hideSubCategory(){
     this.setState({ showSubCategory: false });
+  }
+  handlePageChange(pageNumber) {
+    this.setState({activePage: pageNumber});
+    if(this.state.showSubCategory)
+    {
+      this.props.loadSubCategoryProducts({
+        token:this.props.token,
+        categoryId: this.state.categoryId,
+        descriptionLength: 120,
+        inStartItem:(pageNumber-1)*10
+      });
+    }
+    else
+    {
+      this.props.loadCategoryProducts({
+        token:this.props.token,
+        departmentId: this.state.departmentId,
+        descriptionLength: 120,
+        inStartItem:(pageNumber-1)*10
+      });
+    }
+    
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -119,6 +147,15 @@ class Category extends Component {
                   </h4>
                 :''
               }
+              <div>
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={100}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange.bind(this)}
+                />
+              </div>
                 <section>
                   {
                     <ProductList
@@ -130,6 +167,15 @@ class Category extends Component {
                     />
                   }
                 </section>
+                <div>
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={100}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange.bind(this)}
+                />
+              </div>
               </div>
             </div>
           </div>
@@ -195,7 +241,7 @@ class Category extends Component {
       }
 
       if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
-        props.loadSubCategories(departmentId);
+        props.loadSubCategories({token:props.token,inDepartmentId:departmentId});
       }
 
       if (
@@ -203,26 +249,31 @@ class Category extends Component {
         !props.categoryProducts[categoryNameLowerCase]
       ) {
         props.loadCategoryProducts({
+          token:props.token,
           departmentId: departmentId,
-          descriptionLength: 120
+          descriptionLength: 120,
+          inStartItem:0
         });
+        this.setState({departmentId:departmentId});
       }
     }
   }
 }
 
 const mapStateToProps = state => {
+  // console.log(state.get("products"));
   return {
     subCategories: state.get("products").subCategories,
     categories: state.get("products").categories,
     categoryProducts: state.get("products").categoryProducts,
-    subCategoryProducts: state.get("products").subCategoryProducts
+    subCategoryProducts: state.get("products").subCategoryProducts,
+    token:state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
-  loadSubCategories: categoryId =>
-    dispatch(Actions.getSubCategories.request(categoryId)),
+  loadSubCategories: data =>
+    dispatch(Actions.getSubCategories.request(data)),
   loadCategoryProducts: data =>
     dispatch(Actions.getCategoryProducts.request(data)),
   loadSubCategoryProducts: data =>

@@ -78,52 +78,7 @@ class Checkout extends Component {
         this.props.history.push('/');
       }
   }
-  handleSubmit(ev) {
-    ev.preventDefault();
-    let this_ref = this;
-    // We don't want to let default form submission happen here, which would refresh the page.
-    let totalAmount = 0;
-    if (this.props.cart) {
-      let cart = this.props.cart;
-      if(cart.products)
-      {
-        for (var i = 0; i < cart.products.length; i++) {
-          totalAmount =
-            totalAmount + cart.products[i].price * cart.products[i].quantity;
-        }
-      }
 
-    }
-    totalAmount=Math.round(totalAmount * 100) / 100;
-    // Within the context of `Elements`, this call to createToken knows which Element to
-    // tokenize, since there's only one in this group.
-    this.props.stripe
-      .createToken({ name: this.props.user.name })
-      .then(({ token }) => {
-        axios
-          .post(API_ROOT + "payment", {
-            email: this.props.user.email,
-            id: token.card_id,
-            inCartId:this.props.cart.inCartId,
-            inCustomerId:this.props.customer.customer_id,
-            inShippingId:this.props.cart.shippingOption.shipping_id,
-            amount:totalAmount+this.props.cart.shippingOption.cost,
-            inTaxId:0
-          })
-          .then(function(response) {
-            if (response.data.status === "error") {
-              this_ref.setState({ errors: response.data.msg });
-            } else {
-              this_ref.setState({ errors: null });
-              let state = this_ref.state;
-              state["stage"] = state["stage"] + 1;
-              this_ref.setState(state);
-            }
-          })
-          .catch(function(error) {
-          });
-      });
-  }
   showstages() {
     if (this.state.stage === 0) {
       return (
@@ -294,13 +249,13 @@ class Checkout extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
-    user: state.get("user")
+    user: state.get("user"),
+    token:state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
-  getCartProducts: () => dispatch(Actions.getCartProducts.request()),
-  clearCart: () => dispatch(clearCart()),
+  clearCart: () => dispatch(clearCart())
 
 });
 

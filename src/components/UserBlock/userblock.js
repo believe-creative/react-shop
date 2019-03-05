@@ -32,9 +32,9 @@ class UserBlock extends Component {
           this.state.cart.count === null ||
           this.state.cart.count === undefined
         ) {
-          this.props.getCartProducts(props.cart.inCartId);
+          this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
         } else if (props.cart.count !== this.state.cart.count) {
-          this.props.getCartProducts(props.cart.inCartId);
+          this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
         }
         this.setState({ cart: props.cart });
       }
@@ -114,7 +114,8 @@ class UserBlock extends Component {
 const mapStateToProps = state => {
   return {
     user: state.get("user"),
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    token:state.get("user").token
   };
 };
 
@@ -122,7 +123,7 @@ function mapDispatchToProps(dispatch) {
   return {
     setUser: user => dispatch(setUser(user)),
     checkUserLogin: token => dispatch(Actions.checkUserLogin.request(token)),
-    getCartProducts: token => dispatch(Actions.getCartProducts.request(token))
+    getCartProducts: data => dispatch(Actions.getCartProducts.request(data))
   };
 }
 

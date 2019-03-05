@@ -102,7 +102,8 @@ const mapStateToProps = state => {
   return {
     categories: state.get("products").categories,
     cart: state.get("products").cart,
-    location: state.get("router").location
+    location: state.get("router").location,
+    token:state.get("user").token
   };
 };
 

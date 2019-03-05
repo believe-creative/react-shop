@@ -34,7 +34,7 @@ let secret_key = require('./config.js').secret_key;
 //   };
 
 const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
-  host: '192.168.0.135',
+  host: 'localhost',
   dialect: 'mysql',
   port:3306
 });

@@ -38,7 +38,7 @@ class Login extends Component {
               email: this_ref.state.email,
               pwd: this_ref.state.pwd
             },
-            { Authorization: `Bearer ${response.data.token}` }
+            { Authorization: `Bearer ${props.token}` }
           )
           .then(function(response) {
             if (response.data.status === "error") {
@@ -191,7 +191,8 @@ class Login extends Component {
 }
 const mapStateToProps = state => {
   return {
-    user: state.get("user")
+    user: state.get("user"),
+    token:state.get("user").token
   };
 };
 function mapDispatchToProps(dispatch) {

@@ -24,12 +24,14 @@ class ProductDetails extends Component {
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
+        token:props.token,
         inCartId: cart.inCartId,
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
       });
     } else {
       props.AddToCart({
+        token:props.token,
         inCartId: null,
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
@@ -45,9 +47,9 @@ class ProductDetails extends Component {
   }
   componentDidMount() {
     console.log(this.props.match.params.productid);
-    this.props.loadProduct(this.props.match.params.productid);
-    this.props.getProductRecommendations(this.props.match.params.productid);
-    this.props.getProductLocations(this.props.match.params.productid);
+    this.props.loadProduct({token:props.token,inProductId:this.props.match.params.productid});
+    this.props.getProductRecommendations({token:props.token,inProductId:this.props.match.params.productid});
+    this.props.getProductLocations({token:props.token,inProductId:this.props.match.params.productid});
     const props = this.props;
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
@@ -70,9 +72,9 @@ class ProductDetails extends Component {
         this.state.cart.count === undefined ||
         this.state.cart.count === null
       ) {
-        this.props.getCartProducts(props.cart.inCartId);
+        this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
       } else if (props.cart.count !== this.state.cart.count) {
-        this.props.getCartProducts(props.cart.inCartId);
+        this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
       }
       if (props.cart.count <= 0) {
         state["buttonStyles"] = { pointerEvents: "none" };
@@ -94,6 +96,7 @@ class ProductDetails extends Component {
       this.setState(state);
     } else {
       this.props.updateProductQuantity({
+        token:this.props.token,
         inItemId: e.currentTarget.getAttribute("data-item"),
         inQuantity: count
       });
@@ -492,17 +495,18 @@ const mapStateToProps = state => {
     cart: state.get("products").cart,
     productdetails: state.get("products").product,
     productrecommendations: state.get("products").productrecommendations,
-    productlocations: state.get("products").productLocations
+    productlocations: state.get("products").productLocations,
+    token:state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   loadProduct: data => dispatch(Actions.product.request(data)),
-  AddToCart: (inCartId, inProductId, inAttributes) =>
-    dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),
+  AddToCart: (data) =>
+    dispatch(Actions.AddToCart.request(data)),
   updateProductQuantity: data =>
     dispatch(Actions.updateProductQuantity.request(data)),
-  getCartProducts: token => dispatch(Actions.getCartProducts.request(token)),
+  getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),
   getProductRecommendations: data =>
     dispatch(Actions.getProductRecommendations.request(data)),
   getProductLocations: data => dispatch(Actions.productLocations.request(data))

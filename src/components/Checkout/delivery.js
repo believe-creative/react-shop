@@ -19,7 +19,7 @@ class Delivery extends Component {
     this.stage = 0;
   }
   componentDidMount() {
-    this.props.getShippingRegions();
+    this.props.getShippingRegions({token:this.props.token});
   }
   componentWillReceiveProps(props) {
     if (props.user) {
@@ -29,7 +29,7 @@ class Delivery extends Component {
             this.setState({ customer: props.customer });
           }
         } else {
-          props.getCustomerInfo(props.user.email);
+          props.getCustomerInfo({token:this.props.token,inEmail:props.user.email});
         }
       }
     }
@@ -48,7 +48,7 @@ class Delivery extends Component {
     this.setState(state);
     this.props.setDelivarydetails(this.state, this.state);
     this.props.setRegion(state["completeRegion"]);
-    this.props.getShippingOptions(state["region"]);
+    this.props.getShippingOptions({token:this.props.token,inShippingRegionId:state["region"]});
   }
   setShippingOption(e) {
     let state = this.state;
@@ -120,7 +120,7 @@ class Delivery extends Component {
                 inCountry: state["customer"]["country"],
                 inShippingRegionId: state["region"]
               },
-              { Authorization: `Bearer ${response.data.token}` }
+              { Authorization: `Bearer ${this_ref.props.token}` }
             )
             .then(function(response) {
               this_ref.props.nextStage(this_ref.stage);
@@ -338,20 +338,21 @@ const mapStateToProps = state => {
     regions: state.get("shipping").regions,
     shippingOptions: state.get("shipping").shippingOptions,
     user: state.get("user"),
-    customer: state.get("user").customer
+    customer: state.get("user").customer,
+    token:state.get("user").token
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    getShippingRegions: () => dispatch(Actions.getShippingRegions.request()),
+    getShippingRegions: (data) => dispatch(Actions.getShippingRegions.request(data)),
     setRegion: regionId => dispatch(setRegion(regionId)),
     setShippingOption: inShippingId =>
       dispatch(setShippingOption(inShippingId)),
-    getCustomerInfo: inEmail =>
-      dispatch(Actions.getCustomerInfo.request(inEmail)),
-    getShippingOptions: inShippingRegionId =>
-      dispatch(Actions.getShippingOptions.request(inShippingRegionId))
+    getCustomerInfo: data =>
+      dispatch(Actions.getCustomerInfo.request(data)),
+    getShippingOptions: data =>
+      dispatch(Actions.getShippingOptions.request(data))
   };
 }
 

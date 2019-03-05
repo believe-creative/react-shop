@@ -30,6 +30,19 @@ export default function(state = initialState, action) {
         isLoading: false,
         ...action.payload
       };
+    case Actions.SETTOKEN:
+      return {
+        ...state,
+        isLoading: false,
+        token:action.payload
+      };
+    case Actions.GETTOKEN.SUCCESS:
+      console.log(action.response);
+      return {
+        ...state,
+        isLoading: false,
+        token:action.response.token
+      };
     case Actions.CUSTOMERINFO.SUCCESS:
       return {
         ...state,

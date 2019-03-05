@@ -12,7 +12,7 @@ class SearchItem extends Component {
     };
   }
   componentDidMount() {
-    this.props.getSearchItems(this.state.searchResult);
+    this.props.getSearchItems({token:this.props.token,searchTerm:this.state.searchResult});
   }
   render() {
     if (this.props.searchItems && this.props.searchItems.length > 0) {
@@ -54,12 +54,13 @@ class SearchItem extends Component {
 const mapStateToProps = state => {
   return {
     searchItems: state.get("products").searchItem,
-    location: state.get("router").location
+    location: state.get("router").location,
+    token:state.get("user").token
   };
 };
 const mapStateToDispatch = dispatch => ({
-  getSearchItems: searchitem =>
-    dispatch(Actions.getSearchItems.request(searchitem))
+  getSearchItems: data =>
+    dispatch(Actions.getSearchItems.request(data))
 });
 export default connect(
   mapStateToProps,

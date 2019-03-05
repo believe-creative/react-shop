@@ -14,12 +14,14 @@ class Product extends Component {
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
+        token:props.token,
         inCartId: cart.inCartId,
         inProductId: this.props.product.product_id,
         inAttributes: null
       });
     } else {
       props.AddToCart({
+        token:props.token,
         inCartId: null,
         inProductId: this.props.product.product_id,
         inAttributes: null
@@ -87,7 +89,8 @@ class Product extends Component {
 
 const mapStateToProps = state => {
   return {
-    cart: state.get("products").cart
+    cart: state.get("products").cart,
+    token:state.get("user").token
   };
 };
 

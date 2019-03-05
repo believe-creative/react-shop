@@ -146,7 +146,8 @@ class Conformation extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
-    customer: state.get("user").customer
+    customer: state.get("user").customer,
+    token:state.get("user").token
   };
 };
 

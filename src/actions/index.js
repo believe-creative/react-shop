@@ -23,6 +23,8 @@ export const CHECKUSERLOGIN = createRequestTypes("CHECKUSERLOGIN");
 export const SETUSER = "SETUSER";
 export const SETREGION = "SETREGION";
 export const CLEARCART = "CLEARCART";
+export const SETTOKEN = "SETTOKEN";
+export const GETTOKEN = createRequestTypes("GETTOKEN");
 export const SETSHIPPINGOPTION = "SETSHIPPINGOPTION";
 export const CATEGORIES = createRequestTypes("CATEGORIES");
 export const SUBCATEGORIES = createRequestTypes("SUBCATEGORIES");
@@ -46,6 +48,10 @@ export function clearCart() {
   return { type: "CLEARCART" };
 }
 
+export function setToken(payload) {
+  return { type: "SETTOKEN", payload };
+}
+
 export function setShippingOption(payload) {
   return { type: "SETSHIPPINGOPTION", payload };
 }
@@ -55,24 +61,31 @@ function action(type, payload = {}) {
 }
 
 export const product = {
-  request: productId => action(PRODUCT[REQUEST], { productId }),
-  success: (productId, response) =>
-    action(PRODUCT[SUCCESS], { productId, response }),
-  failure: (productId, error) => action(PRODUCT[FAILURE], { productId, error })
+  request: data => action(PRODUCT[REQUEST], { data }),
+  success: (data, response) =>
+    action(PRODUCT[SUCCESS], { data, response }),
+  failure: (data, error) => action(PRODUCT[FAILURE], { data, error })
+};
+
+export const getToken = {
+  request: () => action(GETTOKEN[REQUEST], { }),
+  success: (status, response) =>
+    action(GETTOKEN[SUCCESS], {  response }),
+  failure: ( error) => action(GETTOKEN[FAILURE], {error })
 };
 
 export const products = {
-  request: category => action(PRODUCTS[REQUEST], { category }),
-  success: (category, response) =>
-    action(PRODUCTS[SUCCESS], { category, response }),
-  failure: (category, error) => action(PRODUCTS[FAILURE], { category, error })
+  request: data => action(PRODUCTS[REQUEST], { data }),
+  success: (data, response) =>
+    action(PRODUCTS[SUCCESS], { data, response }),
+  failure: (data, error) => action(PRODUCTS[FAILURE], { data, error })
 };
 
 export const productLocations = {
-  request: productId => action(PRODUCTLOCATIONS[REQUEST], { productId }),
-  success: (productId, response) =>
-    action(PRODUCTLOCATIONS[SUCCESS], { productId, response }),
-  failure: (productId, error) => action(PRODUCTLOCATIONS[FAILURE], { productId, error })
+  request: data => action(PRODUCTLOCATIONS[REQUEST], { data }),
+  success: (data, response) =>
+    action(PRODUCTLOCATIONS[SUCCESS], { data, response }),
+  failure: (data, error) => action(PRODUCTLOCATIONS[FAILURE], { data, error })
 };
 
 export const AddToCart = {
@@ -83,14 +96,14 @@ export const AddToCart = {
 };
 
 export const removeFromCart = {
-  request: inItemId => {
-    return action(REMOVEFROMCART[REQUEST], { inItemId });
+  request: data => {
+    return action(REMOVEFROMCART[REQUEST], { data });
   },
-  success: (inItemId, response) => {
-    return action(REMOVEFROMCART[SUCCESS], { inItemId, response });
+  success: (data, response) => {
+    return action(REMOVEFROMCART[SUCCESS], { data, response });
   },
-  failure: (inItemId, error) =>
-    action(REMOVEFROMCART[FAILURE], { inItemId, error })
+  failure: (data, error) =>
+    action(REMOVEFROMCART[FAILURE], { data, error })
 };
 
 export const updateProductQuantity = {
@@ -101,39 +114,39 @@ export const updateProductQuantity = {
 };
 
 export const getCustomerInfo = {
-  request: inEmail => action(CUSTOMERINFO[REQUEST], { inEmail }),
-  success: (inEmail, response) =>
-    action(CUSTOMERINFO[SUCCESS], { inEmail, response }),
-  failure: (inEmail, error) => action(CUSTOMERINFO[FAILURE], { inEmail, error })
+  request: data => action(CUSTOMERINFO[REQUEST], { data }),
+  success: (data, response) =>
+    action(CUSTOMERINFO[SUCCESS], { data, response }),
+  failure: (data, error) => action(CUSTOMERINFO[FAILURE], { data, error })
 };
 
 export const getCartProducts = {
-  request: inCartId => action(GETCARTPRODUCTS[REQUEST], { inCartId }),
-  success: (inCartId, response) =>
-    action(GETCARTPRODUCTS[SUCCESS], { inCartId, response }),
-  failure: (inCartId, error) =>
-    action(GETCARTPRODUCTS[FAILURE], { inCartId, error })
+  request: data => action(GETCARTPRODUCTS[REQUEST], { data }),
+  success: (data, response) =>
+    action(GETCARTPRODUCTS[SUCCESS], { data, response }),
+  failure: (data, error) =>
+    action(GETCARTPRODUCTS[FAILURE], { data, error })
 };
 
 export const getShippingRegions = {
-  request: () => action(GETSHIPPINGREGIONS[REQUEST], {}),
-  success: (status, response) => {
-    return action(GETSHIPPINGREGIONS[SUCCESS], { response });
+  request: (data) => action(GETSHIPPINGREGIONS[REQUEST], {data}),
+  success: (data, response) => {
+    return action(GETSHIPPINGREGIONS[SUCCESS], {data, response });
   },
-  failure: error => action(GETSHIPPINGREGIONS[FAILURE], { error })
+  failure: (data,error) => action(GETSHIPPINGREGIONS[FAILURE], { data,error })
 };
 
 export const getShippingOptions = {
-  request: inShippingRegionId =>
-    action(GETSHIPPINGOPTIONS[REQUEST], { inShippingRegionId }),
-  success: (inShippingRegionId, response) => {
+  request: data =>
+    action(GETSHIPPINGOPTIONS[REQUEST], { data }),
+  success: (data, response) => {
     return action(GETSHIPPINGOPTIONS[SUCCESS], {
-      inShippingRegionId,
+      data,
       response
     });
   },
-  failure: (inShippingRegionId, error) =>
-    action(GETSHIPPINGOPTIONS[FAILURE], { inShippingRegionId, error })
+  failure: (data, error) =>
+    action(GETSHIPPINGOPTIONS[FAILURE], { data, error })
 };
 
 export const checkUserLogin = {
@@ -143,17 +156,17 @@ export const checkUserLogin = {
 };
 
 export const getCategories = {
-  request: () => action(CATEGORIES[REQUEST]),
-  success: (id, response) => action(CATEGORIES[SUCCESS], { response }),
-  failure: (id, error) => action(CATEGORIES[FAILURE], { error })
+  request: (data) => action(CATEGORIES[REQUEST],{data}),
+  success: (data, response) => action(CATEGORIES[SUCCESS], {data, response }),
+  failure: (data, error) => action(CATEGORIES[FAILURE], {data, error })
 };
 
 export const getSubCategories = {
-  request: departmentId => action(SUBCATEGORIES[REQUEST], { departmentId }),
-  success: (departmentId, response) =>
-    action(SUBCATEGORIES[SUCCESS], { departmentId, response }),
-  failure: (departmentId, error) =>
-    action(SUBCATEGORIES[FAILURE], { departmentId, error })
+  request: data => action(SUBCATEGORIES[REQUEST], { data }),
+  success: (data, response) =>
+    action(SUBCATEGORIES[SUCCESS], { data, response }),
+  failure: (data, error) =>
+    action(SUBCATEGORIES[FAILURE], { data, error })
 };
 
 export const getCategoryProducts = {

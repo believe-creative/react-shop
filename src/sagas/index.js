@@ -18,6 +18,7 @@ const {
   getCustomerInfo,
   updateProductQuantity,
   getSearchItems,
+  getToken,
   getProductRecommendations,
   productLocations
 } = actions;
@@ -39,6 +40,11 @@ export const addProductToCart = fetchEntity.bind(
   null,
   AddToCart,
   api.AddToCart
+);
+export const getAccessToken = fetchEntity.bind(
+  null,
+  getToken,
+  api.getToken
 );
 export const getProductsfromCart = fetchEntity.bind(
   null,
@@ -115,15 +121,15 @@ function* loadUpadtedCart(action) {
 }
 
 function* loadremoveProduct(action) {
-  yield call(removeProduct, action.inItemId);
+  yield call(removeProduct, action.data);
 }
 
 function* loadgetCustomerInfo(action) {
-  yield call(getCustomer, action.inEmail);
+  yield call(getCustomer, action.data);
 }
 
 function* loadProductsfromCart(action) {
-  yield call(getProductsfromCart, action.inCartId);
+  yield call(getProductsfromCart, action.data);
 }
 
 function* loadupdateQuantity(action) {
@@ -131,19 +137,19 @@ function* loadupdateQuantity(action) {
 }
 
 function* loadgetAllShippingRegions(action) {
-  yield call(getAllShippingRegions);
+  yield call(getAllShippingRegions,action.data);
 }
 
 function* loadgetRegionShippingOption(action) {
-  yield call(getRegionShippingOption, action.inShippingRegionId);
+  yield call(getRegionShippingOption, action.data);
 }
 
 function* loadProducts(action) {
-  yield call(fetchProducts, action.category);
+  yield call(fetchProducts, action.data);
 }
 
 function* loadProduct(action) {
-  yield call(fetchProduct, action.productId);
+  yield call(fetchProduct, action.data);
 }
 
 function* loadUser(action) {
@@ -151,11 +157,11 @@ function* loadUser(action) {
 }
 
 function* loadCategories(action) {
-  yield call(fetchCategories);
+  yield call(fetchCategories,action.data);
 }
 
 function* loadSubCategories(action) {
-  yield call(fetchSubCategories, action.departmentId);
+  yield call(fetchSubCategories, action.data);
 }
 
 function* loadCategoryProducts(action) {
@@ -173,7 +179,11 @@ function* loadProductRecommendations(action) {
 }
 
 function* loadProductLocations(action) {
-  yield call(fetchProductLocations, action.productId);
+  yield call(fetchProductLocations, action.data);
+}
+
+function* loadgetAccessToken(action) {
+  yield call(getAccessToken, action.data);
 }
 
 //+++++++++++++++++//
@@ -251,6 +261,14 @@ function* watchloadProductLocations() {
   yield takeLatest(actions.PRODUCTLOCATIONS.REQUEST, loadProductLocations);
 }
 
+
+function* watchloadgetAccessToken() {
+  yield takeLatest(
+    actions.GETTOKEN.REQUEST,
+    loadgetAccessToken
+  );
+}
+
 export default function*() {
   yield fork(watchLoadProducts);
   yield fork(watchLoadProduct);
@@ -269,4 +287,5 @@ export default function*() {
   yield fork(watchloadgetCustomerInfo);
   yield fork(watchloadProductRecommendations);
   yield fork(watchloadProductLocations);
+  yield fork(watchloadgetAccessToken);
 }
