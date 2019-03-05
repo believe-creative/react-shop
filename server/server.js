@@ -19,6 +19,9 @@ const {checkToken} = require('./lib/middleware')
 const {cryptPassword,comparePassword} = require('./lib/pgen')
 const uniqueString = require('unique-string');
 
+// Mail functionality
+let mail = require('./nodeMailer');
+
 const socketio = require('socket.io')
 var passport = require('passport');
 SESSION_SECRET="justfortesting"
@@ -34,7 +37,7 @@ let secret_key = require('./config.js').secret_key;
 //   };
 
 const sequelize = new Sequelize('tshirtshop_db', 'root', '', {
-  host: 'localhost',
+  host: '192.168.0.135',
   dialect: 'mysql',
   port:3306
 });
@@ -634,9 +637,25 @@ app.post('/api/get-order-details', checkToken, (req, res)=>{
 */
 app.post('/api/get-order-info', checkToken, (req, res)=>{
   let inOrderId = req.body.inOrderId;
+  let full_order_details = [];
   sequelize.query('CALL orders_get_order_info(:inOrderId)',
                   {replacements:{inOrderId:inOrderId}})
-           .then(order_info=>res.json(order_info));
+           .then(order_info=>{
+                full_order_details.push({'order_info':order_info});
+                sequelize.query('CALL orders_get_order_details(:inOrderId)',
+                  {replacements:{inOrderId:inOrderId}})
+                .then(order_details=>{
+                    full_order_details.push({'products':order_details});
+                })
+                sequelize
+                   .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:order_info[0].customer_id}}).then(
+                      get_customer=>{
+                      full_order_details.push({'shipping_address':get_customer})
+                        mail.orderEmail(full_order_details, get_customer[0].email);
+                        return res.json(full_order_details)
+                      })
+
+           });
 });
 
 /*
