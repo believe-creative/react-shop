@@ -23,10 +23,10 @@ class Category extends Component {
   componentWillReceiveProps(props) {
     this.checkAndLoadSubCategories(props);
     const categoryName = props.match.params.category;
-    if (categoryName !== this.previousCategoryName) {
-      this.setState({ showSubCategory: false });
+    // if (categoryName !== this.previousCategoryName) {
+      this.setState({ showSubCategory: false,activePage:1 });
       this.previousCategoryName = categoryName;
-    }
+    // }
   }
   callSubCategories(subcategoryName) {
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
@@ -52,7 +52,8 @@ class Category extends Component {
           token: this.props.token,
           categoryId: categoryId,
           descriptionLength: 120,
-          inStartItem: 0
+          inStartItem: 0,
+          inProductsPerPage:10000
         });
       }
     }
@@ -67,21 +68,7 @@ class Category extends Component {
   }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-    if (this.state.showSubCategory) {
-      this.props.loadSubCategoryProducts({
-        token: this.props.token,
-        categoryId: this.state.categoryId,
-        descriptionLength: 120,
-        inStartItem: (pageNumber - 1) * 10
-      });
-    } else {
-      this.props.loadCategoryProducts({
-        token: this.props.token,
-        departmentId: this.state.departmentId,
-        descriptionLength: 120,
-        inStartItem: (pageNumber - 1) * 10
-      });
-    }
+   
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -93,14 +80,40 @@ class Category extends Component {
     let heroStyle = {
       backgroundImage: `url(${backgroundImageURL})`
     };
-
-    let categoryProducts = this.props.categoryProducts
-      ? this.props.categoryProducts[categoryName]
-      : [];
-    let subcategoryProducts = this.props.subCategoryProducts
-      ? this.props.subCategoryProducts[this.selectedSubCategoryName]
-      : [];
-
+    let categoryProducts=[];
+    let subcategoryProducts=[];
+    if(this.props.categoryProducts)
+    {
+        if(this.props.categoryProducts[categoryName])
+        {
+          categoryProducts=this.props.categoryProducts[categoryName];
+        }
+    }
+    if(this.props.subCategoryProducts)
+    {
+        if(this.props.subCategoryProducts[this.selectedSubCategoryName])
+        {
+          subcategoryProducts=this.props.subCategoryProducts[this.selectedSubCategoryName];
+        }
+    }
+      
+    let length=50;
+    let categoryProductsGot=[];
+    let categorysubProductsGot=[];
+    if(this.state.showSubCategory)
+    {
+      if(subcategoryProducts.length>0)
+      {
+          length=subcategoryProducts.length;
+          categorysubProductsGot=subcategoryProducts.slice((this.state.activePage-1)*10,(this.state.activePage-1)*10+10);
+      }
+    }
+    else if(categoryProducts.length>0)
+    {
+        length=categoryProducts.length;
+        categoryProductsGot=categoryProducts.slice((this.state.activePage-1)*10,(this.state.activePage-1)*10+10);
+    }
+    
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -150,15 +163,18 @@ class Category extends Component {
                 ) : (
                   ""
                 )}
-                <div className="pagination-block">
+                <div >
                   <Pagination
                     activePage={this.state.activePage}
                     itemsCountPerPage={10}
-                    totalItemsCount={100}
+                    totalItemsCount={length}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange.bind(this)}
+                    innerClass={"pagination-block pb-4"}
                     prevPageText={"Back"}
                     nextPageText={"Forward"}
+                    itemClassPrev={"back"}
+                    itemClassNext={"forward"}
                     itemClassFirst={"first_page"}
                     itemClassLast={"last_page"}
                   />
@@ -168,21 +184,24 @@ class Category extends Component {
                     <ProductList
                       products={
                         this.state.showSubCategory
-                          ? subcategoryProducts
-                          : categoryProducts
+                          ? categorysubProductsGot
+                          : categoryProductsGot
                       }
                     />
                   }
                 </section>
-                <div className="pagination-block">
+                <div>
                   <Pagination
                     activePage={this.state.activePage}
                     itemsCountPerPage={10}
-                    totalItemsCount={100}
+                    totalItemsCount={length}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange.bind(this)}
+                    innerClass={"pagination-block pb-4"}
                     prevPageText={"Back"}
                     nextPageText={"Forward"}
+                    itemClassPrev={"back"}
+                    itemClassNext={"forward"}
                     itemClassFirst={"first_page"}
                     itemClassLast={"last_page"}
                   />
@@ -266,7 +285,9 @@ class Category extends Component {
           token: props.token,
           departmentId: departmentId,
           descriptionLength: 120,
-          inStartItem: 0
+          inStartItem: 0,
+          inProductsPerPage:10000
+          
         });
         this.setState({ departmentId: departmentId });
       }

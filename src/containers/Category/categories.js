@@ -70,6 +70,8 @@ class Categories extends Component {
                   innerClass={"pagination-block pb-4"}
                   prevPageText={"Back"}
                   nextPageText={"Forward"}
+                  itemClassPrev={"back"}
+                  itemClassNext={"forward"}
                   itemClassFirst={"first_page"}
                   itemClassLast={"last_page"}
                 />
@@ -84,9 +86,11 @@ class Categories extends Component {
                   totalItemsCount={totalItemsCount}
                   pageRangeDisplayed={5}
                   onChange={this.handlePageChange.bind(this)}
-                  innerClass={"pagination-block"}
+                  innerClass={"pagination-block pb-4"}
                   prevPageText={"Back"}
                   nextPageText={"Forward"}
+                  itemClassPrev={"back"}
+                  itemClassNext={"forward"}
                   itemClassFirst={"first_page"}
                   itemClassLast={"last_page"}
                 />
