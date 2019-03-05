@@ -92,7 +92,7 @@ class Checkout extends Component {
           <Elements>
 
 
-                    <Payment user={this.props.user} cart={this.props.cart} customer={this.props.customer} backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} back={"back"} next={"pay"}   />
+                    <Payment {...this.props} user={this.props.user} cart={this.props.cart} customer={this.props.customer} backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} back={"back"} next={"pay"}   />
 
           </Elements>
         </StripeProvider>

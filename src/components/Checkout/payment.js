@@ -47,16 +47,13 @@ class Payment extends Component {
     totalAmount = Math.round(totalAmount * 100) / 100;
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
+    console.log(this_ref.props.token);
 
     this.props.stripe
       .createToken({ name: this.props.user.name })
       .then(({ token }) => {
         if (token) {
           this_ref.setState({ errors: null });
-
-          axios
-            .get(API_ROOT + "get_token")
-            .then(function(response) {
               axios
                 .post(
                   API_ROOT + "payment",
@@ -74,7 +71,8 @@ class Payment extends Component {
                       ),
                     inTaxId: 0
                   },
-                  { Authorization: `Bearer ${this_ref.props.token}` }
+                  {headers: { Authorization: `Bearer ${this_ref.props.token}` }}
+
                 )
                 .then(function(res) {
                   if (res.data.status === "error") {
@@ -85,10 +83,6 @@ class Payment extends Component {
                   }
                 })
                 .catch(function(error) {});
-            })
-            .catch(function(error) {
-              this_ref.setState({ errors: error.message });
-            });
         } else {
           this_ref.setState({ errors: "Please fill all the feilds." });
         }
