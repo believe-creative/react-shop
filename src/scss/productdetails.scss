@@ -1,5 +1,5 @@
 @import "variables.scss";
-
+@import "react-alice-carousel/src/alice-carousel.scss";
 img {
   max-width: 100%;
   height: auto;
@@ -8,6 +8,12 @@ img {
   padding: 20px 15px;
   @media (max-width: 767px) {
     padding: 25px 15px;
+  }
+}
+.product_images_block {
+  display: none;
+  @media (max-width: 767px) {
+    display: block;
   }
 }
 .breadcrumbs {
@@ -33,9 +39,9 @@ img {
     display: none;
   }
   .top-image {
-    position:relative;
+    position: relative;
     height: 75%;
-    img{
+    img {
       position: absolute;
       margin: auto;
       left: -100%;
@@ -140,6 +146,7 @@ img {
   .btn-block {
     @media (max-width: 560px) {
       text-align: center;
+      padding-top: 0.1rem !important;
     }
     .add_to_cart {
       display: block;

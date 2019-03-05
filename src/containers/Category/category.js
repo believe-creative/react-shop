@@ -9,9 +9,9 @@ class Category extends Component {
     super(props);
     this.state = {
       showSubCategory: false,
-      activePage:1,
-      categoryId:null,
-      departmentId:null
+      activePage: 1,
+      categoryId: null,
+      departmentId: null
     };
     this.callSubCategories = this.callSubCategories.bind(this);
     this.hideSubCategory = this.hideSubCategory.bind(this);
@@ -23,7 +23,7 @@ class Category extends Component {
   componentWillReceiveProps(props) {
     this.checkAndLoadSubCategories(props);
     const categoryName = props.match.params.category;
-    if(categoryName!==this.previousCategoryName){
+    if (categoryName !== this.previousCategoryName) {
       this.setState({ showSubCategory: false });
       this.previousCategoryName = categoryName;
     }
@@ -32,7 +32,6 @@ class Category extends Component {
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
     this.selectedSubCategoryName = categoryNameLowerCase;
     if (this.props.subCategories) {
-
       var categoryId;
       var allSubCategories = [];
       Object.values(this.props.subCategories).map(subCategory => {
@@ -45,41 +44,44 @@ class Category extends Component {
       if (matchedCategories.length > 0) {
         categoryId = matchedCategories[0].category_id;
       }
-      if (!this.props.subCategoryProducts || !this.props.subCategoryProducts[categoryNameLowerCase]) {
+      if (
+        !this.props.subCategoryProducts ||
+        !this.props.subCategoryProducts[categoryNameLowerCase]
+      ) {
         this.props.loadSubCategoryProducts({
-          token:this.props.token,
+          token: this.props.token,
           categoryId: categoryId,
           descriptionLength: 120,
-          inStartItem:0
+          inStartItem: 0
         });
       }
     }
-    this.setState({ showSubCategory: true ,activePage: 1,categoryId:categoryId});
+    this.setState({
+      showSubCategory: true,
+      activePage: 1,
+      categoryId: categoryId
+    });
   }
-  hideSubCategory(){
+  hideSubCategory() {
     this.setState({ showSubCategory: false });
   }
   handlePageChange(pageNumber) {
-    this.setState({activePage: pageNumber});
-    if(this.state.showSubCategory)
-    {
+    this.setState({ activePage: pageNumber });
+    if (this.state.showSubCategory) {
       this.props.loadSubCategoryProducts({
-        token:this.props.token,
+        token: this.props.token,
         categoryId: this.state.categoryId,
         descriptionLength: 120,
-        inStartItem:(pageNumber-1)*10
+        inStartItem: (pageNumber - 1) * 10
       });
-    }
-    else
-    {
+    } else {
       this.props.loadCategoryProducts({
-        token:this.props.token,
+        token: this.props.token,
         departmentId: this.state.departmentId,
         descriptionLength: 120,
-        inStartItem:(pageNumber-1)*10
+        inStartItem: (pageNumber - 1) * 10
       });
     }
-    
   }
   render() {
     const categoryName = this.props.match.params.category;
@@ -113,18 +115,15 @@ class Category extends Component {
                       var subCategoryName = category.name.toLowerCase();
                       return (
                         <li key={index}>
-                            <a
-                              className="sub_categories_submit"
-                              onClick={this.callSubCategories.bind(this)}
-                            >
-                              {" "}
-                              <h2
-                                className="category_name"
-                                id={subCategoryName}
-                              >
-                                {category.name}
-                              </h2>
-                            </a>
+                          <a
+                            className="sub_categories_submit"
+                            onClick={this.callSubCategories.bind(this)}
+                          >
+                            {" "}
+                            <h2 className="category_name" id={subCategoryName}>
+                              {category.name}
+                            </h2>
+                          </a>
                         </li>
                       );
                     })
@@ -137,25 +136,33 @@ class Category extends Component {
         <div className="container">
           <div className="product_filter_panel">
             <div className="row">
-
               <div className="col-md-12 items_block">
-              {
-                this.state.showSubCategory ?
+                {this.state.showSubCategory ? (
                   <h4 className="pb-4 breadcrumb-sub-cat-name">
-                  <a onClick={this.hideSubCategory}>{categoryName.charAt(0).toUpperCase()+ categoryName.slice(1)}</a> /&nbsp;
-                   {this.selectedSubCategoryName.charAt(0).toUpperCase()+ this.selectedSubCategoryName.slice(1)}
+                    <a onClick={this.hideSubCategory}>
+                      {categoryName.charAt(0).toUpperCase() +
+                        categoryName.slice(1)}
+                    </a>{" "}
+                    /&nbsp;
+                    {this.selectedSubCategoryName.charAt(0).toUpperCase() +
+                      this.selectedSubCategoryName.slice(1)}
                   </h4>
-                :''
-              }
-              <div>
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={100}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
-                />
-              </div>
+                ) : (
+                  ""
+                )}
+                <div className="pagination-block">
+                  <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={100}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    prevPageText={"Back"}
+                    nextPageText={"Forward"}
+                    itemClassFirst={"first_page"}
+                    itemClassLast={"last_page"}
+                  />
+                </div>
                 <section>
                   {
                     <ProductList
@@ -167,15 +174,19 @@ class Category extends Component {
                     />
                   }
                 </section>
-                <div>
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={100}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
-                />
-              </div>
+                <div className="pagination-block">
+                  <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={100}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    prevPageText={"Back"}
+                    nextPageText={"Forward"}
+                    itemClassFirst={"first_page"}
+                    itemClassLast={"last_page"}
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -241,7 +252,10 @@ class Category extends Component {
       }
 
       if (!props.subCategories || !props.subCategories[categoryNameLowerCase]) {
-        props.loadSubCategories({token:props.token,inDepartmentId:departmentId});
+        props.loadSubCategories({
+          token: props.token,
+          inDepartmentId: departmentId
+        });
       }
 
       if (
@@ -249,12 +263,12 @@ class Category extends Component {
         !props.categoryProducts[categoryNameLowerCase]
       ) {
         props.loadCategoryProducts({
-          token:props.token,
+          token: props.token,
           departmentId: departmentId,
           descriptionLength: 120,
-          inStartItem:0
+          inStartItem: 0
         });
-        this.setState({departmentId:departmentId});
+        this.setState({ departmentId: departmentId });
       }
     }
   }
@@ -267,13 +281,12 @@ const mapStateToProps = state => {
     categories: state.get("products").categories,
     categoryProducts: state.get("products").categoryProducts,
     subCategoryProducts: state.get("products").subCategoryProducts,
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
-  loadSubCategories: data =>
-    dispatch(Actions.getSubCategories.request(data)),
+  loadSubCategories: data => dispatch(Actions.getSubCategories.request(data)),
   loadCategoryProducts: data =>
     dispatch(Actions.getCategoryProducts.request(data)),
   loadSubCategoryProducts: data =>

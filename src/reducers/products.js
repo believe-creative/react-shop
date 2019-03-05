@@ -163,7 +163,10 @@ export default (state = intialState, action) => {
         cart: cart
       };
     case ActionTypes.SUBCATEGORIES.SUCCESS:
-      let categoryName = getCategoryName(state.categories, action.data.inDepartmentId);
+      let categoryName = getCategoryName(
+        state.categories,
+        action.data.inDepartmentId
+      );
       let subCategories = state.subCategories
         ? Object.assign({}, state.subCategories)
         : [];

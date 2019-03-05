@@ -5,6 +5,9 @@ import { LinkContainer } from "react-router-bootstrap";
 import { confirmAlert } from "react-confirm-alert";
 import * as Actions from "../../actions";
 import "react-confirm-alert/src/react-confirm-alert.css";
+import AliceCarousel from "react-alice-carousel";
+
+const handleOnDragStart = e => e.preventDefault();
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -24,14 +27,14 @@ class ProductDetails extends Component {
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
-        token:props.token,
+        token: props.token,
         inCartId: cart.inCartId,
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
       });
     } else {
       props.AddToCart({
-        token:props.token,
+        token: props.token,
         inCartId: null,
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
@@ -47,9 +50,18 @@ class ProductDetails extends Component {
   }
   componentDidMount() {
     console.log(this.props.match.params.productid);
-    this.props.loadProduct({token:props.token,inProductId:this.props.match.params.productid});
-    this.props.getProductRecommendations({token:props.token,inProductId:this.props.match.params.productid});
-    this.props.getProductLocations({token:props.token,inProductId:this.props.match.params.productid});
+    this.props.loadProduct({
+      token: this.props.token,
+      inProductId: this.props.match.params.productid
+    });
+    this.props.getProductRecommendations({
+      token: this.props.token,
+      inProductId: this.props.match.params.productid
+    });
+    this.props.getProductLocations({
+      token: this.props.token,
+      inProductId: this.props.match.params.productid
+    });
     const props = this.props;
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
@@ -66,21 +78,31 @@ class ProductDetails extends Component {
   }
   componentWillReceiveProps(props) {
     let state = this.state;
+    console.log(props);
     state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
-    if (props.cart.count !== undefined && props.cart.count !== null) {
-      if (
-        this.state.cart.count === undefined ||
-        this.state.cart.count === null
-      ) {
-        this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
-      } else if (props.cart.count !== this.state.cart.count) {
-        this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
+    if (props.cart != undefined) {
+      if (props.cart.count !== undefined && props.cart.count !== null) {
+        if (
+          this.state.cart.count === undefined ||
+          this.state.cart.count === null
+        ) {
+          this.props.getCartProducts({
+            token: props.token,
+            inCartId: props.cart.inCartId
+          });
+        } else if (props.cart.count !== this.state.cart.count) {
+          this.props.getCartProducts({
+            token: props.token,
+            inCartId: props.cart.inCartId
+          });
+        }
+        if (props.cart.count <= 0) {
+          state["buttonStyles"] = { pointerEvents: "none" };
+        }
+        state["cart"] = props.cart;
       }
-      if (props.cart.count <= 0) {
-        state["buttonStyles"] = { pointerEvents: "none" };
-      }
-      state["cart"] = props.cart;
     }
+
     this.setState(state);
   }
   update(e) {
@@ -96,7 +118,7 @@ class ProductDetails extends Component {
       this.setState(state);
     } else {
       this.props.updateProductQuantity({
-        token:this.props.token,
+        token: this.props.token,
         inItemId: e.currentTarget.getAttribute("data-item"),
         inQuantity: count
       });
@@ -137,7 +159,19 @@ class ProductDetails extends Component {
                     </li>
                     <li>
                       <LinkContainer to={"/categories/" + productlocations}>
-                        <a>All Categories</a>
+                        <a>
+                          {this.props.productlocations[0]
+                            ? this.props.productlocations[0].department_name
+                            : ""}
+                        </a>
+                      </LinkContainer>/<LinkContainer
+                        to={"/categories/" + productlocations}
+                      >
+                        <a>
+                          {this.props.productlocations[0]
+                            ? this.props.productlocations[0].category_name
+                            : ""}
+                        </a>
                       </LinkContainer>
                     </li>
                   </ul>
@@ -230,7 +264,7 @@ class ProductDetails extends Component {
                         : ""}
                     </p>
                   </div>
-                  <div className="amount-block pt-3 pb-3">
+                  <div className="amount-block pt-3">
                     <h6 className="pricetag"> Price:</h6> &#163;{" "}
                     {this.props.productdetails[0]
                       ? this.props.productdetails[0].price
@@ -284,6 +318,28 @@ class ProductDetails extends Component {
                       </div>
                     );
                   })}
+                  <div className="product_images_block">
+                    <AliceCarousel mouseDragEnabled>
+                      <img
+                        src={require(`../../images/product_images/${
+                          this.props.productdetails[0]
+                            ? this.props.productdetails[0].image
+                            : "a-partridge-in-a-pear-tree-2.gif"
+                        }`)}
+                        onDragStart={handleOnDragStart}
+                        className="yours-custom-class"
+                      />
+                      <img
+                        src={require(`../../images/product_images/${
+                          this.props.productdetails[0]
+                            ? this.props.productdetails[0].image_2
+                            : "a-partridge-in-a-pear-tree-2.gif"
+                        }`)}
+                        onDragStart={handleOnDragStart}
+                        className="yours-custom-class"
+                      />
+                    </AliceCarousel>
+                  </div>
                   <div className="pt-5 btn-block">
                     <button
                       type="button"
@@ -496,14 +552,13 @@ const mapStateToProps = state => {
     productdetails: state.get("products").product,
     productrecommendations: state.get("products").productrecommendations,
     productlocations: state.get("products").productLocations,
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   loadProduct: data => dispatch(Actions.product.request(data)),
-  AddToCart: (data) =>
-    dispatch(Actions.AddToCart.request(data)),
+  AddToCart: data => dispatch(Actions.AddToCart.request(data)),
   updateProductQuantity: data =>
     dispatch(Actions.updateProductQuantity.request(data)),
   getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),

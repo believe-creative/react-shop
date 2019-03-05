@@ -5,31 +5,29 @@ import ProductList from "../../components/Product/productlist";
 import "../../scss/categories.scss";
 import Pagination from "react-js-pagination";
 
-
 class Categories extends Component {
-  constructor(props)
-  {
+  constructor(props) {
     super(props);
-    this.state={
-      activePage:1
-    }
+    this.state = {
+      activePage: 1
+    };
   }
   componentDidMount() {
     if (this.props.categories) {
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
-          token:this.props.token,
+          token: this.props.token,
           departmentId: category.department_id,
           descriptionLength: 120,
-          inStartItem:0,
-          inProductsPerPage:10000
+          inStartItem: 0,
+          inProductsPerPage: 10000
         });
         return category;
       });
     }
   }
   handlePageChange(pageNumber) {
-    this.setState({activePage: pageNumber});
+    this.setState({ activePage: pageNumber });
     console.log(pageNumber);
   }
   render() {
@@ -44,19 +42,16 @@ class Categories extends Component {
       });
       return category;
     });
-    let totalItemsCount=productsList.length;
-    productsList=productsList.sort(function(a,b){
-        if(a.createdAt<b.createdAt)
-        {
-          return -1;
-        }
-        else if(a.createdAt>b.createdAt)
-        {
-          return 1;
-        }
-        return 0;
+    let totalItemsCount = productsList.length;
+    productsList = productsList.sort(function(a, b) {
+      if (a.createdAt < b.createdAt) {
+        return -1;
+      } else if (a.createdAt > b.createdAt) {
+        return 1;
+      }
+      return 0;
     });
-    productsList=productsList.splice((this.state.activePage-1)*10,10);
+    productsList = productsList.splice((this.state.activePage - 1) * 10, 10);
     return (
       <div className="container">
         <div className="product_filter_panel">
@@ -72,6 +67,11 @@ class Categories extends Component {
                   totalItemsCount={totalItemsCount}
                   pageRangeDisplayed={5}
                   onChange={this.handlePageChange.bind(this)}
+                  innerClass={"pagination-block pb-4"}
+                  prevPageText={"Back"}
+                  nextPageText={"Forward"}
+                  itemClassFirst={"first_page"}
+                  itemClassLast={"last_page"}
                 />
               </div>
               <section>
@@ -84,6 +84,11 @@ class Categories extends Component {
                   totalItemsCount={totalItemsCount}
                   pageRangeDisplayed={5}
                   onChange={this.handlePageChange.bind(this)}
+                  innerClass={"pagination-block"}
+                  prevPageText={"Back"}
+                  nextPageText={"Forward"}
+                  itemClassFirst={"first_page"}
+                  itemClassLast={"last_page"}
                 />
               </div>
             </div>
@@ -100,7 +105,7 @@ const mapStateToProps = state => {
     categories: state.get("products").categories,
     categoryProducts: state.get("products").categoryProducts,
     searchitem: state.get("products").searchItem,
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 
