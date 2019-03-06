@@ -6,6 +6,7 @@ import { confirmAlert } from "react-confirm-alert";
 import * as Actions from "../../actions";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import AliceCarousel from "react-alice-carousel";
+import { BeatLoader} from 'react-spinners';
 
 const handleOnDragStart = e => e.preventDefault();
 
@@ -18,12 +19,15 @@ class ProductDetails extends Component {
       buttonStyles: { cursor: "pointer" },
       cart: null,
       productImageName: "",
-      activeClass: "active"
+      activeClass: "active",
+      adding:false,
     };
   }
+
   addtoCart(e) {
     let cart = localStorage.getItem("react-shop-cart");
     let props = this.props;
+    console.log(props,'=0___',cart);
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
@@ -33,6 +37,7 @@ class ProductDetails extends Component {
         inAttributes: null
       });
     } else {
+      console.log(props,"here");
       props.AddToCart({
         token: props.token,
         inCartId: null,
@@ -41,10 +46,10 @@ class ProductDetails extends Component {
       });
     }
 
-    this.setState({ show: "show" });
+    this.setState({ show: "show",adding:true });
     setTimeout(() => {
       this.setState({
-        show: ""
+        show: "",
       });
     }, 1000);
   }
@@ -62,7 +67,28 @@ class ProductDetails extends Component {
       inProductId: this.props.match.params.productid
     });
   }
+<<<<<<< HEAD
 
+=======
+  componentWillReceiveProps(props) {
+    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
+      }
+
+      this.setState({ cart: props.cart,adding:false });
+    }
+  }
+>>>>>>> b3879b05d6b270d720edecdbe4aea8b3da5b87a6
   update(e) {
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "none" };
@@ -267,6 +293,11 @@ class ProductDetails extends Component {
                       onClick={this.addtoCart.bind(this)}
                     >
                       Add to cart
+                      {this.state.adding?<BeatLoader
+                        color={"#f62f5e"}
+                        >
+
+                      </BeatLoader>:""}
                     </button>
                     <span className={"add_to_cart mt-2"}>
                       <h3
@@ -274,7 +305,7 @@ class ProductDetails extends Component {
                           "addcart" + this.state.show ? this.state.show : ""
                         }
                       >
-                        {"Added to cart"}
+                        {"Adding to cart"}
                       </h3>
                     </span>
                   </div>
@@ -322,7 +353,7 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({
   loadProduct: data => dispatch(Actions.product.request(data)),
-  AddToCart: data => dispatch(Actions.AddToCart.request(data)),
+  AddToCart: (inCartId, inProductId, inAttributes) => dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),
   updateProductQuantity: data =>
     dispatch(Actions.updateProductQuantity.request(data)),
   getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),
