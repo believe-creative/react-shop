@@ -320,7 +320,14 @@ class ProductDetails extends Component {
                 {this.props.productrecommendations.map((item, index) => {
                   return (
                     <div className="col-sm-6 col-lg-3" key={index}>
-                      <a href="#">
+                      <a
+                        href={
+                          "/product/" +
+                          item.product_id +
+                          "/" +
+                          item.product_name
+                        }
+                      >
                         <div className="product-image-block bg-white">
                           <h3 className="pt-3">{item.product_name}</h3>
                           <p className="pt-3">{item.description}</p>
