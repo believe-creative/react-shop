@@ -292,11 +292,6 @@ class ProductDetails extends Component {
                       onClick={this.addtoCart.bind(this)}
                     >
                       Add to cart
-                      {this.state.adding ? (
-                        <BeatLoader color={"#f62f5e"} />
-                      ) : (
-                        ""
-                      )}
                     </button>
                     <span className={"add_to_cart mt-2"}>
                       <h3
