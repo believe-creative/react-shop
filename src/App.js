@@ -5,40 +5,33 @@ import "./scss/App.scss";
 import { ConnectedRouter } from "connected-react-router/immutable";
 import routes from "./routes";
 import * as Actions from "./actions";
-import { getCookie} from "./services/helpers";
+import { getCookie } from "./services/helpers";
+import { BarLoader } from "react-spinners";
 
 class App extends Component {
-  constructor(props)
-  {
-      super(props);
-      this.state={token:"null"}
+  constructor(props) {
+    super(props);
+    this.state = { token: "null", loaded: true };
+    this.handleLoad = this.handleLoad.bind(this);
   }
   componentDidMount() {
-    // var c = getCookie("s-atk");
-    // if (c) {
-    //   this.props.checkUserLogin(c);
-    // }
-    //this.props.loadCategories({token});
-    // let cart = localStorage.getItem("react-shop-cart");
-    // if (cart) {
-    //   cart = JSON.parse(cart);
-    //   this.props.getCartProducts(cart.inCartId);
-    // }
-    // productRequest();
     var c = getCookie("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
     }
     this.props.getToken();
+    window.addEventListener("load", this.handleLoad);
+  }
+  handleLoad() {
+    this.setState({ loaded: false });
   }
   componentWillReceiveProps(props, b, c) {
     if (props.token) {
-      if(this.state.token!=props.token)
-      {
-        this.setState({token:props.token});
+      if (this.state.token != props.token) {
+        this.setState({ token: props.token });
         console.log(props);
-        if(!this.props.categories)
-          this.props.getCategories({token:props.token});
+        if (!this.props.categories)
+          this.props.getCategories({ token: props.token });
         // let cart = localStorage.getItem("react-shop-cart");
         // if (cart) {
         //   cart = JSON.parse(cart);
@@ -46,23 +39,41 @@ class App extends Component {
         // }
         // productRequest();
       }
-      
     }
   }
   render() {
-    if (this.props.categories && this.props.categories.length > 0 && this.props.token) {
+    if (this.state.loaded == true) {
       return (
-        <div className="App">
-          <ConnectedRouter
-            history={this.props.history}
-            getcategories={this.props.categories}
-          >
-            {routes}
-          </ConnectedRouter>
-        </div>
+        <BarLoader
+          sizeUnit={"px"}
+          size={150}
+          color={"#36D7B7"}
+          height={4}
+          width={window.innerWidth}
+          loaded={this.state.loaded}
+        >
+          {this.handleLoad}
+        </BarLoader>
       );
     } else {
-      return <div />;
+      if (
+        this.props.categories &&
+        this.props.categories.length > 0 &&
+        this.props.token
+      ) {
+        return (
+          <div className="App">
+            <ConnectedRouter
+              history={this.props.history}
+              getcategories={this.props.categories}
+            >
+              {routes}
+            </ConnectedRouter>
+          </div>
+        );
+      } else {
+        return <div />;
+      }
     }
   }
 }
@@ -79,10 +90,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   productRequest,
   checkUserLogin,
-  getCategories: (data) => dispatch(Actions.getCategories.request(data)),
+  getCategories: data => dispatch(Actions.getCategories.request(data)),
   getCartProducts: inCartId =>
     dispatch(Actions.getCartProducts.request(inCartId)),
-    getToken:() => dispatch(Actions.getToken.request())
+  getToken: () => dispatch(Actions.getToken.request())
 });
 
 export default connect(

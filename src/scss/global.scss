@@ -378,6 +378,11 @@ input.form-control:focus {
   .last_page {
     margin-left: 10px;
   }
+  li.disabled {
+    a {
+      color: $gray-light !important;
+    }
+  }
   li {
     float: left;
     margin-right: 30px;

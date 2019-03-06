@@ -282,3 +282,9 @@ form {
     color: $black;
   }
 }
+.productlocations_breadcrumb {
+  display: inline-flex;
+  h6 {
+    margin-top: 0.2rem;
+  }
+}

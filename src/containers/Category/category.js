@@ -11,7 +11,8 @@ class Category extends Component {
       showSubCategory: false,
       activePage: 1,
       categoryId: null,
-      departmentId: null
+      departmentId: null,
+      cart: null
     };
     this.callSubCategories = this.callSubCategories.bind(this);
     this.hideSubCategory = this.hideSubCategory.bind(this);
@@ -23,10 +24,24 @@ class Category extends Component {
   componentWillReceiveProps(props) {
     this.checkAndLoadSubCategories(props);
     const categoryName = props.match.params.category;
-    // if (categoryName !== this.previousCategoryName) {
-      this.setState({ showSubCategory: false,activePage:1 });
-      this.previousCategoryName = categoryName;
-    // }
+    this.setState({ showSubCategory: false, activePage: 1 });
+    this.previousCategoryName = categoryName;
+
+    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
+      }
+      this.setState({ cart: props.cart });
+    }
   }
   callSubCategories(subcategoryName) {
     var categoryNameLowerCase = subcategoryName.target.id.toLowerCase();
@@ -53,7 +68,7 @@ class Category extends Component {
           categoryId: categoryId,
           descriptionLength: 120,
           inStartItem: 0,
-          inProductsPerPage:10000
+          inProductsPerPage: 10000
         });
       }
     }
@@ -68,9 +83,9 @@ class Category extends Component {
   }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-   
   }
   render() {
+    console.log(this.props);
     const categoryName = this.props.match.params.category;
     const getsubCategories = this.props.subCategories
       ? this.props.subCategories[categoryName]
@@ -80,40 +95,40 @@ class Category extends Component {
     let heroStyle = {
       backgroundImage: `url(${backgroundImageURL})`
     };
-    let categoryProducts=[];
-    let subcategoryProducts=[];
-    if(this.props.categoryProducts)
-    {
-        if(this.props.categoryProducts[categoryName])
-        {
-          categoryProducts=this.props.categoryProducts[categoryName];
-        }
-    }
-    if(this.props.subCategoryProducts)
-    {
-        if(this.props.subCategoryProducts[this.selectedSubCategoryName])
-        {
-          subcategoryProducts=this.props.subCategoryProducts[this.selectedSubCategoryName];
-        }
-    }
-      
-    let length=50;
-    let categoryProductsGot=[];
-    let categorysubProductsGot=[];
-    if(this.state.showSubCategory)
-    {
-      if(subcategoryProducts.length>0)
-      {
-          length=subcategoryProducts.length;
-          categorysubProductsGot=subcategoryProducts.slice((this.state.activePage-1)*10,(this.state.activePage-1)*10+10);
+    let categoryProducts = [];
+    let subcategoryProducts = [];
+    if (this.props.categoryProducts) {
+      if (this.props.categoryProducts[categoryName]) {
+        categoryProducts = this.props.categoryProducts[categoryName];
       }
     }
-    else if(categoryProducts.length>0)
-    {
-        length=categoryProducts.length;
-        categoryProductsGot=categoryProducts.slice((this.state.activePage-1)*10,(this.state.activePage-1)*10+10);
+    if (this.props.subCategoryProducts) {
+      if (this.props.subCategoryProducts[this.selectedSubCategoryName]) {
+        subcategoryProducts = this.props.subCategoryProducts[
+          this.selectedSubCategoryName
+        ];
+      }
     }
-    
+
+    let length = 50;
+    let categoryProductsGot = [];
+    let categorysubProductsGot = [];
+    if (this.state.showSubCategory) {
+      if (subcategoryProducts.length > 0) {
+        length = subcategoryProducts.length;
+        categorysubProductsGot = subcategoryProducts.slice(
+          (this.state.activePage - 1) * 10,
+          (this.state.activePage - 1) * 10 + 10
+        );
+      }
+    } else if (categoryProducts.length > 0) {
+      length = categoryProducts.length;
+      categoryProductsGot = categoryProducts.slice(
+        (this.state.activePage - 1) * 10,
+        (this.state.activePage - 1) * 10 + 10
+      );
+    }
+
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -163,7 +178,7 @@ class Category extends Component {
                 ) : (
                   ""
                 )}
-                <div >
+                <div>
                   <Pagination
                     activePage={this.state.activePage}
                     itemsCountPerPage={10}
@@ -286,8 +301,7 @@ class Category extends Component {
           departmentId: departmentId,
           descriptionLength: 120,
           inStartItem: 0,
-          inProductsPerPage:10000
-          
+          inProductsPerPage: 10000
         });
         this.setState({ departmentId: departmentId });
       }
@@ -302,7 +316,8 @@ const mapStateToProps = state => {
     categories: state.get("products").categories,
     categoryProducts: state.get("products").categoryProducts,
     subCategoryProducts: state.get("products").subCategoryProducts,
-    token: state.get("user").token
+    token: state.get("user").token,
+    cart: state.get("products").cart
   };
 };
 
@@ -311,7 +326,9 @@ const mapStateToDispatch = dispatch => ({
   loadCategoryProducts: data =>
     dispatch(Actions.getCategoryProducts.request(data)),
   loadSubCategoryProducts: data =>
-    dispatch(Actions.getSubCategoryProducts.request(data))
+    dispatch(Actions.getSubCategoryProducts.request(data)),
+  getCartProducts: inCartId =>
+    dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(

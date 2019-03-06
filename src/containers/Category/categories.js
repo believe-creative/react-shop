@@ -9,10 +9,12 @@ class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 1
+      activePage: 1,
+      cart: null
     };
   }
   componentDidMount() {
+    console.log(this.props);
     if (this.props.categories) {
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
@@ -24,6 +26,23 @@ class Categories extends Component {
         });
         return category;
       });
+    }
+  }
+  componentWillReceiveProps(props) {
+    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
+      }
+      this.setState({ cart: props.cart });
     }
   }
   handlePageChange(pageNumber) {
@@ -109,13 +128,16 @@ const mapStateToProps = state => {
     categories: state.get("products").categories,
     categoryProducts: state.get("products").categoryProducts,
     searchitem: state.get("products").searchItem,
-    token: state.get("user").token
+    token: state.get("user").token,
+    cart: state.get("products").cart
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   loadCategoryProducts: data =>
-    dispatch(Actions.getCategoryProducts.request(data))
+    dispatch(Actions.getCategoryProducts.request(data)),
+  getCartProducts: inCartId =>
+    dispatch(Actions.getCartProducts.request(inCartId))
 });
 
 export default connect(

@@ -16,7 +16,7 @@ class ProductDetails extends Component {
     this.state = {
       show: "",
       buttonStyles: { cursor: "pointer" },
-      cart: {},
+      cart: null,
       productImageName: "",
       activeClass: "active"
     };
@@ -49,7 +49,6 @@ class ProductDetails extends Component {
     }, 1000);
   }
   componentDidMount() {
-    console.log(this.props.match.params.productid);
     this.props.loadProduct({
       token: this.props.token,
       inProductId: this.props.match.params.productid
@@ -62,48 +61,23 @@ class ProductDetails extends Component {
       token: this.props.token,
       inProductId: this.props.match.params.productid
     });
-    const props = this.props;
-    let state = this.state;
-    state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
-    if (props.cart) {
-      if (props.cart.count !== undefined && props.cart.count != null) {
-        if (props.cart.count <= 0) {
-          state["buttonStyles"] = { pointerEvents: "none" };
-        }
-        state["cart"] = props.cart;
-      }
-    }
-
-    this.setState(state);
   }
   componentWillReceiveProps(props) {
-    let state = this.state;
-    console.log(props);
-    state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
-    if (props.cart != undefined) {
-      if (props.cart.count !== undefined && props.cart.count !== null) {
-        if (
-          this.state.cart.count === undefined ||
-          this.state.cart.count === null
-        ) {
-          this.props.getCartProducts({
-            token: props.token,
-            inCartId: props.cart.inCartId
-          });
-        } else if (props.cart.count !== this.state.cart.count) {
-          this.props.getCartProducts({
-            token: props.token,
-            inCartId: props.cart.inCartId
-          });
-        }
-        if (props.cart.count <= 0) {
-          state["buttonStyles"] = { pointerEvents: "none" };
-        }
-        state["cart"] = props.cart;
+    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
       }
+      this.setState({ cart: props.cart });
     }
-
-    this.setState(state);
   }
   update(e) {
     let state = this.state;
@@ -125,7 +99,6 @@ class ProductDetails extends Component {
     }
   }
   handleClick(name) {
-    console.log("imageName:", name);
     this.setState({ productImageName: name, activeClass: "" });
   }
   render() {
@@ -138,12 +111,12 @@ class ProductDetails extends Component {
     let productlocations = this.props.productlocations[0]
       ? this.props.productlocations[0].department_name.toLowerCase()
       : "";
-    console.log(this.props.productdetails[0]);
+    // console.log(this.props.productdetails[0]);
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
     let hasItems = cart.count > 0 ? true : false;
     let this_ref = this;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <React.Fragment>
         <div id="main" className="mt-5 mb-5">
@@ -157,22 +130,21 @@ class ProductDetails extends Component {
                         <a>Home</a>
                       </LinkContainer>
                     </li>
-                    <li>
+                    <li className="productlocations_breadcrumb">
                       <LinkContainer to={"/categories/" + productlocations}>
                         <a>
-                          {this.props.productlocations[0]
-                            ? this.props.productlocations[0].department_name
-                            : ""}
-                        </a>
-                      </LinkContainer>/<LinkContainer
-                        to={"/categories/" + productlocations}
-                      >
-                        <a>
-                          {this.props.productlocations[0]
-                            ? this.props.productlocations[0].category_name
-                            : ""}
+                          <h6>
+                            {this.props.productlocations[0]
+                              ? this.props.productlocations[0].department_name
+                              : ""}
+                          </h6>
                         </a>
                       </LinkContainer>
+                      <h6>
+                        {this.props.productlocations[0]
+                          ? "/" + this.props.productlocations[0].category_name
+                          : ""}
+                      </h6>
                     </li>
                   </ul>
                   <div className="clearfix" />
@@ -265,7 +237,7 @@ class ProductDetails extends Component {
                     </p>
                   </div>
                   <div className="amount-block pt-3">
-                    <h6 className="pricetag"> Price:</h6> &#163;{" "}
+                    <h6 className="pricetag"> Price:</h6> ${" "}
                     {this.props.productdetails[0]
                       ? this.props.productdetails[0].price
                       : ""}
@@ -273,7 +245,7 @@ class ProductDetails extends Component {
                   </div>
                   {this.props.productdetails[0] ? (
                     <div className="amount-block pt-3 pb-3">
-                      <h6 className="pricetag"> Discounted Price:</h6> &#163;{" "}
+                      <h6 className="pricetag"> Discounted Price:</h6> ${" "}
                       {this.props.productdetails[0]
                         ? this.props.productdetails[0].discounted_price
                         : ""}
@@ -281,43 +253,7 @@ class ProductDetails extends Component {
                   ) : (
                     ""
                   )}
-                  {cart.products.map(function(product, key) {
-                    return (
-                      <div className="quantity-block display_none">
-                        <h3 className="gray-dark pt-3 pb-2">Quantity</h3>
-                        <ul className="list-unstyled">
-                          <li className="quantity-block">
-                            <span>
-                              <a
-                                data-param="-1"
-                                data-item={product.item_id}
-                                data-quantity={product.quantity}
-                                style={this_ref.state.buttonStyles}
-                                onClick={this_ref.update.bind(this_ref)}
-                              >
-                                &#8722;
-                              </a>
-                            </span>
-                            <span className="number-block">
-                              {product.quantity}
-                            </span>
-                            <span>
-                              <a
-                                data-param="1"
-                                data-item={product.item_id}
-                                style={this_ref.state.buttonStyles}
-                                data-quantity={product.quantity}
-                                onClick={this_ref.update.bind(this_ref)}
-                              >
-                                &#43;
-                              </a>
-                            </span>
-                          </li>
-                        </ul>
-                        <div className="clearfix" />
-                      </div>
-                    );
-                  })}
+
                   <div className="product_images_block">
                     <AliceCarousel mouseDragEnabled>
                       <img
@@ -362,180 +298,24 @@ class ProductDetails extends Component {
               </div>
             </div>
           </div>
-          <div className="container display_none">
-            <div className="review-block bg-gray pt-5 pb-5">
-              <div className="row">
-                <div className="col-md-10 offset-md-1">
-                  <div className="review-top-block">
-                    <h2 className="pb-4">Product reviews</h2>
-                    <div className="row">
-                      <div className="col-md-3">
-                        <div className="starts-block pb-2">
-                          <ul className="list-unstyled">
-                            <li className="active">
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li className="active">
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li>
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li>
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li>
-                              <a href="">&#9733;</a>
-                            </li>
-                          </ul>
-                          <div className="clearfix" />
-                        </div>
-                        <div className="author-block">
-                          <h6>
-                            <strong>Pablo Permins</strong>
-                          </h6>
-                          <span>one hour ago</span>
-                        </div>
-                      </div>
-                      <div className="col-md-9">
-                        <p>
-                          Nulla in metus vitae leo lobortis faucibus ac sed mi.
-                          Sed elit nisl, vehicula eu nisi id, porttitor auctor
-                          ipsum.
-                        </p>
-                        <ul className="list-unstyled comment-block">
-                          <li>
-                            <span>&#9825;</span> 113
-                          </li>
-                          <li>
-                            <span>
-                              <i
-                                className="fa fa-comment-o"
-                                aria-hidden="true"
-                              />
-                            </span>{" "}
-                            6
-                          </li>
-                        </ul>
-                        <div className="clearfix" />
-                      </div>
-                    </div>
-                  </div>
-                  <hr className="mt-5 mb-5" />
-                  <div className="review-bot-block">
-                    <h2 className="pb-4">Add a review</h2>
-                    <form action="#" method="post">
-                      <div className="form-group">
-                        <label for="nickname">Choose a nickname</label>
-                        <input type="text" />
-                      </div>
-                      <div className="form-group">
-                        <label for="review">Your review</label>
-                        <textarea />
-                        <span>
-                          Your review must be atleast 50 characters{" "}
-                          <a href="#">Full review guidelines</a>
-                        </span>
-                      </div>
-                      <div className="form-group">
-                        <label for="review">Overall rating</label>
-                        <div className="starts-block pb-2">
-                          <ul className="list-unstyled">
-                            <li className="active">
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li className="active">
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li className="active">
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li>
-                              <a href="">&#9733;</a>
-                            </li>
-                            <li>
-                              <a href="">&#9733;</a>
-                            </li>
-                          </ul>
-                          <div className="clearfix" />
-                        </div>
-                      </div>
-                      <div className="form-group">
-                        <label />
-                        <button type="submit" className="btn btn-lg mb-2">
-                          Submit
-                        </button>
-                      </div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+
           {this.props.productrecommendations.length > 0 ? (
             <div className="container related-block mt-5">
               <h2 className="pb-4">You may also like</h2>
               <div className="row">
-                <div className="col-sm-6 col-lg-3">
-                  <a href="#">
-                    <div className="product-image-block bg-white">
-                      <img
-                        src="images/adoration-of-the-kings.gif"
-                        alt="Iamge"
-                        title="Image"
-                      />
-                      <h3 className="pt-3">
-                        New Look T-Shirt In Gradient Fade
-                      </h3>
-                      <div className="price pt-3">&#163;14.99</div>
+                {this.props.productrecommendations.map((item, index) => {
+                  return (
+                    <div className="col-sm-6 col-lg-3">
+                      <a href="#">
+                        <div className="product-image-block bg-white">
+                          <h3 className="pt-3">{item.product_name}</h3>
+                          <p className="pt-3">{item.description}</p>
+                          <div className="price pt-3">&#163;14.99</div>
+                        </div>
+                      </a>
                     </div>
-                  </a>
-                </div>
-                <div className="col-sm-6 col-lg-3">
-                  <a href="#">
-                    <div className="product-image-block bg-white">
-                      <img
-                        src="images/adoration-of-the-kings.gif"
-                        alt="Iamge"
-                        title="Image"
-                      />
-                      <h3 className="pt-3">
-                        New Look T-Shirt In Gradient Fade
-                      </h3>
-                      <div className="price pt-3">&#163;14.99</div>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-sm-6 col-lg-3">
-                  <a href="#">
-                    <div className="product-image-block bg-white">
-                      <img
-                        src="images/adoration-of-the-kings.gif"
-                        alt="Iamge"
-                        title="Image"
-                      />
-                      <h3 className="pt-3">
-                        New Look T-Shirt In Gradient Fade
-                      </h3>
-                      <div className="price pt-3">&#163;14.99</div>
-                    </div>
-                  </a>
-                </div>
-                <div className="col-sm-6 col-lg-3">
-                  <a href="#">
-                    <div className="product-image-block bg-white">
-                      <img
-                        src="images/adoration-of-the-kings.gif"
-                        alt="Iamge"
-                        title="Image"
-                      />
-                      <h3 className="pt-3">
-                        New Look T-Shirt In Gradient Fade
-                      </h3>
-                      <div className="price pt-3">&#163;14.99</div>
-                    </div>
-                  </a>
-                </div>
+                  );
+                })}
               </div>
             </div>
           ) : (
