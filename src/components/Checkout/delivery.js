@@ -104,9 +104,6 @@ class Delivery extends Component {
       hasErrors = true;
     }
     if (!hasErrors) {
-      axios
-        .get(API_ROOT + "get_token")
-        .then(function(response) {
           axios
             .post(
               API_ROOT + "update-address",
@@ -120,7 +117,7 @@ class Delivery extends Component {
                 inCountry: state["customer"]["country"],
                 inShippingRegionId: state["region"]
               },
-              { Authorization: `Bearer ${this_ref.props.token}` }
+              {headers:{ Authorization: `Bearer ${this_ref.props.token}` }}
             )
             .then(function(response) {
               this_ref.props.nextStage(this_ref.stage);
@@ -129,11 +126,6 @@ class Delivery extends Component {
               this_ref.state["errors"]["general"] = error;
               this_ref.setState(this_ref.state);
             });
-        })
-        .catch(function(error) {
-          this_ref.state["errors"]["general"] = error;
-          this_ref.setState(this_ref.state);
-        });
     }
     this.setState(state);
   }

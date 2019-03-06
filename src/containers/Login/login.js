@@ -27,10 +27,6 @@ class Login extends Component {
   login() {
     let props = this.props;
     let this_ref = this;
-
-    axios
-      .get(API_ROOT + "get_token")
-      .then(function(response) {
         axios
           .post(
             API_ROOT + "login",
@@ -38,7 +34,7 @@ class Login extends Component {
               email: this_ref.state.email,
               pwd: this_ref.state.pwd
             },
-            { Authorization: `Bearer ${props.token}` }
+            {headers:{ Authorization: `Bearer ${props.token}` }}
           )
           .then(function(response) {
             if (response.data.status === "error") {
@@ -50,8 +46,6 @@ class Login extends Component {
             }
           })
           .catch(function(error) {});
-      })
-      .catch(function(error) {});
   }
   change(e) {
     let state = this.state;
@@ -85,7 +79,7 @@ class Login extends Component {
           {
             props.history.push("/");
           }
-          
+
         }
       });
       return provider;
@@ -99,7 +93,7 @@ class Login extends Component {
     }
   }
   openPopup(e) {
-    e.preventDefault();    
+    e.preventDefault();
     const width = 600, height = 600
     const left = (window.innerWidth / 2) - (width / 2)
     const top = (window.innerHeight / 2) - (height / 2)
@@ -117,7 +111,7 @@ class Login extends Component {
     if (this.props.user) {
       name = this.props.user.name;
     }
-  
+
     return (
       <div className="signin-form pt-5">
         <Container>
