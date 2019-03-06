@@ -29,7 +29,6 @@ class App extends Component {
     if (props.token) {
       if (this.state.token !== props.token) {
         this.setState({ token: props.token });
-        console.log(props);
         if (!this.props.categories)
           this.props.getCategories({ token: props.token });
       }

@@ -6,7 +6,7 @@ import { confirmAlert } from "react-confirm-alert";
 import * as Actions from "../../actions";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import AliceCarousel from "react-alice-carousel";
-import { BeatLoader} from 'react-spinners';
+import { BeatLoader } from "react-spinners";
 
 const handleOnDragStart = e => e.preventDefault();
 
@@ -20,14 +20,14 @@ class ProductDetails extends Component {
       cart: null,
       productImageName: "",
       activeClass: "active",
-      adding:false,
+      adding: false
     };
   }
 
   addtoCart(e) {
     let cart = localStorage.getItem("react-shop-cart");
     let props = this.props;
-    console.log(props,'=0___',cart);
+    console.log(props, "=0___", cart);
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
@@ -37,7 +37,7 @@ class ProductDetails extends Component {
         inAttributes: null
       });
     } else {
-      console.log(props,"here");
+      console.log(props, "here");
       props.AddToCart({
         token: props.token,
         inCartId: null,
@@ -46,10 +46,10 @@ class ProductDetails extends Component {
       });
     }
 
-    this.setState({ show: "show",adding:true });
+    this.setState({ show: "show", adding: true });
     setTimeout(() => {
       this.setState({
-        show: "",
+        show: ""
       });
     }, 1000);
   }
@@ -67,9 +67,7 @@ class ProductDetails extends Component {
       inProductId: this.props.match.params.productid
     });
   }
-<<<<<<< HEAD
 
-=======
   componentWillReceiveProps(props) {
     let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
     if (localCart != null) {
@@ -85,10 +83,10 @@ class ProductDetails extends Component {
         });
       }
 
-      this.setState({ cart: props.cart,adding:false });
+      this.setState({ cart: props.cart, adding: false });
     }
   }
->>>>>>> b3879b05d6b270d720edecdbe4aea8b3da5b87a6
+
   update(e) {
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "none" };
@@ -141,20 +139,21 @@ class ProductDetails extends Component {
                       </LinkContainer>
                     </li>
                     <li className="productlocations_breadcrumb">
+                      <div className="arrow">{" > "}</div>
                       <LinkContainer to={"/categories/" + productlocations}>
                         <a>
-                          <h6>
-                            {this.props.productlocations[0]
-                              ? this.props.productlocations[0].department_name
-                              : ""}
-                          </h6>
+                          {this.props.productlocations[0]
+                            ? this.props.productlocations[0].department_name
+                            : ""}
                         </a>
                       </LinkContainer>
-                      <h6>
-                        {this.props.productlocations[0]
-                          ? "/" + this.props.productlocations[0].category_name
-                          : ""}
-                      </h6>
+                    </li>
+                    <li className="productlocations_breadcrumb">
+                      <div className="arrow">{" > "}</div>
+
+                      {this.props.productlocations[0]
+                        ? this.props.productlocations[0].category_name
+                        : ""}
                     </li>
                   </ul>
                   <div className="clearfix" />
@@ -247,17 +246,17 @@ class ProductDetails extends Component {
                     </p>
                   </div>
                   <div className="amount-block pt-3">
-                    <h6 className="pricetag"> Price:</h6> ${" "}
+                    <h6 className="pricetag"> Price:</h6>
                     {this.props.productdetails[0]
-                      ? this.props.productdetails[0].price
+                      ? "$" + this.props.productdetails[0].price
                       : ""}
                     {this.props.productdetails[0] ? <p> {""}</p> : ""}
                   </div>
                   {this.props.productdetails[0] ? (
                     <div className="amount-block pt-3 pb-3">
-                      <h6 className="pricetag"> Discounted Price:</h6> ${" "}
+                      <h6 className="pricetag"> Discounted Price:</h6>
                       {this.props.productdetails[0]
-                        ? this.props.productdetails[0].discounted_price
+                        ? "$" + this.props.productdetails[0].discounted_price
                         : ""}
                     </div>
                   ) : (
@@ -293,11 +292,11 @@ class ProductDetails extends Component {
                       onClick={this.addtoCart.bind(this)}
                     >
                       Add to cart
-                      {this.state.adding?<BeatLoader
-                        color={"#f62f5e"}
-                        >
-
-                      </BeatLoader>:""}
+                      {this.state.adding ? (
+                        <BeatLoader color={"#f62f5e"} />
+                      ) : (
+                        ""
+                      )}
                     </button>
                     <span className={"add_to_cart mt-2"}>
                       <h3
@@ -353,7 +352,8 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({
   loadProduct: data => dispatch(Actions.product.request(data)),
-  AddToCart: (inCartId, inProductId, inAttributes) => dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),
+  AddToCart: (inCartId, inProductId, inAttributes) =>
+    dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),
   updateProductQuantity: data =>
     dispatch(Actions.updateProductQuantity.request(data)),
   getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),

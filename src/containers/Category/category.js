@@ -25,11 +25,9 @@ class Category extends Component {
     this.setState({ showSubCategory: false });
   }
   componentWillReceiveProps(props) {
-    console.log("props", props);
     this.setState({ activePage: 1 });
     this.checkAndLoadSubCategories(props);
     const categoryName = props.match.params.category;
-
     this.previousCategoryName = categoryName;
   }
   callSubCategories(subcategoryName) {
@@ -120,13 +118,7 @@ class Category extends Component {
         (this.state.activePage - 1) * 10 + 10
       );
     }
-    console.log(
-      "length",
-      categoryProducts.length,
-      categorysubProductsGot.length,
-      categoryProducts.length > 0,
-      categorysubProductsGot.length > 0
-    );
+
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>

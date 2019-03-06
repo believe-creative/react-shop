@@ -6,10 +6,8 @@ const initialState = {
 };
 
 export default function(state = initialState, action) {
-  console.log("action", action);
   switch (action.type) {
     case Actions.SETSUBCATEGORY:
-      console.log("action.payload", action.payload);
       return {
         ...state,
         isLoading: true,

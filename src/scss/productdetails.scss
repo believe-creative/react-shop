@@ -22,7 +22,10 @@ img {
     margin: 0;
     li {
       float: left;
-      margin-right: 30px;
+      margin: 0px;
+      .arrow {
+        margin: 0 5px;
+      }
       a {
         color: $gray-dark;
         font-weight: $fw-600;
@@ -48,7 +51,6 @@ img {
       right: -100%;
       top: -100%;
       bottom: -100%;
-      max-width: inherit;
       height: 100%;
       width: inherit;
     }

@@ -2,21 +2,19 @@ import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
-import { BeatLoader} from 'react-spinners';
+import { BeatLoader } from "react-spinners";
 class Product extends Component {
   constructor(props) {
     super(props);
-    this.state = { show: "", items: "" ,adding:false};
+    this.state = { show: "", items: "", adding: false };
   }
   componentDidMount() {}
-  componentWillReceiveProps(props){
-    console.log(props,"---");
-    this.setState({adding:false });
+  componentWillReceiveProps(props) {
+    this.setState({ adding: false });
   }
   addtoCart(e) {
-
     let cart = localStorage.getItem("react-shop-cart");
-    let props = this.props;    
+    let props = this.props;
     if (cart) {
       cart = JSON.parse(cart);
       props.AddToCart({
@@ -34,7 +32,7 @@ class Product extends Component {
       });
     }
 
-    this.setState({ show: "show",adding:true });
+    this.setState({ show: "show", adding: true });
     setTimeout(() => {
       this.setState({
         show: ""
@@ -85,12 +83,7 @@ class Product extends Component {
           </h3>
           <button className="btn btn-sm" onClick={this.addtoCart.bind(this)}>
             Add to cart
-            {this.state.adding?<BeatLoader
-              color={"#f62f5e"}
-              >
-
-            </BeatLoader>:""}
-
+            {this.state.adding ? <BeatLoader color={"#f62f5e"} /> : ""}
           </button>
           <span className={"add_to_cart mt-2"}>
             <h3 className={"addcart" + this.state.show ? this.state.show : ""}>

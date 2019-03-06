@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import ProductList from "../../components/Product/productlist";
 import "../../scss/categories.scss";
 import Pagination from "react-js-pagination";
+import { ClipLoader } from "react-spinners";
 
 class Categories extends Component {
   constructor(props) {
@@ -81,8 +82,19 @@ class Categories extends Component {
                   ""
                 )}
               </div>
-              <section>
-                {<ProductList products={productsList ? productsList : []} />}
+              <section className="category_products">
+                {productsList.length > 0 ? (
+                  <ProductList products={productsList ? productsList : []} />
+                ) : (
+                  <div className="clip_loader">
+                    <ClipLoader
+                      sizeUnit={"px"}
+                      size={80}
+                      color={"#f62f5e"}
+                      loading={this.state.loading}
+                    />
+                  </div>
+                )}
               </section>
               <div>
                 {productsList ? (
