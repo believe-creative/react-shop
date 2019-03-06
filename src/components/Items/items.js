@@ -176,7 +176,9 @@ class Items extends Component {
                                   </a>
                                 </span>
                               </li>
-                              <li className="price">${product.price}</li>
+                              <li className="price">
+                                ${(product.quantity * product.price).toFixed(2)}
+                              </li>
                             </ul>
                             <div className="clearfix" />
                           </div>

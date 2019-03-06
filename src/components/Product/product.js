@@ -49,7 +49,6 @@ class Product extends Component {
             }
           >
             <a>
-              {" "}
               <img
                 src={require(`../../images/product_images/${
                   this.props.product.thumbnail
@@ -73,7 +72,8 @@ class Product extends Component {
             </a>
           </LinkContainer>
           <h3 className="red">
-            {"$" + this.props.product.discounted_price != undefined
+            {"$"}
+            {this.props.product.discounted_price !== undefined
               ? this.props.product.discounted_price
               : this.props.product.price}
           </h3>

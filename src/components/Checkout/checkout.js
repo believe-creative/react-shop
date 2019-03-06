@@ -9,17 +9,11 @@ import Conformation from "./conformation";
 import Payment from "./payment";
 import Image from "react-bootstrap/Image";
 import successimage from "../../images/success-image.png";
-import * as Actions from "../../actions";
-import axios from "axios";
-import { API_ROOT } from "../../services/constants";
 import { clearCart } from "../../actions";
 
 import { connect } from "react-redux";
 
-import {
-  StripeProvider,
-  Elements
-} from "react-stripe-elements";
+import { StripeProvider, Elements } from "react-stripe-elements";
 
 class Checkout extends Component {
   constructor(props) {
@@ -62,38 +56,48 @@ class Checkout extends Component {
     this.setState(state);
   }
 
-  componentDidMount()
-  {
-      if(!this.props.user.email)
-      {
-          this.props.history.push('/login');
-          localStorage.setItem("nextRoute","/checkout");
-      }
-      if(!this.props.cart)
-      {
-        this.props.history.push('/');
-      }
-      else if(this.props.cart.count<=0)
-      {
-        this.props.history.push('/');
-      }
+  componentDidMount() {
+    if (!this.props.user.email) {
+      this.props.history.push("/login");
+      localStorage.setItem("nextRoute", "/checkout");
+    }
+    if (!this.props.cart) {
+      this.props.history.push("/");
+    } else if (this.props.cart.count <= 0) {
+      this.props.history.push("/");
+    }
   }
 
   showstages() {
     if (this.state.stage === 0) {
       return (
-        <Delivery backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} setDelivarydetails={this.setDelivarydetails.bind(this)} />
+        <Delivery
+          backStage={this.backStage.bind(this)}
+          nextStage={this.nextStage.bind(this)}
+          setDelivarydetails={this.setDelivarydetails.bind(this)}
+        />
       );
     } else if (this.state.stage === 1) {
-      return <Conformation backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} />;
+      return (
+        <Conformation
+          backStage={this.backStage.bind(this)}
+          nextStage={this.nextStage.bind(this)}
+        />
+      );
     } else if (this.state.stage === 2) {
       return (
         <StripeProvider apiKey="pk_test_7bmdPQNsz569HDDDKiNUn76k">
           <Elements>
-
-
-                    <Payment {...this.props} user={this.props.user} cart={this.props.cart} customer={this.props.customer} backStage={this.backStage.bind(this)} nextStage={this.nextStage.bind(this)} back={"back"} next={"pay"}   />
-
+            <Payment
+              {...this.props}
+              user={this.props.user}
+              cart={this.props.cart}
+              customer={this.props.customer}
+              backStage={this.backStage.bind(this)}
+              nextStage={this.nextStage.bind(this)}
+              back={"back"}
+              next={"pay"}
+            />
           </Elements>
         </StripeProvider>
       );
@@ -129,21 +133,16 @@ class Checkout extends Component {
     }
   }
   backStage(stage) {
-    if(stage>0)
-    {
+    if (stage > 0) {
       let state = this.state;
       state["stage"] = stage - 1;
       this.setState(state);
+    } else {
+      this.props.history.push("/cart");
     }
-    else
-    {
-       this.props.history.push("/cart");
-    }
-
   }
   nextStage(stage) {
-    if(stage>=2)
-    {
+    if (stage >= 2) {
       localStorage.removeItem("react-shop-cart");
       localStorage.removeItem("nextRoute");
       this.props.clearCart();
@@ -151,10 +150,7 @@ class Checkout extends Component {
     let state = this.state;
     state["stage"] = stage + 1;
     this.setState(state);
-
-
   }
-
 
   render() {
     let finalstage = false;
@@ -163,82 +159,82 @@ class Checkout extends Component {
       <React.Fragment>
         <Container>
           <div className="checkout_information">
-              <Row className="checkout_block">
-                <Col md={12}>
-                  <h2>Checkout</h2>
-                  <ul className="list-unstyled color-codes">
-                    <li
-                      className={
-                        this.state.stage >= 0
-                          ? "bg-red dot  active_next"
-                          : "bg-red dot"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 1 ? "bar active_next" : "bar"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 1
-                          ? "bg-red dot  active_next"
-                          : "bg-red dot"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 2 ? "bar active_next" : "bar"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 2
-                          ? "bg-red dot  active_next"
-                          : "bg-red dot"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 3 ? "bar active_next" : "bar"
-                      }
-                    />
-                    <li
-                      className={
-                        this.state.stage >= 3
-                          ? "bg-red dot  active_next"
-                          : "bg-red dot"
-                      }
-                    />
-                  </ul>
-                </Col>
-                <Col md={12}>
-                  <ul className="list-unstyled progress-txt">
-                    <li>
-                      <a href="#">
-                        <h3>Delivery</h3>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <h3>Confirmation</h3>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <h3>Payment</h3>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        <h3>Finish</h3>
-                      </a>
-                    </li>
-                  </ul>
-                </Col>
+            <Row className="checkout_block">
+              <Col md={12}>
+                <h2>Checkout</h2>
+                <ul className="list-unstyled color-codes">
+                  <li
+                    className={
+                      this.state.stage >= 0
+                        ? "bg-red dot  active_next"
+                        : "bg-red dot"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 1 ? "bar active_next" : "bar"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 1
+                        ? "bg-red dot  active_next"
+                        : "bg-red dot"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 2 ? "bar active_next" : "bar"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 2
+                        ? "bg-red dot  active_next"
+                        : "bg-red dot"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 3 ? "bar active_next" : "bar"
+                    }
+                  />
+                  <li
+                    className={
+                      this.state.stage >= 3
+                        ? "bg-red dot  active_next"
+                        : "bg-red dot"
+                    }
+                  />
+                </ul>
+              </Col>
+              <Col md={12}>
+                <ul className="list-unstyled progress-txt">
+                  <li>
+                    <a href="#">
+                      <h3>Delivery</h3>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h3>Confirmation</h3>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h3>Payment</h3>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#">
+                      <h3>Finish</h3>
+                    </a>
+                  </li>
+                </ul>
+              </Col>
 
-                {this.showstages()}
-              </Row>
+              {this.showstages()}
+            </Row>
           </div>
         </Container>
       </React.Fragment>
@@ -250,13 +246,12 @@ const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
     user: state.get("user"),
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   clearCart: () => dispatch(clearCart())
-
 });
 
 export default connect(

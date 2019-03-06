@@ -31,7 +31,7 @@ export default class Home extends Component {
             <div className="row product_panel">
               <div className="col-md-4 product_img">
                 <div className="sale">SALE</div>
-                <img src={bag} alt={bag}/>
+                <img src={bag} alt={bag} />
               </div>
               <div className="col-md-8 shop_now">
                 <h2>Vera Bradley</h2>
@@ -63,7 +63,6 @@ export default class Home extends Component {
               </div>
               <div className="col-md-8 ">
                 <div className="game_begin_block">
-                  <div className="pop">POP</div>
                   <img src={pop_image} alt={pop_image} />
                   <div className="game_sub_block">
                     <h1>Let The Game begin</h1>

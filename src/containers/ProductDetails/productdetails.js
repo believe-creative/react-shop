@@ -62,23 +62,7 @@ class ProductDetails extends Component {
       inProductId: this.props.match.params.productid
     });
   }
-  componentWillReceiveProps(props) {
-    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
-    if (localCart != null) {
-      if (this.state.cart === null || this.state.cart === undefined) {
-        this.props.getCartProducts({
-          token: props.token,
-          inCartId: localCart.inCartId
-        });
-      } else if (props.cart.count !== this.state.cart.count) {
-        this.props.getCartProducts({
-          token: props.token,
-          inCartId: props.cart.inCartId
-        });
-      }
-      this.setState({ cart: props.cart });
-    }
-  }
+
   update(e) {
     let state = this.state;
     state["buttonStyles"] = { pointerEvents: "none" };
@@ -167,7 +151,7 @@ class ProductDetails extends Component {
                     <ul className="list-unstyled">
                       <li
                         className={
-                          this.state.productImageName == productImg1
+                          this.state.productImageName === productImg1
                             ? "active"
                             : this.state.activeClass
                         }
@@ -195,7 +179,7 @@ class ProductDetails extends Component {
 
                       <li
                         className={
-                          this.state.productImageName == productImg2
+                          this.state.productImageName === productImg2
                             ? "active"
                             : ""
                         }
@@ -305,7 +289,7 @@ class ProductDetails extends Component {
               <div className="row">
                 {this.props.productrecommendations.map((item, index) => {
                   return (
-                    <div className="col-sm-6 col-lg-3">
+                    <div className="col-sm-6 col-lg-3" key={index}>
                       <a href="#">
                         <div className="product-image-block bg-white">
                           <h3 className="pt-3">{item.product_name}</h3>

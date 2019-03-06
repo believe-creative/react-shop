@@ -104,7 +104,7 @@ class Conformation extends Component {
                 </div> */}
                 <div className="col-md-2">
                   <h3>{"Subtotal"}</h3>
-                  <h3>{totalAmount}</h3>
+                  <h3>{totalAmount.toFixed(2)}</h3>
                 </div>
                 <div className="col-md-2">
                   <h3>{"Shipping"}</h3>
@@ -113,7 +113,9 @@ class Conformation extends Component {
                 <div className="col-md-2">
                   <h3>{"Grand Total"}</h3>
                   <h3>
-                    {totalAmount + parseInt(shippingoption.shipping_cost)}
+                    {(
+                      totalAmount + parseInt(shippingoption.shipping_cost)
+                    ).toFixed(2)}
                   </h3>
                 </div>
               </div>
@@ -147,7 +149,7 @@ const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
     customer: state.get("user").customer,
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 

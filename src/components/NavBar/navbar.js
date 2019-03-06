@@ -20,7 +20,9 @@ class NavBar extends Component {
   searchItems(e) {
     this.setState({ searchitem: e.target.value });
   }
-  
+  clearSub() {
+    this.props.setSubCategory(false);
+  }
   render() {
     let { cart } = this.props;
     if (!cart) cart = { count: 0 };
@@ -57,7 +59,9 @@ class NavBar extends Component {
                         key={category.name}
                       >
                         <LinkContainer to={link}>
-                          <Nav.Link>{category.name}</Nav.Link>
+                          <Nav.Link onClick={this.clearSub.bind(this)}>
+                            {category.name}
+                          </Nav.Link>
                         </LinkContainer>
                       </li>
                     );
@@ -103,13 +107,15 @@ const mapStateToProps = state => {
     categories: state.get("products").categories,
     cart: state.get("products").cart,
     location: state.get("router").location,
-    token:state.get("user").token
+    token: state.get("user").token,
+    showSubCategory: state.get("showSubCategory").showSubCategory
   };
 };
 
 const mapStateToDispatch = dispatch => ({
   getCartProducts: inCartId =>
-    dispatch(Actions.getCartProducts.request(inCartId))
+    dispatch(Actions.getCartProducts.request(inCartId)),
+  setSubCategory: data => dispatch(Actions.setSubCategory(data))
 });
 
 export default connect(

@@ -47,42 +47,38 @@ class Payment extends Component {
     totalAmount = Math.round(totalAmount * 100) / 100;
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
-    console.log(this_ref.props.token);
+    // console.log(this_ref.props.token);
 
     this.props.stripe
       .createToken({ name: this.props.user.name })
       .then(({ token }) => {
         if (token) {
           this_ref.setState({ errors: null });
-              axios
-                .post(
-                  API_ROOT + "payment",
-                  {
-                    email: this_ref.props.user.email,
-                    id: token.id,
-                    inCartId: this_ref.props.cart.inCartId,
-                    inCustomerId: null,
-                    inShippingId:
-                      this_ref.props.cart.shippingoption.shipping_id,
-                    amount:
-                      totalAmount +
-                      parseInt(
-                        this_ref.props.cart.shippingoption.shipping_cost
-                      ),
-                    inTaxId: 1
-                  },
-                  {headers: { Authorization: `Bearer ${this_ref.props.token}` }}
-
-                )
-                .then(function(res) {
-                  if (res.data.status === "error") {
-                    this_ref.setState({ errors: res.data.msg });
-                  } else {
-                    this_ref.setState({ errors: null });
-                    this_ref.props.nextStage(this_ref.stage);
-                  }
-                })
-                .catch(function(error) {});
+          axios
+            .post(
+              API_ROOT + "payment",
+              {
+                email: this_ref.props.user.email,
+                id: token.id,
+                inCartId: this_ref.props.cart.inCartId,
+                inCustomerId: null,
+                inShippingId: this_ref.props.cart.shippingoption.shipping_id,
+                amount:
+                  totalAmount +
+                  parseInt(this_ref.props.cart.shippingoption.shipping_cost),
+                inTaxId: 1
+              },
+              { headers: { Authorization: `Bearer ${this_ref.props.token}` } }
+            )
+            .then(function(res) {
+              if (res.data.status === "error") {
+                this_ref.setState({ errors: res.data.msg });
+              } else {
+                this_ref.setState({ errors: null });
+                this_ref.props.nextStage(this_ref.stage);
+              }
+            })
+            .catch(function(error) {});
         } else {
           this_ref.setState({ errors: "Please fill all the feilds." });
         }

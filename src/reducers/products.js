@@ -22,7 +22,7 @@ export default (state = intialState, action) => {
   let cart = null;
   switch (action.type) {
     case ActionTypes.PRODUCT.REQUEST:
-      console.log(action);
+      // console.log(action);
       return {
         ...state,
         isLoading: true

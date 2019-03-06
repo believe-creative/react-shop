@@ -27,25 +27,25 @@ class Login extends Component {
   login() {
     let props = this.props;
     let this_ref = this;
-        axios
-          .post(
-            API_ROOT + "login",
-            {
-              email: this_ref.state.email,
-              pwd: this_ref.state.pwd
-            },
-            {headers:{ Authorization: `Bearer ${props.token}` }}
-          )
-          .then(function(response) {
-            if (response.data.status === "error") {
-              this_ref.setState({ errors: response.data.msg });
-            } else {
-              setCookie("s-atk", response.data.token, 0.2);
-              props.setUser(response.data.user);
-              this_ref.setState({ errors: null });
-            }
-          })
-          .catch(function(error) {});
+    axios
+      .post(
+        API_ROOT + "login",
+        {
+          email: this_ref.state.email,
+          pwd: this_ref.state.pwd
+        },
+        { headers: { Authorization: `Bearer ${props.token}` } }
+      )
+      .then(function(response) {
+        if (response.data.status === "error") {
+          this_ref.setState({ errors: response.data.msg });
+        } else {
+          setCookie("s-atk", response.data.token, 0.2);
+          props.setUser(response.data.user);
+          this_ref.setState({ errors: null });
+        }
+      })
+      .catch(function(error) {});
   }
   change(e) {
     let state = this.state;
@@ -69,17 +69,12 @@ class Login extends Component {
             if (route.length > 0) {
               localStorage.removeItem("nextRoute");
               props.history.push(route);
-            }
-            else
-            {
+            } else {
               props.history.push("/");
             }
-          }
-          else
-          {
+          } else {
             props.history.push("/");
           }
-
         }
       });
       return provider;
@@ -94,20 +89,22 @@ class Login extends Component {
   }
   openPopup(e) {
     e.preventDefault();
-    const width = 600, height = 600
-    const left = (window.innerWidth / 2) - (width / 2)
-    const top = (window.innerHeight / 2) - (height / 2)
+    const width = 600,
+      height = 600;
+    const left = window.innerWidth / 2 - width / 2;
+    const top = window.innerHeight / 2 - height / 2;
     const url = e.currentTarget.getAttribute("href");
 
-    window.open(url, '',
+    window.open(
+      url,
+      "",
       `toolbar=no, location=no, directories=no, status=no, menubar=no,
       scrollbars=no, resizable=no, copyhistory=no, width=${width},
       height=${height}, top=${top}, left=${left}`
-    )
+    );
   }
   render() {
     let name = null;
-    const props = this.props;
     if (this.props.user) {
       name = this.props.user.name;
     }
@@ -186,7 +183,7 @@ class Login extends Component {
 const mapStateToProps = state => {
   return {
     user: state.get("user"),
-    token:state.get("user").token
+    token: state.get("user").token
   };
 };
 function mapDispatchToProps(dispatch) {

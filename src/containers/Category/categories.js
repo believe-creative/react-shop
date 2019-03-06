@@ -9,12 +9,11 @@ class Categories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 1,
-      cart: null
+      activePage: 1
     };
   }
   componentDidMount() {
-    console.log(this.props);
+    // console.log(this.props);
     if (this.props.categories) {
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
@@ -28,26 +27,9 @@ class Categories extends Component {
       });
     }
   }
-  componentWillReceiveProps(props) {
-    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
-    if (localCart != null) {
-      if (this.state.cart === null || this.state.cart === undefined) {
-        this.props.getCartProducts({
-          token: props.token,
-          inCartId: localCart.inCartId
-        });
-      } else if (props.cart.count !== this.state.cart.count) {
-        this.props.getCartProducts({
-          token: props.token,
-          inCartId: props.cart.inCartId
-        });
-      }
-      this.setState({ cart: props.cart });
-    }
-  }
+
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
-    console.log(pageNumber);
   }
   render() {
     let productsList = [];
@@ -80,39 +62,47 @@ class Categories extends Component {
                 <h2>ALL PRODUCTS</h2>
               </div>
               <div>
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={totalItemsCount}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
-                  innerClass={"pagination-block pb-4"}
-                  prevPageText={"Back"}
-                  nextPageText={"Forward"}
-                  itemClassPrev={"back"}
-                  itemClassNext={"forward"}
-                  itemClassFirst={"first_page"}
-                  itemClassLast={"last_page"}
-                />
+                {productsList ? (
+                  <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={totalItemsCount}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    innerClass={"pagination-block pb-4"}
+                    prevPageText={"Back"}
+                    nextPageText={"Forward"}
+                    itemClassPrev={"back"}
+                    itemClassNext={"forward"}
+                    itemClassFirst={"first_page"}
+                    itemClassLast={"last_page"}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
               <section>
                 {<ProductList products={productsList ? productsList : []} />}
               </section>
               <div>
-                <Pagination
-                  activePage={this.state.activePage}
-                  itemsCountPerPage={10}
-                  totalItemsCount={totalItemsCount}
-                  pageRangeDisplayed={5}
-                  onChange={this.handlePageChange.bind(this)}
-                  innerClass={"pagination-block pb-4"}
-                  prevPageText={"Back"}
-                  nextPageText={"Forward"}
-                  itemClassPrev={"back"}
-                  itemClassNext={"forward"}
-                  itemClassFirst={"first_page"}
-                  itemClassLast={"last_page"}
-                />
+                {productsList ? (
+                  <Pagination
+                    activePage={this.state.activePage}
+                    itemsCountPerPage={10}
+                    totalItemsCount={totalItemsCount}
+                    pageRangeDisplayed={5}
+                    onChange={this.handlePageChange.bind(this)}
+                    innerClass={"pagination-block pb-4"}
+                    prevPageText={"Back"}
+                    nextPageText={"Forward"}
+                    itemClassPrev={"back"}
+                    itemClassNext={"forward"}
+                    itemClassFirst={"first_page"}
+                    itemClassLast={"last_page"}
+                  />
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </div>
@@ -135,9 +125,7 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({
   loadCategoryProducts: data =>
-    dispatch(Actions.getCategoryProducts.request(data)),
-  getCartProducts: inCartId =>
-    dispatch(Actions.getCartProducts.request(inCartId))
+    dispatch(Actions.getCategoryProducts.request(data))
 });
 
 export default connect(

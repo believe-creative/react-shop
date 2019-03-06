@@ -27,22 +27,31 @@ class App extends Component {
   }
   componentWillReceiveProps(props, b, c) {
     if (props.token) {
-      if (this.state.token != props.token) {
+      if (this.state.token !== props.token) {
         this.setState({ token: props.token });
         console.log(props);
         if (!this.props.categories)
           this.props.getCategories({ token: props.token });
-        // let cart = localStorage.getItem("react-shop-cart");
-        // if (cart) {
-        //   cart = JSON.parse(cart);
-        //   this.props.getCartProducts(cart.inCartId);
-        // }
-        // productRequest();
       }
+    }
+    let localCart = JSON.parse(localStorage.getItem("react-shop-cart"));
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
+      }
+      this.setState({ cart: props.cart });
     }
   }
   render() {
-    if (this.state.loaded == true) {
+    if (this.state.loaded === true) {
       return (
         <BarLoader
           sizeUnit={"px"}
