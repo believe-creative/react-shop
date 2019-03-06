@@ -135,7 +135,7 @@ app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
                            })
                   })
             })
-      });
+      })
       .catch(err => {
         console.log("Error:", err);
         response.status(500).send({error: "Purchase Failed"});
