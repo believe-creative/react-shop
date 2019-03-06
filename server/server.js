@@ -94,8 +94,6 @@ app.get('/api/checkuser',checkToken,checklogin);
 
 app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
     let amount=Math.round(req.body.amount)*100;
-	console.log(req.body);
-    console.log(amount,req.body.id)
     stripe.customers.create({
         email: req.body.email,
         card: req.body.id
@@ -107,14 +105,37 @@ app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
             currency: "usd",
             customer: customer.id
           })
-      }
-        )
+      })
       .then(charge => {
         sequelize
-        .query('CALL shopping_cart_create_order(:inCartId,:inCustomerId,:inShippingId,:inTaxId)',
-        {replacements:{inCartId:req.body.inCartId,inCustomerId:req.body.inCustomerId,inShippingId:req.body.inShippingId,inTaxId:req.body.inTaxId}}).then(
-          create_order=>response.json(create_order));
-      })
+        .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:req.body.email}}).then(
+            data=>{
+                sequelize
+                .query('CALL shopping_cart_create_order(:inCartId,:inCustomerId,:inShippingId,:inTaxId)',
+                {replacements:{inCartId:req.body.inCartId,inCustomerId:data[0].customer_id,inShippingId:req.body.inShippingId,inTaxId:req.body.inTaxId}}).then(
+                  create_order=>{
+                  let full_order_details = [];
+                  sequelize.query('CALL orders_get_order_info(:inOrderId)',
+                                  {replacements:{inOrderId:create_order[0].orderId}})
+                           .then(order_info=>{
+                                full_order_details.push({'order_info':order_info});
+                                sequelize.query('CALL orders_get_order_details(:inOrderId)',
+                                  {replacements:{inOrderId:create_order[0].orderId}})
+                                .then(order_details=>{
+                                    full_order_details.push({'products':order_details});
+                                })
+                                sequelize
+                                   .query('CALL customer_get_customer(:inCustomerId)',{replacements:{inCustomerId:order_info[0].customer_id}}).then(
+                                      get_customer=>{
+                                      full_order_details.push({'shipping_address':get_customer})
+                                        mail.orderEmail(full_order_details, get_customer[0].email);
+                                        return response.json(full_order_details)
+                                      })
+
+                           })
+                  })
+            })
+      });
       .catch(err => {
         console.log("Error:", err);
         response.status(500).send({error: "Purchase Failed"});

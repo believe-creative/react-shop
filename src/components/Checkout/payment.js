@@ -69,7 +69,7 @@ class Payment extends Component {
                       parseInt(
                         this_ref.props.cart.shippingoption.shipping_cost
                       ),
-                    inTaxId: 0
+                    inTaxId: 1
                   },
                   {headers: { Authorization: `Bearer ${this_ref.props.token}` }}
 
