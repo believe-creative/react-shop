@@ -18,20 +18,20 @@ exports.orderEmail = function(order_data, to_email){
     ejs.renderFile(__dirname + "/templates/order/email_template.ejs", {'order_info':order_data, 'logo':site_logo, 'product_image':product_image}, function (err, data) {
     if (err) {
         console.log(err);
-    } else {        
+    } else {
         var mainOptions = {
-            from: '"TShirtShop" vikram@amoha.co',
+            from: '"TShirt Shop" vikram@amoha.co',
             to: to_email,
-            subject: 'Order Information',            
-            html: data            
-        };        
+            subject: 'Order Information',
+            html: data
+        };
         transporter.sendMail(mainOptions, function (err, info) {
             if (err) {
                 console.log(err);
             } else {
                 console.log('Message sent: ' + info.response);
             }
-        });       
+        });
     }
     });
 }
