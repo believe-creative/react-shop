@@ -20,7 +20,8 @@ class ProductDetails extends Component {
       cart: null,
       productImageName: "",
       activeClass: "active",
-      adding: false
+      adding: false,
+      link: null
     };
   }
 
@@ -66,6 +67,7 @@ class ProductDetails extends Component {
       token: this.props.token,
       inProductId: this.props.match.params.productid
     });
+    this.setState({ link: this.props.match.params.productid });
   }
 
   componentWillReceiveProps(props) {
@@ -84,6 +86,23 @@ class ProductDetails extends Component {
       }
 
       this.setState({ cart: props.cart, adding: false });
+    }
+
+    if (this.state.link !== props.match.params.productid) {
+      console.log("call");
+      props.loadProduct({
+        token: props.token,
+        inProductId: props.match.params.productid
+      });
+      props.getProductRecommendations({
+        token: props.token,
+        inProductId: props.match.params.productid
+      });
+      props.getProductLocations({
+        token: props.token,
+        inProductId: props.match.params.productid
+      });
+      this.setState({ link: props.match.params.productid });
     }
   }
 
@@ -315,20 +334,22 @@ class ProductDetails extends Component {
                 {this.props.productrecommendations.map((item, index) => {
                   return (
                     <div className="col-sm-6 col-lg-3" key={index}>
-                      <a
-                        href={
+                      <LinkContainer
+                        to={
                           "/product/" +
                           item.product_id +
                           "/" +
                           item.product_name
                         }
                       >
-                        <div className="product-image-block bg-white">
-                          <h3 className="pt-3">{item.product_name}</h3>
-                          <p className="pt-3">{item.description}</p>
-                          <div className="price pt-3">&#163;14.99</div>
-                        </div>
-                      </a>
+                        <a>
+                          <div className="product-image-block bg-white">
+                            <h3 className="pt-3">{item.product_name}</h3>
+                            <p className="pt-3">{item.description}</p>
+                            <div className="price pt-3">&#163;14.99</div>
+                          </div>
+                        </a>
+                      </LinkContainer>
                     </div>
                   );
                 })}
