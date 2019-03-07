@@ -55,7 +55,7 @@ class NavBar extends Component {
                       this.props.location.pathname === link ? "active" : "";
                     return (
                       <li
-                        className={"nav-item" + location_path}
+                        className={"nav-item" + " " + location_path}
                         key={category.name}
                       >
                         <LinkContainer to={link}>

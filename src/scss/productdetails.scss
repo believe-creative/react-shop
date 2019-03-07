@@ -289,10 +289,24 @@ form {
     margin-top: 0.2rem;
   }
 }
-
+.mb_price {
+  margin-bottom: 132px;
+}
 .clip_loader {
   height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.carousel {
+  margin: 0 60px;
+}
+.productrecommendations_item {
+  margin: 0 15px;
+  &:first-child {
+    margin-left: 0;
+    @media (max-width: 767px) {
+      margin-left: 15px;
+    }
+  }
 }

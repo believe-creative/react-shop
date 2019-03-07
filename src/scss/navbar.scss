@@ -179,8 +179,8 @@
       }
     }
     .navbar-nav {
-      .nav-item.active {
-        .nav-link {
+      .nav-item {
+        .nav-link.active {
           color: $red;
         }
       }

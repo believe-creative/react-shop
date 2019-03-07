@@ -194,8 +194,10 @@ class Category extends Component {
                   )}
                 </div>
                 <section className="category_products">
-                  {categoryProducts.length > 0 ||
-                  subcategoryProducts.length > 0 ? (
+                  {(!this.props.showSubCategory &&
+                    categoryProducts.length > 0) ||
+                  (this.props.showSubCategory &&
+                    subcategoryProducts.length > 0) ? (
                     <ProductList
                       products={
                         this.props.showSubCategory

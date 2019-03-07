@@ -77,7 +77,8 @@ class Product extends Component {
           </LinkContainer>
           <h3 className="red">
             {"$"}
-            {this.props.product.discounted_price !== undefined
+            {this.props.product.discounted_price !== undefined &&
+            this.props.product.discounted_price !== "0.00"
               ? this.props.product.discounted_price
               : this.props.product.price}
           </h3>

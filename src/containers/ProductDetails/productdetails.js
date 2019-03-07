@@ -130,6 +130,39 @@ class ProductDetails extends Component {
     this.setState({ productImageName: name, activeClass: "" });
   }
 
+  productPrice() {
+    let discountedPrice = this.props.productdetails[0]
+      ? this.props.productdetails[0].discounted_price
+      : "";
+    if (discountedPrice !== "0.00") {
+      return (
+        <div>
+          <div className="amount-block pt-3">
+            <h6 className="pricetag"> Price:</h6>
+            {this.props.productdetails[0]
+              ? "$" + this.props.productdetails[0].price
+              : ""}
+            {this.props.productdetails[0] ? <p> {""}</p> : ""}
+          </div>
+          <div className="amount-block pt-3 pb-3">
+            <h6 className="pricetag"> Discounted Price:</h6>
+            {this.props.productdetails[0]
+              ? "$" + this.props.productdetails[0].discounted_price
+              : ""}
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="amount-block pt-3 mb_price">
+          <h6 className="pricetag"> Price:</h6>
+          {this.props.productdetails[0]
+            ? "$" + this.props.productdetails[0].price
+            : ""}
+        </div>
+      );
+    }
+  }
   render() {
     let productImg1 = this.props.productdetails[0]
       ? this.props.productdetails[0].image
@@ -137,8 +170,8 @@ class ProductDetails extends Component {
     let productImg2 = this.props.productdetails[0]
       ? this.props.productdetails[0].image_2
       : "";
-    let productId = this.props.productlocations[0]
-      ? this.props.productlocations[0].product_id
+    let productId = this.props.productdetails[0]
+      ? this.props.productdetails[0].product_id.toString()
       : "";
     let productlocations = this.props.productlocations[0]
       ? this.props.productlocations[0].department_name.toLowerCase()
@@ -148,8 +181,33 @@ class ProductDetails extends Component {
     if (this.props.cart) cart = this.props.cart;
     let hasItems = cart.count > 0 ? true : false;
     let this_ref = this;
-    console.log(this.props);
-    if (this.state.link === this.props.match.params.productid) {
+    let items = "";
+    if (this.props.productrecommendations.length > 0) {
+      items = this.props.productrecommendations.map((item, index) => {
+        return (
+          <div
+            className="productrecommendations_item"
+            key={index}
+            onDragStart={handleOnDragStart}
+          >
+            <LinkContainer
+              to={"/product/" + item.product_id + "/" + item.product_name}
+            >
+              <a>
+                <div className="product-image-block bg-white">
+                  <h3 className="pt-3">{item.product_name}</h3>
+                  <p className="pt-3">{item.description}</p>
+                  <div className="price pt-3">&#163;14.99</div>
+                </div>
+              </a>
+            </LinkContainer>
+          </div>
+        );
+      });
+    }
+
+    // console.log(this.props, productId, this.props.match.params.productid);
+    if (productId !== "" && productId === this.props.match.params.productid) {
       return (
         <React.Fragment>
           <div id="main" className="mt-5 mb-5">
@@ -270,23 +328,7 @@ class ProductDetails extends Component {
                           : ""}
                       </p>
                     </div>
-                    <div className="amount-block pt-3">
-                      <h6 className="pricetag"> Price:</h6>
-                      {this.props.productdetails[0]
-                        ? "$" + this.props.productdetails[0].price
-                        : ""}
-                      {this.props.productdetails[0] ? <p> {""}</p> : ""}
-                    </div>
-                    {this.props.productdetails[0] ? (
-                      <div className="amount-block pt-3 pb-3">
-                        <h6 className="pricetag"> Discounted Price:</h6>
-                        {this.props.productdetails[0]
-                          ? "$" + this.props.productdetails[0].discounted_price
-                          : ""}
-                      </div>
-                    ) : (
-                      ""
-                    )}
+                    {this.productPrice()}
 
                     <div className="product_images_block">
                       <AliceCarousel mouseDragEnabled>
@@ -336,29 +378,26 @@ class ProductDetails extends Component {
             {this.props.productrecommendations.length > 0 ? (
               <div className="container related-block mt-5">
                 <h2 className="pb-4">You may also like</h2>
+
                 <div className="row">
-                  {this.props.productrecommendations.map((item, index) => {
-                    return (
-                      <div className="col-sm-6 col-lg-3" key={index}>
-                        <LinkContainer
-                          to={
-                            "/product/" +
-                            item.product_id +
-                            "/" +
-                            item.product_name
-                          }
-                        >
-                          <a>
-                            <div className="product-image-block bg-white">
-                              <h3 className="pt-3">{item.product_name}</h3>
-                              <p className="pt-3">{item.description}</p>
-                              <div className="price pt-3">&#163;14.99</div>
-                            </div>
-                          </a>
-                        </LinkContainer>
-                      </div>
-                    );
-                  })}
+                  <div className="col-md-12">
+                    <AliceCarousel
+                      items={items}
+                      mouseDragEnabled
+                      dotsDisabled={"false"}
+                      responsive={{
+                        0: {
+                          items: 1
+                        },
+                        767: {
+                          items: 2
+                        },
+                        1024: {
+                          items: 3
+                        }
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
             ) : (
