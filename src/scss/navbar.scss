@@ -85,6 +85,11 @@
   .price-block {
     float: right;
     margin-top: 8px;
+
+    @media (min-width: 767px) and (max-width: 992px) {
+      width: 40%;
+      text-align: right;
+    }
     @media (max-width: 767px) {
       margin-top: 0;
     }

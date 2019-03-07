@@ -123,6 +123,77 @@ class Category extends Component {
       );
     }
     console.log(this.props);
+    let productItems = (
+      <div className="product_filter_panel">
+        <div className="row">
+          <div className="col-md-12 items_block">
+            {this.props.showSubCategory ? (
+              <h4 className="pb-4 breadcrumb-sub-cat-name">
+                <a onClick={this.hideSubCategory}>
+                  {categoryName.charAt(0).toUpperCase() + categoryName.slice(1)}
+                </a>
+                &nbsp;/&nbsp;
+                {this.selectedSubCategoryName
+                  ? this.selectedSubCategoryName.charAt(0).toUpperCase() +
+                    this.selectedSubCategoryName.slice(1)
+                  : ""}
+              </h4>
+            ) : (
+              ""
+            )}
+            <div>
+              {categoryProducts.length > 0 ? (
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={length}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange.bind(this)}
+                  hideFirstLastPages={"false"}
+                  innerClass={"pagination-block pb-4"}
+                  prevPageText={"<"}
+                  nextPageText={">"}
+                  itemClassPrev={"back"}
+                  itemClassNext={"forward"}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+            <section className="category_products">
+              {
+                <ProductList
+                  products={
+                    this.props.showSubCategory
+                      ? categorysubProductsGot
+                      : categoryProductsGot
+                  }
+                />
+              }
+            </section>
+            <div>
+              {categoryProducts.length > 0 ? (
+                <Pagination
+                  activePage={this.state.activePage}
+                  itemsCountPerPage={10}
+                  totalItemsCount={length}
+                  pageRangeDisplayed={5}
+                  onChange={this.handlePageChange.bind(this)}
+                  hideFirstLastPages={"false"}
+                  innerClass={"pagination-block pb-4"}
+                  prevPageText={"<"}
+                  nextPageText={">"}
+                  itemClassPrev={"back"}
+                  itemClassNext={"forward"}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -156,89 +227,19 @@ class Category extends Component {
         </section>
 
         <div className="container">
-          <div className="product_filter_panel">
-            <div className="row">
-              <div className="col-md-12 items_block">
-                {this.props.showSubCategory ? (
-                  <h4 className="pb-4 breadcrumb-sub-cat-name">
-                    <a onClick={this.hideSubCategory}>
-                      {categoryName.charAt(0).toUpperCase() +
-                        categoryName.slice(1)}
-                    </a>
-                    /&nbsp;
-                    {this.selectedSubCategoryName
-                      ? this.selectedSubCategoryName.charAt(0).toUpperCase() +
-                        this.selectedSubCategoryName.slice(1)
-                      : ""}
-                  </h4>
-                ) : (
-                  ""
-                )}
-                <div>
-                  {categoryProducts.length > 0 ? (
-                    <Pagination
-                      activePage={this.state.activePage}
-                      itemsCountPerPage={10}
-                      totalItemsCount={length}
-                      pageRangeDisplayed={5}
-                      onChange={this.handlePageChange.bind(this)}
-                      hideFirstLastPages={"false"}
-                      innerClass={"pagination-block pb-4"}
-                      prevPageText={"<"}
-                      nextPageText={">"}
-                      itemClassPrev={"back"}
-                      itemClassNext={"forward"}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-                <section className="category_products">
-                  {(!this.props.showSubCategory &&
-                    categoryProducts.length > 0) ||
-                  (this.props.showSubCategory &&
-                    subcategoryProducts.length > 0) ? (
-                    <ProductList
-                      products={
-                        this.props.showSubCategory
-                          ? categorysubProductsGot
-                          : categoryProductsGot
-                      }
-                    />
-                  ) : (
-                    <div className="clip_loader">
-                      <ClipLoader
-                        sizeUnit={"px"}
-                        size={80}
-                        color={"#f62f5e"}
-                        loading={this.state.loading}
-                      />
-                    </div>
-                  )}
-                </section>
-                <div>
-                  {categoryProducts.length > 0 ? (
-                    <Pagination
-                      activePage={this.state.activePage}
-                      itemsCountPerPage={10}
-                      totalItemsCount={length}
-                      pageRangeDisplayed={5}
-                      onChange={this.handlePageChange.bind(this)}
-                      hideFirstLastPages={"false"}
-                      innerClass={"pagination-block pb-4"}
-                      prevPageText={"<"}
-                      nextPageText={">"}
-                      itemClassPrev={"back"}
-                      itemClassNext={"forward"}
-                    />
-                  ) : (
-                    ""
-                  )}
-                </div>
-              </div>
+          {(!this.props.showSubCategory && categoryProducts.length > 0) ||
+          (this.props.showSubCategory && subcategoryProducts.length > 0) ? (
+            productItems
+          ) : (
+            <div className="clip_loader">
+              <ClipLoader
+                sizeUnit={"px"}
+                size={80}
+                color={"#f62f5e"}
+                loading={this.state.loading}
+              />
             </div>
-          </div>
-
+          )}
           <div className="shop_brand_panel">
             <div className="row">
               <div className="col-md-6">
