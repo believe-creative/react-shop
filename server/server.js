@@ -129,7 +129,7 @@ app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
                                       get_customer=>{
                                       full_order_details.push({'shipping_address':get_customer})
                                         mail.orderEmail(full_order_details, get_customer[0].email);
-                                        return response.json(full_order_details)
+                                        return response.json({status:'order created'})
                                       })
 
                            })
