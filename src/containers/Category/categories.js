@@ -71,12 +71,11 @@ class Categories extends Component {
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange.bind(this)}
                     innerClass={"pagination-block pb-4"}
-                    prevPageText={"Back"}
-                    nextPageText={"Forward"}
+                    prevPageText={"<"}
+                    nextPageText={">"}
                     itemClassPrev={"back"}
                     itemClassNext={"forward"}
-                    itemClassFirst={"first_page"}
-                    itemClassLast={"last_page"}
+                    hideFirstLastPages={"false"}
                   />
                 ) : (
                   ""
@@ -104,13 +103,12 @@ class Categories extends Component {
                     totalItemsCount={totalItemsCount}
                     pageRangeDisplayed={5}
                     onChange={this.handlePageChange.bind(this)}
+                    hideFirstLastPages={"false"}
                     innerClass={"pagination-block pb-4"}
-                    prevPageText={"Back"}
-                    nextPageText={"Forward"}
+                    prevPageText={"<"}
+                    nextPageText={">"}
                     itemClassPrev={"back"}
                     itemClassNext={"forward"}
-                    itemClassFirst={"first_page"}
-                    itemClassLast={"last_page"}
                   />
                 ) : (
                   ""

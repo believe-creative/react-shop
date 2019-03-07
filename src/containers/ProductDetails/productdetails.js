@@ -67,6 +67,7 @@ class ProductDetails extends Component {
       token: this.props.token,
       inProductId: this.props.match.params.productid
     });
+    this.props.setSubCategory(false);
     this.setState({ link: this.props.match.params.productid });
   }
 
@@ -128,6 +129,7 @@ class ProductDetails extends Component {
   handleClick(name) {
     this.setState({ productImageName: name, activeClass: "" });
   }
+
   render() {
     let productImg1 = this.props.productdetails[0]
       ? this.props.productdetails[0].image
@@ -143,7 +145,7 @@ class ProductDetails extends Component {
     if (this.props.cart) cart = this.props.cart;
     let hasItems = cart.count > 0 ? true : false;
     let this_ref = this;
-    // console.log(this.props);
+    console.log(this.props);
     return (
       <React.Fragment>
         <div id="main" className="mt-5 mb-5">
@@ -369,11 +371,13 @@ const mapStateToProps = state => {
     productdetails: state.get("products").product,
     productrecommendations: state.get("products").productrecommendations,
     productlocations: state.get("products").productLocations,
-    token: state.get("user").token
+    token: state.get("user").token,
+    showSubCategory: state.get("showSubCategory").showSubCategory
   };
 };
 
 const mapStateToDispatch = dispatch => ({
+  setSubCategory: data => dispatch(Actions.setSubCategory(data)),
   loadProduct: data => dispatch(Actions.product.request(data)),
   AddToCart: (inCartId, inProductId, inAttributes) =>
     dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),

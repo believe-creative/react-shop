@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
+import { createBrowserHistory } from "history";
 import ProductList from "../../components/Product/productlist";
 import "../../scss/categories.scss";
 import Pagination from "react-js-pagination";
 import { ClipLoader } from "react-spinners";
+import { LinkContainer } from "react-router-bootstrap";
+
+const history = createBrowserHistory();
 
 class Category extends Component {
   constructor(props) {
@@ -68,7 +72,7 @@ class Category extends Component {
     });
   }
   hideSubCategory() {
-    this.setState({ showSubCategory: false });
+    this.props.setSubCategory(false);
   }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
@@ -118,7 +122,7 @@ class Category extends Component {
         (this.state.activePage - 1) * 10 + 10
       );
     }
-
+    console.log(this.props);
     return (
       <div>
         <section className="hero-section categories" style={heroStyle}>
@@ -160,10 +164,12 @@ class Category extends Component {
                     <a onClick={this.hideSubCategory}>
                       {categoryName.charAt(0).toUpperCase() +
                         categoryName.slice(1)}
-                    </a>{" "}
+                    </a>
                     /&nbsp;
-                    {this.selectedSubCategoryName.charAt(0).toUpperCase() +
-                      this.selectedSubCategoryName.slice(1)}
+                    {this.selectedSubCategoryName
+                      ? this.selectedSubCategoryName.charAt(0).toUpperCase() +
+                        this.selectedSubCategoryName.slice(1)
+                      : ""}
                   </h4>
                 ) : (
                   ""
@@ -176,20 +182,20 @@ class Category extends Component {
                       totalItemsCount={length}
                       pageRangeDisplayed={5}
                       onChange={this.handlePageChange.bind(this)}
+                      hideFirstLastPages={"false"}
                       innerClass={"pagination-block pb-4"}
-                      prevPageText={"Back"}
-                      nextPageText={"Forward"}
+                      prevPageText={"<"}
+                      nextPageText={">"}
                       itemClassPrev={"back"}
                       itemClassNext={"forward"}
-                      itemClassFirst={"first_page"}
-                      itemClassLast={"last_page"}
                     />
                   ) : (
                     ""
                   )}
                 </div>
                 <section className="category_products">
-                  {categoryProducts.length > 0 ? (
+                  {categoryProducts.length > 0 ||
+                  subcategoryProducts.length > 0 ? (
                     <ProductList
                       products={
                         this.props.showSubCategory
@@ -216,13 +222,12 @@ class Category extends Component {
                       totalItemsCount={length}
                       pageRangeDisplayed={5}
                       onChange={this.handlePageChange.bind(this)}
+                      hideFirstLastPages={"false"}
                       innerClass={"pagination-block pb-4"}
-                      prevPageText={"Back"}
-                      nextPageText={"Forward"}
+                      prevPageText={"<"}
+                      nextPageText={">"}
                       itemClassPrev={"back"}
                       itemClassNext={"forward"}
-                      itemClassFirst={"first_page"}
-                      itemClassLast={"last_page"}
                     />
                   ) : (
                     ""
