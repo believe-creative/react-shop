@@ -531,10 +531,11 @@ app.post('/api/add-address',checkToken, jsonParser, (req,res)=>{
 
 /*
 * To Update Customer Address
-* Parameters {inEmail, inCustomerId,inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
+* Parameters {inEmail, inAddressId, inCustomerId, inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
 */
 app.post('/api/update-address',checkToken, jsonParser, (req,res)=>{
   let inEmail = req.body.inEmail;
+  let inAddressId = req.body.inAddressId;
   let inAddressName = req.body.inAddressName;
   let inAddress1 = req.body.inAddress1;
   let inAddress2 = req.body.inAddress2;
@@ -549,10 +550,11 @@ app.post('/api/update-address',checkToken, jsonParser, (req,res)=>{
     {replacements:{inEmail:inEmail}}).then(
       customer_info=>{
         sequelize
-        .query('CALL customer_update_address(:inCustomerId,:inAddressName,:inAddress1,:inAddress2,:inCity,:inPostalCode,:inCountry,:inDayPhone,:inEvePhone,:inMobPhone)',
+        .query('CALL customer_update_address(:inCustomerId,:inAddressId,:inAddressName,:inAddress1,:inAddress2,:inCity,:inPostalCode,:inCountry,:inDayPhone,:inEvePhone,:inMobPhone)',
         {
           replacements:{
             inCustomerId:customer_info[0].customer_id,
+            inAddressId:inAddressId,
             inAddressName:inAddressName,
             inAddress1:inAddress1,
             inAddress2:inAddress2,
