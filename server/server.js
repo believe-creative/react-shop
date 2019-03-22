@@ -469,28 +469,82 @@ app.post('/api/update-account', checkToken, (req,res)=>{
       update_account=>res.json(update_account));
 });
 /*
-* To Update Customer Address
-* Parameters {inCustomerId,inAddress1,inAddress2,inCity,inRegion,inPostalCode,inCountry,inShippingRegionId}
+* To Add Customer Address
+* Parameters {inCustomerId,inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
 */
-app.post('/api/update-address',checkToken, jsonParser, (req,res)=>{
+app.post('/api/add-address',checkToken, jsonParser, (req,res)=>{
+  let inEmail = req.body.inEmail;
+  let inAddressName = req.body.inAddressName;
   let inAddress1 = req.body.inAddress1;
   let inAddress2 = req.body.inAddress2;
   let inCity = req.body.inCity;
-  let inEmail = req.body.inEmail;
-  let inRegion = req.body.inRegion;
   let inPostalCode = req.body.inPostalCode;
   let inCountry = req.body.inCountry;
-  let inShippingRegionId = req.body.inShippingRegionId;
-  console.log(req.body.inEmail,req.body[0]);
+  let inDayPhone = req.body.inDayPhone;
+  let inEvePhone = req.body.inEvePhone;
+  let inMobPhone = req.body.inMobPhone;
   sequelize
     .query('CALL customer_get_login_info(:inEmail)',
     {replacements:{inEmail:inEmail}}).then(
       customer_info=>{
         sequelize
-        .query('CALL customer_update_address(:inCustomerId,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId)',
-        {replacements:{inCustomerId:customer_info[0].customer_id,inAddress1:inAddress1,inAddress2:inAddress2,inCity:inCity,inRegion:inRegion,inPostalCode:inPostalCode,inCountry:inCountry,inShippingRegionId:inShippingRegionId}}).then(
-          update_account=>res.json(update_account));
+        .query('CALL customer_add_address(:inCustomerId,:inAddressName,:inAddress1,:inAddress2,
+          :inCity,:inPostalCode,:inCountry,:inDayPhone,:inEvePhone,:inMobPhone)',
+        {
+          replacements:{
+            inCustomerId:customer_info[0].customer_id,
+            inAddressName:inAddressName,
+            inAddress1:inAddress1,
+            inAddress2:inAddress2,
+            inCity:inCity,
+            inPostalCode:inPostalCode,
+            inCountry:inCountry,
+            inDayPhone:inDayPhone,
+            inEvePhone:inEvePhone,
+            inMobPhone:inMobPhone
+          }
+        }).then(
+          add_address=>res.json(add_address));
+      });
 
+});
+
+/*
+* To Update Customer Address
+* Parameters {inCustomerId,inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
+*/
+app.post('/api/update-address',checkToken, jsonParser, (req,res)=>{
+  let inAddressName = req.body.inAddressName;
+  let inAddress1 = req.body.inAddress1;
+  let inAddress2 = req.body.inAddress2;
+  let inCity = req.body.inCity;
+  let inPostalCode = req.body.inPostalCode;
+  let inCountry = req.body.inCountry;
+  let inDayPhone = req.body.inDayPhone;
+  let inEvePhone = req.body.inEvePhone;
+  let inMobPhone = req.body.inMobPhone;
+  sequelize
+    .query('CALL customer_get_login_info(:inEmail)',
+    {replacements:{inEmail:inEmail}}).then(
+      customer_info=>{
+        sequelize
+        .query('CALL customer_update_address(:inCustomerId,:inAddressName,:inAddress1,:inAddress2,
+          :inCity,:inPostalCode,:inCountry,:inDayPhone,:inEvePhone,:inMobPhone)',
+        {
+          replacements:{
+            inCustomerId:customer_info[0].customer_id,
+            inAddressName:inAddressName,
+            inAddress1:inAddress1,
+            inAddress2:inAddress2,
+            inCity:inCity,
+            inPostalCode:inPostalCode,
+            inCountry:inCountry,
+            inDayPhone:inDayPhone,
+            inEvePhone:inEvePhone,
+            inMobPhone:inMobPhone
+          }
+        }).then(
+          update_account=>res.json(update_account));
       });
 
 });
