@@ -20,7 +20,9 @@ const {
   getSearchItems,
   getToken,
   getProductRecommendations,
-  productLocations
+  productLocations,
+  addAddress,
+  getAddress
 } = actions;
 
 //reusable fetch subroutine.
@@ -41,11 +43,7 @@ export const addProductToCart = fetchEntity.bind(
   AddToCart,
   api.AddToCart
 );
-export const getAccessToken = fetchEntity.bind(
-  null,
-  getToken,
-  api.getToken
-);
+export const getAccessToken = fetchEntity.bind(null, getToken, api.getToken);
 export const getProductsfromCart = fetchEntity.bind(
   null,
   getCartProducts,
@@ -115,6 +113,17 @@ export const fetchProductLocations = fetchEntity.bind(
   productLocations,
   api.getProductLocations
 );
+export const fetchaddAddress = fetchEntity.bind(
+  null,
+  addAddress,
+  api.addAddress
+);
+
+export const fetchgetAddress = fetchEntity.bind(
+  null,
+  getAddress,
+  api.getAddress
+);
 
 function* loadUpadtedCart(action) {
   yield call(addProductToCart, action.data);
@@ -137,7 +146,7 @@ function* loadupdateQuantity(action) {
 }
 
 function* loadgetAllShippingRegions(action) {
-  yield call(getAllShippingRegions,action.data);
+  yield call(getAllShippingRegions, action.data);
 }
 
 function* loadgetRegionShippingOption(action) {
@@ -157,7 +166,7 @@ function* loadUser(action) {
 }
 
 function* loadCategories(action) {
-  yield call(fetchCategories,action.data);
+  yield call(fetchCategories, action.data);
 }
 
 function* loadSubCategories(action) {
@@ -184,6 +193,14 @@ function* loadProductLocations(action) {
 
 function* loadgetAccessToken(action) {
   yield call(getAccessToken, action.data);
+}
+
+function* loadaddAddress(action) {
+  yield call(fetchaddAddress, action.data);
+}
+
+function* loadgetAddress(action) {
+  yield call(fetchgetAddress, action.data);
 }
 
 //+++++++++++++++++//
@@ -261,12 +278,16 @@ function* watchloadProductLocations() {
   yield takeLatest(actions.PRODUCTLOCATIONS.REQUEST, loadProductLocations);
 }
 
-
 function* watchloadgetAccessToken() {
-  yield takeLatest(
-    actions.GETTOKEN.REQUEST,
-    loadgetAccessToken
-  );
+  yield takeLatest(actions.GETTOKEN.REQUEST, loadgetAccessToken);
+}
+
+function* watchLoadaddAddress() {
+  yield takeLatest(actions.ADDADDRESS.REQUEST, loadaddAddress);
+}
+
+function* watchLoadgetAddress() {
+  yield takeLatest(actions.GETADDRESS.REQUEST, loadgetAddress);
 }
 
 export default function*() {
@@ -288,4 +309,6 @@ export default function*() {
   yield fork(watchloadProductRecommendations);
   yield fork(watchloadProductLocations);
   yield fork(watchloadgetAccessToken);
+  yield fork(watchLoadaddAddress);
+  yield fork(watchLoadgetAddress);
 }

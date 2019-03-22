@@ -14,12 +14,17 @@ class Delivery extends Component {
     this.state = {
       region: "",
       customer: {},
-      errors: {}
+      errors: {},
+      address: {}
     };
     this.stage = 0;
   }
   componentDidMount() {
-    this.props.getShippingRegions({token:this.props.token});
+    this.props.getShippingRegions({ token: this.props.token });
+    this.props.getAddress({
+      token: this.props.token,
+      inEmail: this.props.user ? this.props.user.email : ""
+    });
   }
   componentWillReceiveProps(props) {
     if (props.user) {
@@ -29,7 +34,10 @@ class Delivery extends Component {
             this.setState({ customer: props.customer });
           }
         } else {
-          props.getCustomerInfo({token:this.props.token,inEmail:props.user.email});
+          props.getCustomerInfo({
+            token: this.props.token,
+            inEmail: props.user.email
+          });
         }
       }
     }
@@ -48,7 +56,10 @@ class Delivery extends Component {
     this.setState(state);
     this.props.setDelivarydetails(this.state, this.state);
     this.props.setRegion(state["completeRegion"]);
-    this.props.getShippingOptions({token:this.props.token,inShippingRegionId:state["region"]});
+    this.props.getShippingOptions({
+      token: this.props.token,
+      inShippingRegionId: state["region"]
+    });
   }
   setShippingOption(e) {
     let state = this.state;
@@ -104,28 +115,28 @@ class Delivery extends Component {
       hasErrors = true;
     }
     if (!hasErrors) {
-          axios
-            .post(
-              API_ROOT + "update-address",
-              {
-                inEmail: this_ref.props.user.email,
-                inAddress1: state["customer"]["address_1"],
-                inAddress2: state["customer"]["address_2"],
-                inCity: state["customer"]["city"],
-                inRegion: state["regionName"],
-                inPostalCode: state["customer"]["postal_code"],
-                inCountry: state["customer"]["country"],
-                inShippingRegionId: state["region"]
-              },
-              {headers:{ Authorization: `Bearer ${this_ref.props.token}` }}
-            )
-            .then(function(response) {
-              this_ref.props.nextStage(this_ref.stage);
-            })
-            .catch(function(error) {
-              this_ref.state["errors"]["general"] = error;
-              this_ref.setState(this_ref.state);
-            });
+      axios
+        .post(
+          API_ROOT + "update-address",
+          {
+            inEmail: this_ref.props.user.email,
+            inAddress1: state["customer"]["address_1"],
+            inAddress2: state["customer"]["address_2"],
+            inCity: state["customer"]["city"],
+            inRegion: state["regionName"],
+            inPostalCode: state["customer"]["postal_code"],
+            inCountry: state["customer"]["country"],
+            inShippingRegionId: state["region"]
+          },
+          { headers: { Authorization: `Bearer ${this_ref.props.token}` } }
+        )
+        .then(function(response) {
+          this_ref.props.nextStage(this_ref.stage);
+        })
+        .catch(function(error) {
+          this_ref.state["errors"]["general"] = error;
+          this_ref.setState(this_ref.state);
+        });
     }
     this.setState(state);
   }
@@ -138,7 +149,19 @@ class Delivery extends Component {
       return <span />;
     }
   }
+  itemInsert(address_id) {
+    this.props.getaddress.map((e, index) => {
+      if (address_id === e.id) {
+        console.log("hello", e);
+        this.setState({ address: e });
+      }
+    });
+  }
+  saveAddress() {
+    console.log("save");
+  }
   render() {
+    console.log(this.props);
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
@@ -153,15 +176,57 @@ class Delivery extends Component {
       country: ""
     };
     if (this.state.customer) {
-      if (this.state.customer.name) {
+      if (this.state.customer.address_1) {
         customer = this.state.customer;
       }
     }
+    let getAddress =
+      this.props.getaddress.length > 0 ? this.props.getaddress : "";
+
     return (
       <React.Fragment>
         <Container>
+          <Row className="address_block items_block">
+            {getAddress
+              ? getAddress.map((address, index) => {
+                  return (
+                    <div className="col-md-6 col-lg-4 item">
+                      <div className="hot_block">
+                        <div
+                          className="address"
+                          onClick={add => this.itemInsert(address.id)}
+                        >
+                          <h3>{address.address_name} Address</h3>
+                          <div>Address 1 : {address.address_1}</div>
+                          <div>Address 2 : {address.address_2}</div>
+                          <div>City : {address.city}</div>
+                          <div>Country : {address.country}</div>
+                          <div>Postal Code : {address.postal_code}</div>
+                          <div>Day phone number : {address.day_phone}</div>
+                          <div>Evening phone number :{address.eve_phone} </div>
+                          <div>Mobile number :{address.mob_phone} </div>
+                        </div>
+                        <div className="next_step">
+                          <button
+                            type="button"
+                            className="btn btn-md save_address"
+                          >
+                            Edit
+                          </button>
+                          <button type="button" className="btn btn-md ">
+                            Delete
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })
+              : ""}
+          </Row>
+
           <Row className="delivery_block">
             <Col md={12}>
+              <h2 className="pb-3">{"Add Address"}</h2>
               {this.showError("general")}
               <div className="form-content">
                 <div className="row">
@@ -310,13 +375,22 @@ class Delivery extends Component {
             >
               Back
             </button>
-            <button
-              onClick={this.nextStage.bind(this)}
-              type="button"
-              className="btn btn-md next_step"
-            >
-              Next Step
-            </button>
+            <div className="next_step">
+              <button
+                type="button"
+                className="btn btn-md save_address"
+                onClick={this.saveAddress.bind(this)}
+              >
+                Save
+              </button>
+              <button
+                onClick={this.nextStage.bind(this)}
+                type="button"
+                className="btn btn-md "
+              >
+                Next Step
+              </button>
+            </div>
           </div>
         </div>
       </React.Fragment>
@@ -331,20 +405,23 @@ const mapStateToProps = state => {
     shippingOptions: state.get("shipping").shippingOptions,
     user: state.get("user"),
     customer: state.get("user").customer,
-    token:state.get("user").token
+    token: state.get("user").token,
+    getaddress: state.get("products").getAddress
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    getShippingRegions: (data) => dispatch(Actions.getShippingRegions.request(data)),
+    getShippingRegions: data =>
+      dispatch(Actions.getShippingRegions.request(data)),
     setRegion: regionId => dispatch(setRegion(regionId)),
     setShippingOption: inShippingId =>
       dispatch(setShippingOption(inShippingId)),
-    getCustomerInfo: data =>
-      dispatch(Actions.getCustomerInfo.request(data)),
+    getCustomerInfo: data => dispatch(Actions.getCustomerInfo.request(data)),
     getShippingOptions: data =>
-      dispatch(Actions.getShippingOptions.request(data))
+      dispatch(Actions.getShippingOptions.request(data)),
+    addAddress: data => dispatch(Actions.addAddress.request(data)),
+    getAddress: data => dispatch(Actions.getAddress.request(data))
   };
 }
 

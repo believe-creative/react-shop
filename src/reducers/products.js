@@ -6,7 +6,9 @@ const intialState = {
   products: [],
   product: [],
   productrecommendations: [],
-  productLocations: []
+  productLocations: [],
+  addAddress: [],
+  getAddress: []
 };
 
 function getCategoryName(categories, id) {
@@ -256,6 +258,40 @@ export default (state = intialState, action) => {
       return {
         ...state,
         searchItem: action.response
+      };
+    case ActionTypes.ADDADDRESS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.ADDADDRESS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        addAddress: action.response
+      };
+    case ActionTypes.ADDADDRESS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
+    case ActionTypes.GETADDRESS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.GETADDRESS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        getAddress: action.response
+      };
+    case ActionTypes.GETADDRESS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
       };
     default:
       return state;

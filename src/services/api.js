@@ -244,3 +244,40 @@ export const getProductLocations = function(data) {
     })
   );
 };
+
+export const addAddress = function(data) {
+  return callAPI(
+    `add-address/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8",
+      Authorization: `Bearer ${data.token}`
+    },
+    getParams({
+      inEmail: data.inEmail,
+      inAddressName: data.inAddressName,
+      inAddress1: data.inAddress1,
+      inAddress2: data.inAddress2,
+      inCity: data.inCity,
+      inPostalCode: data.inPostalCode,
+      inCountry: data.inCountry,
+      inDayPhone: data.inDayPhone,
+      inEvePhone: data.inEvePhone,
+      inMobPhone: data.inMobPhone
+    })
+  );
+};
+
+export const getAddress = function(data) {
+  return callAPI(
+    `get-address/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8",
+      Authorization: `Bearer ${data.token}`
+    },
+    getParams({
+      inEmail: data.inEmail
+    })
+  );
+};

@@ -208,3 +208,33 @@ table.order_summery {
   border-radius: 0.25rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+
+.address_select_block {
+  select {
+    width: 48%;
+  }
+}
+.save_address {
+  margin-right: 20px;
+}
+.address_block {
+  .item {
+    display: grid;
+  }
+  .hot_block {
+    text-align: left;
+    padding: 0;
+  }
+  .address {
+    padding: 25px;
+    cursor: pointer;
+    &:hover {
+      background-color: $gray-light;
+      opacity: 0.75;
+    }
+  }
+  .next_step {
+    padding: 25px;
+    display: inline-flex;
+  }
+}

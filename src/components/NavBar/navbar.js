@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Nav from "react-bootstrap/Nav";
 import Container from "react-bootstrap/Container";
-import logo from "../../images/tshirtshop.png";
+import logo from "../../images/proof-of-concept.png";
 import Image from "react-bootstrap/Image";
 import * as Actions from "../../actions";
 import { LinkContainer } from "react-router-bootstrap";

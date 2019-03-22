@@ -36,7 +36,8 @@ export const PRODUCTRECOMMENDATIONS = createRequestTypes(
   "PRODUCTRECOMMENDATIONS"
 );
 export const PRODUCTLOCATIONS = createRequestTypes("PRODUCTLOCATIONS");
-
+export const ADDADDRESS = createRequestTypes("ADDADDRESS");
+export const GETADDRESS = createRequestTypes("GETADDRESS");
 export function setUser(payload) {
   return { type: "SETUSER", payload };
 }
@@ -191,4 +192,15 @@ export const getProductRecommendations = {
     action(PRODUCTRECOMMENDATIONS[SUCCESS], { data, response }),
   failure: (data, error) =>
     action(PRODUCTRECOMMENDATIONS[FAILURE], { data, error })
+};
+
+export const addAddress = {
+  request: data => action(ADDADDRESS[REQUEST], { data }),
+  success: (data, response) => action(ADDADDRESS[SUCCESS], { data, response }),
+  failure: (data, error) => action(ADDADDRESS[FAILURE], { data, error })
+};
+export const getAddress = {
+  request: data => action(GETADDRESS[REQUEST], { data }),
+  success: (data, response) => action(GETADDRESS[SUCCESS], { data, response }),
+  failure: (data, error) => action(GETADDRESS[FAILURE], { data, error })
 };
