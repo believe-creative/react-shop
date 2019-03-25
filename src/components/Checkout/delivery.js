@@ -73,11 +73,31 @@ class Delivery extends Component {
 
   changed(e) {
     let state = this.state;
+    console.log("Onchange_this.state", this.state);
     state["customer"][e.currentTarget.name] = e.currentTarget.value;
     this.setState(state);
+    console.log("this.state", this.state);
     this.props.setDelivarydetails(this.state, this.state);
   }
+  itemInsert(address_id) {
+    var addressDetails = {};
+    let state = this.state;
+    this.props.getaddress.map((e, index) => {
+      if (address_id === e.id) {
+        console.log("hello", e);
+        addressDetails = e;
+        Object.keys(addressDetails).map(key => {
+          state["customer"][key] = addressDetails[key];
+        });
+        this.setState(state);
+        console.log("this.state", this.state);
+        this.props.setDelivarydetails(this.state, this.state);
+        this.setState({ address: e });
+      }
+    });
 
+    console.log(addressDetails);
+  }
   backStage() {
     this.props.backStage(this.stage);
   }
@@ -149,14 +169,7 @@ class Delivery extends Component {
       return <span />;
     }
   }
-  itemInsert(address_id) {
-    this.props.getaddress.map((e, index) => {
-      if (address_id === e.id) {
-        console.log("hello", e);
-        this.setState({ address: e });
-      }
-    });
-  }
+
   saveAddress() {
     console.log("save");
   }
@@ -237,6 +250,18 @@ class Delivery extends Component {
                         type="text"
                         className="form-control"
                         placeholder=""
+                        value={customer.name}
+                        name="name"
+                        onChange={this.changed.bind(this)}
+                      />
+                    </div>
+                    {this.showError("name")}
+                    <div className="form-group">
+                      <label className="">Address 1*</label>
+                      <input
+                        type="text"
+                        className="form-control"
+                        placeholder=""
                         value={customer.address_1}
                         name="address_1"
                         onChange={this.changed.bind(this)}
@@ -244,7 +269,7 @@ class Delivery extends Component {
                     </div>
                     {this.showError("address_1")}
                     <div className="form-group">
-                      <label className="">Address</label>
+                      <label className="">Address 2</label>
                       <input
                         type="text"
                         className="form-control"

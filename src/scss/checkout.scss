@@ -224,10 +224,12 @@ table.order_summery {
   .hot_block {
     text-align: left;
     padding: 0;
+    display: grid;
   }
   .address {
     padding: 25px;
     cursor: pointer;
+
     &:hover {
       background-color: $gray-light;
       opacity: 0.75;
@@ -235,6 +237,11 @@ table.order_summery {
   }
   .next_step {
     padding: 25px;
-    display: inline-flex;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
   }
+}
+.active_stage {
+  color: $red;
 }

@@ -212,22 +212,38 @@ class Checkout extends Component {
                 <ul className="list-unstyled progress-txt">
                   <li>
                     <a href="#">
-                      <h3>Delivery</h3>
+                      <h3
+                        className={this.state.stage >= 0 ? "active_stage" : ""}
+                      >
+                        Delivery
+                      </h3>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <h3>Confirmation</h3>
+                      <h3
+                        className={this.state.stage >= 1 ? "active_stage" : ""}
+                      >
+                        Confirmation
+                      </h3>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <h3>Payment</h3>
+                      <h3
+                        className={this.state.stage >= 2 ? "active_stage" : ""}
+                      >
+                        Payment
+                      </h3>
                     </a>
                   </li>
                   <li>
                     <a href="#">
-                      <h3>Finish</h3>
+                      <h3
+                        className={this.state.stage >= 3 ? "active_stage" : ""}
+                      >
+                        Finish
+                      </h3>
                     </a>
                   </li>
                 </ul>
