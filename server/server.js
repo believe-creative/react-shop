@@ -601,6 +601,23 @@ app.post('/api/update-address',checkToken, jsonParser, (req,res)=>{
 });*/
 
 /*
+* To Delete Customer Address
+* Parameters {inAddressId}
+*/
+app.post('/api/delete-customer-address', checkToken, (req,res)=>{
+  let inAddressId = req.body.inAddressId;
+  sequelize
+    .query('CALL customer_delete_address(:inAddressId)',
+    {
+      replacements:
+      {
+        inAddressId:inAddressId
+      }
+    }).then(
+      delete_address=>res.json(delete_address));
+});
+
+/*
 * To Update Creditcard
 * Parameters {inCustomerId,inCreditCard}
 */
