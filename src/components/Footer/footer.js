@@ -60,7 +60,7 @@ export default class SiteFooter extends Component {
             </Col>
             <Col sm={6} lg={3}>
               <ul className="list-unstyled developed_logo">
-                <li>@Developed by</li>
+                <li>Developed by</li>
                 <li>
                   <a
                     className="logo"
