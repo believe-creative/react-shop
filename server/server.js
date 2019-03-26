@@ -511,7 +511,7 @@ app.post('/api/add-address',checkToken, jsonParser, (req,res)=>{
     {replacements:{inEmail:inEmail}}).then(
       customer_info=>{
         sequelize
-        .query('CALL customer_add_address(:inCustomerId,:inAddressName,:inAddress1,:inAddress2,:inCity,:inPostalCode,:inCountry,:inDayPhone,:inEvePhone,:inMobPhone)',
+        .query('CALL customer_add_address(:inCustomerId,:inAddressName,:inAddress1,:inAddress2,:inCity,:inRegion,:inPostalCode,:inCountry,:inShippingRegionId,:inDayPhone,:inEvePhone,:inMobPhone)',
         {
           replacements:{
             inCustomerId:customer_info[0].customer_id,
