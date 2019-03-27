@@ -100,7 +100,7 @@ class Delivery extends Component {
         this.setState(state);
         console.log("this.state", this.state);
         this.props.setDelivarydetails(this.state, this.state);
-        this.setState({ address: e });
+        this.setState({ address: e, shippingoption: null });
         this.props.setAddress(addressDetails);
       }
     });
@@ -160,7 +160,7 @@ class Delivery extends Component {
 
     if (!state["shippingoption"]) {
       state["errors"]["shippingoption"] = "Should select a delivery option.";
-      hasErrors = false;
+      hasErrors = true;
     }
     if (!hasErrors) {
       this_ref.props.nextStage(this_ref.stage);
