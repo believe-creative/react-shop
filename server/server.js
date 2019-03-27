@@ -94,6 +94,7 @@ app.get('/api/checkuser',checkToken,checklogin);
 
 app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
     let amount=Math.round(req.body.amount)*100;
+    let inOrderAddress=req.body.inOrderAddress;
     stripe.customers.create({
         email: req.body.email,
         card: req.body.id
@@ -111,8 +112,8 @@ app.post('/api/payment',checkToken ,jsonParser,(req, response) => {
         .query('CALL customer_get_login_info(:inEmail)',{replacements:{inEmail:req.body.email}}).then(
             data=>{
                 sequelize
-                .query('CALL shopping_cart_create_order(:inCartId,:inCustomerId,:inShippingId,:inTaxId)',
-                {replacements:{inCartId:req.body.inCartId,inCustomerId:data[0].customer_id,inShippingId:req.body.inShippingId,inTaxId:req.body.inTaxId}}).then(
+                .query('CALL shopping_cart_create_order(:inCartId,:inOrderAddress,:inCustomerId,:inShippingId,:inTaxId)',
+                {replacements:{inCartId:req.body.inCartId,inOrderAddress:inOrderAddress,inCustomerId:data[0].customer_id,inShippingId:req.body.inShippingId,inTaxId:req.body.inTaxId}}).then(
                   create_order=>{
                   let full_order_details = [];
                   sequelize.query('CALL orders_get_order_info(:inOrderId)',
