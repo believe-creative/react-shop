@@ -112,7 +112,6 @@ class Delivery extends Component {
       if (address_id === e.id) {
         let addressDetails = e;
         this.setState({ address: e, modalShow: true, addNewAddress: true });
-        this.props.setAddress(addressDetails);
       }
     });
   }
@@ -182,7 +181,7 @@ class Delivery extends Component {
     console.log("save");
   }
   handleClose() {
-    this.setState({ modalShow: false });
+    this.setState({ modalShow: false, address: {} });
   }
   addAddress() {
     console.log("add address");

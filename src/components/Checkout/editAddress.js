@@ -20,16 +20,17 @@ class EditAddress extends Component {
       customer: {},
       errors: {},
       address: "",
+      add_address: "",
       modalShow: false
     };
     this.handleClose = this.handleClose.bind(this);
   }
-  componentDidMount() {
+  componentDidMount() {}
+  componentWillReceiveProps(props) {
     if (this.props.addressDetails) {
       this.setState({ address: this.props.addressDetails });
     }
   }
-  componentWillReceiveProps(props) {}
   changeRegion(e) {
     let state = this.state;
     state["region"] = e.currentTarget.value;
@@ -153,12 +154,12 @@ class EditAddress extends Component {
       country: ""
     };
     let addAddressList = this.state.address;
-    addressList = this.props.address ? this.props.address : "";
+    addressList = this.state.address ? this.state.address : "";
 
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
     if (this.props.addNewAddress) {
-      console.log("edit render");
+      console.log("edit render", addressList);
       return (
         <React.Fragment>
           <Modal
