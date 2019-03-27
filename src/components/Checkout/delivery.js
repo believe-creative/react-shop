@@ -218,10 +218,11 @@ class Delivery extends Component {
                 <span>{address.address_1} </span>
                 <div> {address.address_2}</div>
                 <div>
-                  {address.city} {address.country} {address.postal_code}
-                </div>{" "}
+                  {address.city}, {address.postal_code}
+                </div>
+                <div> {address.country}</div>
               </p>
-              <p>Mobile number :{address.mob_phone} </p>
+              <p>Mobile number : {address.mob_phone} </p>
             </div>
 
             <div className="next_step">
