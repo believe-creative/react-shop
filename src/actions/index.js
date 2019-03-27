@@ -37,11 +37,17 @@ export const PRODUCTRECOMMENDATIONS = createRequestTypes(
 );
 export const PRODUCTLOCATIONS = createRequestTypes("PRODUCTLOCATIONS");
 export const ADDADDRESS = createRequestTypes("ADDADDRESS");
+export const UPDATEADDRESS = createRequestTypes("UPDATEADDRESS");
 export const GETADDRESS = createRequestTypes("GETADDRESS");
+export const DELETEADDRESS = createRequestTypes("DELETEADDRESS");
+export const SETADDRESS = "SETADDRESS";
 export function setUser(payload) {
   return { type: "SETUSER", payload };
 }
-
+export function setAddress(payload) {
+  console.log(payload);
+  return { type: "SETADDRESS", payload };
+}
 export function setSubCategory(payload) {
   return { type: "SETSUBCATEGORY", payload };
 }
@@ -199,8 +205,23 @@ export const addAddress = {
   success: (data, response) => action(ADDADDRESS[SUCCESS], { data, response }),
   failure: (data, error) => action(ADDADDRESS[FAILURE], { data, error })
 };
+
+export const updateAddress = {
+  request: data => action(UPDATEADDRESS[REQUEST], { data }),
+  success: (data, response) =>
+    action(UPDATEADDRESS[SUCCESS], { data, response }),
+  failure: (data, error) => action(UPDATEADDRESS[FAILURE], { data, error })
+};
+
 export const getAddress = {
   request: data => action(GETADDRESS[REQUEST], { data }),
   success: (data, response) => action(GETADDRESS[SUCCESS], { data, response }),
   failure: (data, error) => action(GETADDRESS[FAILURE], { data, error })
+};
+
+export const deleteAddress = {
+  request: data => action(DELETEADDRESS[REQUEST], { data }),
+  success: (data, response) =>
+    action(DELETEADDRESS[SUCCESS], { data, response }),
+  failure: (data, error) => action(DELETEADDRESS[FAILURE], { data, error })
 };

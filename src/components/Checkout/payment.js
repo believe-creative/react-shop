@@ -48,6 +48,20 @@ class Payment extends Component {
     // Within the context of `Elements`, this call to createToken knows which Element to
     // tokenize, since there's only one in this group.
     // console.log(this_ref.props.token);
+    let getShippingAddress = {};
+    if (this.props.address) {
+      getShippingAddress = {
+        address_name: this.props.address.address_name,
+        address_1: this.props.address.address_1,
+        address_2: this.props.address.address_2,
+        city: this.props.address.city,
+        postal_code: this.props.address.postal_code,
+        country: this.props.address.country,
+        day_phone: this.props.address.day_phone,
+        eve_phone: this.props.address.eve_phone,
+        mob_phone: this.props.address.mob_phone
+      };
+    }
 
     this.props.stripe
       .createToken({ name: this.props.user.name })
@@ -61,6 +75,7 @@ class Payment extends Component {
                 email: this_ref.props.user.email,
                 id: token.id,
                 inCartId: this_ref.props.cart.inCartId,
+                inOrderAddress: JSON.stringify(getShippingAddress),
                 inCustomerId: null,
                 inShippingId: this_ref.props.cart.shippingoption.shipping_id,
                 amount:

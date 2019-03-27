@@ -8,7 +8,8 @@ const intialState = {
   productrecommendations: [],
   productLocations: [],
   addAddress: [],
-  getAddress: []
+  getAddress: [],
+  address: {}
 };
 
 function getCategoryName(categories, id) {
@@ -77,6 +78,7 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
+
     case ActionTypes.PRODUCTLOCATIONS.REQUEST:
       return {
         ...state,
@@ -276,6 +278,24 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
+
+    case ActionTypes.UPDATEADDRESS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.UPDATEADDRESS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        updateAddress: action.response
+      };
+    case ActionTypes.UPDATEADDRESS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
     case ActionTypes.GETADDRESS.REQUEST:
       return {
         ...state,
@@ -293,6 +313,24 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
+    case ActionTypes.DELETEADDRESS.REQUEST:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case ActionTypes.DELETEADDRESS.SUCCESS:
+      return {
+        ...state,
+        isLoading: false,
+        deleteAddress: action.response
+      };
+    case ActionTypes.DELETEADDRESS.FAILURE:
+      return {
+        ...state,
+        isLoading: false,
+        error: action.errors
+      };
+
     default:
       return state;
   }

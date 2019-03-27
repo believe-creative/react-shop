@@ -2,11 +2,14 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { ButtonToolbar, Button } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
 import "../../scss/cart.scss";
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
 import axios from "axios";
+import EditAddress from "./editAddress";
 import { API_ROOT } from "../../services/constants";
 class Delivery extends Component {
   constructor(props) {
@@ -15,8 +18,12 @@ class Delivery extends Component {
       region: "",
       customer: {},
       errors: {},
-      address: {}
+      address: {},
+      modalShow: false,
+      address_id: "",
+      default: false
     };
+    this.handleClose = this.handleClose.bind(this);
     this.stage = 0;
   }
   componentDidMount() {
@@ -81,6 +88,7 @@ class Delivery extends Component {
   }
   itemInsert(address_id) {
     var addressDetails = {};
+    console.log("this set", this.props);
     let state = this.state;
     this.props.getaddress.map((e, index) => {
       if (address_id === e.id) {
@@ -93,10 +101,34 @@ class Delivery extends Component {
         console.log("this.state", this.state);
         this.props.setDelivarydetails(this.state, this.state);
         this.setState({ address: e });
+        this.props.setAddress(addressDetails);
       }
     });
 
     console.log(addressDetails);
+  }
+  handleEdit(address_id) {
+    this.props.getaddress.map((e, index) => {
+      if (address_id === e.id) {
+        let addressDetails = e;
+        this.setState({ address: e, modalShow: true, addNewAddress: true });
+        this.props.setAddress(addressDetails);
+      }
+    });
+  }
+  handleDelete(address_id) {
+    alert("are you sure delete this address");
+    this.props.deleteAddress({
+      token: this.props.token,
+      inAddressId: address_id
+    });
+    this.props.getAddress({
+      token: this.props.token,
+      inEmail: this.props.user ? this.props.user.email : ""
+    });
+  }
+  handleAdd() {
+    this.setState({ modalShow: true, addNewAddress: false, address: {} });
   }
   backStage() {
     this.props.backStage(this.stage);
@@ -126,37 +158,13 @@ class Delivery extends Component {
       state["errors"]["region"] = "Should select a region";
       hasErrors = true;
     }
-    if (!state["region"]) {
-      state["errors"]["region"] = "Should select a region";
-      hasErrors = true;
-    }
+
     if (!state["shippingoption"]) {
       state["errors"]["shippingoption"] = "Should select a delivery option.";
-      hasErrors = true;
+      hasErrors = false;
     }
     if (!hasErrors) {
-      axios
-        .post(
-          API_ROOT + "update-address",
-          {
-            inEmail: this_ref.props.user.email,
-            inAddress1: state["customer"]["address_1"],
-            inAddress2: state["customer"]["address_2"],
-            inCity: state["customer"]["city"],
-            inRegion: state["regionName"],
-            inPostalCode: state["customer"]["postal_code"],
-            inCountry: state["customer"]["country"],
-            inShippingRegionId: state["region"]
-          },
-          { headers: { Authorization: `Bearer ${this_ref.props.token}` } }
-        )
-        .then(function(response) {
-          this_ref.props.nextStage(this_ref.stage);
-        })
-        .catch(function(error) {
-          this_ref.state["errors"]["general"] = error;
-          this_ref.setState(this_ref.state);
-        });
+      this_ref.props.nextStage(this_ref.stage);
     }
     this.setState(state);
   }
@@ -173,11 +181,78 @@ class Delivery extends Component {
   saveAddress() {
     console.log("save");
   }
+  handleClose() {
+    this.setState({ modalShow: false });
+  }
+  addAddress() {
+    console.log("add address");
+  }
+  setDefaultAddress(address) {
+    this.setState({
+      default: true,
+      address_id: address.id,
+      region: address.shipping_region_id
+    });
+    this.props.getShippingOptions({
+      token: this.props.token,
+      inShippingRegionId: address.shipping_region_id
+    });
+  }
+  addressList(getAddress) {
+    return getAddress.map((address, index) => {
+      return (
+        <div className="col-md-6 col-lg-4 item">
+          <div
+            className={
+              "hot_block" +
+              " " +
+              (address.id == this.state.address_id ? "default" : "")
+            }
+            onClick={() => this.setDefaultAddress(address)}
+          >
+            <div
+              className="address"
+              onClick={add => this.itemInsert(address.id)}
+            >
+              <h3>{address.address_name} Address</h3>
+              <p>
+                <span>{address.address_1} </span>
+                <div> {address.address_2}</div>
+                <div>
+                  {address.city} {address.country} {address.postal_code}
+                </div>{" "}
+              </p>
+              <p>Mobile number :{address.mob_phone} </p>
+            </div>
+
+            <div className="next_step">
+              <button
+                type="button"
+                className="btn btn-md save_address"
+                onClick={() => this.handleEdit(address.id)}
+              >
+                Edit
+              </button>
+
+              <button
+                type="button"
+                className="btn btn-md "
+                onClick={() => this.handleDelete(address.id)}
+              >
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      );
+    });
+  }
   render() {
-    console.log(this.props);
+    console.log(this.props, this.state);
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
+
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
@@ -200,196 +275,60 @@ class Delivery extends Component {
       <React.Fragment>
         <Container>
           <Row className="address_block items_block">
-            {getAddress
-              ? getAddress.map((address, index) => {
-                  return (
-                    <div className="col-md-6 col-lg-4 item">
-                      <div className="hot_block">
-                        <div
-                          className="address"
-                          onClick={add => this.itemInsert(address.id)}
-                        >
-                          <h3>{address.address_name} Address</h3>
-                          <div>Address 1 : {address.address_1}</div>
-                          <div>Address 2 : {address.address_2}</div>
-                          <div>City : {address.city}</div>
-                          <div>Country : {address.country}</div>
-                          <div>Postal Code : {address.postal_code}</div>
-                          <div>Day phone number : {address.day_phone}</div>
-                          <div>Evening phone number :{address.eve_phone} </div>
-                          <div>Mobile number :{address.mob_phone} </div>
-                        </div>
-                        <div className="next_step">
-                          <button
-                            type="button"
-                            className="btn btn-md save_address"
-                          >
-                            Edit
-                          </button>
-                          <button type="button" className="btn btn-md ">
-                            Delete
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })
-              : ""}
-          </Row>
-
-          <Row className="delivery_block">
-            <Col md={12}>
-              <h2 className="pb-3">{"Add Address"}</h2>
-              {this.showError("general")}
-              <div className="form-content">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Name*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.name}
-                        name="name"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("name")}
-                    <div className="form-group">
-                      <label className="">Address 1*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.address_1}
-                        name="address_1"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_1")}
-                    <div className="form-group">
-                      <label className="">Address 2</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.address_2}
-                        name="address_2"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_2")}
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">City *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.city}
-                        name="city"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("city")}
-                    <div className="form-group">
-                      <label className="">Zip-code *</label>
-
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.postal_code}
-                        name="postal_code"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("postal_code")}
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-group country">
-                      <label>{"Country:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={customer.country}
-                        name="country"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("country")}
-                    <div className="form-group form-check">
-                      <span />
-                      <label htmlFor="male">
-                        <h3>Region *</h3>
-                      </label>
-                      <select
-                        className="selectpicker"
-                        value={this.state.region}
-                        onChange={this_ref.changeRegion.bind(this_ref)}
-                      >
-                        {regions.map(function(region, index) {
-                          return (
-                            <option
-                              key={index}
-                              data-region={JSON.stringify(region)}
-                              value={region.shipping_region_id}
-                            >
-                              {region.shipping_region}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      {this.showError("region")}
-                    </div>
-
-                    {this.state.region ? (
-                      <div className="form-group delivery_options">
-                        <label
-                          className="form-check-label"
-                          htmlFor="exampleCheck1"
-                        >
-                          <h2>Delivery Options </h2>
-                        </label>
-                        <div className="row radio-checkbox-block">
-                          {shippingOptions.map(function(option, index) {
-                            return (
-                              <div key={index} className="col-md-6">
-                                <p>
-                                  <input
-                                    type="radio"
-                                    data-option={JSON.stringify(option)}
-                                    data-value={option.shipping_id}
-                                    name="shippingoption"
-                                    id={"option" + option.shipping_id}
-                                    onClick={this_ref.setShippingOption.bind(
-                                      this_ref
-                                    )}
-                                  />
-                                  <span />
-                                  <label
-                                    htmlFor={"option" + option.shipping_id}
-                                  >
-                                    <h3>{option.shipping_type}</h3>
-                                  </label>
-                                </p>
-                              </div>
-                            );
-                          })}
-                        </div>
-                        {this.showError("shippingoption")}
-                      </div>
-                    ) : (
-                      <div />
-                    )}
-                  </div>
+            <EditAddress
+              modalShow={this.state.modalShow}
+              onHide={this.handleClose}
+              addressDetails={this.state.address}
+              customerDetails={this.state.customer}
+              setDelivarydetails={this.props.setDelivarydetails}
+              addNewAddress={this.state.addNewAddress}
+            />
+            <div className="col-md-6 col-lg-12">
+              <h2 class="pb-3">Select Address</h2>
+            </div>
+            {getAddress ? this.addressList(getAddress) : ""}
+            <div className="col-md-6 col-lg-4 item add-address-block">
+              <div className="hot_block" onClick={() => this.handleAdd()}>
+                <div className="address">
+                  <i className="fas fa-plus" />
+                  <h3>Add Address</h3>
                 </div>
               </div>
-            </Col>
+            </div>
           </Row>
+
+          {this.state.region ? (
+            <div className="form-group delivery_options">
+              <label className="form-check-label" htmlFor="exampleCheck1">
+                <h2>Delivery Options </h2>
+              </label>
+              <div className="row radio-checkbox-block">
+                {shippingOptions.map(function(option, index) {
+                  return (
+                    <div key={index} className="col-md-6">
+                      <p>
+                        <input
+                          type="radio"
+                          data-option={JSON.stringify(option)}
+                          data-value={option.shipping_id}
+                          name="shippingoption"
+                          id={"option" + option.shipping_id}
+                          onClick={this_ref.setShippingOption.bind(this_ref)}
+                        />
+                        <span />
+                        <label htmlFor={"option" + option.shipping_id}>
+                          <h3>{option.shipping_type}</h3>
+                        </label>
+                      </p>
+                    </div>
+                  );
+                })}
+              </div>
+              {this.showError("shippingoption")}
+            </div>
+          ) : (
+            <div />
+          )}
         </Container>
         <div className="col-md-12">
           <div className="checkout_next">
@@ -401,13 +340,6 @@ class Delivery extends Component {
               Back
             </button>
             <div className="next_step">
-              <button
-                type="button"
-                className="btn btn-md save_address"
-                onClick={this.saveAddress.bind(this)}
-              >
-                Save
-              </button>
               <button
                 onClick={this.nextStage.bind(this)}
                 type="button"
@@ -431,7 +363,8 @@ const mapStateToProps = state => {
     user: state.get("user"),
     customer: state.get("user").customer,
     token: state.get("user").token,
-    getaddress: state.get("products").getAddress
+    getaddress: state.get("products").getAddress,
+    address: state.get("order").address
   };
 };
 
@@ -446,7 +379,9 @@ function mapDispatchToProps(dispatch) {
     getShippingOptions: data =>
       dispatch(Actions.getShippingOptions.request(data)),
     addAddress: data => dispatch(Actions.addAddress.request(data)),
-    getAddress: data => dispatch(Actions.getAddress.request(data))
+    getAddress: data => dispatch(Actions.getAddress.request(data)),
+    deleteAddress: data => dispatch(Actions.deleteAddress.request(data)),
+    setAddress: data => dispatch(Actions.setAddress(data))
   };
 }
 

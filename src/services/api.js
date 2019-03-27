@@ -246,6 +246,7 @@ export const getProductLocations = function(data) {
 };
 
 export const addAddress = function(data) {
+  console.log(data);
   return callAPI(
     `add-address/`,
     {
@@ -259,8 +260,38 @@ export const addAddress = function(data) {
       inAddress1: data.inAddress1,
       inAddress2: data.inAddress2,
       inCity: data.inCity,
+      inRegion: data.inRegion,
       inPostalCode: data.inPostalCode,
       inCountry: data.inCountry,
+      inShippingRegionId: data.inShippingRegionId,
+      inDayPhone: data.inDayPhone,
+      inEvePhone: data.inEvePhone,
+      inMobPhone: data.inMobPhone
+    })
+  );
+};
+
+export const updateAddress = function(data) {
+  console.log(data);
+  return callAPI(
+    `update-address/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8",
+      Authorization: `Bearer ${data.token}`
+    },
+
+    getParams({
+      inEmail: data.inEmail,
+      inAddressId: data.inAddressId,
+      inAddressName: data.inAddressName,
+      inAddress1: data.inAddress1,
+      inAddress2: data.inAddress2,
+      inCity: data.inCity,
+      inRegion: data.inRegion,
+      inPostalCode: data.inPostalCode,
+      inCountry: data.inCountry,
+      inShippingRegionId: data.inShippingRegionId,
       inDayPhone: data.inDayPhone,
       inEvePhone: data.inEvePhone,
       inMobPhone: data.inMobPhone
@@ -278,6 +309,20 @@ export const getAddress = function(data) {
     },
     getParams({
       inEmail: data.inEmail
+    })
+  );
+};
+
+export const deleteAddress = function(data) {
+  return callAPI(
+    `delete-customer-address/`,
+    {
+      "Content-Type": "application/x-www-form-urlencoded",
+      Accept: "application/json; charset=utf-8",
+      Authorization: `Bearer ${data.token}`
+    },
+    getParams({
+      inAddressId: data.inAddressId
     })
   );
 };

@@ -229,12 +229,20 @@ table.order_summery {
   .address {
     padding: 25px;
     cursor: pointer;
-
+    .fa-plus {
+      font-size: 60px;
+      color: #decdcd;
+      padding: 24px;
+    }
     &:hover {
       background-color: $gray-light;
       opacity: 0.75;
     }
   }
+  .default {
+    border: 2px solid #f62f5e;
+  }
+
   .next_step {
     padding: 25px;
     display: flex;
@@ -244,4 +252,22 @@ table.order_summery {
 }
 .active_stage {
   color: $red;
+}
+.modal-open {
+  .modal-backdrop.show {
+    background-color: rgba(0, 0, 0, 0.75);
+  }
+  .edit-address-popup {
+    .form-content {
+      padding: 20px;
+    }
+  }
+}
+.add-address-block {
+  .hot_block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px dotted;
+  }
 }

@@ -22,7 +22,9 @@ const {
   getProductRecommendations,
   productLocations,
   addAddress,
-  getAddress
+  updateAddress,
+  getAddress,
+  deleteAddress
 } = actions;
 
 //reusable fetch subroutine.
@@ -119,10 +121,22 @@ export const fetchaddAddress = fetchEntity.bind(
   api.addAddress
 );
 
+export const fetchupdateAddress = fetchEntity.bind(
+  null,
+  updateAddress,
+  api.updateAddress
+);
+
 export const fetchgetAddress = fetchEntity.bind(
   null,
   getAddress,
   api.getAddress
+);
+
+export const fetchdeleteAddress = fetchEntity.bind(
+  null,
+  deleteAddress,
+  api.deleteAddress
 );
 
 function* loadUpadtedCart(action) {
@@ -199,8 +213,16 @@ function* loadaddAddress(action) {
   yield call(fetchaddAddress, action.data);
 }
 
+function* loadupdateAddress(action) {
+  yield call(fetchupdateAddress, action.data);
+}
+
 function* loadgetAddress(action) {
   yield call(fetchgetAddress, action.data);
+}
+
+function* loaddeleteAddress(action) {
+  yield call(fetchdeleteAddress, action.data);
 }
 
 //+++++++++++++++++//
@@ -286,8 +308,16 @@ function* watchLoadaddAddress() {
   yield takeLatest(actions.ADDADDRESS.REQUEST, loadaddAddress);
 }
 
+function* watchLoadupdateAddress() {
+  yield takeLatest(actions.UPDATEADDRESS.REQUEST, loadupdateAddress);
+}
+
 function* watchLoadgetAddress() {
   yield takeLatest(actions.GETADDRESS.REQUEST, loadgetAddress);
+}
+
+function* watchLoaddeleteAddress() {
+  yield takeLatest(actions.DELETEADDRESS.REQUEST, loaddeleteAddress);
 }
 
 export default function*() {
@@ -310,5 +340,7 @@ export default function*() {
   yield fork(watchloadProductLocations);
   yield fork(watchloadgetAccessToken);
   yield fork(watchLoadaddAddress);
+  yield fork(watchLoadupdateAddress);
   yield fork(watchLoadgetAddress);
+  yield fork(watchLoaddeleteAddress);
 }

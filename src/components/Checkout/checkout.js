@@ -49,6 +49,7 @@ class Checkout extends Component {
     };
   }
   setDelivarydetails(e, child) {
+    console.log("child", e, child);
     let state = this.state;
     state["delivery"] = child;
     state["delivery"]["errors"] = [];
@@ -93,6 +94,7 @@ class Checkout extends Component {
               user={this.props.user}
               cart={this.props.cart}
               customer={this.props.customer}
+              address={this.props.address}
               backStage={this.backStage.bind(this)}
               nextStage={this.nextStage.bind(this)}
               back={"back"}
@@ -262,7 +264,8 @@ const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
     user: state.get("user"),
-    token: state.get("user").token
+    token: state.get("user").token,
+    address: state.get("order").address
   };
 };
 

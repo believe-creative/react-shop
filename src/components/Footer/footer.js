@@ -64,8 +64,7 @@ export default class SiteFooter extends Component {
                 <li>
                   <a
                     className="logo"
-                    href="
-https://www.believecreative.com/"
+                    href="https://www.believecreative.com/"
                     target="_blank"
                   >
                     <Image
