@@ -85,7 +85,7 @@
                 <p>Order Date: <%= order_date %></p>
                 <% } %>
             </div>
-            <div class="summary-right-block">
+            <!-- <div class="summary-right-block">
                 <h3>SHIPPING ADDRESS:</h3>
                 <% if(order_info[2].shipping_address){ %>
                 <p><%= order_info[2].shipping_address[0].address_1; %></p>
@@ -93,6 +93,18 @@
                 <p><%= order_info[2].shipping_address[0].city; %></p>
                 <p><%= order_info[2].shipping_address[0].region; %>, <%= order_info[2].shipping_address[0].postal_code; %></p>
                 <p><%= order_info[2].shipping_address[0].country; %></p>
+                <% } %>
+            </div> -->
+						<div class="summary-right-block">
+                <h3>SHIPPING ADDRESS:</h3>
+								<% var order_address = JSON.parse(order_info[0].order_info[0].order_address); %>
+                <% if(order_address){ %>
+                <p><b><%= order_info[2].shipping_address[0].name; %></b></p>
+                <p><%= order_address.address_1; %></p>
+                <p><%= order_address.address_2; %></p>
+                <p><%= order_address.city; %>, <%= order_address.postal_code; %></p>
+                <p><%= order_address.country; %></p>
+                <p>Phone: <%= order_address.mob_phone; %></p>
                 <% } %>
             </div>
             <div class="clear"></div>
