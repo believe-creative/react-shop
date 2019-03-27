@@ -681,16 +681,17 @@ app.post('/api/get-saved-products', checkToken, (req,res)=>{
 });
 /*
 * To create order using shopping cart items.
-* Parameters{inCartId,inCustomerId,inShippingId,inTaxId}
+* Parameters{inCartId,inOrderAddress,inCustomerId,inShippingId,inTaxId}
 */
 app.post('/api/create-order', checkToken, (req,res)=>{
   let inCartId=req.body.inCartId;
+  let inOrderAddress=req.body.inOrderAddress;
   let inCustomerId=req.body.inCustomerId;
   let inShippingId=req.body.inShippingId;
   let inTaxId=req.body.inTaxId;
   sequelize
-    .query('CALL shopping_cart_create_order(:inCartId,:inCustomerId,:inShippingId,:inTaxId)',
-    {replacements:{inCartId:inCartId,inCustomerId:inCustomerId,inShippingId:inShippingId,inTaxId:inTaxId}}).then(
+    .query('CALL shopping_cart_create_order(:inCartId,:inOrderAddress,:inCustomerId,:inShippingId,:inTaxId)',
+    {replacements:{inCartId:inCartId,inOrderAddress:inOrderAddress,inCustomerId:inCustomerId,inShippingId:inShippingId,inTaxId:inTaxId}}).then(
       create_order=>res.json(create_order));
 });
 /*
