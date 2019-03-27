@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import { confirmAlert } from "react-confirm-alert";
 import { ButtonToolbar, Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import "../../scss/cart.scss";
@@ -116,16 +117,31 @@ class Delivery extends Component {
     });
   }
   handleDelete(address_id) {
-    alert("are you sure delete this address");
-    this.props.deleteAddress({
-      token: this.props.token,
-      inAddressId: address_id
-    });
-    this.props.getAddress({
-      token: this.props.token,
-      inEmail: this.props.user ? this.props.user.email : ""
+    confirmAlert({
+      title: "Delete Address",
+      message: "are you sure delete this address!",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => {
+            this.props.deleteAddress({
+              token: this.props.token,
+              inAddressId: address_id
+            });
+            this.props.getAddress({
+              token: this.props.token,
+              inEmail: this.props.user ? this.props.user.email : ""
+            });
+          }
+        },
+        {
+          label: "No",
+          onClick: () => {}
+        }
+      ]
     });
   }
+
   handleAdd() {
     this.setState({ modalShow: true, addNewAddress: false, address: {} });
   }
