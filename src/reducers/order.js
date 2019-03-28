@@ -7,10 +7,8 @@ const intialState = {
 };
 
 export default (state = intialState, action) => {
-  console.log(action);
   switch (action.type) {
     case Actions.SETADDRESS:
-      console.log("action.payload order", action.payload);
       return {
         ...state,
         isLoading: false,

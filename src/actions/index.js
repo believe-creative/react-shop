@@ -45,7 +45,6 @@ export function setUser(payload) {
   return { type: "SETUSER", payload };
 }
 export function setAddress(payload) {
-  console.log(payload);
   return { type: "SETADDRESS", payload };
 }
 export function setSubCategory(payload) {

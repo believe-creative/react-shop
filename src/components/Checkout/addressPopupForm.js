@@ -11,10 +11,9 @@ import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
 import axios from "axios";
 import { API_ROOT } from "../../services/constants";
-class EditAddress extends Component {
+class AddressPopupForm extends Component {
   constructor(props) {
     super(props);
-    console.log("props", props);
     this.state = {
       region: "",
       customer: {},
@@ -62,10 +61,8 @@ class EditAddress extends Component {
 
   changed(e) {
     let state = this.state;
-    console.log("Onchange_this.state", this.state);
     state["address"][e.currentTarget.name] = e.currentTarget.value;
     this.setState(state);
-    console.log("this.state", this.state);
     this.props.setDelivarydetails(this.state, this.state);
   }
 
@@ -80,9 +77,7 @@ class EditAddress extends Component {
   }
 
   updateAddress() {
-    console.log("update");
     let state = this.state;
-    console.log(this.props);
     this.props.updateAddress({
       token: this.props.token,
       inEmail: this.props.user ? this.props.user.email : "",
@@ -107,9 +102,7 @@ class EditAddress extends Component {
     this.setState({ address: {} });
   }
   saveAddress() {
-    console.log("save");
     let state = this.state;
-    console.log(this.props);
     this.props.addAddress({
       token: this.props.token,
       inEmail: this.props.user ? this.props.user.email : "",
@@ -138,7 +131,6 @@ class EditAddress extends Component {
   }
 
   render() {
-    console.log("edit", this.props, this.state);
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
@@ -159,7 +151,6 @@ class EditAddress extends Component {
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
     if (this.props.addNewAddress) {
-      console.log("edit render", addressList);
       return (
         <React.Fragment>
           <Modal
@@ -248,7 +239,7 @@ class EditAddress extends Component {
                     {this.showError("postal_code")}
                   </div>
                   <div className="col-md-6">
-                    <div className="form-group country">
+                    <div className="form-group">
                       <label>{"Country:"}</label>
                       <input
                         type="text"
@@ -436,7 +427,7 @@ class EditAddress extends Component {
                     {this.showError("postal_code")}
                   </div>
                   <div className="col-md-6">
-                    <div className="form-group country">
+                    <div className="form-group">
                       <label>{"Country:"}</label>
                       <input
                         type="text"
@@ -570,4 +561,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditAddress);
+)(AddressPopupForm);

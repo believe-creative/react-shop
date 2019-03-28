@@ -10,7 +10,7 @@ import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
 import axios from "axios";
-import EditAddress from "./editAddress";
+import AddressPopupForm from "./addressPopupForm";
 import { API_ROOT } from "../../services/constants";
 class Delivery extends Component {
   constructor(props) {
@@ -81,32 +81,25 @@ class Delivery extends Component {
 
   changed(e) {
     let state = this.state;
-    console.log("Onchange_this.state", this.state);
     state["customer"][e.currentTarget.name] = e.currentTarget.value;
     this.setState(state);
-    console.log("this.state", this.state);
     this.props.setDelivarydetails(this.state, this.state);
   }
   itemInsert(address_id) {
     var addressDetails = {};
-    console.log("this set", this.props);
     let state = this.state;
     this.props.getaddress.map((e, index) => {
       if (address_id === e.id) {
-        console.log("hello", e);
         addressDetails = e;
         Object.keys(addressDetails).map(key => {
           state["customer"][key] = addressDetails[key];
         });
         this.setState(state);
-        console.log("this.state", this.state);
         this.props.setDelivarydetails(this.state, this.state);
         this.setState({ address: e, shippingoption: null });
         this.props.setAddress(addressDetails);
       }
     });
-
-    console.log(addressDetails);
   }
   handleEdit(address_id) {
     this.props.getaddress.map((e, index) => {
@@ -193,15 +186,10 @@ class Delivery extends Component {
     }
   }
 
-  saveAddress() {
-    console.log("save");
-  }
   handleClose() {
     this.setState({ modalShow: false, address: {} });
   }
-  addAddress() {
-    console.log("add address");
-  }
+
   setDefaultAddress(address) {
     this.setState({
       default: true,
@@ -264,7 +252,6 @@ class Delivery extends Component {
     });
   }
   render() {
-    console.log(this.props, this.state);
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
@@ -291,7 +278,7 @@ class Delivery extends Component {
       <React.Fragment>
         <Container>
           <Row className="address_block items_block">
-            <EditAddress
+            <AddressPopupForm
               modalShow={this.state.modalShow}
               onHide={this.handleClose}
               addressDetails={this.state.address}
@@ -299,7 +286,7 @@ class Delivery extends Component {
               setDelivarydetails={this.props.setDelivarydetails}
               addNewAddress={this.state.addNewAddress}
             />
-            <div className="col-md-6 col-lg-12">
+            <div className="col-md-12">
               <h2 class="pb-3">Select Address</h2>
             </div>
             {getAddress ? this.addressList(getAddress) : ""}

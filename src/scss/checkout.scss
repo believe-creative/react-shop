@@ -228,6 +228,7 @@ table.order_summery {
   }
   .address {
     padding: 25px;
+    padding-bottom: 0;
     cursor: pointer;
     .fa-plus {
       font-size: 60px;
@@ -260,6 +261,14 @@ table.order_summery {
   .edit-address-popup {
     .form-content {
       padding: 20px;
+    }
+    input.form-control {
+      margin-bottom: 0;
+      min-height: 36px;
+    }
+    .form-check,
+    .selectpicker {
+      margin: 0;
     }
   }
 }
