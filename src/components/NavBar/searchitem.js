@@ -58,11 +58,11 @@ class SearchItem extends Component {
                   action={"/search/" + this.state.searchitem}
                   id="search_icon"
                 >
-                  <div class="form-group has-search">
-                    <span class="fa fa-search form-control-feedback" />
+                  <div className="form-group has-search">
+                    <span className="fa fa-search form-control-feedback" />
                     <input
                       type="text"
-                      class="form-control search"
+                      className="form-control search"
                       placeholder="Search"
                       onChange={this.searchItems.bind(this)}
                     />

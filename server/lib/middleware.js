@@ -1,17 +1,17 @@
-let jwt = require('jsonwebtoken');
-let secret_key = require('../config.js').secret_key;
+let jwt = require("jsonwebtoken");
+let secret_key = require("../config.js").secret_key;
 let checkToken = (req, res, next) => {
-  let token = req.headers['x-access-token'] || req.headers['authorization']; // Express headers are auto converted to lowercase
+  let token = req.headers["x-access-token"] || req.headers["authorization"]; // Express headers are auto converted to lowercase
   if (token) {
-    if (token.startsWith('Bearer ')) {
+    if (token.startsWith("Bearer ")) {
       // Remove Bearer from string
       token = token.slice(7, token.length);
     }
-    jwt.verify(token, secret_key, (err, decoded) => {      
+    jwt.verify(token, secret_key, (err, decoded) => {
       if (err) {
         return res.json({
           success: false,
-          message: 'Token is not valid'
+          message: "Token is not valid"
         });
       } else {
         req.decoded = decoded;
@@ -21,11 +21,11 @@ let checkToken = (req, res, next) => {
   } else {
     return res.json({
       success: false,
-      message: 'Auth token is not supplied'
+      message: "Auth token is not supplied"
     });
   }
 };
 
 module.exports = {
   checkToken: checkToken
-}
+};

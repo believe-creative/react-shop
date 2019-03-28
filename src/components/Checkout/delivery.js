@@ -204,7 +204,7 @@ class Delivery extends Component {
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <div className="col-md-6 col-lg-4 item">
+        <div key={index} className="col-md-6 col-lg-4 item">
           <div
             className={
               "hot_block" +
@@ -218,14 +218,14 @@ class Delivery extends Component {
               onClick={add => this.itemInsert(address.id)}
             >
               <h3>{address.address_name} Address</h3>
-              <p>
-                <span>{address.address_1} </span>
+              <div>
+                <div>{address.address_1} </div>
                 <div> {address.address_2}</div>
                 <div>
                   {address.city}, {address.postal_code}
                 </div>
                 <div> {address.country}</div>
-              </p>
+              </div>
               <p>Mobile number : {address.mob_phone} </p>
             </div>
 
@@ -287,7 +287,7 @@ class Delivery extends Component {
               addNewAddress={this.state.addNewAddress}
             />
             <div className="col-md-12">
-              <h2 class="pb-3">Select Address</h2>
+              <h2 className="pb-3">Select Address</h2>
             </div>
             {getAddress ? this.addressList(getAddress) : ""}
             <div className="col-md-6 col-lg-4 item add-address-block">

@@ -122,7 +122,7 @@ class Category extends Component {
         (this.state.activePage - 1) * 10 + 10
       );
     }
-    console.log(this.props);
+    // console.log(this.props);
     let productItems = (
       <div className="product_filter_panel">
         <div className="row">

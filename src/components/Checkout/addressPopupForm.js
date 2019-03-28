@@ -150,383 +150,230 @@ class AddressPopupForm extends Component {
 
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-    if (this.props.addNewAddress) {
-      return (
-        <React.Fragment>
-          <Modal
-            show={this.props.modalShow}
-            onHide={this.props.onHide}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            className={"edit-address-popup"}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Edit Address
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="form-content">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Name*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.address_name}
-                        name="address_name"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_name")}
-                  </div>
-                  <div className="col-md-6" />
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Address 1*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.address_1}
-                        name="address_1"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_1")}
-                    <div className="form-group">
-                      <label className="">City *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.city}
-                        name="city"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("city")}
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Address 2</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.address_2}
-                        name="address_2"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_2")}
 
-                    <div className="form-group">
-                      <label className="">Zip-code *</label>
+    return (
+      <React.Fragment>
+        <Modal
+          show={this.props.modalShow}
+          onHide={this.props.onHide}
+          size="lg"
+          aria-labelledby="contained-modal-title-vcenter"
+          centered
+          className={"edit-address-popup"}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title id="contained-modal-title-vcenter">
+              {this.props.addNewAddress ? "Edit Address" : "Add Address"}
+            </Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="form-content">
+              <div className="row">
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="">Name*</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.address_name
+                          : addAddressList.address_name
+                      }
+                      name="address_name"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("address_name")}
+                </div>
+                <div className="col-md-6" />
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="">Address 1*</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.address_1
+                          : addAddressList.address_1
+                      }
+                      name="address_1"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("address_1")}
+                  <div className="form-group">
+                    <label className="">City *</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={addressList.city}
+                      name="city"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("city")}
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label className="">Address 2</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.address_2
+                          : addAddressList.address_2
+                      }
+                      name="address_2"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("address_2")}
 
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.postal_code}
-                        name="postal_code"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("postal_code")}
+                  <div className="form-group">
+                    <label className="">Zip-code *</label>
+
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.postal_code
+                          : addAddressList.postal_code
+                      }
+                      name="postal_code"
+                      onChange={this.changed.bind(this)}
+                    />
                   </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label>{"Country:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.country}
-                        name="country"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("country")}
-                    <div className="form-group">
-                      <label>{"Day Phone Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.day_phone}
-                        name="day_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("day_phone")}
+                  {this.showError("postal_code")}
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>{"Country:"}</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.country
+                          : addAddressList.country
+                      }
+                      name="country"
+                      onChange={this.changed.bind(this)}
+                    />
                   </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label>{"Mobile Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.mob_phone}
-                        name="mob_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("mobile_phone")}
-                    <div className="form-group">
-                      <label>{"Eve Phone Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addressList.eve_phone}
-                        name="eve_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("evn_phone")}
+                  {this.showError("country")}
+                  <div className="form-group">
+                    <label>{"Day Phone Number:"}</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.day_phone
+                          : addAddressList.day_phone
+                      }
+                      name="day_phone"
+                      onChange={this.changed.bind(this)}
+                    />
                   </div>
-                  <div className="col-md-12">
-                    <div className="form-group form-check">
-                      <span />
-                      <label htmlFor="male">
-                        <h3>Region *</h3>
-                      </label>
-                      <select
-                        className="selectpicker"
-                        value={this.state.region}
-                        onChange={this_ref.changeRegion.bind(this_ref)}
-                      >
-                        {regions.map(function(region, index) {
-                          return (
-                            <option
-                              key={index}
-                              data-region={JSON.stringify(region)}
-                              value={region.shipping_region_id}
-                            >
-                              {region.shipping_region}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      {this.showError("region")}
-                    </div>
+                  {this.showError("day_phone")}
+                </div>
+                <div className="col-md-6">
+                  <div className="form-group">
+                    <label>{"Mobile Number:"}</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.mob_phone
+                          : addAddressList.mob_phone
+                      }
+                      name="mob_phone"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("mobile_phone")}
+                  <div className="form-group">
+                    <label>{"Eve Phone Number:"}</label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder=""
+                      value={
+                        this.props.addNewAddress
+                          ? addressList.eve_phone
+                          : addAddressList.eve_phone
+                      }
+                      name="eve_phone"
+                      onChange={this.changed.bind(this)}
+                    />
+                  </div>
+                  {this.showError("evn_phone")}
+                </div>
+                <div className="col-md-12">
+                  <div className="form-group form-check">
+                    <span />
+                    <label htmlFor="male">
+                      <h3>Region *</h3>
+                    </label>
+                    <select
+                      className="selectpicker"
+                      value={this.state.region}
+                      onChange={this_ref.changeRegion.bind(this_ref)}
+                    >
+                      {regions.map(function(region, index) {
+                        return (
+                          <option
+                            key={index}
+                            data-region={JSON.stringify(region)}
+                            value={region.shipping_region_id}
+                          >
+                            {region.shipping_region}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {this.showError("region")}
                   </div>
                 </div>
               </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                type="button"
-                className="btn btn-md save_address"
-                onClick={this.props.onHide}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-md save_address"
-                onClick={this.updateAddress.bind(this)}
-              >
-                Save Changes
-              </button>
-            </Modal.Footer>
-          </Modal>
-        </React.Fragment>
-      );
-    } else {
-      return (
-        <React.Fragment>
-          <Modal
-            show={this.props.modalShow}
-            onHide={this.props.onHide}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
-            centered
-            className={"edit-address-popup"}
-          >
-            <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
-                Add Address
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <div className="form-content">
-                <div className="row">
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Name*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.address_name}
-                        name="address_name"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_name")}
-                  </div>
-                  <div className="col-md-6" />
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Address 1*</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.address_1}
-                        name="address_1"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_1")}
-                    <div className="form-group">
-                      <label className="">City *</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.city}
-                        name="city"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("city")}
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label className="">Address 2</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.address_2}
-                        name="address_2"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("address_2")}
-
-                    <div className="form-group">
-                      <label className="">Zip-code *</label>
-
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.postal_code}
-                        name="postal_code"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("postal_code")}
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label>{"Country:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.country}
-                        name="country"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("country")}
-                    <div className="form-group">
-                      <label>{"Day Phone Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.day_phone}
-                        name="day_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("day_phone")}
-                  </div>
-                  <div className="col-md-6">
-                    <div className="form-group">
-                      <label>{"Mobile Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.mob_phone}
-                        name="mob_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("mobile_phone")}
-                    <div className="form-group">
-                      <label>{"Eve Phone Number:"}</label>
-                      <input
-                        type="text"
-                        className="form-control"
-                        placeholder=""
-                        value={addAddressList.eve_phone}
-                        name="eve_phone"
-                        onChange={this.changed.bind(this)}
-                      />
-                    </div>
-                    {this.showError("evn_phone")}
-                  </div>
-                  <div className="col-md-12">
-                    <div className="form-group form-check">
-                      <span />
-                      <label htmlFor="male">
-                        <h3>Region *</h3>
-                      </label>
-                      <select
-                        className="selectpicker"
-                        value={this.state.region}
-                        onChange={this_ref.changeRegion.bind(this_ref)}
-                      >
-                        {regions.map(function(region, index) {
-                          return (
-                            <option
-                              key={index}
-                              data-region={JSON.stringify(region)}
-                              value={region.shipping_region_id}
-                            >
-                              {region.shipping_region}
-                            </option>
-                          );
-                        })}
-                      </select>
-                      {this.showError("region")}
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Modal.Body>
-            <Modal.Footer>
-              <button
-                type="button"
-                className="btn btn-md save_address"
-                onClick={this.props.onHide}
-              >
-                Close
-              </button>
-              <button
-                type="button"
-                className="btn btn-md save_address"
-                onClick={this.saveAddress.bind(this)}
-              >
-                Save Changes
-              </button>
-            </Modal.Footer>
-          </Modal>
-        </React.Fragment>
-      );
-    }
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              type="button"
+              className="btn btn-md save_address"
+              onClick={this.props.onHide}
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              className="btn btn-md save_address"
+              onClick={
+                this.props.addNewAddress
+                  ? this.updateAddress.bind(this)
+                  : this.saveAddress.bind(this)
+              }
+            >
+              Save Changes
+            </button>
+          </Modal.Footer>
+        </Modal>
+      </React.Fragment>
+    );
   }
 }
 

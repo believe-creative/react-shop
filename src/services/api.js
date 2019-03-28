@@ -128,8 +128,9 @@ export const getShippingRegions = function(data) {
   });
 };
 
-export const checkUser = token =>
-  callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
+export const checkUser = token => {
+  return callAPI(`checkuser/`, { Authorization: `Bearer ${token}` });
+};
 
 export const getDepartments = function(data) {
   return callAPI("get-departments/", {
@@ -246,7 +247,6 @@ export const getProductLocations = function(data) {
 };
 
 export const addAddress = function(data) {
-  console.log(data);
   return callAPI(
     `add-address/`,
     {
@@ -272,7 +272,6 @@ export const addAddress = function(data) {
 };
 
 export const updateAddress = function(data) {
-  console.log(data);
   return callAPI(
     `update-address/`,
     {

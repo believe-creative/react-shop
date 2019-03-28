@@ -50,7 +50,11 @@ class App extends Component {
     }
   }
   render() {
-    if (this.state.loaded === true) {
+    if (
+      this.state.loaded === true &&
+      this.props.categories &&
+      this.props.token
+    ) {
       return (
         <BarLoader
           sizeUnit={"px"}
