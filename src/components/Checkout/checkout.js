@@ -49,7 +49,6 @@ class Checkout extends Component {
     };
   }
   setDelivarydetails(e, child) {
-    console.log("child", e, child);
     let state = this.state;
     state["delivery"] = child;
     state["delivery"]["errors"] = [];

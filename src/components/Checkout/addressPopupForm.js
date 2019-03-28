@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import { ButtonToolbar, Button } from "react-bootstrap";
 import Modal from "react-bootstrap/Modal";
 import "../../scss/cart.scss";
 import "../../scss/checkout.scss";
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
-import axios from "axios";
-import { API_ROOT } from "../../services/constants";
 class AddressPopupForm extends Component {
   constructor(props) {
     super(props);

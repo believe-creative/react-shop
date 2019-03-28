@@ -309,20 +309,18 @@ class Delivery extends Component {
                 {shippingOptions.map(function(option, index) {
                   return (
                     <div key={index} className="col-md-6">
-                      <p>
-                        <input
-                          type="radio"
-                          data-option={JSON.stringify(option)}
-                          data-value={option.shipping_id}
-                          name="shippingoption"
-                          id={"option" + option.shipping_id}
-                          onClick={this_ref.setShippingOption.bind(this_ref)}
-                        />
-                        <span />
-                        <label htmlFor={"option" + option.shipping_id}>
-                          <h3>{option.shipping_type}</h3>
-                        </label>
-                      </p>
+                      <input
+                        type="radio"
+                        data-option={JSON.stringify(option)}
+                        data-value={option.shipping_id}
+                        name="shippingoption"
+                        id={"option" + option.shipping_id}
+                        onClick={this_ref.setShippingOption.bind(this_ref)}
+                      />
+                      <span />
+                      <label htmlFor={"option" + option.shipping_id}>
+                        <h3>{option.shipping_type}</h3>
+                      </label>
                     </div>
                   );
                 })}
