@@ -7,14 +7,17 @@ import routes from "./routes";
 import * as Actions from "./actions";
 import { getCookie } from "./services/helpers";
 import { BarLoader } from "react-spinners";
-
+function demoAsyncCall() {
+  return new Promise(resolve => setTimeout(() => resolve(), 2500));
+}
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = { token: "null", loaded: true };
+    this.state = { token: "null", loaded: true, loading: true };
     this.handleLoad = this.handleLoad.bind(this);
   }
   componentDidMount() {
+    demoAsyncCall().then(() => this.setState({ loading: false }));
     var c = getCookie("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
@@ -50,11 +53,7 @@ class App extends Component {
     }
   }
   render() {
-    if (
-      this.state.loaded === true &&
-      this.props.categories &&
-      this.props.token
-    ) {
+    if (this.state.loading) {
       return (
         <BarLoader
           sizeUnit={"px"}

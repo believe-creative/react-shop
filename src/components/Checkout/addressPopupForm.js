@@ -10,6 +10,7 @@ class AddressPopupForm extends Component {
     super(props);
     this.state = {
       region: "",
+      editregion: "",
       customer: {},
       errors: {},
       address: "",
@@ -18,16 +19,21 @@ class AddressPopupForm extends Component {
     };
     this.handleClose = this.handleClose.bind(this);
   }
-  componentDidMount() {}
+  componentDidMount() {
+    console.log("mount", this.props, this.state);
+  }
   componentWillReceiveProps(props) {
+    console.log(props);
     if (this.props.addressDetails) {
-      this.setState({ address: this.props.addressDetails });
+      this.setState({
+        address: this.props.addressDetails
+      });
     }
   }
   changeRegion(e) {
     let state = this.state;
-    state["region"] = e.currentTarget.value;
-    state["regionName"] = e.currentTarget.querySelectorAll(
+    state["address"]["shipping_region_id"] = e.currentTarget.value;
+    state["address"]["region"] = e.currentTarget.querySelectorAll(
       "option[value='" + e.currentTarget.value + "']"
     )[0].innerText;
     state["completeRegion"] = JSON.parse(
@@ -36,18 +42,14 @@ class AddressPopupForm extends Component {
         .getAttribute("data-region")
     );
     this.setState(state);
-    this.props.setDelivarydetails(this.state, this.state);
-    this.props.setRegion(state["completeRegion"]);
-    this.props.getShippingOptions({
-      token: this.props.token,
-      inShippingRegionId: state["region"]
-    });
+    console.log(this.state);
   }
   setShippingOption(e) {
     let state = this.state;
     state["shippingoption"] = JSON.parse(
       e.currentTarget.getAttribute("data-option")
     );
+
     this.setState(state);
     this.props.setDelivarydetails(this.state, this.state);
     this.props.setShippingOption(state["shippingoption"]);
@@ -69,6 +71,12 @@ class AddressPopupForm extends Component {
       return <span />;
     }
   }
+  setOptions(region) {
+    this.props.getShippingOptions({
+      token: this.props.token,
+      inShippingRegionId: region
+    });
+  }
 
   updateAddress() {
     let state = this.state;
@@ -80,19 +88,25 @@ class AddressPopupForm extends Component {
       inAddress1: state["address"]["address_1"],
       inAddress2: state["address"]["address_2"],
       inCity: state["address"]["city"],
-      inRegion: state["regionName"],
+      inRegion: state["address"]["region"],
       inPostalCode: state["address"]["postal_code"],
       inCountry: state["address"]["country"],
-      inShippingRegionId: state["region"],
+      inShippingRegionId: state["address"]["shipping_region_id"],
       inDayPhone: state["address"]["day_phone"],
       inEvePhone: state["address"]["eve_phone"],
       inMobPhone: state["address"]["mob_phone"]
     });
     this.props.onHide();
+    this.props.setRegion(state["completeRegion"]);
+    this.props.getShippingOptions({
+      token: this.props.token,
+      inShippingRegionId: state["address"]["shipping_region_id"]
+    });
     this.props.getAddress({
       token: this.props.token,
       inEmail: this.props.user ? this.props.user.email : ""
     });
+
     this.setState({ address: {} });
   }
   saveAddress() {
@@ -104,10 +118,10 @@ class AddressPopupForm extends Component {
       inAddress1: state["address"]["address_1"],
       inAddress2: state["address"]["address_2"],
       inCity: state["address"]["city"],
-      inRegion: state.regionName,
+      inRegion: state["address"]["region"],
       inPostalCode: state["address"]["postal_code"],
       inCountry: state["address"]["country"],
-      inShippingRegionId: state.region,
+      inShippingRegionId: state["address"]["shipping_region_id"],
       inDayPhone: state["address"]["day_phone"],
       inEvePhone: state["address"]["eve_phone"],
       inMobPhone: state["address"]["mob_phone"]
@@ -318,13 +332,13 @@ class AddressPopupForm extends Component {
                 </div>
                 <div className="col-md-12">
                   <div className="form-group form-check">
-                    <span />
                     <label htmlFor="male">
                       <h3>Region *</h3>
                     </label>
+
                     <select
                       className="selectpicker"
-                      value={this.state.region}
+                      value={addressList.shipping_region_id}
                       onChange={this_ref.changeRegion.bind(this_ref)}
                     >
                       {regions.map(function(region, index) {
@@ -339,6 +353,7 @@ class AddressPopupForm extends Component {
                         );
                       })}
                     </select>
+
                     {this.showError("region")}
                   </div>
                 </div>

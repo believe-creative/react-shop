@@ -35,6 +35,7 @@ class Delivery extends Component {
     });
   }
   componentWillReceiveProps(props) {
+    console.log(props, "propjjjjjjjjjjjjjjjjjjjjjjjjjjjjs");
     if (props.user) {
       if (props.user.email) {
         if (props.customer) {
@@ -105,7 +106,12 @@ class Delivery extends Component {
     this.props.getaddress.map((e, index) => {
       if (address_id === e.id) {
         let addressDetails = e;
-        this.setState({ address: e, modalShow: true, addNewAddress: true });
+        this.setState({
+          address: e,
+          modalShow: true,
+          addNewAddress: true,
+          region: e.shipping_region_id
+        });
       }
     });
   }
@@ -125,6 +131,7 @@ class Delivery extends Component {
               token: this.props.token,
               inEmail: this.props.user ? this.props.user.email : ""
             });
+            this.setState({ region: null });
           }
         },
         {
@@ -255,7 +262,7 @@ class Delivery extends Component {
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
-
+    console.log(this.state, "state");
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
@@ -285,6 +292,8 @@ class Delivery extends Component {
               customerDetails={this.state.customer}
               setDelivarydetails={this.props.setDelivarydetails}
               addNewAddress={this.state.addNewAddress}
+              region={this.state.region ? this.state.region : "hello"}
+              setDefaultAddress={address => this.setDefaultAddress(address)}
             />
             <div className="col-md-12">
               <h2 className="pb-3">Select Address</h2>
