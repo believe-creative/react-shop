@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, maximum-scale=1.0, user-scalable=no">
+   <link rel="profile" href="http://gmpg.org/xfn/11">
+   <title>Order Confirmation Template</title>
+   <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+   <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700" rel="stylesheet">
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" type="text/css" >
+   <style type="text/css">
+	/*
+		font-family: 'Playfair Display', serif;
+		font-family: 'Montserrat', sans-serif;
+	*/
+	h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6{ font-weight: 700;}
+	p{ margin-bottom: 0;}
+	body{ background: #F7F7F7; font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 400; color: #000; line-height: 150%; }
+	.main-wraper{ max-width: 1140px; margin: 15px auto; padding:15px; background: #fff; border-radius: 15px; -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; }
+	.clear{ clear: both;}
+	.order-track{ text-align: center; color: #2e2e2e; font-family: Playfair Display,serif; font-size: 36px; line-height: 150%;}
+	.logo{ margin-bottom: 25px; text-align: center;}
+	.summary-block{ background: #f3f3f3; border: 1px solid #b4b4b4; margin: 25px 0; padding:0; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px;}
+	.summary-left-block{ float: left; text-align: center; width: 45%; padding: 15px;}
+	.summary-right-block{ float: right; width: 45%; text-align: center; padding: 15px; border-left: 1px solid #b4b4b4;}
+	.product-block{ border: 1px solid #b4b4b4; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; -ms-border-radius: 5px; -o-border-radius: 5px;}
+	.product-top-block{ background: #efefef; font-weight: 700; border-bottom: 1px solid #b4b4b4; padding:15px; border-top-left-radius: 5px; -webkit-border-top-left-radius: 5px; -moz-border-top-left-radius: 5px; -ms-border-top-left-radius: 5px; -o-border-top-left-radius: 5px; border-top-right-radius: 5px; -webkit-border-top-right-radius: 5px; -moz-border-top-right-radius: 5px; -ms-border-top-right-radius: 5px; -o-border-top-right-radius: 5px;}
+	.product-top-block p, .product-item-block div{ float: left;}
+	.product-top-block p.pname, .product-item-block div.product-img-block{ width: 83%; padding-right: 15px;}
+	.product-top-block p.pqty, .product-item-block div.product-qty-block{ width: 5%; text-align: center;}
+	.product-top-block p.pprice, .product-item-block div.product-price-block{ width: 10%; text-align: right;}
+	.product-mid-block{ background: #f3f3f3; border-bottom-left-radius: 5px; -webkit-border-bottom-left-radius: 5px; -moz-border-bottom-left-radius: 5px; -ms-border-bottom-left-radius: 5px; -o-border-bottom-left-radius: 5px; border-bottom-right-radius: 5px; -webkit-border-bottom-right-radius: 5px; -moz-border-bottom-right-radius: 5px; -ms-border-bottom-right-radius: 5px; -o-border-bottom-right-radius: 5px;}
+	.product-img-block{ display: flex; align-items: center;}
+	.product-img-block img{ width: 100px; height: auto; border: 1px solid #b4b4b4; padding: 10px; margin-right: 25px;}
+	.product-img-block p{ font-weight: 600; color: #000;}
+	.product-bot-block{ padding: 0 15px; text-align: right; margin-top: 25px;}
+	.product-item-block{ border-bottom: 1px solid #b4b4b4; min-height: 40px; display: flex; align-items: center; justify-content: center; padding:15px;}
+	.product-item-block:nth-child(odd){ background: #fff;}
+	.product-price-block{ font-weight: 700;}
+	.product-bot-block p{ margin-bottom: 0.75rem;}
+	.product-bot-block p span{ margin-right: 30px; width: 88%; float: left;}
+	.product-bot-block p:last-child{ color: #000; font-weight: 700;}
+
+	/* Media Queries */
+	@media(max-width:767px){
+		.product-bot-block p span{ width: 80%;}
+		.product-top-block p.pname, .product-item-block div.product-img-block{ width: 75%;}
+		.product-top-block p.pqty, .product-item-block div.product-qty-block{ width: 10%;}
+		.product-top-block p.pprice, .product-item-block div.product-price-block{ width: 15%;}
+	}
+	@media(max-width:560px){
+		.order-track{ font-size: 24px;}
+		.summary-left-block{ width: 100%; border-bottom: 1px solid #b4b4b4; }
+		.summary-right-block{ width: 100%;  border-left:0;}
+		.product-top-block p.pname, .product-item-block div.product-img-block{ width: 60%;}
+		.product-top-block p.pqty, .product-item-block div.product-qty-block{ width: 15%;}
+		.product-top-block p.price, .product-item-block div.product-price-block{ width: 25%;}
+		.product-img-block{ flex-wrap: wrap; }
+		.product-item-block{ align-items: inherit;}
+		.product-img-block img{ margin-right: 0; margin-bottom: 15px;}
+		.product-bot-block p span{ width: 65%;}
+	}
+	@media(max-width:360px){
+		.product-top-block p.pname, .product-item-block div.product-img-block{ width: 55%;}
+		.product-top-block p.pprice, .product-item-block div.product-price-block{ width: 30%;}
+	}
+	</style>
+</head>
+
+<body style="background: #F7F7F7; font-family: 'Open Sans', sans-serif; font-size: 16px; font-weight: 400; color: #000; line-height: 150%;">
+<div class="main-wraper">
+<div class="logo"><img src="<%= logo %>" alt="Logo" title="Logo"/></div>
+    <% if(order_info[2].shipping_address[0].name){ %>
+        <h1 class="order-track">Hi <%= order_info[2].shipping_address[0].name; %>, your order is on its way.</h1>
+    <% } %>
+
+    <div class="summary-block">
+            <div class="summary-left-block">
+                <h3>SUMMARY:</h3>
+                <% if(order_info[0].order_info){ %>
+                <p>Order #: <%= order_info[0].order_info[0].order_id; %></p>
+                <% var order_date = (order_info[0].order_info[0].created_on).toString().split(' ', 5).join(' ');%>
+                <p>Order Date: <%= order_date %></p>
+                <% } %>
+            </div>
+            <!-- <div class="summary-right-block">
+                <h3>SHIPPING ADDRESS:</h3>
+                <% if(order_info[2].shipping_address){ %>
+                <p><%= order_info[2].shipping_address[0].address_1; %></p>
+                <p><%= order_info[2].shipping_address[0].address_2; %></p>
+                <p><%= order_info[2].shipping_address[0].city; %></p>
+                <p><%= order_info[2].shipping_address[0].region; %>, <%= order_info[2].shipping_address[0].postal_code; %></p>
+                <p><%= order_info[2].shipping_address[0].country; %></p>
+                <% } %>
+            </div> -->
+						<div class="summary-right-block">
+                <h3>SHIPPING ADDRESS:</h3>
+								<% var order_address = JSON.parse(order_info[0].order_info[0].order_address); %>
+                <% if(order_address){ %>
+                <p><b><%= order_info[2].shipping_address[0].name; %></b></p>
+                <p><%= order_address.address_1; %></p>
+                <p><%= order_address.address_2; %></p>
+                <p><%= order_address.city; %>, <%= order_address.postal_code; %></p>
+                <p><%= order_address.country; %></p>
+                <p>Phone: <%= order_address.mob_phone; %></p>
+                <% } %>
+            </div>
+            <div class="clear"></div>
+    </div>
+	<div class="product-block">
+		<div class="product-top-block">
+			<p class="pname">PRODUCT</p>
+			<p class="pqty">QTY</p>
+			<p class="pprice">PRICE</p>
+			<div class="clear"></div>
+		</div>
+        <% if(order_info[1].products){ %>
+            <div class="product-mid-block">
+                        <% order_info[1].products.forEach(function(product, p_key) { %>
+                            <div class="product-item-block">
+                                <div class="product-img-block">
+                                    <img src="<%= product_image %>" alt="Image" title="Image"/>
+                                    <p><%= product.product_name; %></p>
+                                </div>
+                                <div class="product-qty-block"><%= product.quantity; %></div>
+                                <div class="product-price-block">$<%= product.subtotal; %></div>
+                                <div class="clear"></div>
+                            </div>
+                        <% }) %>
+                <div class="clear"></div>
+            </div>
+        <% } %>
+		<div class="product-bot-block">
+                <p><span>Subtotal(<%= order_info[1].products.length; %> Item<% if(order_info[1].products.length > 1){ %>s<%}%>) :</span> $<% if(order_info[0].order_info[0].total_amount){ %><%= order_info[0].order_info[0].total_amount; %><% } %></p>
+            <% if(order_info[0].order_info[0].shipping_cost){ %>
+			<p><span>Shipping Cost :</span> $<%= order_info[0].order_info[0].shipping_cost; %></p>
+			<p><span>Tax :</span> $<%= order_info[0].order_info[0].tax_percentage; %></p>
+            <% var total = (parseFloat(order_info[0].order_info[0].total_amount) + parseFloat(order_info[0].order_info[0].shipping_cost) + parseFloat(order_info[0].order_info[0].tax_percentage)).toFixed(2); %>
+            <p><span>Order Total :</span> $<%= total %></p>
+            <% } %>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</body>
+</html>
