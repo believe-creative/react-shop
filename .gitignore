@@ -24,3 +24,7 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+/nativeApp/android
+/nativeApp/ios
+/nativeApp/node_modules
