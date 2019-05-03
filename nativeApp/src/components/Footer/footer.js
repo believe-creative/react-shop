@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View} from 'react-native';
-
+import {styles} from './footer-styles'; 
 
 export default class Footer extends Component {
 
@@ -14,10 +14,11 @@ export default class Footer extends Component {
   render() {
 
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>@ Belivie Creative</Text>
+      <View style={styles.footer}>
+        <Text style={styles.footertext}>@ Belivie Creative</Text>
       </View>
     );
   }
 
 }
+
