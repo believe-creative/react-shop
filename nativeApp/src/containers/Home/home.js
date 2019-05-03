@@ -20,6 +20,7 @@ import createSagaMiddleware from "redux-saga";
 import createReducers from "../../reducers";
 import rootSaga from "../../sagas";
 import {store} from "../../store";
+import {styles} from './home-styles'; 
 
 type Props = {};
 
@@ -50,33 +51,13 @@ class HomeScreen extends Component {
 
   }
   render() {      
-      return (
-        // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-
-        //   <Text>Home Screen</Text>
-        //   <Button
-        //    title="Go to Details"
-        //    onPress={() => {
-        //      /* 1. Navigate to the Details route with params */
-        //      this.props.navigation.navigate('Details', {
-        //        itemId: 86,
-        //        otherParam: 'anything you want here',
-        //      });
-        //    }}
-        //  />
-        // </View>
-        
-        <ScrollView style={styles.home}>               
-          <Text h1>Background and development</Text>
-            <Text h2>
-              Convergent the dictates of the consumer: background and
-              development
-            </Text>
-            <TouchableOpacity onPress={() => Linking.openURL('/categories')}>
-              <Text style={{color: 'blue'}}>
-                View All
-              </Text>
-            </TouchableOpacity> 
+      return (        
+			<ScrollView style={styles.home}>               
+          <View style={styles.banner}>
+			 	<Text style={styles.h1}>Background and development</Text>
+			 	<Text style={styles.h2}>Convergent the dictates of the consumer: background and development</Text>
+          	<TouchableOpacity onPress={() => Linking.openURL('/categories')}><Text style={styles.button}>View All</Text></TouchableOpacity>
+			 </View> 
             <View style={styles.shop_now_panel}>
             <View style={styles.product_panel}>
               <View style={styles.product_img}>
@@ -161,8 +142,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(HomeScreen);
-
-
-const styles = StyleSheet.create({
-  home: {}  
-});
