@@ -71,9 +71,9 @@ class App extends Component {
   render() {
       return (
         <Provider store={this.store}>
-          <NavBar />
+          <NavBar />    
           <AppContainer />
-          <Footer />
+          
         </Provider>
         );
       }

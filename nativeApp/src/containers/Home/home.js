@@ -7,7 +7,8 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Button} from 'react-native';
+import Footer from '../../components/Footer/footer';
+import {Platform, StyleSheet, Text, View,Button, Linking, TouchableOpacity, Image, ScrollView} from 'react-native';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import { getCookie } from "../../services/helpers";
@@ -19,7 +20,6 @@ import createSagaMiddleware from "redux-saga";
 import createReducers from "../../reducers";
 import rootSaga from "../../sagas";
 import {store} from "../../store";
-
 
 type Props = {};
 
@@ -49,22 +49,92 @@ class HomeScreen extends Component {
     }
 
   }
-  render() {
+  render() {      
       return (
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        // <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
 
-          <Text>Home Screen</Text>
-          <Button
-           title="Go to Details"
-           onPress={() => {
-             /* 1. Navigate to the Details route with params */
-             this.props.navigation.navigate('Details', {
-               itemId: 86,
-               otherParam: 'anything you want here',
-             });
-           }}
-         />
-        </View>
+        //   <Text>Home Screen</Text>
+        //   <Button
+        //    title="Go to Details"
+        //    onPress={() => {
+        //      /* 1. Navigate to the Details route with params */
+        //      this.props.navigation.navigate('Details', {
+        //        itemId: 86,
+        //        otherParam: 'anything you want here',
+        //      });
+        //    }}
+        //  />
+        // </View>
+        
+        <ScrollView style={styles.home}>               
+          <Text h1>Background and development</Text>
+            <Text h2>
+              Convergent the dictates of the consumer: background and
+              development
+            </Text>
+            <TouchableOpacity onPress={() => Linking.openURL('/categories')}>
+              <Text style={{color: 'blue'}}>
+                View All
+              </Text>
+            </TouchableOpacity> 
+            <View style={styles.shop_now_panel}>
+            <View style={styles.product_panel}>
+              <View style={styles.product_img}>
+                <Button title="Sale" />                                
+                <Image
+                  style={{width: 50, height: 50}}                 
+                  source={require('../../images/bag.png')}                  
+                />
+              </View>
+              <View style={styles.shop_now}>
+                <Text h2>Vera Bradley</Text>
+                <Text>
+                  Carry the day in the style with this extra-large tote crafted
+                  in our chic B.B. Collection textured PVC. Featuring colorful
+                  faux leather trim,this tote offers a roomy interior plus just
+                  enough perfectly placed.
+                </Text>                
+                <TouchableOpacity onPress={() => Linking.openURL('/categories')}>
+                    <Button
+                     title="Shop Now"
+                    />
+                </TouchableOpacity>                 
+              </View>
+            </View>
+          </View>
+          <View style={styles.register_panel}>
+            <View style={styles.shop_now_panel}>
+              <View>
+                <View style={styles.wow_block}>
+                  <Text h1>WOW</Text>
+                  <Text h2 style={{"color":"red"}}>Check</Text>                  
+                  <Text h2 style={{"color":"red"}}>WHAT!</Text>
+                </View>
+                <View style={styles.wow_men_block}>
+                <Text h1>Men</Text>
+                </View>
+              </View>
+              <View>
+                <View style={styles.game_begin_block}>
+                <Image
+                  style={{width: 50, height: 50}}                 
+                  source={require('../../images/pop_image.png')}                  
+                />
+                  <View style={styles.game_sub_block}>
+                    <Text h1>Let The Game begin</Text>
+                    <Text h2>Registration is on - get ready for the Open</Text>
+                    <TouchableOpacity onPress={() => Linking.openURL('/login')}>
+                      <Text style={{color: 'blue'}}>
+                        Register
+                      </Text>
+                    </TouchableOpacity> 
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+          <Footer />           
+      </ScrollView>
         );
       }
 }
@@ -91,3 +161,8 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(HomeScreen);
+
+
+const styles = StyleSheet.create({
+  home: {}  
+});
