@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
 import {Platform, StyleSheet, Text, View, Image} from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 import DropdownMenu from 'react-native-dropdown-menu';
-import {styles} from './navbar-styles'; 
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
+import NavigationService from '../../routes/NavigationService.js';
 
-export default class NavBar extends Component {
+class NavBar extends Component {
 
   constructor(props) {
     super(props);
@@ -11,18 +14,76 @@ export default class NavBar extends Component {
       text: ''
     };
   }
+  componentDidMount() {
 
+  console.log("dfgdfgdfg0fgfgfgf000");
+  this.props.getToken();
+
+  }
+
+  componentWillReceiveProps(props) {
+
+    if (props.token) {
+      if (this.state.token !== props.token) {
+        this.setState({ token: props.token });
+        if (!this.props.categories)
+          this.props.getCategories({ token: props.token });
+      }
+    }
+
+  }
   render() {
-    var data = [["C", "Java", "JavaScript", "PHP"], ["Python", "Ruby"], ["Swift", "Objective-C"]];
+
+    console.log("Navbar",this.props);
     return (
         <View style={{flex: 0}}>
-       <Image
+        <Image
         style={{width: 150, height: 80}}
         source={require('../../images/proof-of-concept.png')}
-      />
+        />
+        <Image
+        style={{width: 80, height: 80}}
+        source={require('../../images/menu_icon.png')}
+        />
+
+        {this.props.categories && Object.values(this.props.categories).map((e,index)=>{
+          console.log(e);
+          return(
+            <Text style={{padding: 10, fontSize: 14}} onPress={() => {
+                NavigationService.navigate('Categories', {
+              itemId: e.department_id,
+              categoryName: e.name,
+            });
+            }}>
+           {e.name}
+           </Text>
+       );
+        })}
      </View>
 
     );
   }
 
 }
+const productRequest = Actions.products.request;
+const checkUserLogin = Actions.checkUserLogin.request;
+
+const mapStateToProps = state => ({
+  categories: state.get("products").categories,
+  cart: state.get("products").cart,
+  token: state.get("user").token
+});
+
+const mapDispatchToProps = dispatch => ({
+  productRequest,
+  checkUserLogin,
+  getCategories: data => dispatch(Actions.getCategories.request(data)),
+  getCartProducts: inCartId =>
+    dispatch(Actions.getCartProducts.request(inCartId)),
+  getToken: () => dispatch(Actions.getToken.request())
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NavBar);

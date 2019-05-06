@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, FlatList, TouchableOpacity, Linking } from 'react-native';
-import {styles} from './footer-styles'; 
+import {Platform, StyleSheet, Text, View, FlatList, TouchableOpacity, Linking,ScrollView } from 'react-native';
+import {styles} from './footer-styles';
 
 export default class Footer extends Component {
 
@@ -14,8 +14,8 @@ export default class Footer extends Component {
   render() {
 
     return (
-      <View style={styles.footer}>
-		  <Text style={styles.ftitle}>Questions?</Text>		 
+      <ScrollView style={styles.footer}>
+		  <Text style={styles.ftitle}>Questions?</Text>
 		 <FlatList style={styles.block1}
           data={[
             {key: 'Help', url: 'http://google.com'},
@@ -44,9 +44,8 @@ export default class Footer extends Component {
           renderItem={({item}) => <TouchableOpacity onPress={() => Linking.openURL(item.url)}><Text style={styles.footerlinks}>{item.key}</Text></TouchableOpacity> }
         />
 		 <TouchableOpacity onPress={() => Linking.openURL('https://www.believecreative.com/')}><Text style={styles.footertext}>Developed by Believe Creative</Text></TouchableOpacity>
-      </View>
+      </ScrollView>
     );
   }
 
 }
-

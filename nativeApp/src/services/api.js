@@ -139,6 +139,7 @@ export const getDepartments = function(data) {
 };
 
 export const getToken = function() {
+  console.log("cameapi");    
   return callAPI(`get_token/`);
 };
 

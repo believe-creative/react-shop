@@ -15,7 +15,7 @@ import { connect } from "react-redux";
 import * as Actions from "./actions";
 import { getCookie } from "./services/helpers";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-
+import NavigationService from './routes/NavigationService.js';
 import Immutable from "immutable";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware, compose } from "redux";
@@ -69,11 +69,14 @@ class App extends Component {
 
 
   render() {
+    console.log("App",this.props);
       return (
         <Provider store={this.store}>
-          <NavBar />    
-          <AppContainer />
-          
+          <NavBar />
+          <AppContainer ref={navigatorRef => {
+          NavigationService.setTopLevelNavigator(navigatorRef);
+        }} />
+
         </Provider>
         );
       }
