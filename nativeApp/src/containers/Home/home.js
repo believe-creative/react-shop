@@ -60,41 +60,30 @@ class HomeScreen extends Component {
 			 </View> 
             <View style={styles.shop_now_panel}>
             <View style={styles.product_panel}>
-              <View style={styles.product_img}>
-                <Button title="Sale" />                                
-                <Image
-                  style={{width: 50, height: 50}}                 
+					<Text style={styles.sale}>Sale</Text>
+              <View style={styles.shop_now}>
+					  <Image style={{width: 100, height: 100, marginBottom: 10}}                 
                   source={require('../../images/bag.png')}                  
                 />
-              </View>
-              <View style={styles.shop_now}>
-                <Text h2>Vera Bradley</Text>
-                <Text>
-                  Carry the day in the style with this extra-large tote crafted
-                  in our chic B.B. Collection textured PVC. Featuring colorful
-                  faux leather trim,this tote offers a roomy interior plus just
-                  enough perfectly placed.
+                <Text style={{...styles.h2, ...styles.title1}}>Vera Bradley</Text>  
+                <Text style={styles.shoptxt}>
+                  Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed. 
                 </Text>                
-                <TouchableOpacity onPress={() => Linking.openURL('/categories')}>
-                    <Button
-                     title="Shop Now"
-                    />
-                </TouchableOpacity>                 
+                <TouchableOpacity onPress={() => Linking.openURL('/categories')}><Text style={styles.button}>Shop Now</Text></TouchableOpacity>                 
               </View>
             </View>
           </View>
-          <View style={styles.register_panel}>
-            <View style={styles.shop_now_panel}>
-              <View>
-                <View style={styles.wow_block}>
+			 
+			  <View style={styles.wow_block}>
                   <Text h1>WOW</Text>
                   <Text h2 style={{"color":"red"}}>Check</Text>                  
                   <Text h2 style={{"color":"red"}}>WHAT!</Text>
-                </View>
-                <View style={styles.wow_men_block}>
-                <Text h1>Men</Text>
-                </View>
-              </View>
+           </View>			 
+				<View style={styles.wow_block}>
+            	<Text h1>Men</Text>
+            </View>
+          <View style={styles.register_panel}>
+            <View style={styles.shop_now_panel}>              
               <View>
                 <View style={styles.game_begin_block}>
                 <Image
@@ -105,7 +94,7 @@ class HomeScreen extends Component {
                     <Text h1>Let The Game begin</Text>
                     <Text h2>Registration is on - get ready for the Open</Text>
                     <TouchableOpacity onPress={() => Linking.openURL('/login')}>
-                      <Text style={{color: 'blue'}}>
+                      <Text style={styles.button}>
                         Register
                       </Text>
                     </TouchableOpacity> 

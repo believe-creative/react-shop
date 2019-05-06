@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   footer: {
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#fff',
 	 fontSize: 16,
 	 padding: 10,
   },
