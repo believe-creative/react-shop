@@ -33,4 +33,9 @@ export const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 		flexDirection: 'row',
 	},
+	copyright:{
+		fontSize: 16,
+		color: '#f62f5e',
+		fontStyle: 'italic',
+	},
 });

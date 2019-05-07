@@ -43,7 +43,10 @@ export default class Footer extends Component {
           ]}
           renderItem={({item}) => <TouchableOpacity onPress={() => Linking.openURL(item.url)}><Text style={styles.footerlinks}>{item.key}</Text></TouchableOpacity> }
         />
-		 <TouchableOpacity onPress={() => Linking.openURL('https://www.believecreative.com/')}><Text style={styles.footertext}>Developed by Believe Creative</Text></TouchableOpacity>
+		 <View>
+			 <Text style={styles.footertext}>Developed by</Text>
+			 <TouchableOpacity onPress={() => Linking.openURL('https://www.believecreative.com/')}><Text style={styles.copyright}>Believe Creative</Text></TouchableOpacity> 
+		 </View>
       </ScrollView>
     );
   }
