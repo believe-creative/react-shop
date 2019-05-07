@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View,Button} from 'react-native';
+import {Platform, StyleSheet, Text, View,Button,ScrollView} from 'react-native';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import { getCookie } from "../../services/helpers";
@@ -19,7 +19,8 @@ import createSagaMiddleware from "redux-saga";
 import createReducers from "../../reducers";
 import rootSaga from "../../sagas";
 import {store} from "../../store";
-
+import ProductList from '../../components/Product/productlist';
+import Footer from '../../components/Footer/footer';
 
 type Props = {};
 
@@ -33,7 +34,18 @@ class Categories extends Component {
 
   console.log("dfgdfgdfg0fgfgfgf000");
   this.props.getToken();
-
+  if (this.props.categories) {
+    Object.values(this.props.categories).map((category, index) => {
+      this.props.loadCategoryProducts({
+        token: this.props.token,
+        departmentId: category.department_id,
+        descriptionLength: 120,
+        inStartItem: 0,
+        inProductsPerPage: 10000
+      });
+      return category;
+    });
+  }
   }
 
   componentWillReceiveProps(props) {
@@ -48,16 +60,28 @@ class Categories extends Component {
 
   }
   render() {
+
     console.log("Home screenffff",this.props);
     const { navigation } = this.props;
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
       return (
+        <ScrollView >
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <Text>Products Screen </Text>
+        {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
+          console.log(key,productsList,categoryName.toLowerCase()== key);
+          if(categoryName.toLowerCase()== key){
+                console.log(productsList);
 
-          <Text>CATEGORIES Screen {categoryName} : {JSON.stringify(itemId)}</Text>
+                return  (<ProductList products={productsList} />);
+
+          }
+        }) : <Text>""</Text>}
 
         </View>
+          <Footer />
+        </ScrollView>
         );
       }
 }
@@ -66,7 +90,9 @@ const productRequest = Actions.products.request;
 const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
+  subCategories: state.get("products").subCategories,
   categories: state.get("products").categories,
+  categoryProducts: state.get("products").categoryProducts,
   cart: state.get("products").cart,
   token: state.get("user").token
 });
@@ -77,7 +103,9 @@ const mapDispatchToProps = dispatch => ({
   getCategories: data => dispatch(Actions.getCategories.request(data)),
   getCartProducts: inCartId =>
     dispatch(Actions.getCartProducts.request(inCartId)),
-  getToken: () => dispatch(Actions.getToken.request())
+  getToken: () => dispatch(Actions.getToken.request()),
+  loadCategoryProducts: data =>
+    dispatch(Actions.getCategoryProducts.request(data))
 });
 
 export default connect(

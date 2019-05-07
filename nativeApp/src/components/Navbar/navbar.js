@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View, Image} from 'react-native';
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import {Platform, StyleSheet, Text, View, Image,TouchableOpacity} from 'react-native';
+import { createDrawerNavigator,createStackNavigator, createAppContainer } from 'react-navigation';
 import DropdownMenu from 'react-native-dropdown-menu';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -32,6 +32,10 @@ class NavBar extends Component {
     }
 
   }
+  toggleDrawer = () => {
+    //Props to open/close the drawer
+    this.props.navigationProps.toggleDrawer();
+  };
   render() {
 
     console.log("Navbar",this.props);
@@ -41,10 +45,14 @@ class NavBar extends Component {
         style={{width: 150, height: 80}}
         source={require('../../images/proof-of-concept.png')}
         />
-        <Image
-        style={{width: 80, height: 80}}
-        source={require('../../images/menu_icon.png')}
-        />
+
+        <TouchableOpacity >
+          {/*Donute Button Image */}
+          <Image
+            source={require('../../images/menu_icon.png')}
+            style={{ width: 25, height: 25, marginLeft: 5 }}
+          />
+        </TouchableOpacity>
 
         {this.props.categories && Object.values(this.props.categories).map((e,index)=>{
           console.log(e);
