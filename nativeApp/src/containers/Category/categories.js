@@ -21,6 +21,7 @@ import rootSaga from "../../sagas";
 import {store} from "../../store";
 import ProductList from '../../components/Product/productlist';
 import Footer from '../../components/Footer/footer';
+import {styles} from '../Home/home-styles';
 
 type Props = {};
 
@@ -66,9 +67,8 @@ class Categories extends Component {
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
       return (
-        <ScrollView >
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Products Screen </Text>
+        <ScrollView style={styles.body}>
+        <View>
         {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
           console.log(key,productsList,categoryName.toLowerCase()== key);
           if(categoryName.toLowerCase()== key){

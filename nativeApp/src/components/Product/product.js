@@ -24,14 +24,13 @@ export default class Product extends Component {
     }
     console.log(productImage);
     return (
-          <View style={styles.shop_now}>
+          <View style={styles.item}>
             <Image style={{width: 100, height: 100, marginBottom: 10}}
               source={require('../../images/product_images/a-partridge-in-a-pear-tree-2.gif')}
             />
-            <Text style={{...styles.h2, ...styles.title1}}>{this.props.product && this.props.product.name}</Text>
-            <Text style={styles.shoptxt}>
-              {this.props.product && this.props.product.description}
-            </Text>
+            <Text style={{...styles.h2, ...styles.black}}>{this.props.product && this.props.product.name}</Text>
+				<Text style={{...styles.price, ...styles.red}}>$16.99</Text>
+            <TouchableOpacity onPress={() => Linking.openURL('/categories')}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
         </View>
         );
   }

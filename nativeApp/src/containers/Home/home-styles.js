@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
 		paddingLeft: 30,
 		paddingRight: 30,
 		textAlign: 'center',
-		width: 150,
+		minWidth: 150, 
 	},
 	shop_now_panel:{
 		margin:15,
@@ -131,5 +131,34 @@ export const styles = StyleSheet.create({
 	},
 	center: {
 		textAlign: 'center',
+	},
+	
+	/* product page */
+	
+	body: {
+		backgroundColor: '#eeeeee',
+		paddingTop: 30,
+		paddingBottom: 30,
+	},
+	item: {
+		backgroundColor: '#fff',
+		padding: 25,
+		margin: 15,
+		position: 'relative',
+		textAlign: 'center',
+		marginBottom: 30,
+		flex:1,
+		alignItems: 'center',
+		justifyContent: 'center',
+		shadowColor: '#000',
+  		shadowOffset: {width: 0, height: 10},
+  		shadowOpacity: 0.8,
+		shadowRadius: 2,
+		elevation: 6, 
+	},
+	price: {
+		fontWeight: 'bold',
+		fontSize: 18,
+		marginBottom: 15,
 	},
 });
