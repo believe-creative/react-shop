@@ -5,6 +5,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#fff',
 	 fontSize: 16,
 	 padding: 10,
+	 paddingBottom: 20,
   },
 	footertext: {
 		color: '#333',

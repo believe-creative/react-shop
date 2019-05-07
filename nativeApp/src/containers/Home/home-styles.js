@@ -144,6 +144,7 @@ export const styles = StyleSheet.create({
 		backgroundColor: '#fff',
 		padding: 25,
 		margin: 15,
+		paddingBottom: 40,
 		position: 'relative',
 		textAlign: 'center',
 		marginBottom: 30,

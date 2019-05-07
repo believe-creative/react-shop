@@ -10,22 +10,19 @@ import {styles} from '../../containers/Home/home-styles';
 export default class Product extends Component {
 
   constructor(props) {
-    console.log("ProductList",props);
     super(props);
     this.state = {
       text: '',
     };
   }
   render() {
-    console.log("ProductList",this.props);
     let productImage='../../images/product_images/a-partridge-in-a-pear-tree-2.gif';
     if(this.props.product){
       productImage='../../images/product_images/'+this.props.product.thumbnail;
     }
-    console.log(productImage);
     return (
           <View style={styles.item}>
-            <Image style={{width: 100, height: 100, marginBottom: 10}}
+            <Image style={{width: 320, height: 250, marginBottom: 10}}
               source={require('../../images/product_images/a-partridge-in-a-pear-tree-2.gif')}
             />
             <Text style={{...styles.h2, ...styles.black}}>{this.props.product && this.props.product.name}</Text>
