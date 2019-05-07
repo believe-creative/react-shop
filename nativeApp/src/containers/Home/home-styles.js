@@ -10,6 +10,9 @@ export const styles = StyleSheet.create({
 		paddingBottom: 25,
 		paddingLeft: 50,
 		paddingRight: 50,
+		flex:1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
 	},
 	img: {
 		width: null, 
@@ -110,12 +113,13 @@ export const styles = StyleSheet.create({
 	game_begin_img_block: {
 		marginLeft: 15,
 		marginRight: 15,
+		marginTop: 15,
 	},
 	game_sub_block: {
 		marginLeft:15,
 		marginRight: 15,
 		marginTop: 0,
-		marginBottom: 30,
+		marginBottom: 40,
 		padding: 30,
 		backgroundColor: '#fff',
 		position: 'relative',
