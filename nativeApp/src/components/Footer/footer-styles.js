@@ -28,5 +28,14 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		color: '#2e2e2e',
 		fontWeight: '400',
+		flex:1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+		flexDirection: 'row',
+	},
+	copyright:{
+		fontSize: 16,
+		color: '#f62f5e',
+		fontStyle: 'italic',
 	},
 });

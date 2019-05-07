@@ -62,10 +62,10 @@ class HomeScreen extends Component {
             <View style={styles.product_panel}>
 					<Text style={styles.sale}>Sale</Text>
               <View style={styles.shop_now}>
-					  <Image style={{width: 100, height: 100, marginBottom: 10}}                 
+					  <Image style={{width: 300, height: 360, marginBottom: 10}}                 
                   source={require('../../images/bag.png')}                  
                 />
-                <Text style={{...styles.h2, ...styles.title1}}>Vera Bradley</Text>  
+                <Text style={{...styles.h2, ...styles.black}}>Vera Bradley</Text>  
                 <Text style={styles.shoptxt}>
                   Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed. 
                 </Text>                
@@ -75,34 +75,27 @@ class HomeScreen extends Component {
           </View>
 			 
 			  <View style={styles.wow_block}>
-                  <Text h1>WOW</Text>
-                  <Text h2 style={{"color":"red"}}>Check</Text>                  
-                  <Text h2 style={{"color":"red"}}>WHAT!</Text>
+                  <Text style={{...styles.h1, ...styles.black}}>WOW</Text>
+                  <Text style={{...styles.h2, ...styles.red}}>Check</Text>                  
+                  <Text style={{...styles.h2, ...styles.red}}>WHAT!</Text>
            </View>			 
 				<View style={styles.wow_block}>
-            	<Text h1>Men</Text>
+            	<Text style={{...styles.h1, ...styles.black}}>Men</Text>
             </View>
-          <View style={styles.register_panel}>
-            <View style={styles.shop_now_panel}>              
-              <View>
-                <View style={styles.game_begin_block}>
-                <Image
-                  style={{width: 50, height: 50}}                 
-                  source={require('../../images/pop_image.png')}                  
-                />
-                  <View style={styles.game_sub_block}>
-                    <Text h1>Let The Game begin</Text>
-                    <Text h2>Registration is on - get ready for the Open</Text>
-                    <TouchableOpacity onPress={() => Linking.openURL('/login')}>
-                      <Text style={styles.button}>
-                        Register
-                      </Text>
-                    </TouchableOpacity> 
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
+				<View style={styles.game_begin_img_block}>
+                <Image style={styles.img} source={require('../../images/pop_image.png')} />
+				</View>            
+				<View style={{...styles.game_sub_block, ...styles.shop_now}}>
+				  <Text style={{...styles.h1, ...styles.black, ...styles.center}}>Let The Game begin</Text>
+				  <Text style={{...styles.h2, ...styles.black, ...styles.center}}>Registration is on - get ready for the Open</Text>
+				  <TouchableOpacity onPress={() => Linking.openURL('/login')} style={styles.center}>
+					 <Text style={styles.button}>
+						Register
+					 </Text>
+				  </TouchableOpacity> 
+				</View>
+
+
           <Footer />           
       </ScrollView>
         );

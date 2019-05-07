@@ -6,10 +6,18 @@ export const styles = StyleSheet.create({
   },
 	banner: {
 		backgroundColor: '#6c6c6c',
-		paddingTop: 15,
-		paddingBottom: 15,
+		paddingTop: 25,
+		paddingBottom: 25,
 		paddingLeft: 50,
 		paddingRight: 50,
+		flex:1,
+		justifyContent: 'flex-start',
+		alignItems: 'flex-start',
+	},
+	img: {
+		width: null, 
+		height: 300, 
+		flex:1,
 	},
 	h1: {
 		fontSize: 36,
@@ -22,6 +30,15 @@ export const styles = StyleSheet.create({
 		fontWeight: '700',
 		color: '#fff', 
 		marginBottom: 10,
+	},
+	black: {		
+		color: '#2e2e2e', 
+	},
+	red: {
+		color: '#f62f5e',
+	},
+	white: {
+		color: '#fff',
 	},
 	button: {
 		backgroundColor: '#f62f5e',
@@ -39,7 +56,7 @@ export const styles = StyleSheet.create({
 	shop_now_panel:{
 		margin:15,
 		marginBottom: 30,
-		padding: 15,
+		padding: 25,
 		backgroundColor: '#fff',
 		position: 'relative',
 		shadowColor: '#000',
@@ -61,11 +78,13 @@ export const styles = StyleSheet.create({
 		paddingBottom: 5,
 		paddingLeft: 10,
 		paddingRight: 10,
-		width: 50,
+		width: 'auto',
 		position: 'absolute',
 		left: 0,
 		top: 0,
-		zIndex: 0,
+		zIndex: 1,
+		fontSize: 16,
+		fontWeight: '400',
 		},
 	shop_now: {
 		textAlign: 'center',
@@ -74,16 +93,15 @@ export const styles = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
-	title1: {		
-		color: '#2e2e2e', 
-	},
 	shoptxt: {
-		marginBottom:10,
+		marginBottom:15,
 		textAlign:'center',
+		fontSize: 16,
+		fontWeight: '400',
 	},
 	wow_block: {
 		backgroundColor: '#00d3ca',
-		padding: 10,
+		padding: 15,
 		margin: 15,
 		marginBottom: 30, 
 		minHeight: 345,
@@ -91,5 +109,27 @@ export const styles = StyleSheet.create({
 		flexDirection: 'column',
 		alignItems: 'center',
 		justifyContent: 'center',
+	},
+	game_begin_img_block: {
+		marginLeft: 15,
+		marginRight: 15,
+		marginTop: 15,
+	},
+	game_sub_block: {
+		marginLeft:15,
+		marginRight: 15,
+		marginTop: 0,
+		marginBottom: 40,
+		padding: 30,
+		backgroundColor: '#fff',
+		position: 'relative',
+		shadowColor: '#000',
+  		shadowOffset: {width: 0, height: 2},
+  		shadowOpacity: 0.8,
+  		shadowRadius: 2,
+		elevation: 5,
+	},
+	center: {
+		textAlign: 'center',
 	},
 });
