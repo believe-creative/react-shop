@@ -1,6 +1,8 @@
 import * as ActionTypes from "../actions";
 //import { store } from "../index";
 
+import SyncStorage from 'sync-storage';
+
 const intialState = {
   loading: false,
   products: [],
@@ -132,24 +134,35 @@ export default (state = intialState, action) => {
         cart: cart
       };
     case ActionTypes.ADDPRODUCTTOCART.SUCCESS:
-      cart = localStorage.getItem("react-shop-cart");
+      cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-        cart = JSON.parse(cart);
+        if(cart.count){
+
+        }
+        else{
+          cart = JSON.parse(cart);
+        }
+        //cart = JSON.parse(cart);
       } else {
         cart = { inCartId: null, count: 0 };
       }
       cart.inCartId = action.response.inCartId;
       cart.count = cart.count + 1;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,
         cart: cart
       };
     case ActionTypes.GETCARTPRODUCTS.SUCCESS:
-      cart = localStorage.getItem("react-shop-cart");
+      cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-        cart = JSON.parse(cart);
+        if(cart.count){
+
+        }
+        else{
+          cart = JSON.parse(cart);
+        }
       } else {
         cart = { inCartId: null, count: 0, products: [] };
       }
@@ -159,8 +172,8 @@ export default (state = intialState, action) => {
         count = count + action.response[i].quantity;
       }
       cart.count = count;
-      cart.products = action.response;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      cart.products = action.response;      
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,

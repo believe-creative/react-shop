@@ -23,6 +23,9 @@ import createSagaMiddleware from "redux-saga";
 import createReducers from "./reducers";
 import rootSaga from "./sagas";
 
+
+import SyncStorage from 'sync-storage';
+
 const AppContainer = createAppContainer(RootStack);
 
 type Props = {};
@@ -67,6 +70,10 @@ class App extends Component {
     sagaMiddleware.run(rootSaga);
   }
 
+  async componentWillMount(): void {
+    const data = await SyncStorage.init();
+    console.log('AsyncStorage is ready!', data);
+   }
 
   render() {
     console.log("App",this.props);
