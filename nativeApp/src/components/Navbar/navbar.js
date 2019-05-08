@@ -5,8 +5,7 @@ import DropdownMenu from 'react-native-dropdown-menu';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
-import Cart from "../Cart/cart";
-import SyncStorage from 'sync-storage';
+import UserBlock from '../UserBlock/userblock';
 
 class NavBar extends Component {
 
@@ -17,51 +16,37 @@ class NavBar extends Component {
     };
   }
   componentDidMount() {
-    this.props.getToken();
-    
-      
-    }
-  
+
+  console.log("dfgdfgdfg0fgfgfgf000");
+  this.props.getToken();
+
+  }
 
   componentWillReceiveProps(props) {
+
     if (props.token) {
       if (this.state.token !== props.token) {
         this.setState({ token: props.token });
         if (!this.props.categories)
           this.props.getCategories({ token: props.token });
       }
-      let localCart = SyncStorage.get("react-shop-cart");
-      if (localCart != null) {
-        if (this.state.cart === null || this.state.cart === undefined) {
-          this.props.getCartProducts({
-            token: props.token,
-            inCartId: localCart.inCartId
-          });
-        } else if (props.cart.count !== this.state.cart.count) {
-          this.props.getCartProducts({
-            token: props.token,
-            inCartId: props.cart.inCartId
-          });
-        }
-        this.setState({ cart: props.cart });
-      }
     }
-    
+
   }
   toggleDrawer = () => {
     //Props to open/close the drawer
     this.props.navigationProps.toggleDrawer();
   };
   render() {
-    let { cart }  = this.props;
-    if (!cart) cart = { count: 0 };
+
+    console.log("Navbar",this.props);
     return (
         <View style={{flex: 0}}>
+        <UserBlock/>
         <Image
         style={{width: 150, height: 80}}
         source={require('../../images/proof-of-concept.png')}
         />
-        <Text><Cart cartItems={cart.count} /></Text>
 
         <TouchableOpacity >
           {/*Donute Button Image */}
@@ -83,8 +68,9 @@ class NavBar extends Component {
            {e.name}
            </Text>
        );
-        })}          
+        })}
      </View>
+
     );
   }
 
@@ -92,13 +78,11 @@ class NavBar extends Component {
 const productRequest = Actions.products.request;
 const checkUserLogin = Actions.checkUserLogin.request;
 
-const mapStateToProps = function(state){
-   console.log("mapStateToProps",state.get("products"));
-  return {
+const mapStateToProps = state => ({
   categories: state.get("products").categories,
   cart: state.get("products").cart,
   token: state.get("user").token
-}};
+});
 
 const mapDispatchToProps = dispatch => ({
   productRequest,
