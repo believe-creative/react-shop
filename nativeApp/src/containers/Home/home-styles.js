@@ -214,6 +214,9 @@ export const styles = StyleSheet.create({
 		paddingLeft:15,
 		paddingRight:15,
 	},
+	ptitle:{
+		marginBottom:30,
+	},
 	cart_single_block:{
 		flex:1,
 		flexDirection:'row',
@@ -221,6 +224,7 @@ export const styles = StyleSheet.create({
 		flexWrap:'wrap',
 		textAlign: 'left',
 		alignItems:'center',
+		marginBottom: 15,
 	},
 	product_img:{
 		padding:10,
@@ -230,10 +234,10 @@ export const styles = StyleSheet.create({
 	},
 	img_right_block:{
 		flex:1,
-		flexDirection:'row',
+		flexDirection:'column',
 		flexWrap:'wrap',
-		justifyContent:'center',
-		alignItems:'center',
+		justifyContent:'flex-start',
+		alignItems:'flex-start',
 	},
 	cart_bottom_block:{
 		backgroundColor:'#efefef',
@@ -251,5 +255,16 @@ export const styles = StyleSheet.create({
 		justifyContent:'space-between',
 		flexDirection:'row',
 		marginTop: 15,
+	},
+	quantity:{
+		backgroundColor:'#efefef', 
+	   color:'#2e2e2e', 
+		fontSize: 18, 
+		fontWeight: '700', 
+		borderRadius: 20, 
+		width:30, 
+		height:30,
+		textAlign: 'center',
+		lineHeight: 30,
 	},
 });

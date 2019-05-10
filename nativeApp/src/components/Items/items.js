@@ -132,36 +132,37 @@ class Items extends Component {
           <View style={styles.cart_page_wraper}>            
               <View style={styles.cart_page_block}>         
                     <View style={styles.cart_top_block}>
-		 					<Text style={{...styles.h2, ...styles.black}}>{cart.count} Items In Your Cart</Text>
+		 					<Text style={{...styles.h2, ...styles.black, ...styles.ptitle}}>{cart.count} Items In Your Cart</Text>
                       {cart.products.map(function(product, key) {
                         return (
                           <View key={key}>
                             <View style={styles.cart_single_block}>
-                              <Text style={styles.product_img}>
+                              <View style={styles.product_img}>
                                 <Image style={{width: 100, height: 100,}}
                                   source={require("../../images/product_images/afghan-flower-2.gif")}
                                 />                                                                 
-                              </Text>
-										<Text style={styles.img_right_block}>
-											<Text>{product.name}</Text>
-                              	<Text>Men BK3569</Text>                                  
-                                <Text onPress={this_ref.remove.bind(this_ref, product.item_id, product.name)}>&#10005; Remove	</Text>
-										</Text> 
+                              </View>
+										<View style={styles.img_right_block}>
+											<Text style={{ fontSize:16, fontWeight: '700', color:'#2e2e2e', marginBottom: 15}}>{product.name}</Text>
+                              	<Text style={{ fontSize:14, fontWeight: '400', color:'#2e2e2e', marginBottom: 15}}>Men BK3569</Text>                                  
+                                <Text style={{ fontSize:10, fontWeight: '400', color:'#f62f5e'}} onPress={this_ref.remove.bind(this_ref, product.item_id, product.name)}>&#10005; Remove	</Text>
+										</View> 
                             </View>  
 									<View style={styles.cart_size_block}>
 										<Text style={{color: '#b4b4b4', fontWeight: '700', fontSize: 14,}}>XXL</Text>
-                              <Text>
+                              <View style={{ flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'center', width: 150,}}>
                                   <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
                                     &#8722;
-                                  </Text>                                
-                                <Text style={styles.quantity}>
+                                  </Text> 
+											 
+                                <Text style={{paddingLeft: 10, paddingRight: 10, color: '#2e2e2e', fontSize: 20, fontWeight: '700',}}>
                                   {product.quantity}
-                                </Text>                                
+                                </Text>  
                                   <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
                                     &#43;
                                   </Text>
-                              </Text>
-                              <Text>
+                              </View>
+                              <Text style={{fontSize: 22, fontWeight: '700', color: '#2e2e2e',}}>
                                 ${(product.quantity * product.price).toFixed(2)}
                               </Text>
 									</View>
