@@ -1,14 +1,11 @@
 import React, { Component } from "react";
-//import "../../scss/cart.scss";
 import { connect } from "react-redux";
-//import { LinkContainer } from "react-router-bootstrap";
-//import { confirmAlert } from "react-confirm-alert";
+import Footer from '../../components/Footer/footer';
 import * as Actions from "../../actions";
 //import "react-confirm-alert/src/react-confirm-alert.css";
 
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 import NavigationService from '../../routes/NavigationService.js';
-
 class Items extends Component {
   constructor(props) {
     super(props);
@@ -105,13 +102,12 @@ class Items extends Component {
     //   ]
     // });
   }
-  update(e) {
-    let state = this.state;
-    console.log("updatebuttonclick",e);
+  update(pid, pqty, qtyNum) {   
+    let state = this.state;   
     state["buttonStyles"] = {};
     this.setState(state);
-    let count = parseInt(e.currentTarget.getAttribute("data-quantity"));
-    let param = parseInt(e.currentTarget.getAttribute("data-param"));
+    let count = parseInt(pqty);    
+    let param = parseInt(qtyNum);    
     count = count + param;
     if (count < 0) {
       let state = this.state;
@@ -120,7 +116,7 @@ class Items extends Component {
     } else {
       this.props.updateProductQuantity({
         token: this.props.token,
-        inItemId: e.currentTarget.getAttribute("data-item"),
+        inItemId: pid,
         inQuantity: count
       });
     }
@@ -131,8 +127,7 @@ class Items extends Component {
     let hasItems = cart.count > 0 ? true : false;
     let this_ref = this;
     return (
-      <ScrollView>
-        <View>
+      <ScrollView>       
         {hasItems ? (
           <View>            
               <View>                
@@ -163,23 +158,13 @@ class Items extends Component {
                               </Text>
                               <Text>XXL</Text>
                               <Text>
-                                  <Text
-                                    data-param="-1"
-                                    data-item={product.item_id}
-                                    data-quantity={product.quantity}                                    
-                                    onPress={this_ref.update.bind(this_ref)}
-                                  >
+                                  <Text onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
                                     &#8722;
                                   </Text>                                
                                 <Text>
                                   {product.quantity}
                                 </Text>                                
-                                  <Text
-                                    data-param="1"
-                                    data-item={product.item_id}                                    
-                                    data-quantity={product.quantity}
-                                    onPress={this_ref.update.bind(this_ref)}
-                                  >
+                                  <Text onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
                                     &#43;
                                   </Text>
                               </Text>
@@ -225,7 +210,7 @@ class Items extends Component {
               </View>            
           </View>
         )}
-        </View>
+        <Footer />        
       </ScrollView>
     );
   }
@@ -239,7 +224,7 @@ const mapStateToProps = state => {
 
 const mapStateToDispatch = dispatch => ({  
   updateProductQuantity: data =>
-    dispatch(Actions.updateProductQuantity.request(data)),
+  dispatch(Actions.updateProductQuantity.request(data)),
   removeFromCart: data => dispatch(Actions.removeFromCart.request(data)),
   getCartProducts: data => dispatch(Actions.getCartProducts.request(data))
 });

@@ -2,7 +2,6 @@ import * as ActionTypes from "../actions";
 //import { store } from "../index";
 
 import SyncStorage from 'sync-storage';
-
 const intialState = {
   loading: false,
   products: [],
@@ -105,14 +104,14 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.REMOVEFROMCART.SUCCESS:
-      cart = localStorage.getItem("react-shop-cart");
+      cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-        cart = JSON.parse(cart);
+       
       } else {
         cart = { inCartId: null, count: 0 };
       }
       cart.count = cart.count - 1;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
@@ -120,14 +119,13 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.UPDATEQUANTITY.SUCCESS:
-      cart = localStorage.getItem("react-shop-cart");
-      if (cart) {
-        cart = JSON.parse(cart);
+      cart = SyncStorage.get("react-shop-cart");      
+      if (cart) {        
       } else {
         cart = { inCartId: null, count: 0 };
       }
       cart.count = cart.count - 1;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,
@@ -194,7 +192,7 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.SETREGION:
-      cart = localStorage.getItem("react-shop-cart");
+      cart = SyncStorage.get("react-shop-cart");
       if (cart) {
         cart = JSON.parse(cart);
       } else {
@@ -202,7 +200,7 @@ export default (state = intialState, action) => {
       }
 
       cart.region = action.payload;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
@@ -217,7 +215,7 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.SETSHIPPINGOPTION:
-      cart = localStorage.getItem("react-shop-cart");
+      cart = SyncStorage.get("react-shop-cart");
       if (cart) {
         cart = JSON.parse(cart);
       } else {
@@ -231,7 +229,7 @@ export default (state = intialState, action) => {
       }
 
       cart.shippingoption = action.payload;
-      localStorage.setItem("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
       return {
         ...state,
         isLoading: false,
