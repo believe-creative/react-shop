@@ -1,0 +1,184 @@
+import React, { Component } from "react";
+import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
+import NavigationService from '../../routes/NavigationService.js';
+import successimage from "../../images/success-image.png";
+import { clearCart } from "../../actions";
+import Delivery from "./delivery";
+import Conformation from "./conformation";
+import Payment from "./payment";
+import Home from "../../containers/Home/home";
+import Login from "../../containers/Login/login";
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
+import SyncStorage from 'sync-storage';
+import { StripeProvider, Elements } from "react-stripe-elements";
+import {styles} from '../../containers/Home/home-styles';
+
+class Checkout extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      stage: 0,
+      stages: [
+        {
+          next: "Next step",
+          back: "Back",
+          name: "delivery"
+        },
+        {
+          next: "Next step",
+          back: "Back",
+          name: "conformation"
+        },
+        {
+          next: "Pay",
+          back: "Back",
+          name: "payment"
+        },
+        {
+          next: "Back to Shop",
+          name: "finish"
+        }
+      ],
+      delivery: {},
+      conformation: {},
+      payment: {},
+      finish: {},
+      errors: []
+    };
+  }
+  setDelivarydetails(e, child) {
+    let state = this.state;
+    state["delivery"] = child;
+    state["delivery"]["errors"] = [];
+
+    this.setState(state);
+  }
+
+  componentDidMount() {
+    if (!this.props.user.email) {
+
+        NavigationService.navigate('Login');
+        SyncStorage.set("nextRoute", "Checkout");
+
+    }
+    if (!this.props.cart) {
+      NavigationService.navigate('Home');
+    } else if (this.props.cart.count <= 0) {
+      NavigationService.navigate('Home');
+    }
+  }
+
+  showstages() {
+    if (this.state.stage === 0) {
+      return (
+        <Delivery
+          backStage={this.backStage.bind(this)}
+          nextStage={this.nextStage.bind(this)}
+          setDelivarydetails={this.setDelivarydetails.bind(this)}
+        />
+      );
+    } else if (this.state.stage === 1) {
+      return (
+        <Conformation
+          backStage={this.backStage.bind(this)}
+          nextStage={this.nextStage.bind(this)}
+        />
+      );
+    } else if (this.state.stage === 2) {
+      return (
+            <Payment
+              {...this.props}
+              user={this.props.user}
+              cart={this.props.cart}
+              customer={this.props.customer}
+              address={this.props.address}
+              backStage={this.backStage.bind(this)}
+              nextStage={this.nextStage.bind(this)}
+              back={"back"}
+              next={"pay"}
+            />
+      );
+    } else {
+      return (
+        <View >
+        <Image
+          source={require('../../images/success-image.png')}
+          style={{ width: 50, height: 50, marginLeft: 5, marginTop: 20, }}
+
+        />
+
+              <Text>Success!</Text>
+              <Text>
+                Your items will be shipped shortly, you will get email with
+                details.
+              </Text>
+
+              <Text style={{padding: 10, fontSize: 14}} onPress={() => {
+                  NavigationService.navigate('Categories', {
+                itemId: e.department_id,
+                categoryName: e.name,
+              });
+              }}>
+             Back to Shop
+             </Text>
+             </View>
+      );
+    }
+  }
+  backStage(stage) {
+    if (stage > 0) {
+      let state = this.state;
+      state["stage"] = stage - 1;
+      this.setState(state);
+    } else {
+
+      NavigationService.navigate('Items');
+    }
+  }
+  nextStage(stage) {
+    if (stage >= 2) {
+      SyncStorage.remove("react-shop-cart");
+      SyncStorage.remove("nextRoute");
+
+      this.props.clearCart();
+    }
+    let state = this.state;
+    state["stage"] = stage + 1;
+    this.setState(state);
+  }
+
+  render() {
+    let finalstage = false;
+    if (this.state.stage >= 2) finalstage = true;
+    return (
+        <ScrollView>
+          <View>
+
+                <Text>Checkout</Text>
+
+
+              {this.showstages()}
+          </View>
+        </ScrollView>
+    );
+  }
+}
+
+const mapStateToProps = state => {
+  return {
+    cart: state.get("products").cart,
+    user: state.get("user"),
+    token: state.get("user").token,
+    address: state.get("order").address
+  };
+};
+
+const mapStateToDispatch = dispatch => ({
+  clearCart: () => dispatch(clearCart())
+});
+
+export default connect(
+  mapStateToProps,
+  mapStateToDispatch
+)(Checkout);

@@ -6,6 +6,9 @@ import DetailsScreen from '../containers/Home/detailsScreen';
 import Login from '../containers/Login/login';
 import NavBar from '../components/Navbar/navbar';
 import Items from '../components/Items/items';
+import Checkout from '../components/Checkout/checkout';
+import Delivery from '../components/Checkout/delivery';
+import Conformation from '../components/Checkout/conformation';
 
 export const RootStack = createStackNavigator(
   {
@@ -14,7 +17,10 @@ export const RootStack = createStackNavigator(
     Categories:Categories,
     Navbar:NavBar,
     Items:Items,
-    Login:Login
+    Login:Login,
+    Checkout:Checkout,
+    Delivery:Delivery,
+    Conformation:Conformation
   },
   {
     initialRouteName: 'Home',
