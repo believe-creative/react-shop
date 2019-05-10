@@ -15,7 +15,7 @@ export const styles = StyleSheet.create({
 	  justifyContent:'flex-end',
 	  paddingLeft:15,
 	  paddingRight:15,
-	  paddingTop:5,
+	  paddingTop:15,
 	  paddingBottom:0,
   },
   logo:{
@@ -23,4 +23,18 @@ export const styles = StyleSheet.create({
 	  flexDirection:'row',
 	  justifyContent:'flex-start',
   },
+	menu_block:{
+		paddingTop:0,
+	},
+	menu_list:{
+		fontSize: 18, 
+		color:'#2e2e2e', 
+		fontWeight:'700', 
+		paddingTop:10, 
+		paddingBottom:10, 
+		paddingLeft:15, 
+		paddingRight:15, 
+		borderBottomWidth:1,
+		borderColor:'#b4b4b4',
+	},
 });

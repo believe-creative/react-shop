@@ -82,9 +82,8 @@ class NavBar extends Component {
 			 </View>
 			 <View style={styles.menu_block}>
         {this.state.menuOpen ? this.props.categories && Object.values(this.props.categories).map((e,index)=>{
-          console.log(e);
           return(
-            <Text style={{padding: 10, fontSize: 14}} onPress={() => {
+            <Text style={styles.menu_list} onPress={() => {
                 NavigationService.navigate('Categories', {
               itemId: e.department_id,
               categoryName: e.name,
