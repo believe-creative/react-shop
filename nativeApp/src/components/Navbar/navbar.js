@@ -8,14 +8,15 @@ import NavigationService from '../../routes/NavigationService.js';
 import Cart from "../Cart/cart";
 import SyncStorage from 'sync-storage';
 import UserBlock from '../UserBlock/userblock';
-import {styles} from './navbar-styles'; 
+import {styles} from './navbar-styles';
 
 class NavBar extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      menuOpen:false,
     };
   }
   componentDidMount() {
@@ -46,13 +47,15 @@ class NavBar extends Component {
           });
         }
         this.setState({ cart: props.cart });
-      }   
+      }
 
   }
   toggleDrawer = () => {
     //Props to open/close the drawer
     this.props.navigationProps.toggleDrawer();
   };
+
+
   render() {
     let { cart }  = this.props;
     if (!cart) cart = { count: 0 };
@@ -65,20 +68,20 @@ class NavBar extends Component {
         style={{width: 120, height: 60}}
         source={require('../../images/proof-of-concept.png')}
         />
-      <Text><Cart cartItems={cart.count} /></Text>
 		  </View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 20, }}><Cart cartItems={cart.count} /></View>
 		  <View style={styles.burgermenu}>
-        <TouchableOpacity >
+        <TouchableOpacity  onPress={()=>this.setState({menuOpen:!this.state.menuOpen})}>
           {/*Donute Button Image */}
           <Image
             source={require('../../images/menu_icon.png')}
             style={{ width: 40, height: 25, marginLeft: 5, marginTop: 20, }}
           />
-        </TouchableOpacity>
+        </TouchableOpacity  >
 			 </View>
 			 </View>
 			 <View style={styles.menu_block}>
-        {this.props.categories && Object.values(this.props.categories).map((e,index)=>{
+        {this.state.menuOpen ? this.props.categories && Object.values(this.props.categories).map((e,index)=>{
           console.log(e);
           return(
             <Text style={{padding: 10, fontSize: 14}} onPress={() => {
@@ -90,7 +93,7 @@ class NavBar extends Component {
            {e.name}
            </Text>
        );
-        })}
+     }) :<Text> </Text>}
 		  </View>
      </View>
 
