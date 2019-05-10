@@ -78,7 +78,7 @@ class UserBlock extends Component {
     return (
         <View style={styles.topbar}>
             <View style={styles.topleft}>
-                <Text style={{...styles.hiblock, ...styles.toptext}}>Hi!</Text>
+                <Text style={{...styles.hiblock, ...styles.toptext}}>Hi! </Text>
               {name ? (
                 <Text style={{...styles.login_name_block, ...styles.toptext}}>{name}</Text>
               ) : (

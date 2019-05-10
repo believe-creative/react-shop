@@ -192,14 +192,18 @@ export const styles = StyleSheet.create({
 	},
 	cart_block:{
 		position:'relative',
+		right: 5,
 	},
 	cartcount:{
 		color:'#fff',
 		backgroundColor:'#f62f5e',
 		position:'absolute',
-		top:50,
+		top:-15,
 		width:25,
-		height:30,
+		height:25,
+		textAlign: 'center',
+		lineHeight: 25,
+		borderRadius: 20,
 	},
 	
 	/* Cart page css */
@@ -255,6 +259,7 @@ export const styles = StyleSheet.create({
 		justifyContent:'space-between',
 		flexDirection:'row',
 		marginTop: 15,
+		marginBottom:30,
 	},
 	quantity:{
 		backgroundColor:'#efefef', 
