@@ -24,7 +24,19 @@ class UserBlock extends Component {
     } 
   }
   componentWillReceiveProps(props, b, c) {
+    console.log("props.cart",props.cart,this.state.cart);
+    
+    
     if (props.cart) {
+      let productsCounts=0;
+      if(props.cart.products)
+      {
+
+        for(var i=0;i<props.cart.products.length;i++)
+        {
+          productsCounts+=props.cart.products[i].quantity;
+        }
+      }
       if (
         props.cart.count !== null &&
         props.cart.count !== undefined &&
@@ -35,7 +47,7 @@ class UserBlock extends Component {
           this.state.cart.count === undefined
         ) {
           this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
-        } else if (props.cart.count !== this.state.cart.count) {
+        } else if (props.cart.count !== productsCounts) {
           this.props.getCartProducts({token:props.token,inCartId:props.cart.inCartId});
         }
         this.setState({ cart: props.cart });
@@ -105,5 +117,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {pure:false}
 )(UserBlock);

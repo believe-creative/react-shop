@@ -79,29 +79,28 @@ class Items extends Component {
     }
     this.setState(state);
   }
-  remove(e) {
-    // let props = this.props;
-    // let this_ref = this;
-    // let item = e.currentTarget.getAttribute("data-item");
-    // confirmAlert({
-    //   title: e.currentTarget.getAttribute("data-name"),
-    //   message: "remove this product?",
-    //   buttons: [
-    //     {
-    //       label: "Yes",
-    //       onClick: () => {
-    //         let state = this_ref.state;
-    //         state["buttonStyles"] = { pointerEvents: "none" };
-    //         this_ref.setState(state);
-    //         return props.removeFromCart({ token: props.token, inItemId: item });
-    //       }
-    //     },
-    //     {
-    //       label: "No",
-    //       onClick: () => {}
-    //     }
-    //   ]
-    // });
+  remove(pid, pname) {
+    let props = this.props;
+    let this_ref = this;
+    let item = pid;    
+    Alert.alert(
+      pname,
+      'remove this product?',
+      [  
+        {text: 'Yes', onPress: () => {
+          let state = this_ref.state;
+          this_ref.setState(state);
+          return props.removeFromCart({ token: props.token, inItemId: item });
+        }},      
+        {
+          text: 'No',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        
+      ],
+      {cancelable: false},
+    );    
   }
   update(pid, pqty, qtyNum) {   
     let state = this.state;   
@@ -146,12 +145,7 @@ class Items extends Component {
 										<Text style={styles.img_right_block}>
 											<Text>{product.name}</Text>
                               	<Text>Men BK3569</Text>                                  
-											<Text
-											  data-item={product.item_id}
-											  data-name={product.name}                                      
-											  onPress={this_ref.remove.bind(this_ref)}
-											>&#10005; Remove
-											</Text>
+                                <Text onPress={this_ref.remove.bind(this_ref, product.item_id, product.name)}>&#10005; Remove	</Text>
 										</Text> 
                             </View>  
 									<View style={styles.cart_size_block}>
@@ -227,5 +221,7 @@ const mapStateToDispatch = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapStateToDispatch
+  mapStateToDispatch,
+  null,
+  {pure:false}
 )(Items);

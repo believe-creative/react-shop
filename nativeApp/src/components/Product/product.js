@@ -25,7 +25,7 @@ import SyncStorage from 'sync-storage';
 
       }
       else{
-        cart = JSON.parse(cart);
+        cart = cart;
       }
       
       props.AddToCart({

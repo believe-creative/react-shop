@@ -111,7 +111,7 @@ export default (state = intialState, action) => {
         cart = { inCartId: null, count: 0 };
       }
       cart.count = cart.count - 1;
-      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,
@@ -138,7 +138,7 @@ export default (state = intialState, action) => {
 
         }
         else{
-          cart = JSON.parse(cart);
+          cart = cart;
         }
         //cart = JSON.parse(cart);
       } else {
@@ -159,7 +159,7 @@ export default (state = intialState, action) => {
 
         }
         else{
-          cart = JSON.parse(cart);
+          cart = cart;
         }
       } else {
         cart = { inCartId: null, count: 0, products: [] };
