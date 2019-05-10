@@ -162,4 +162,33 @@ export const styles = StyleSheet.create({
 		fontSize: 18,
 		marginBottom: 15,
 	},
+	
+	/* Topblock styles */
+	
+	topbar:{
+		backgroundColor: '#f7f7f7',
+		paddingTop:10,
+		paddingBottom: 10,
+		paddingLeft: 15,
+		paddingRight:15,
+		flexDirection: 'row',
+		justifyContent:'space-between',
+		alignItems:'center',
+	},
+	topleft:{
+		flex:1,
+		flexDirection: 'row',
+	},
+	toptext:{
+		fontSize:15,
+		fontWeight: '700',
+		color:'#000',
+	},
+	signin:{
+		fontSize:15,
+		fontWeight: '700',
+		color:'#f62f5e',
+		marginLeft: 10,
+	},	
+	
 });

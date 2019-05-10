@@ -6,6 +6,7 @@ import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
 import UserBlock from '../UserBlock/userblock';
+import {styles} from './navbar-styles'; 
 
 class NavBar extends Component {
 
@@ -16,8 +17,6 @@ class NavBar extends Component {
     };
   }
   componentDidMount() {
-
-  console.log("dfgdfgdfg0fgfgfgf000");
   this.props.getToken();
 
   }
@@ -39,23 +38,27 @@ class NavBar extends Component {
   };
   render() {
 
-    console.log("Navbar",this.props);
     return (
-        <View style={{flex: 0}}>
+        <View style={styles.header}>
         <UserBlock/>
-        <Image
-        style={{width: 150, height: 80}}
+		 <View style={styles.headtop}>
+        <View style={styles.logo}>
+		 <Image
+        style={{width: 120, height: 60}}
         source={require('../../images/proof-of-concept.png')}
         />
-
+		  </View>
+		  <View style={styles.burgermenu}>
         <TouchableOpacity >
           {/*Donute Button Image */}
           <Image
             source={require('../../images/menu_icon.png')}
-            style={{ width: 25, height: 25, marginLeft: 5 }}
+            style={{ width: 40, height: 25, marginLeft: 5, marginTop: 20, }}
           />
         </TouchableOpacity>
-
+			 </View>
+			 </View>
+			 <View style={styles.menu_block}>
         {this.props.categories && Object.values(this.props.categories).map((e,index)=>{
           console.log(e);
           return(
@@ -69,6 +72,7 @@ class NavBar extends Component {
            </Text>
        );
         })}
+		  </View>
      </View>
 
     );

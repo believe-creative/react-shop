@@ -6,6 +6,7 @@ import { getCookie, deleteCookie } from "../../services/helpers";
 import { setUser } from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
+import {styles} from '../../containers/Home/home-styles'; 
 
 
 class UserBlock extends Component {
@@ -63,32 +64,25 @@ class UserBlock extends Component {
     totalAmount = Math.round(totalAmount * 100) / 100;
 
     return (
-      <View>
-        <View>
-            <View>
-                <Text>Hi!</Text>
+        <View style={styles.topbar}>
+            <View style={styles.topleft}>
+                <Text style={{...styles.hiblock, ...styles.toptext}}>Hi!</Text>
               {name ? (
-                <Text className="login-name-block">{name}</Text>
+                <Text style={{...styles.login_name_block, ...styles.toptext}}>{name}</Text>
               ) : (
-                  <Button title="Sign in" onPress={() => {
-                    NavigationService.navigate('Login');
-                }}/>
+		 				<TouchableOpacity  onPress={() => {NavigationService.navigate('Login');}}><Text style={{...styles.signin}}>Sign in</Text></TouchableOpacity>
               )}
+				  
             </View>
-            <View>
-              <View>
-                <Text>Your bag: ${totalAmount}</Text>
-              </View>
+            <View style={styles.toprightblock}>
+                <Text style={styles.toptext}>Your bag: ${totalAmount}</Text>
               {name ? (
-                <View>
-                <Button title="Logout" onPress={this.logout.bind(this)}/>
-              </View>
+				  	 <TouchableOpacity  onPress={this.logout.bind(this)}><Text style={{...styles.logout, ...styles.toptext}}>Logout</Text></TouchableOpacity>
             ) : (
               <View/>
             )}
             </View>
         </View>
-      </View>
     );
   }
 }
