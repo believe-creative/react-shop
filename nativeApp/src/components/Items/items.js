@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import Footer from '../../components/Footer/footer';
 import * as Actions from "../../actions";
+import {styles} from '../../containers/Home/home-styles';
 //import "react-confirm-alert/src/react-confirm-alert.css";
 
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
@@ -127,70 +128,65 @@ class Items extends Component {
     let hasItems = cart.count > 0 ? true : false;
     let this_ref = this;
     return (
-      <ScrollView>       
+      <ScrollView style={styles.home}>       
         {hasItems ? (
-          <View>            
-              <View>                
-                    <Text>{cart.count} Items In Your Cart</Text>                    
-                      <View>
-                        <Text>Item</Text>
-                        <Text>Size</Text>
-                        <Text>Quantity</Text>
-                        <Text>Price</Text>
-                      </View>                    
-                    <View>
+          <View style={styles.cart_page_wraper}>            
+              <View style={styles.cart_page_block}>         
+                    <View style={styles.cart_top_block}>
+		 					<Text style={{...styles.h2, ...styles.black}}>{cart.count} Items In Your Cart</Text>
                       {cart.products.map(function(product, key) {
                         return (
                           <View key={key}>
-                            <View>
-                              <Text>
-                                <Image
+                            <View style={styles.cart_single_block}>
+                              <Text style={styles.product_img}>
+                                <Image style={{width: 100, height: 100,}}
                                   source={require("../../images/product_images/afghan-flower-2.gif")}
-                                />                                  
-                                  <Text>{product.name}</Text>
-                                  <Text>Men BK3569</Text>                                  
-                                    <Text
-                                      data-item={product.item_id}
-                                      data-name={product.name}                                      
-                                      onPress={this_ref.remove.bind(this_ref)}
-                                    >&#10005; Remove
-                                    </Text>                                
+                                />                                                                 
                               </Text>
-                              <Text>XXL</Text>
+										<Text style={styles.img_right_block}>
+											<Text>{product.name}</Text>
+                              	<Text>Men BK3569</Text>                                  
+											<Text
+											  data-item={product.item_id}
+											  data-name={product.name}                                      
+											  onPress={this_ref.remove.bind(this_ref)}
+											>&#10005; Remove
+											</Text>
+										</Text> 
+                            </View>  
+									<View style={styles.cart_size_block}>
+										<Text style={{color: '#b4b4b4', fontWeight: '700', fontSize: 14,}}>XXL</Text>
                               <Text>
-                                  <Text onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
+                                  <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
                                     &#8722;
                                   </Text>                                
-                                <Text>
+                                <Text style={styles.quantity}>
                                   {product.quantity}
                                 </Text>                                
-                                  <Text onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
+                                  <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
                                     &#43;
                                   </Text>
                               </Text>
                               <Text>
                                 ${(product.quantity * product.price).toFixed(2)}
                               </Text>
-                            </View>                           
+									</View>
                           </View>
                         );
                       })}
                     </View>                  
               </View>
-              <View>                              
-                    <Text style={{padding: 10, fontSize: 14}} onPress={() => {
-                      NavigationService.navigate('Categories', {
-                        itemId: 1,
-                        categoryName: "Regional",
-                      });
-                      }}>
-                      Back to shop
-                    </Text>
-                    <Text style={{padding: 10, fontSize: 14}} onPress={() => {
-                      NavigationService.navigate('Checkout');
-                      }}>
-                    Checkout
-                  </Text>
+              <View style={styles.cart_bottom_block}>                              
+					 <TouchableOpacity onPress={() => {
+					 NavigationService.navigate('Categories', {
+						itemId: 1,
+						categoryName: "Regional",
+					 });
+					 }}><Text style={styles.button}>Back to shop</Text></TouchableOpacity>
+
+					 <TouchableOpacity onPress={() => {
+					 NavigationService.navigate('Checkout');
+					 }}><Text style={styles.button}>Checkout</Text></TouchableOpacity>
               </View>            
           </View>
         ) : (

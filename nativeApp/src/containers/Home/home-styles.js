@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   home: {
-    backgroundColor: '#eeeeee',
+    backgroundColor: '#f7f7f7',
   },
 	banner: {
 		backgroundColor: '#6c6c6c',
@@ -201,5 +201,55 @@ export const styles = StyleSheet.create({
 		width:25,
 		height:30,
 	},
-
+	
+	/* Cart page css */
+	
+	cart_page_wraper:{
+		padding: 15,
+	},
+	cart_top_block:{
+		backgroundColor: '#fff',
+		paddingTop:20,
+		paddingBottom:20,
+		paddingLeft:15,
+		paddingRight:15,
+	},
+	cart_single_block:{
+		flex:1,
+		flexDirection:'row',
+		justifyContent:'space-between',
+		flexWrap:'wrap',
+		textAlign: 'left',
+		alignItems:'center',
+	},
+	product_img:{
+		padding:10,
+		borderWidth:1,
+		borderColor:'#b4b4b4',
+		marginRight:15, 
+	},
+	img_right_block:{
+		flex:1,
+		flexDirection:'row',
+		flexWrap:'wrap',
+		justifyContent:'center',
+		alignItems:'center',
+	},
+	cart_bottom_block:{
+		backgroundColor:'#efefef',
+		paddingTop:20,
+		paddingBottom:20,
+		paddingLeft:15,
+		paddingRight:15,
+		marginBottom: 20,
+		flex:1,
+		flexDirection:'row',
+		justifyContent:'space-between',
+	},
+	cart_size_block:{
+		flex:1, 
+		justifyContent:'space-between',
+		flexDirection:'row',
+		marginTop: 15,
+	},
 });
