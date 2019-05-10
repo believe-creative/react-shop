@@ -189,6 +189,17 @@ export const styles = StyleSheet.create({
 		fontWeight: '700',
 		color:'#f62f5e',
 		marginLeft: 10,
-	},	
-	
+	},
+	cart_block:{
+		position:'relative',
+	},
+	cartcount:{
+		color:'#fff',
+		backgroundColor:'#f62f5e',
+		position:'absolute',
+		top:50,
+		width:25,
+		height:30,
+	},
+
 });

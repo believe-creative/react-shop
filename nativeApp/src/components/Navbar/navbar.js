@@ -68,15 +68,14 @@ class NavBar extends Component {
         style={{width: 120, height: 60}}
         source={require('../../images/proof-of-concept.png')}
         />
-      <Text><Cart cartItems={cart.count} /></Text>
 		  </View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 20, }}><Cart cartItems={cart.count} /></View>
 		  <View style={styles.burgermenu}>
         <TouchableOpacity  onPress={()=>this.setState({menuOpen:!this.state.menuOpen})}>
           {/*Donute Button Image */}
           <Image
             source={require('../../images/menu_icon.png')}
             style={{ width: 40, height: 25, marginLeft: 5, marginTop: 20, }}
-
           />
         </TouchableOpacity  >
 			 </View>
