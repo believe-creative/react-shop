@@ -107,6 +107,7 @@ class Items extends Component {
   }
   update(e) {
     let state = this.state;
+    console.log("updatebuttonclick",e);
     state["buttonStyles"] = {};
     this.setState(state);
     let count = parseInt(e.currentTarget.getAttribute("data-quantity"));
@@ -156,7 +157,7 @@ class Items extends Component {
                                     <Text
                                       data-item={product.item_id}
                                       data-name={product.name}                                      
-                                      onClick={this_ref.remove.bind(this_ref)}
+                                      onPress={this_ref.remove.bind(this_ref)}
                                     >&#10005; Remove
                                     </Text>                                
                               </Text>
@@ -166,7 +167,7 @@ class Items extends Component {
                                     data-param="-1"
                                     data-item={product.item_id}
                                     data-quantity={product.quantity}                                    
-                                    onClick={this_ref.update.bind(this_ref)}
+                                    onPress={this_ref.update.bind(this_ref)}
                                   >
                                     &#8722;
                                   </Text>                                
@@ -177,7 +178,7 @@ class Items extends Component {
                                     data-param="1"
                                     data-item={product.item_id}                                    
                                     data-quantity={product.quantity}
-                                    onClick={this_ref.update.bind(this_ref)}
+                                    onPress={this_ref.update.bind(this_ref)}
                                   >
                                     &#43;
                                   </Text>

@@ -5,6 +5,8 @@ import DropdownMenu from 'react-native-dropdown-menu';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
+import Cart from "../Cart/cart";
+import SyncStorage from 'sync-storage';
 import UserBlock from '../UserBlock/userblock';
 import {styles} from './navbar-styles'; 
 
@@ -30,6 +32,21 @@ class NavBar extends Component {
           this.props.getCategories({ token: props.token });
       }
     }
+    let localCart = SyncStorage.get("react-shop-cart");
+      if (localCart != null) {
+        if (this.state.cart === null || this.state.cart === undefined) {
+          this.props.getCartProducts({
+            token: props.token,
+            inCartId: localCart.inCartId
+          });
+        } else if (props.cart.count !== this.state.cart.count) {
+          this.props.getCartProducts({
+            token: props.token,
+            inCartId: props.cart.inCartId
+          });
+        }
+        this.setState({ cart: props.cart });
+      }   
 
   }
   toggleDrawer = () => {
@@ -37,7 +54,8 @@ class NavBar extends Component {
     this.props.navigationProps.toggleDrawer();
   };
   render() {
-
+    let { cart }  = this.props;
+    if (!cart) cart = { count: 0 };
     return (
         <View style={styles.header}>
         <UserBlock/>
@@ -47,6 +65,7 @@ class NavBar extends Component {
         style={{width: 120, height: 60}}
         source={require('../../images/proof-of-concept.png')}
         />
+      <Text><Cart cartItems={cart.count} /></Text>
 		  </View>
 		  <View style={styles.burgermenu}>
         <TouchableOpacity >
