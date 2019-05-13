@@ -3,6 +3,7 @@ import {Picker, Modal ,Alert, Text,TextInput, View , TouchableOpacity, Image, Sc
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
+import {styles} from '../../containers/Home/home-styles'; 
 
 class AddressPopupForm extends Component {
   constructor(props) {
@@ -163,7 +164,7 @@ class AddressPopupForm extends Component {
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
       console.log(this.props.onHide);
     return (
-      <ScrollView style={{marginTop: 22}}>
+      <ScrollView >
         <Modal
           animationType="slide"
           transparent={false}
@@ -172,126 +173,115 @@ class AddressPopupForm extends Component {
             Alert.alert('Modal has been closed.');
           }}>
 
-          <ScrollView style={{marginTop: 22}}>
-          <Text >Add Address</Text>
-            <View>
-            <TouchableOpacity  onPress={this.props.onHide}>
-          <Text>Close</Text>
-          </TouchableOpacity>
-          </View>
+          <ScrollView style={styles.add_address_block}>
+				 <View style={styles.address_top_block}>
+          		<Text style={styles.address_title}>Add Address</Text>
+            	<TouchableOpacity onPress={this.props.onHide}><Text style={styles.close}>x</Text></TouchableOpacity>
+          	 </View>
 
-              <Text>Name</Text>
+              <Text style={styles.input_text}>Name</Text>
 
               <TextInput value={
                 this.props.addNewAddress
                   ? addressList.address_name
                   : addAddressList.address_name
               }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              style={styles.input_field}
               title="address_name" onChangeText={this.changed.bind(this)}/>
 
         {this.showError("address_name")}
 
-            <Text>Address 1*</Text>
-            <TextInput value={
+            <Text style={styles.input_text}>Address 1*</Text>
+            <TextInput style={styles.input_field} value={
               this.props.addNewAddress
                 ? addressList.address_1
                 : addAddressList.address_1
             }
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
             title="address_1" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("address_1")}
 
 
-              <Text>Address 2</Text>
-              <TextInput value={
+              <Text style={styles.input_text}>Address 2</Text>
+              <TextInput style={styles.input_field} value={
                 this.props.addNewAddress
                   ? addressList.address_2
                   : addAddressList.address_2
               }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="address_2" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("address_2")}
 
-              <Text>City *</Text>
-              <TextInput value={
+              <Text style={styles.input_text}>City *</Text>
+              <TextInput style={styles.input_field} value={
                 this.props.addNewAddress
                   ? addressList.city
                   : addAddressList.city
               }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="city" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("city")}
 
 
-              <Text>Zip-code *</Text>
-              <TextInput value={
+              <Text style={styles.input_text}>Zip-code *</Text>
+              <TextInput style={styles.input_field} value={
                 this.props.addNewAddress
                   ? addressList.postal_code
                   : addAddressList.postal_code
               }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="postal_code" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("postal_code")}
 
-              <Text>Country :</Text>
-              <TextInput   value={
+              <Text style={styles.input_text}>Country :</Text>
+              <TextInput style={styles.input_field} value={
                   this.props.addNewAddress
                     ? addressList.country
                     : addAddressList.country
                 }
-                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="country" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("country")}
 
-            <Text>Mobile Number :</Text>
-            <TextInput   value={
+            <Text style={styles.input_text}>Mobile Number :</Text>
+            <TextInput style={styles.input_field} value={
               this.props.addNewAddress
                 ? addressList.mob_phone
                 : addAddressList.mob_phone
             }
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
             title="mob_phone" onChangeText={this.changed.bind(this)}/>
 
 
             {this.showError("mob_phone")}
 
-            <Text>Day Phone Number:</Text>
-            <TextInput value={
+            <Text style={styles.input_text}>Day Phone Number:</Text>
+            <TextInput style={styles.input_field} value={
                 this.props.addNewAddress
                   ? addressList.day_phone
                   : addAddressList.day_phone
               }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="day_phone" onChangeText={this.changed.bind(this)} />
 
             {this.showError("day_phone")}
 
-            <Text>Eve Phone Number :</Text>
-            <TextInput  value={
+            <Text style={styles.input_text}>Eve Phone Number :</Text>
+            <TextInput style={styles.input_field} value={
               this.props.addNewAddress
                 ? addressList.eve_phone
                 : addAddressList.eve_phone
             }
-            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               title="eve_phone" onChangeText={this.changed.bind(this)}/>
 
             {this.showError("evn_phone")}
 
-            <Text>Region* :</Text>
-            <Picker
+            <Text style={styles.input_text}>Region* :</Text>
+            <Picker style={styles.select_field}
               selectedValue={addressList.shipping_region_id}
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               onValueChange={this_ref.changeRegion.bind(this_ref)}>
 
               {regions.map(function(region, index) {
@@ -303,17 +293,13 @@ class AddressPopupForm extends Component {
             </Picker>
 
             {this.showError("region")}
-
-            <Text
-              onPress={
+				<View style={{...styles.address_top_block,...styles.space_bot}}>
+            <Text style={styles.button} onPress={
                 this.props.addNewAddress
                 ? this.updateAddress.bind(this)
                 : this.saveAddress.bind(this)
               } >Save Changes</Text>
-              <View>
-              <TouchableOpacity  onPress={this.props.onHide}>
-            <Text>Close</Text>
-            </TouchableOpacity>
+				<TouchableOpacity onPress={this.props.onHide}><Text style={styles.button}>Close</Text></TouchableOpacity>
             </View>
 
           </ScrollView>

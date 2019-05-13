@@ -327,4 +327,52 @@ export const styles = StyleSheet.create({
 		textAlign: 'center',
 		lineHeight: 30,
 	},
+	
+	/* Address block css */
+	
+	add_address_block:{
+		padding:20,
+		paddingBottom:50,
+		backgroundColor:'#fff',
+	},
+	address_top_block:{
+		flex:1,
+		alignItems:'center',
+		justifyContent:'space-between',
+		flexDirection:'row',
+		paddingBottom:15,
+	},
+	address_title:{
+		fontSize:24,
+		fontWeight:'500',
+	},
+	close:{
+		fontSize:28,
+		fontWeight:'700',
+		color:'#000',
+		opacity:0.5,
+	},
+	input_field:{
+		backgroundColor:'#fff',
+		borderColor:'#ced4da',
+		borderWidth:1,
+		borderStyle:'solid',
+		height:40,
+		borderRadius:10,
+		paddingLeft:10,
+		paddingRight:10,
+	},
+	select_field:{
+		backgroundColor:'#fff',
+		borderColor:'#ced4da',
+		borderWidth:10,
+		borderStyle:'solid',
+		height:40,
+		borderRadius:10,
+		paddingLeft:10,
+		paddingRight:10,
+	},
+	space_bot:{
+		paddingBottom:50,
+	},
 });
