@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { View, Button, StyleSheet } from 'react-native';
+import { View, Button, StyleSheet, TouchableOpacity, Text } from 'react-native';
 import stripe from 'tipsi-stripe';
 import { API_ROOT } from "../../services/constants";
+import {styles} from '../../containers/Home/home-styles';
+import Footer from '../../components/Footer/footer';
 class Payment extends Component {
   constructor(props) {
     super(props);
@@ -97,21 +99,14 @@ class Payment extends Component {
   render() {
     return (
       
-      <View style={styles.container}>
+      <View style={styles.confirmation_block}>
       {this.showErrors()}
-      <View>
-        <Button
-          title="Make a payment"
-          onPress={this.requestPayment}
-          disabled={this.state.isPaymentPending}
-        />
+      <View style={{flex:1, alignItems:'flex-start', justifyContent:'flex-start'}}>
+		  <TouchableOpacity onPress={this.requestPayment}><Text style={styles.button}>Make a Payment</Text></TouchableOpacity>
         </View>
       </View>
     )
   }
 }
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' } 
-});
 
 export default Payment;

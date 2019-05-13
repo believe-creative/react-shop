@@ -4,6 +4,9 @@ export const styles = StyleSheet.create({
   home: {
     backgroundColor: '#f7f7f7',
   },
+	gray_bg:{
+		backgroundColor: '#f7f7f7',
+	},
 	banner: {
 		backgroundColor: '#6c6c6c',
 		paddingTop: 25,
@@ -29,6 +32,11 @@ export const styles = StyleSheet.create({
 		fontSize: 22,
 		fontWeight: '700',
 		color: '#fff', 
+		marginBottom: 10,
+	},
+	h3: {
+		fontSize: 16,
+		fontWeight: '700',
 		marginBottom: 10,
 	},
 	black: {		
@@ -417,6 +425,9 @@ export const styles = StyleSheet.create({
 	space_bot:{
 		paddingBottom:50,
 	},
+	space_top:{
+		marginTop:15,
+	},
 	
 	/* Delivery Page css */
 	
@@ -429,4 +440,60 @@ export const styles = StyleSheet.create({
 	delivery_block:{
 		padding:15,
 	},
+	
+	/* Confirmation page css */
+	
+	confirmation_block:{
+		margin: 15,
+		marginBottom: 30,
+		padding: 25,
+		backgroundColor: '#fff',
+		position: 'relative',
+		shadowColor: '#000',
+  		shadowOffset: {width: 0, height: 2},
+  		shadowOpacity: 0.8,
+  		shadowRadius: 2,
+		elevation: 5,
+	},
+	ordertxt:{
+		fontWeight:'normal',
+		fontSize:16,
+		textAlign:'left',
+		color:'#000',
+		marginTop:15,
+		flex:1,
+		alignItems:'center',
+		justifyContent:'center',
+		flexDirection:'row',
+	},
+	headtxt:{
+		fontWeight:'bold',
+		fontSize:16,
+		textAlign:'left',
+		color:'#000',
+	},
+	success_block:{
+		margin: 15,
+		marginBottom: 30,
+		padding: 25,
+		backgroundColor: '#fff',
+		position: 'relative',
+		shadowColor: '#000',
+  		shadowOffset: {width: 0, height: 2},
+  		shadowOpacity: 0.8,
+  		shadowRadius: 2,
+		elevation: 5,
+		textAlign:'center',
+		flex:1,
+		alignItems:'center',
+		justifyContent:'center',
+	},
+	success_txt:{
+		fontSize:18,
+		fontWeight:'normal',
+		color:'#000',
+		textAlign: 'center',
+		marginBottom:15,
+	},
+
 });

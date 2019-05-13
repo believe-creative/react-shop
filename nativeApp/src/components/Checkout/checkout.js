@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView, StyleSheet} from 'react-native';
 import NavigationService from '../../routes/NavigationService.js';
 import successimage from "../../images/success-image.png";
 import { clearCart } from "../../actions";
@@ -13,6 +13,7 @@ import * as Actions from "../../actions";
 import SyncStorage from 'sync-storage';
 import { StripeProvider, Elements } from "react-stripe-elements";
 import {styles} from '../../containers/Home/home-styles';
+import Footer from '../../components/Footer/footer';
 
 class Checkout extends Component {
   constructor(props) {
@@ -50,7 +51,7 @@ class Checkout extends Component {
   setDelivarydetails(e, child) {
     let state = this.state;
     state["delivery"] = child;
-    state["delivery"]["errors"] = [];
+    state["delivery"]["errors"] = []; 
 
     this.setState(state);
   }
@@ -101,27 +102,24 @@ class Checkout extends Component {
       );
     } else {
       return (
-        <View >
+        <View style={styles.success_block}>
         <Image
           source={require('../../images/success-image.png')}
           style={{ width: 50, height: 50, marginLeft: 5, marginTop: 20, }}
 
         />
 
-              <Text>Success!</Text>
-              <Text>
+              <Text style={{...styles.h2, ...styles.black}}>Success!</Text>
+              <Text style={styles.success_txt}>
                 Your items will be shipped shortly, you will get email with
                 details.
               </Text>
-
-              <Text style={{padding: 10, fontSize: 14}} onPress={() => {
+				 <TouchableOpacity onPress={() => {
                   NavigationService.navigate('Categories', {
                 itemId: e.department_id,
                 categoryName: e.name,
               });
-              }}>
-             Back to Shop
-             </Text>
+              }}><Text style={styles.button}>Back to Shop</Text></TouchableOpacity>
              </View>
       );
     }
@@ -152,11 +150,12 @@ class Checkout extends Component {
     let finalstage = false;
     if (this.state.stage >= 2) finalstage = true;
     return (
-        <ScrollView>
+        <ScrollView style={styles.gray_bg}>
           <View>
-              <Text>Checkout</Text>
+              <Text style={{...styles.h2, ...styles.black}}>Checkout</Text>
               {this.showstages()}
           </View>
+			 <Footer/>
         </ScrollView>
     );
   }

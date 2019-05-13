@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-
+import Footer from '../../components/Footer/footer';
 import { connect } from "react-redux";
-import { StyleSheet, View, Text, ScrollView, Button } from 'react-native';
+import { StyleSheet, View, Text, ScrollView, Button, TouchableOpacity } from 'react-native';
 import { Table, Row, Rows } from 'react-native-table-component';
+import {styles} from '../../containers/Home/home-styles';
 
 class Conformation extends Component {
   constructor(props) {
@@ -50,18 +51,18 @@ class Conformation extends Component {
     })}
     
     return (
-      <ScrollView>
+      <ScrollView style={styles.confirmation_block}>
         <View>
-          <Text>{"Order Summary"}</Text>
+          <Text style={{...styles.h3, ...styles.black}}>{"Order Summary"}</Text>
           <View>
-              <Table borderStyle={{borderWidth: 2, borderColor: '#c8e1ff'}}>
-                <Row data={state.tableHead} style={styles.head} textStyle={styles.text}/>
-                <Rows data={tableData} textStyle={styles.text}/>
+              <Table borderStyle={{borderWidth: 0, borderColor: 'transparent'}}>
+                <Row data={state.tableHead} style={styles.head} textStyle={styles.headtxt}/>
+                <Rows data={tableData} textStyle={styles.ordertxt}/>
             </Table>
           </View>
         </View>
         <View>
-        <Text>{"Delivery Address"}</Text>
+        <Text style={{...styles.h3, ...styles.black, ...styles.space_top}}>{"Delivery Address"}</Text>
         {Object.keys(customer).map(function(key, index) {
                         if (
                           key === "address_1" ||
@@ -74,43 +75,28 @@ class Conformation extends Component {
                       })}
         </View>
         <View>
-            <Text>{"Delivery Options"}</Text>
+            <Text style={{...styles.h3, ...styles.black, ...styles.space_top}}>{"Delivery Options"}</Text>
             <Text>{shippingoption.shipping_type}</Text>
         </View>
         <View>
             <View>
-              <Text>{"Subtotal"} {totalAmount.toFixed(2)}</Text>
+              <Text style={{...styles.h3, ...styles.black}}>{"Subtotal"} {totalAmount.toFixed(2)}</Text>
             </View>
             <View>
-              <Text>{"Shipping"} {shippingoption.shipping_cost}</Text>
+              <Text style={{...styles.h3, ...styles.black}}>{"Shipping"} {shippingoption.shipping_cost}</Text>
             </View>
             <View>
-              <Text>{"Grand Total"} {(totalAmount + parseInt(shippingoption.shipping_cost)).toFixed(2)} </Text>
+              <Text style={{...styles.h3, ...styles.black}}>{"Grand Total"} {(totalAmount + parseInt(shippingoption.shipping_cost)).toFixed(2)} </Text>
             </View>
         </View>
-      <View>
-          <Button
-          onPress={this.backStage.bind(this)}
-          title="Back"
-          color="#841584"
-          accessibilityLabel="Back"
-          />
-          <Button
-          onPress={this.nextStage.bind(this)}
-          title="Next Step"
-          color="#841584"
-          accessibilityLabel="Next Step"
-          />
-        </View>
+      <View style={styles.back_and_next_btn_block}>
+			 <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
+			 <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
+      </View>
       </ScrollView>
     );
   }
 }
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' },
-  head: { height: 40, backgroundColor: '#f1f8ff' },
-  text: { margin: 6 }
-});
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
