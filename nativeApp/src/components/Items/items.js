@@ -185,19 +185,17 @@ class Items extends Component {
               </View>            
           </View>
         ) : (
-          <View>            
+          <View style={styles.no_items_block}>            
               <View>                
-                  <Text>There no items in the cart.</Text>                
+                  <Text style={styles.loggedin_text}>There no items in the cart.</Text>                
               </View>
-              <View>                              
-                  <Text style={{padding: 10, fontSize: 14}} onPress={() => {
+              <View style={styles.back_to_shop_btn}>                               
+						<TouchableOpacity onPress={() => {
                     NavigationService.navigate('Categories', {
                       itemId: 1,
                       categoryName: "Regional",
                     });
-                    }}>
-                    Back to shop
-                  </Text>  
+                    }}><Text style={styles.button}>Back to shop</Text></TouchableOpacity>
               </View>            
           </View>
         )}

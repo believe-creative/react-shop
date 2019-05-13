@@ -89,7 +89,7 @@ class UserBlock extends Component {
             <View style={styles.toprightblock}>
                 <Text style={styles.toptext}>Your bag: ${totalAmount}</Text>
               {name ? (
-				  	 <TouchableOpacity  onPress={this.logout.bind(this)}><Text style={{...styles.logout, ...styles.toptext}}>Logout</Text></TouchableOpacity>
+				  	 <TouchableOpacity  onPress={this.logout.bind(this)}><Text style={{...styles.toptext, ...styles.signin}}>Logout</Text></TouchableOpacity>
             ) : (
               <View/>
             )}
