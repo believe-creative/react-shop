@@ -161,9 +161,9 @@ class AddressPopupForm extends Component {
 
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-
+      console.log(this.props.onHide);
     return (
-      <View style={{marginTop: 22}}>
+      <ScrollView style={{marginTop: 22}}>
         <Modal
           animationType="slide"
           transparent={false}
@@ -172,8 +172,13 @@ class AddressPopupForm extends Component {
             Alert.alert('Modal has been closed.');
           }}>
 
-          <View style={{marginTop: 22}}>
-            <Text >Add Address</Text>   <Text  onPress={this.props.onHide} >Close</Text>
+          <ScrollView style={{marginTop: 22}}>
+          <Text >Add Address</Text>
+            <View>
+            <TouchableOpacity  onPress={this.props.onHide}>
+          <Text>Close</Text>
+          </TouchableOpacity>
+          </View>
 
               <Text>Name</Text>
 
@@ -284,20 +289,11 @@ class AddressPopupForm extends Component {
             {this.showError("evn_phone")}
 
             <Text>Region* :</Text>
-            <TextInput  value={
-                this.props.addNewAddress
-                  ? addressList.eve_phone
-                  : addAddressList.eve_phone
-              }
-              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-              title="eve_phone" onChangeText={this.changed.bind(this)}/>
-
             <Picker
               selectedValue={addressList.shipping_region_id}
               style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               onValueChange={this_ref.changeRegion.bind(this_ref)}>
-              <Picker.Item label="Java" value="java" />
-              <Picker.Item label="JavaScript" value="js" />
+
               {regions.map(function(region, index) {
                 return (
                   <Picker.Item   key={index} label={region.shipping_region} value={region.shipping_region_id} />
@@ -314,14 +310,13 @@ class AddressPopupForm extends Component {
                 ? this.updateAddress.bind(this)
                 : this.saveAddress.bind(this)
               } >Save Changes</Text>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalShow);
-                }}>
-                <Text>Hide Modal</Text>
-              </TouchableHighlight>
+              <View>
+              <TouchableOpacity  onPress={this.props.onHide}>
+            <Text>Close</Text>
+            </TouchableOpacity>
+            </View>
 
-          </View>
+          </ScrollView>
         </Modal>
 
         <TouchableHighlight
@@ -330,7 +325,7 @@ class AddressPopupForm extends Component {
           }}>
           <Text>Show Modal</Text>
         </TouchableHighlight>
-      </View>
+      </ScrollView>
 
     );
   }
