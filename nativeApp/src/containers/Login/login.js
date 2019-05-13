@@ -102,20 +102,18 @@ class Login extends Component {
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
 		 		{name ? (
-			  <Text>You have already logged.</Text>
+			  <Text style={styles.loggedin_text}>You have already logged.</Text>
 			) : (
 			  <View>
+		 	<View style={styles.social_media}>
 				 {PROVIDERS.map((provider, key) => (
-					<Button
-					  key={key}
-					  title={provider}
-					  onPress={this.openPopup.bind(this,API_ROOT +
+					<TouchableOpacity onPress={this.openPopup.bind(this,API_ROOT +
 						 "sociallogin/" +
 						 provider +
 						 "?socketId=" +
-						 socket.id)}
-					/>
+						 socket.id)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
 				 ))}
+	</View>
 				 <View>
 					{this.show_errors()}
 					<View style={styles.input_block}>

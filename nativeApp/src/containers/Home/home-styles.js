@@ -184,6 +184,11 @@ export const styles = StyleSheet.create({
 		fontWeight: '700',
 		color:'#000',
 	},
+	toprightblock:{
+		flex:1,
+		alignItems:'flex-end',
+		justifyContent:'flex-end',
+	},
 	signin:{
 		fontSize:15,
 		fontWeight: '700',
@@ -228,7 +233,33 @@ export const styles = StyleSheet.create({
 		flexDirection: 'row',
 		marginTop:25,
 	},
+	loggedin_text:{
+		fontSize:24,
+		fontWeight:'500',
+		textAlign:'center',
+		color:'#000',
+	},
+	no_items_block:{
+		paddingTop: 25,
+		paddingBottom:25,
+	},
+	back_to_shop_btn:{
+		flex:1,
+		alignItems:'center',
+		justifyContent:'center',
+		marginTop:25,
+	},
 	
+	social_media:{
+		flex:1,
+		justifyContent:'space-between',
+		alignItems:'center',
+		flexDirection:'row',
+	},
+	sm_btns:{
+		marginBottom:15,
+		textTransform:'capitalize',
+	},
 	
 	/* Cart page css */
 	
