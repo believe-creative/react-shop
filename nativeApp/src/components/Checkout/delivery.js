@@ -6,9 +6,10 @@ import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
 import axios from "axios";
-import {styles} from '../../containers/Home/home-styles';
 import { API_ROOT } from "../../services/constants";
 import AddressPopupForm  from "./addressPopupForm";
+import {styles} from '../../containers/Home/home-styles';
+import Footer from '../../components/Footer/footer';
 class Delivery extends Component {
   constructor(props) {
     super(props);
@@ -253,8 +254,8 @@ class Delivery extends Component {
       console.log(this.props.getaddress);
     return (
 
-        <ScrollView>
-          <View>
+        <ScrollView style={styles.gray_bg}>
+          <View style={styles.confirmation_block}>
           <AddressPopupForm
             modalShow={this.state.modalShow}
             onHide={this.handleClose}
@@ -265,14 +266,19 @@ class Delivery extends Component {
             region={this.state.region ? this.state.region : "hello"}
             setDefaultAddress={address => this.setDefaultAddress(address)}
           />
-          <Text> Delivary</Text>
-
-            <Text >Select Address</Text>
+			 	<View style={styles.addaddress_block}>
+            <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
             {getAddress ? this.addressList(getAddress) : <Text>""</Text>}
-
-              <Text onPress={() => this.handleAdd()}>
-                Add Address
-              </Text>
+				</View>
+              
+					<TouchableOpacity onPress={() => this.handleAdd()}>
+						<View style={styles.addaddress_block}>		
+							<Text style={styles.plus}>+</Text>
+							<Text  style={{...styles.h2, ...styles.black, ...styles.nospace}}>
+                		Add Address 
+              			</Text> 
+					</View>
+							</TouchableOpacity>
               {this.state.region ? (
                 <View >
                   <Text >
@@ -301,9 +307,10 @@ class Delivery extends Component {
               )}
 
 
-
-        <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
-        <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
+				<View style={styles.back_and_next_btn_block}>
+				  <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
+				  <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
+				</View>
           </View>
         </ScrollView>
 

@@ -374,13 +374,6 @@ class AddressPopupForm extends Component {
 
           </ScrollView>
         </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(this.state.modalShow);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
       </ScrollView>
 
     );

@@ -495,5 +495,31 @@ export const styles = StyleSheet.create({
 		textAlign: 'center',
 		marginBottom:15,
 	},
+	addaddress_block:{
+		marginBottom: 30,
+		padding: 25,
+		backgroundColor: '#fff',
+		position: 'relative',
+		shadowColor: '#000',
+  		shadowOffset: {width: 0, height: 2},
+  		shadowOpacity: 0.8,
+  		shadowRadius: 2,
+		elevation: 5,
+		textAlign:'center',
+		flex:1,
+		alignItems:'center',
+		justifyContent:'center',
+		flexDirection:'column',
+	},
+	nospace:{
+		margin:0, 
+		padding:0,
+	},
+	plus:{
+		fontSize:100,
+		fontWeight:'600',
+		color:'#6c6c6c',
+		opacity:0.5, 
+	},
 
 });
