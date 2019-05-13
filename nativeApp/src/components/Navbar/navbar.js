@@ -84,6 +84,7 @@ class NavBar extends Component {
         {this.state.menuOpen ? this.props.categories && Object.values(this.props.categories).map((e,index)=>{
           return(
             <Text style={styles.menu_list} onPress={() => {
+                this.setState({menuOpen:!this.state.menuOpen})
                 NavigationService.navigate('Categories', {
               itemId: e.department_id,
               categoryName: e.name,
