@@ -154,10 +154,7 @@ class Checkout extends Component {
     return (
         <ScrollView>
           <View>
-
-                <Text>Checkout</Text>
-
-
+              <Text>Checkout</Text>
               {this.showstages()}
           </View>
         </ScrollView>

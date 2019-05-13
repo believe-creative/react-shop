@@ -1,10 +1,8 @@
 import React, { Component } from "react";
-import {Picker,Modal,Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Picker, Modal ,Alert, Text,TextInput, View , TouchableOpacity, Image, ScrollView,TouchableHighlight} from 'react-native';
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
-import { Button ,FormLabel, FormInput, FormValidationMessage } from 'react-native-elements';
-import MultiSelect from 'react-native-multiple-select';
 
 class AddressPopupForm extends Component {
   constructor(props) {
@@ -16,8 +14,7 @@ class AddressPopupForm extends Component {
       errors: {},
       address: "",
       add_address: "",
-      modalVisible: false,
-      selectedItems : []
+      modalVisible: false
     };
     this.handleClose = this.handleClose.bind(this);
   }
@@ -67,10 +64,10 @@ class AddressPopupForm extends Component {
   showError(opt) {
     if (this.state["errors"][opt]) {
       return (
-        <div className="alert alert-danger">{this.state["errors"][opt]}</div>
+        <Text >{this.state["errors"][opt]}</Text>
       );
     } else {
-      return <span />;
+      return <Text />;
     }
   }
   setOptions(region) {
@@ -142,11 +139,9 @@ class AddressPopupForm extends Component {
   setModalVisible(visible) {
     this.setState({modalVisible: visible});
   }
-  onSelectedItemsChange = selectedItems => {
-   this.setState({ selectedItems });
- };
+
   render() {
-    const { selectedItems } = this.state;
+
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
@@ -172,125 +167,134 @@ class AddressPopupForm extends Component {
         <Modal
           animationType="slide"
           transparent={false}
-          visible={this.state.modalVisible}
+          visible={this.props.modalShow}
           onRequestClose={() => {
             Alert.alert('Modal has been closed.');
           }}>
+
           <View style={{marginTop: 22}}>
-            <View>
-            <View>
-              <FormLabel>Name</FormLabel>
-              <FormInput value={
+            <Text >Add Address</Text>   <Text  onPress={this.props.onHide} >Close</Text>
+
+              <Text>Name</Text>
+
+              <TextInput value={
                 this.props.addNewAddress
                   ? addressList.address_name
                   : addAddressList.address_name
               }
-              name="address_name" onChangeText={this.changed.bind(this)}/>
-            </View>
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="address_name" onChangeText={this.changed.bind(this)}/>
+
         {this.showError("address_name")}
-          <View>
-            <FormLabel>Name</FormLabel>
-            <FormInput value={
+
+            <Text>Address 1*</Text>
+            <TextInput value={
               this.props.addNewAddress
                 ? addressList.address_1
                 : addAddressList.address_1
             }
-            name="address_1" onChangeText={this.changed.bind(this)}/>
-          </View>
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            title="address_1" onChangeText={this.changed.bind(this)}/>
+
 
             {this.showError("address_1")}
 
-            <View>
-              <FormLabel>Name</FormLabel>
-              <FormInput value={addressList.city}
-              name="city" onChangeText={this.changed.bind(this)}/>
-            </View>
-            {this.showError("city")}
-            <View>
-              <FormLabel>Name</FormLabel>
-              <FormInput value={
+
+              <Text>Address 2</Text>
+              <TextInput value={
                 this.props.addNewAddress
                   ? addressList.address_2
                   : addAddressList.address_2
               }
-              name="address_2" onChangeText={this.changed.bind(this)}/>
-            </View>
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="address_2" onChangeText={this.changed.bind(this)}/>
+
 
             {this.showError("address_2")}
 
-            <View>
-              <FormLabel>Name</FormLabel>
-              <FormInput value={
+              <Text>City *</Text>
+              <TextInput value={
+                this.props.addNewAddress
+                  ? addressList.city
+                  : addAddressList.city
+              }
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="city" onChangeText={this.changed.bind(this)}/>
+
+
+            {this.showError("city")}
+
+
+              <Text>Zip-code *</Text>
+              <TextInput value={
                 this.props.addNewAddress
                   ? addressList.postal_code
                   : addAddressList.postal_code
               }
-              name="postal_code" onChangeText={this.changed.bind(this)}/>
-            </View>
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="postal_code" onChangeText={this.changed.bind(this)}/>
+
 
             {this.showError("postal_code")}
-            <View>
-              <FormLabel>Country :</FormLabel>
-              <FormInput   value={
+
+              <Text>Country :</Text>
+              <TextInput   value={
                   this.props.addNewAddress
                     ? addressList.country
                     : addAddressList.country
                 }
-              name="postal_code" onChangeText={this.changed.bind(this)}/>
-            </View>
+                style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="country" onChangeText={this.changed.bind(this)}/>
+
 
             {this.showError("country")}
-            <View>
-            <FormLabel>Day Phone Number:</FormLabel>
-            <FormInput   value={
+
+            <Text>Mobile Number :</Text>
+            <TextInput   value={
               this.props.addNewAddress
-                ? addressList.day_phone
-                : addAddressList.day_phone
+                ? addressList.mob_phone
+                : addAddressList.mob_phone
             }
-            name="day_phone" onChangeText={this.changed.bind(this)}/>
-          </View>
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+            title="mob_phone" onChangeText={this.changed.bind(this)}/>
+
+
+            {this.showError("mob_phone")}
+
+            <Text>Day Phone Number:</Text>
+            <TextInput value={
+                this.props.addNewAddress
+                  ? addressList.day_phone
+                  : addAddressList.day_phone
+              }
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="day_phone" onChangeText={this.changed.bind(this)} />
 
             {this.showError("day_phone")}
-            <View>
-            <FormLabel>Mobile Number :</FormLabel>
-            <FormInput     value={
-                this.props.addNewAddress
-                  ? addressList.mob_phone
-                  : addAddressList.mob_phone
-              }
-              name="mob_phone" onChangeText={this.changed.bind(this)}/>
-          </View>
 
-
-            {this.showError("mobile_phone")}
-
-            <View>
-            <FormLabel>Eve Phone Number :</FormLabel>
-            <FormInput  value={
+            <Text>Eve Phone Number :</Text>
+            <TextInput  value={
               this.props.addNewAddress
                 ? addressList.eve_phone
                 : addAddressList.eve_phone
             }
-              name="eve_phone" onChangeText={this.changed.bind(this)}/>
-          </View>
-
-
+            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="eve_phone" onChangeText={this.changed.bind(this)}/>
 
             {this.showError("evn_phone")}
 
-              <View>
-              <FormLabel>Region* :</FormLabel>
-              <FormInput  value={
+            <Text>Region* :</Text>
+            <TextInput  value={
                 this.props.addNewAddress
                   ? addressList.eve_phone
                   : addAddressList.eve_phone
               }
-                name="eve_phone" onChangeText={this.changed.bind(this)}/>
-            </View>
-            <View>
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
+              title="eve_phone" onChangeText={this.changed.bind(this)}/>
+
             <Picker
               selectedValue={addressList.shipping_region_id}
-              style={{height: 50, width: 100}}
+              style={{height: 40, borderColor: 'gray', borderWidth: 1}}
               onValueChange={this_ref.changeRegion.bind(this_ref)}>
               <Picker.Item label="Java" value="java" />
               <Picker.Item label="JavaScript" value="js" />
@@ -301,38 +305,28 @@ class AddressPopupForm extends Component {
                 );
               })}
             </Picker>
-            </View>
 
+            {this.showError("region")}
 
-
-              {this.showError("region")}
-              <Button
-    raised
-
-    title='Close'
-    onPress={this.props.onHide} />
-    <Button
-    raised
-    icon={{name: 'cached'}}
-    title='Save Changes'
-    onPress={
-      this.props.addNewAddress
-        ? this.updateAddress.bind(this)
-        : this.saveAddress.bind(this)
-    } />
+            <Text
+              onPress={
+                this.props.addNewAddress
+                ? this.updateAddress.bind(this)
+                : this.saveAddress.bind(this)
+              } >Save Changes</Text>
               <TouchableHighlight
                 onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
+                  this.setModalVisible(!this.state.modalShow);
                 }}>
                 <Text>Hide Modal</Text>
               </TouchableHighlight>
-            </View>
+
           </View>
         </Modal>
 
         <TouchableHighlight
           onPress={() => {
-            this.setModalVisible(true);
+            this.setModalVisible(this.state.modalShow);
           }}>
           <Text>Show Modal</Text>
         </TouchableHighlight>

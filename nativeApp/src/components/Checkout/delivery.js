@@ -7,7 +7,7 @@ import { connect } from "react-redux";
 import axios from "axios";
 import {styles} from '../../containers/Home/home-styles';
 import { API_ROOT } from "../../services/constants";
-
+import AddressPopupForm  from "./addressPopupForm";
 class Delivery extends Component {
   constructor(props) {
     super(props);
@@ -139,6 +139,7 @@ class Delivery extends Component {
   }
 
   handleAdd() {
+    console.log(this.state.modelShow);
     this.setState({ modalShow: true, addNewAddress: false, address: {} });
   }
   backStage() {
@@ -204,7 +205,15 @@ class Delivery extends Component {
       inShippingRegionId: address.shipping_region_id
     });
   }
-
+  addressList(getAddress) {
+    return getAddress.map((address, index) => {
+      return (
+        <View>
+        <Text>Hello</Text>
+        </View>
+      );
+    });
+  }
   render() {
     let this_ref = this;
     let regions = [];
@@ -227,16 +236,35 @@ class Delivery extends Component {
     }
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-
+      console.log(this.state.modalShow);
     return (
 
         <ScrollView>
           <View>
+          <AddressPopupForm
+            modalShow={this.state.modalShow}
+            onHide={this.handleClose}
+            addressDetails={this.state.address}
+            customerDetails={this.state.customer}
+            setDelivarydetails={this.props.setDelivarydetails}
+            addNewAddress={this.state.addNewAddress}
+            region={this.state.region ? this.state.region : "hello"}
+            setDefaultAddress={address => this.setDefaultAddress(address)}
+          />
           <Text> Delivary</Text>
-            </View>
-        <View>
+
+            <Text >Select Address</Text>
+            {getAddress ? this.addressList(getAddress) : <Text>""</Text>}
+
+              <Text onPress={() => this.handleAdd()}>
+                Add Address
+              </Text>
+
+
+
         <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
         <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
+
 
 
           </View>
