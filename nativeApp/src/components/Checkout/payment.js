@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { View, Button } from 'react-native';
+import { View, Button, StyleSheet } from 'react-native';
 import stripe from 'tipsi-stripe';
-
+import { API_ROOT } from "../../services/constants";
 class Payment extends Component {
   constructor(props) {
     super(props);
@@ -68,14 +68,13 @@ class Payment extends Component {
           API_ROOT + "payment",
           {
             email: this_ref.props.user.email,
-            id: token.id,
+            id: stripeTokenInfo.tokenId,
             inCartId: this_ref.props.cart.inCartId,
             inOrderAddress: JSON.stringify(getShippingAddress),
             inCustomerId: null,
             inShippingId: this_ref.props.cart.shippingoption.shipping_id,
             amount:
-              totalAmount +
-              parseInt(this_ref.props.cart.shippingoption.shipping_cost),
+              totalAmount + parseInt(this_ref.props.cart.shippingoption.shipping_cost),
             inTaxId: 1
           },
           { headers: { Authorization: `Bearer ${this_ref.props.token}` } }
@@ -94,6 +93,7 @@ class Payment extends Component {
         console.warn('Payment failed', { error });
       });
   };
+  
   render() {
     return (
       
@@ -110,5 +110,8 @@ class Payment extends Component {
     )
   }
 }
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16, paddingTop: 30, backgroundColor: '#fff' } 
+});
 
 export default Payment;
