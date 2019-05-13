@@ -298,6 +298,47 @@ export const styles = StyleSheet.create({
 		justifyContent:'flex-start',
 		alignItems:'flex-start',
 	},
+	product_name:{
+		fontSize:18, 
+		fontWeight: '700', 
+		color:'#2e2e2e', 
+		marginBottom: 15, 
+	},
+	product_id:{
+		fontSize:16, 
+		fontWeight: '400', 
+		color:'#2e2e2e', 
+		marginBottom: 15,
+	},
+	product_remove:{
+		fontSize:16, 
+		fontWeight: '400', 
+		color:'#f62f5e',
+	},
+	product_size:{
+		color: '#b4b4b4', 
+		fontWeight: '700', 
+		fontSize: 14,
+	},
+	numberof_products:{
+		flex:1, 
+		flexDirection: 'row', 
+		alignItems:'center', 
+		justifyContent:'center', 
+		width: 150,
+	},
+	product_price:{
+		fontSize: 22, 
+		fontWeight: '700', 
+		color: '#2e2e2e',
+	},
+	noof_items:{
+		paddingLeft: 10, 
+		paddingRight: 10, 
+		color: '#2e2e2e', 
+		fontSize: 20, 
+		fontWeight: '700',
+	},
 	cart_bottom_block:{
 		backgroundColor:'#efefef',
 		paddingTop:20,
@@ -313,6 +354,7 @@ export const styles = StyleSheet.create({
 		flex:1, 
 		justifyContent:'space-between',
 		flexDirection:'row',
+		alignItems:'center',
 		marginTop: 15,
 		marginBottom:30,
 	},
@@ -374,5 +416,17 @@ export const styles = StyleSheet.create({
 	},
 	space_bot:{
 		paddingBottom:50,
+	},
+	
+	/* Delivery Page css */
+	
+	back_and_next_btn_block:{
+		flex:1,
+		alignItems:'center',
+		justifyContent:'space-between',
+		flexDirection:'row',		
+	},
+	delivery_block:{
+		padding:15,
 	},
 });

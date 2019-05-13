@@ -143,26 +143,26 @@ class Items extends Component {
                                 />                                                                 
                               </View>
 										<View style={styles.img_right_block}>
-											<Text style={{ fontSize:16, fontWeight: '700', color:'#2e2e2e', marginBottom: 15}}>{product.name}</Text>
-                              	<Text style={{ fontSize:14, fontWeight: '400', color:'#2e2e2e', marginBottom: 15}}>Men BK3569</Text>                                  
-                                <Text style={{ fontSize:10, fontWeight: '400', color:'#f62f5e'}} onPress={this_ref.remove.bind(this_ref, product.item_id, product.name)}>&#10005; Remove	</Text>
+											<Text style={{...styles.product_name}}>{product.name}</Text>
+                              	<Text style={{...styles.product_id}}>Men BK3569</Text>                                  
+                                <Text style={{...styles.product_remove}} onPress={this_ref.remove.bind(this_ref, product.item_id, product.name)}>&#10005; Remove	</Text>
 										</View> 
                             </View>  
 									<View style={styles.cart_size_block}>
-										<Text style={{color: '#b4b4b4', fontWeight: '700', fontSize: 14,}}>XXL</Text>
-                              <View style={{ flex:1, flexDirection: 'row', alignItems:'center', justifyContent:'center', width: 150,}}>
+										<Text style={{...styles.product_size}}>XXL</Text>
+                              <View style={{...styles.numberof_products}}>
                                   <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
                                     &#8722;
                                   </Text> 
 											 
-                                <Text style={{paddingLeft: 10, paddingRight: 10, color: '#2e2e2e', fontSize: 20, fontWeight: '700',}}>
+                                <Text style={{...styles.noof_items}}>
                                   {product.quantity}
                                 </Text>  
                                   <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
                                     &#43;
                                   </Text>
                               </View>
-                              <Text style={{fontSize: 22, fontWeight: '700', color: '#2e2e2e',}}>
+                              <Text style={{...styles.product_price}}>
                                 ${(product.quantity * product.price).toFixed(2)}
                               </Text>
 									</View>
