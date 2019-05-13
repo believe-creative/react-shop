@@ -206,6 +206,30 @@ export const styles = StyleSheet.create({
 		borderRadius: 20,
 	},
 	
+	/* Login page css */
+	login_block_main:{
+		padding:15,
+		marginTop:15,
+		marginBottom:30,
+	},
+	input_block:{
+		marginTop:15,
+	},
+	input_text:{
+		color:'#000',
+		fontSize:14,
+		fontWeight: '400',
+		marginBottom:10,
+	},
+	login_btn_block:{
+		flex:1,
+		alignItems: 'flex-start',
+		justifyContent: 'flex-start',
+		flexDirection: 'row',
+		marginTop:25,
+	},
+	
+	
 	/* Cart page css */
 	
 	cart_page_wraper:{

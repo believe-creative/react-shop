@@ -5,10 +5,12 @@ import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
 import { setUser } from "../../actions";
 import * as Actions from "../../actions";
-import {Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,TextInput,Linking} from 'react-native';
+import {Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,TextInput,Linking, ScrollView} from 'react-native';
 import axios from "axios";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
+import {styles} from '../Home/home-styles'; 
+import Footer from '../../components/Footer/footer';
 
 
 const socket = io(API_ROOT.split("/api/")[0]);
@@ -97,54 +99,50 @@ class Login extends Component {
     }
 
     return (
-      <View>
-          <View>
-              <View>
-                  <View>
-                  {name ? (
-                    <Text>You have already logged.</Text>
-                  ) : (
-                    <View>
-                      {PROVIDERS.map((provider, key) => (
-                        <Button
-                          key={key}
-                          title={provider}
-                          onPress={this.openPopup.bind(this,API_ROOT +
-                            "sociallogin/" +
-                            provider +
-                            "?socketId=" +
-                            socket.id)}
-                        />
-                      ))}
-                      <View>
-                        {this.show_errors()}
-                        <View>
-                          <Text htmlFor="email">Email:</Text>
-                          <TextInput
-                            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                            onChangeText={(text) => this.setState({email:text})}
-                            value={this.state.email}
-                          />
-                        </View>
-                        <View>
-                          <Text htmlFor="email">Password:</Text>
-                          <TextInput
-                            style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-                            onChangeText={(text) => this.setState({pwd:text})}
-                            value={this.state.pwd}
-                          />
-                        </View>
-                        <Button
-                          title="Submit"
-                          onClick={this.login.bind(this)}
-                        />
-                      </View>
-                    </View>
-                  )}
-                  </View>
-              </View>
-          </View>
-      </View>
+      <ScrollView style={styles.home}>
+			<View style={styles.login_block_main}>
+		 		{name ? (
+			  <Text>You have already logged.</Text>
+			) : (
+			  <View>
+				 {PROVIDERS.map((provider, key) => (
+					<Button
+					  key={key}
+					  title={provider}
+					  onPress={this.openPopup.bind(this,API_ROOT +
+						 "sociallogin/" +
+						 provider +
+						 "?socketId=" +
+						 socket.id)}
+					/>
+				 ))}
+				 <View>
+					{this.show_errors()}
+					<View style={styles.input_block}>
+					  <Text htmlFor="email" style={styles.input_text}>Email:</Text>
+					  <TextInput
+						 style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft:10, paddingRight:10}}
+						 onChangeText={(text) => this.setState({email:text})}
+						 value={this.state.email}
+					  />
+					</View>
+					<View style={styles.input_block}>
+					  <Text htmlFor="email" style={styles.input_text}>Password:</Text>
+					  <TextInput
+						 style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft:10, paddingRight:10}}
+						 onChangeText={(text) => this.setState({pwd:text})}
+						 value={this.state.pwd}
+					  />
+					</View>
+					  <View style={styles.login_btn_block}>
+						<TouchableOpacity onClick={this.login.bind(this)}><Text style={styles.button}>Submit</Text></TouchableOpacity>
+					  </View>
+				 </View>
+			  </View>
+			)}
+		 	</View>
+			<Footer />           
+      </ScrollView>
     );
   }
 }
