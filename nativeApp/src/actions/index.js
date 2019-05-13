@@ -200,7 +200,7 @@ export const getProductRecommendations = {
 };
 
 export const addAddress = {
-  request: data => action(ADDADDRESS[REQUEST], { data }),
+  request: data => { console.log("action",data); return action(ADDADDRESS[REQUEST], { data })},
   success: (data, response) => action(ADDADDRESS[SUCCESS], { data, response }),
   failure: (data, error) => action(ADDADDRESS[FAILURE], { data, error })
 };

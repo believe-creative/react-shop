@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { RadioButton } from 'react-native-paper';
 import NavigationService from '../../routes/NavigationService.js';
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
@@ -18,7 +19,8 @@ class Delivery extends Component {
       address: {},
       modalShow: false,
       address_id: "",
-      default: false
+      default: false,
+      checked: "",
     };
     this.handleClose = this.handleClose.bind(this);
     this.stage = 0;
@@ -183,10 +185,10 @@ class Delivery extends Component {
   showError(opt) {
     if (this.state["errors"][opt]) {
       return (
-        <div className="alert alert-danger">{this.state["errors"][opt]}</div>
+        <Text >{this.state["errors"][opt]}</Text>
       );
     } else {
-      return <span />;
+      return <Text />;
     }
   }
 
@@ -208,13 +210,24 @@ class Delivery extends Component {
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <View>
-        <Text>Hello</Text>
+        <View onPress={() => this.setDefaultAddress(address)}>
+        <View onPress={add => this.itemInsert(address.id)}>
+        <Text>{address.address_name} Address</Text>
+          </View>
+
+        <Text>{address.address_1} </Text>
+        <Text> {address.address_2}</Text>
+        <Text>
+          {address.city}, {address.postal_code}
+        </Text>
+        <Text> {address.country}</Text>
+        <Text>Mobile number : {address.mob_phone} </Text>
         </View>
       );
     });
   }
   render() {
+    const { checked } = this.state;
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
@@ -222,6 +235,7 @@ class Delivery extends Component {
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
+      console.log(shippingOptions);
     let customer = {
       address1: "",
       address2: "",
@@ -236,7 +250,7 @@ class Delivery extends Component {
     }
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-      console.log(this.state.modalShow);
+      console.log(this.props.getaddress);
     return (
 
         <ScrollView>
@@ -259,14 +273,37 @@ class Delivery extends Component {
               <Text onPress={() => this.handleAdd()}>
                 Add Address
               </Text>
+              {this.state.region ? (
+                <View >
+                  <Text >
+                    Delivery Options
+                  </Text>
+                  <View >
+                    {shippingOptions.map(function(option, index) {
+                      return (
+
+                        <View key={index} >
+                        <Text>{option.shipping_type}</Text>
+                        <RadioButton
+                        value={option.shipping_id}
+                        status={checked === option.shipping_id ? 'checked' : 'unchecked'}
+                        onPress={() => { this.setState({ checked: option.shipping_id }); }}
+                        />
+
+                        </View>
+                      );
+                    })}
+                  </View>
+                  {this.showError("shippingoption")}
+                </View>
+              ) : (
+                <Text />
+              )}
 
 
 
         <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
         <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
-
-
-
           </View>
         </ScrollView>
 

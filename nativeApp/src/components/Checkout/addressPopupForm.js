@@ -3,7 +3,7 @@ import {Picker, Modal ,Alert, Text,TextInput, View , TouchableOpacity, Image, Sc
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
-import {styles} from '../../containers/Home/home-styles'; 
+import {styles} from '../../containers/Home/home-styles';
 
 class AddressPopupForm extends Component {
   constructor(props) {
@@ -30,17 +30,13 @@ class AddressPopupForm extends Component {
       });
     }
   }
-  changeRegion(e) {
+  changeRegion(itemValue,itemIndex) {
     let state = this.state;
-    state["address"]["shipping_region_id"] = e.currentTarget.value;
-    state["address"]["region"] = e.currentTarget.querySelectorAll(
-      "option[value='" + e.currentTarget.value + "']"
-    )[0].innerText;
-    state["completeRegion"] = JSON.parse(
-      e.currentTarget
-        .querySelectorAll("option[value='" + e.currentTarget.value + "']")[0]
-        .getAttribute("data-region")
-    );
+    console.log(itemValue);
+    state["address"]["shipping_region_id"] = itemValue;
+    state["address"]["region"] = itemValue;
+
+    state["completeRegion"] = itemValue;
     this.setState(state);
     console.log(this.state);
   }
@@ -55,9 +51,11 @@ class AddressPopupForm extends Component {
     this.props.setShippingOption(state["shippingoption"]);
   }
 
-  changed(e) {
+  changed(value,title) {
+    console.log("djksfkjd");
     let state = this.state;
-    state["address"][e.currentTarget.name] = e.currentTarget.value;
+    console.log(value);
+    state["address"][title] = value;
     this.setState(state);
     this.props.setDelivarydetails(this.state, this.state);
   }
@@ -108,9 +106,12 @@ class AddressPopupForm extends Component {
     });
 
     this.setState({ address: {} });
+
   }
   saveAddress() {
+
     let state = this.state;
+    console.log("Hello",state);
     this.props.addAddress({
       token: this.props.token,
       inEmail: this.props.user ? this.props.user.email : "",
@@ -146,7 +147,7 @@ class AddressPopupForm extends Component {
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
-
+    let state=this.state;
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
@@ -162,7 +163,7 @@ class AddressPopupForm extends Component {
 
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-      console.log(this.props.onHide);
+      console.log(this.state);
     return (
       <ScrollView >
         <Modal
@@ -187,7 +188,15 @@ class AddressPopupForm extends Component {
                   : addAddressList.address_name
               }
               style={styles.input_field}
-              title="address_name" onChangeText={this.changed.bind(this)}/>
+              title="address_name" onChangeText={
+
+                  function(text){
+                    console.log(text);
+
+                    state["address"]["address_name"] = text;
+                    this_ref.setState(state);
+                    this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                  }}/>
 
         {this.showError("address_name")}
 
@@ -197,7 +206,13 @@ class AddressPopupForm extends Component {
                 ? addressList.address_1
                 : addAddressList.address_1
             }
-            title="address_1" onChangeText={this.changed.bind(this)}/>
+            title="address_1" onChangeText={  function(text){
+                console.log(text);
+
+                state["address"]["address_1"] = text;
+                this_ref.setState(state);
+                this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+              }}/>
 
 
             {this.showError("address_1")}
@@ -209,7 +224,13 @@ class AddressPopupForm extends Component {
                   ? addressList.address_2
                   : addAddressList.address_2
               }
-              title="address_2" onChangeText={this.changed.bind(this)}/>
+              title="address_2" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["address_2"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }}/>
 
 
             {this.showError("address_2")}
@@ -220,7 +241,13 @@ class AddressPopupForm extends Component {
                   ? addressList.city
                   : addAddressList.city
               }
-              title="city" onChangeText={this.changed.bind(this)}/>
+              title="city" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["city"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }}/>
 
 
             {this.showError("city")}
@@ -232,7 +259,13 @@ class AddressPopupForm extends Component {
                   ? addressList.postal_code
                   : addAddressList.postal_code
               }
-              title="postal_code" onChangeText={this.changed.bind(this)}/>
+              title="postal_code" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["postal_code"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }}/>
 
 
             {this.showError("postal_code")}
@@ -243,7 +276,13 @@ class AddressPopupForm extends Component {
                     ? addressList.country
                     : addAddressList.country
                 }
-              title="country" onChangeText={this.changed.bind(this)}/>
+              title="country" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["country"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }}/>
 
 
             {this.showError("country")}
@@ -254,7 +293,13 @@ class AddressPopupForm extends Component {
                 ? addressList.mob_phone
                 : addAddressList.mob_phone
             }
-            title="mob_phone" onChangeText={this.changed.bind(this)}/>
+            title="mob_phone" onChangeText={function(text){
+                console.log(text);
+
+                state["address"]["mob_phone"] = text;
+                this_ref.setState(state);
+                this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+              }}/>
 
 
             {this.showError("mob_phone")}
@@ -265,7 +310,13 @@ class AddressPopupForm extends Component {
                   ? addressList.day_phone
                   : addAddressList.day_phone
               }
-              title="day_phone" onChangeText={this.changed.bind(this)} />
+              title="day_phone" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["day_phone"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }} />
 
             {this.showError("day_phone")}
 
@@ -275,14 +326,33 @@ class AddressPopupForm extends Component {
                 ? addressList.eve_phone
                 : addAddressList.eve_phone
             }
-              title="eve_phone" onChangeText={this.changed.bind(this)}/>
+              title="eve_phone" onChangeText={function(text){
+                  console.log(text);
+
+                  state["address"]["eve_phone"] = text;
+                  this_ref.setState(state);
+                  this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                }}/>
 
             {this.showError("evn_phone")}
 
             <Text style={styles.input_text}>Region* :</Text>
             <Picker style={styles.select_field}
               selectedValue={addressList.shipping_region_id}
-              onValueChange={this_ref.changeRegion.bind(this_ref)}>
+              onValueChange={function(itemValue, itemIndex){
+                  console.log(regions,itemValue,itemIndex);
+
+                  state["address"]["shipping_region_id"] =itemValue;
+                  Object.values(regions).map((region1, ind)=> {
+                    if(region1.shipping_region_id == itemValue ){
+                        state["address"]["region"] = region1.shipping_region;
+                        this_ref.setState(state);
+                        return;
+                    }
+                  })
+
+
+                }}>
 
               {regions.map(function(region, index) {
                 return (
@@ -297,7 +367,7 @@ class AddressPopupForm extends Component {
             <Text style={styles.button} onPress={
                 this.props.addNewAddress
                 ? this.updateAddress.bind(this)
-                : this.saveAddress.bind(this)
+                : this_ref.saveAddress.bind(this_ref)
               } >Save Changes</Text>
 				<TouchableOpacity onPress={this.props.onHide}><Text style={styles.button}>Close</Text></TouchableOpacity>
             </View>
