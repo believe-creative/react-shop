@@ -9,10 +9,9 @@ import {Modal,Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,Te
 import axios from "axios";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
-import {styles} from '../Home/home-styles';
+import {styles} from '../Home/home-styles'; 
 import Footer from '../../components/Footer/footer';
-import NavBar from '../../components/Navbar/navbar';
-import {LoginManager} from 'react-native-fbsdk';
+import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
 
 
 const socket = io(API_ROOT.split("/api/")[0]);
@@ -25,26 +24,9 @@ class Login extends Component {
       user: null,
       email: "",
       pwd: "",
-      errors: null
+      errors: null,
+      isSigninInProgress:false
     };
-  }
-
-  fbAuth() {
-    let this_ref=this;
-    LoginManager.logInWithReadPermissions(['public_profile','email']).then(
-      function (result) {
-        if (result.isCancelled) {
-          console.log('Login was cancelled');
-        } else {
-          console.log('Login was successful with permissions: '
-            + result.grantedPermissions.toString());
-
-        }
-      },
-      function (error) {
-        console.log('Login failed with error: ' + error);
-      }
-    );
   }
 
   login() {
@@ -75,11 +57,17 @@ class Login extends Component {
     state[e.currentTarget.name] = e.currentTarget.value;
     this.setState(state);
   }
+  logout()
+  {
+    console.log("logged out");
+    SyncStorage.remove('s-atk');
+    this.props.setUser({ email: null, name: null, photo: null });
+  }
   componentDidMount() {
     var c = SyncStorage.get("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
-    }
+    } 
     var props = this.props;
 
     PROVIDERS.map(provider => {
@@ -102,6 +90,7 @@ class Login extends Component {
       });
       return provider;
     });
+
   }
   show_errors() {
     if (this.state.errors) {
@@ -113,6 +102,62 @@ class Login extends Component {
   openPopup(url) {
     Linking.openURL(url)
   }
+
+  initUser(token) {
+    let props=this.props;
+    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
+    .then((response) => response.json())
+    .then((json) => {
+      console.log("dataaaaa",json,props.token,API_ROOT + "userExists"); 
+
+      axios
+      .post(
+        API_ROOT + "userExists",
+        {
+          name: json.name,
+          email: json.email
+        },
+        { headers: { Authorization: `Bearer ${props.token}` } }
+      )
+      .then(function(response) {
+        console.log("here");
+        if(response.data.user)
+        {
+          console.log("here 2");
+          SyncStorage.set("s-atk",response.data.token);
+          props.setUser(response.data.user);
+          let route =SyncStorage.get("nextRoute");
+          if (route) {
+            if (route.length > 0) {
+              SyncStorage.remove("nextRoute");
+              NavigationService.navigate(route);
+            } else {
+              NavigationService.navigate("Home");
+            }
+          } else {
+            NavigationService.navigate("Home");
+          }
+          console.log("here 3");
+        }
+        else
+        {
+          console.log("here 4");
+            NavigationService.navigate("SetPassword",{username:json.name,email:json.email});
+        }
+        console.log("here 5");
+      },function(e){
+        console.log("some error 22",e);
+      })
+      .catch(function(error) {
+        console.log("some error 4444");
+      });
+
+      
+    })
+    .catch(() => {
+      console.log("some error 66666");
+    })
+  }
   render() {
     let name = null;
     if (this.props.user) {
@@ -120,8 +165,6 @@ class Login extends Component {
     }
 
     return (
-      <View>
-        <NavBar />
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
 		 		{name ? (
@@ -129,9 +172,34 @@ class Login extends Component {
 			) : (
 			  <View>
 		 	<View style={styles.social_media}>
-				 {PROVIDERS.map((provider, ind) => (
-					<TouchableOpacity  key={ind} onPress={this.fbAuth.bind(this)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
-				 ))}
+				 {PROVIDERS.map((provider, key) => {
+           if(provider=="facebook")
+           {
+              return <LoginButton
+              readPermissions={['public_profile']}
+              onLoginFinished={
+                (error, result) => {
+                  if (error) {
+                    console.log('login has error: ', result.error)
+                  } else if (result.isCancelled) {
+                    console.log('login is cancelled.')
+                  } else {
+                    AccessToken.getCurrentAccessToken().then((data) => {
+                      console.log(data,"data");
+                      const { accessToken } = data
+                      this.initUser(accessToken)
+                    })
+                  }
+                }
+              }
+              onLogoutFinished={() => this.logout.bind(this)}
+              
+               />
+           }
+           else{
+           }
+           
+         })}
 	</View>
 				 <View>
 					{this.show_errors()}
@@ -158,9 +226,8 @@ class Login extends Component {
 			  </View>
 			)}
 		 	</View>
-			<Footer />
+			<Footer />           
       </ScrollView>
-      </View>
     );
   }
 }

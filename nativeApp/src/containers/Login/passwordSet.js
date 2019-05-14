@@ -52,8 +52,9 @@ class SetPassword extends Component {
           .post(
             API_ROOT + "setPassword",
             {
-              email: this_ref.state.email,
-              pwd: this_ref.state.pwd
+                name:this_ref.state.username,
+                email: this_ref.state.email,
+                pwd: this_ref.state.pwd
             },
             { headers: { Authorization: `Bearer ${props.token}` } }
           )
@@ -64,6 +65,17 @@ class SetPassword extends Component {
               SyncStorage.set("s-atk",response.data.token);
               props.setUser(response.data.user);
               this_ref.setState({ errors: null });
+              let route =SyncStorage.get("nextRoute");
+              if (route) {
+                if (route.length > 0) {
+                  SyncStorage.remove("nextRoute");
+                  NavigationService.navigate(route);
+                } else {
+                  NavigationService.navigate("Home");
+                }
+              } else {
+                NavigationService.navigate("Home");
+              }
             }
           })
     }
@@ -74,11 +86,17 @@ class SetPassword extends Component {
     this.setState(state);
   }
   componentDidMount() {
-    var c = SyncStorage.get("s-atk");
-    if (c) {
-      this.props.checkUserLogin(c);
-    } 
-    var props = this.props;
+    // var c = SyncStorage.get("s-atk");
+    // if (c) {
+    //   this.props.checkUserLogin(c);
+    // } 
+    // var props = this.props;
+    console.log("SetPassword");
+    const { navigation } = this.props;
+    const username = navigation.getParam('username', '');
+    const email = navigation.getParam('email', '');
+    this.setState({username:username,email:email});
+
   }
   show_errors() {
     if (this.state.errors) {
@@ -91,7 +109,7 @@ class SetPassword extends Component {
 
     return (
       <ScrollView style={styles.home}>
-            {show_errors()}
+            {this.show_errors()}
 		    <View style={styles.input_block}>
             <Text htmlFor="email" style={styles.input_text}>Name:</Text>
             <TextInput
@@ -127,7 +145,7 @@ class SetPassword extends Component {
                 />
             </View>
             <View style={styles.login_btn_block}>
-                <TouchableOpacity onClick={this.savePassword.bind(this)}><Text style={styles.button}>Submit</Text></TouchableOpacity>
+                <TouchableOpacity onPress={this.savePassword.bind(this)}><Text style={styles.button}>Submit</Text></TouchableOpacity>
             </View>
 			<Footer />           
       </ScrollView>
