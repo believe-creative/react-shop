@@ -1,15 +1,11 @@
 import React, { Component } from "react";
-import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
+import {Alert, Text, View,Button, TouchableOpacity, ScrollView} from 'react-native';
 import { RadioButton } from 'react-native-paper';
-import NavigationService from '../../routes/NavigationService.js';
 import * as Actions from "../../actions";
 import { setRegion, setShippingOption } from "../../actions";
 import { connect } from "react-redux";
-import axios from "axios";
-import { API_ROOT } from "../../services/constants";
 import AddressPopupForm  from "./addressPopupForm";
 import {styles} from '../../containers/Home/home-styles';
-import Footer from '../../components/Footer/footer';
 class Delivery extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +30,6 @@ class Delivery extends Component {
     });
   }
   componentWillReceiveProps(props) {
-    console.log(props, "propjjjjjjjjjjjjjjjjjjjjjjjjjjjjs");
     if (props.user) {
       if (props.user.email) {
         if (props.customer) {
@@ -115,34 +110,33 @@ class Delivery extends Component {
     });
   }
   handleDelete(address_id) {
-    confirmAlert({
-      title: "Delete Address",
-      message: "are you sure delete this address!",
-      buttons: [
+    Alert.alert(
+      "Delete Address",
+      "Are you sure to delete this address?",
+      [  
+        {text: 'Yes', onPress: () => {
+          this.props.deleteAddress({
+            token: this.props.token,
+            inAddressId: address_id
+          });
+          this.props.getAddress({
+            token: this.props.token,
+            inEmail: this.props.user ? this.props.user.email : ""
+          });
+          this.setState({ region: null });
+        }},      
         {
-          label: "Yes",
-          onClick: () => {
-            this.props.deleteAddress({
-              token: this.props.token,
-              inAddressId: address_id
-            });
-            this.props.getAddress({
-              token: this.props.token,
-              inEmail: this.props.user ? this.props.user.email : ""
-            });
-            this.setState({ region: null });
-          }
+          text: 'No',
+          onPress: () => {},
+          style: 'cancel',
         },
-        {
-          label: "No",
-          onClick: () => {}
-        }
-      ]
-    });
+        
+      ],
+      {cancelable: false},
+    );    
   }
 
   handleAdd() {
-    console.log(this.state.modelShow);
     this.setState({ modalShow: true, addNewAddress: false, address: {} });
   }
   backStage() {
@@ -245,11 +239,9 @@ class Delivery extends Component {
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
-    console.log(this.state, "state");
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
-      console.log("shippingOptions",shippingOptions);
     let customer = {
       address1: "",
       address2: "",
@@ -264,7 +256,6 @@ class Delivery extends Component {
     }
     let getAddress =
       this.props.getaddress.length > 0 ? this.props.getaddress : "";
-      console.log(this.props.getaddress);
     return (
 
         <ScrollView style={styles.gray_bg}>
@@ -305,7 +296,6 @@ class Delivery extends Component {
                         status={checked === option.shipping_id ? 'checked' : 'unchecked'}
                         onPress={() => {
                           let state = this_ref.state;
-                          console.log("heeee",state,option.shipping_id);
                           state["shippingoption"] = option.shipping_id ;
                           state["checked"] = option.shipping_id ;
                           this_ref.setState(state);
@@ -368,5 +358,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {pure:false}
 )(Delivery);
