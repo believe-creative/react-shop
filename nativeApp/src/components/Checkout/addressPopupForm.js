@@ -163,10 +163,7 @@ class AddressPopupForm extends Component {
           animationType="slide"
           transparent={false}
           visible={this.props.modalShow}
-          onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
-          }}>
-
+          >
           <ScrollView style={styles.add_address_block}>
 				 <View style={styles.address_top_block}>
           		<Text style={styles.address_title}>{this.props.addNewAddress ? "Edit Address" : "Add Address"}</Text>
