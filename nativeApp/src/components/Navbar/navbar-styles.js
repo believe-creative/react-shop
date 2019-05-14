@@ -21,7 +21,9 @@ export const styles = StyleSheet.create({
   logo:{
 	  flex:1,
 	  flexDirection:'row',
-	  justifyContent:'flex-start',
+	  justifyContent:'center',
+	  alignItems:'center',
+	  marginTop:5,
   },
 	menu_block:{
 		paddingTop:0,

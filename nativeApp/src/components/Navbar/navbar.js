@@ -68,17 +68,17 @@ class NavBar extends Component {
           {/*Donute Button Image */}
           <Image
             source={require('../../images/menu_icon.png')}
-            style={{ width: 40, height: 25, marginTop: 20, }}
+            style={{ width: 40, height: 25, marginTop: 10, }}
           />
         </TouchableOpacity  >
 			 </View>
         <View style={styles.logo}>
 		 <Image
-        style={{width: 112, height: 66}}
+        style={{width: 84, height: 38}}
         source={require('../../images/proof-of-concept.png')}
         />
 		  </View>
-		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 20, }}><Cart cartItems={cart.count} /></View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 15, }}><Cart cartItems={cart.count} /></View>
 		  
 			 </View>
 			 <View style={styles.menu_block}>
