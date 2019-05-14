@@ -198,6 +198,7 @@ class Delivery extends Component {
   }
 
   setDefaultAddress(address) {
+    this.itemInsert(address.id);
     this.setState({
       default: true,
       address_id: address.id,
@@ -207,13 +208,15 @@ class Delivery extends Component {
       token: this.props.token,
       inShippingRegionId: address.shipping_region_id
     });
+  
+
   }
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
         <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
           <View style={styles.confirmation_block}>
-				 <View onPress={add => this.itemInsert(address.id)}>
+				 <View >
 					 <Text>{address.address_name} Address</Text>
 					 <Text>{address.address_1} </Text>
 					 <Text>{address.address_2}</Text>
@@ -236,7 +239,7 @@ class Delivery extends Component {
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
-      console.log(shippingOptions);
+      console.log("shippingOptions",shippingOptions);
     let customer = {
       address1: "",
       address2: "",
@@ -267,7 +270,7 @@ class Delivery extends Component {
             setDefaultAddress={address => this.setDefaultAddress(address)}
           />
 			 <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
-			 	<View>       
+			 	<View>
             	{getAddress ? this.addressList(getAddress) : <Text>""</Text>}
 				</View>
 
@@ -300,7 +303,7 @@ class Delivery extends Component {
                           state["checked"] = option.shipping_id ;
                           this_ref.setState(state);
                           this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
-                        this_ref.props.setShippingOption(option.shipping_id);
+                          this_ref.props.setShippingOption(option);
                        }}
                         />
 
