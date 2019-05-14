@@ -208,8 +208,8 @@ class Delivery extends Component {
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <TouchableOpacity style={this.state.selected ? styles.selected:styles.notselected} onPress={() => this.setDefaultAddress(address)}>
-          <View style={styles.address_block}>
+        <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
+          <View style={address.id == this.state.address_id ? styles.selected:styles.notselected}>
 				 <View >
 					 <Text style={{...styles.h3, ...styles.black}}>{address.address_name} Address</Text>
 					 <Text>{address.address_1}</Text>

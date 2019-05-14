@@ -76,7 +76,7 @@ class Conformation extends Component {
         </View>
         <View>
             <Text style={{...styles.h3, ...styles.black, ...styles.space_top}}>{"Delivery Options"}</Text>
-            <Text>{shippingoption.shipping_type}</Text>
+            <Text style={{...styles.h3, ...styles.black}}>{shippingoption.shipping_type}</Text>
         </View>
         <View>
             <View>
