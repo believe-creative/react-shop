@@ -10,7 +10,9 @@ class SearchItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchitem: ""      
+      searchitem: "",
+      buttonClicked:false,
+      finalTerm:null      
     };
   }
   componentDidMount() {
@@ -26,29 +28,42 @@ class SearchItem extends Component {
     this.props.getSearchItems({
       token: this.props.token,
       searchTerm: this.state.searchitem
-    });
+    });    
+    this.setState({buttonClicked:false,finalTerm:this.state.searchitem});
   }
-  SearchProducts() {
-    if (this.props.searchItems && this.props.searchItems.length > 0) {      
-      return (
-        <View>          
-            <Text style={{...styles.space, ...styles.h2, ...styles.black}}>Search Results For "{this.state.searchitem}"</Text>          
-          <View>
-            {
-              <ProductList
-                products={this.props.searchItems ? this.props.searchItems : []}
-              />
-            }
-          </View>
-        </View>
-      );
-    } else {
-      return (
-        <View>
-            <Text style={{...styles.space, ...styles.h2, ...styles.black}}>No Search Results For "{this.state.searchitem}"</Text>
-        </View>
-      );
+  componentWillReceiveProps(){
+    if (this.props.searchItems && this.state.finalTerm) {
+      this.setState({buttonClicked:true});
     }
+  }
+  SearchProducts() {    
+    if(this.state.buttonClicked){
+      if (this.props.searchItems && this.props.searchItems.length > 0) {      
+        return (
+          <View>          
+              <Text style={{...styles.space, ...styles.h2, ...styles.black}}>Search Results For "{this.state.finalTerm}"</Text>          
+            <View>
+              {
+                <ProductList
+                  products={this.props.searchItems ? this.props.searchItems : []}
+                />
+              }
+            </View>
+          </View>
+        );
+      } else {
+        return (
+          <View>
+              <Text style={{...styles.space, ...styles.h2, ...styles.black}}>No Search Results For "{this.state.finalTerm}"</Text>
+          </View>
+        );
+      }
+    }else{
+      return(
+        <View></View>
+      )
+    }
+    
   }
   render() {
     return (
