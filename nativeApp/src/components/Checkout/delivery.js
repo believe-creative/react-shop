@@ -208,26 +208,20 @@ class Delivery extends Component {
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
+        <TouchableOpacity style={this.state.selected ? styles.selected:styles.notselected} onPress={() => this.setDefaultAddress(address)}>
           <View style={styles.address_block}>
 				 <View >
 					 <Text style={{...styles.h3, ...styles.black}}>{address.address_name} Address</Text>
-					 <Text>{address.address_1} </Text>
+					 <Text>{address.address_1}</Text>
 					 <Text>{address.address_2}</Text>
 					 <Text>{address.city}, {address.postal_code}</Text>
 					 <Text>{address.country}</Text>
 					 <Text>Mobile number : {address.mob_phone} </Text>
 				 </View>
-            <Button
-              onPress={()=>this.handleEdit(address.id)}
-              title="Edit"
-              color="#f62f5e"
-            />
-            <Button
-              onPress={()=>this.handleDelete(address.id)}
-              title="Delete"
-              color="#f62f5e"
-            />
+				<View style={{...styles.delivery_options, ...styles.space_top}}>
+					<Text style={{...styles.button, ...styles.mright}} onPress={()=>this.handleEdit(address.id)}>Edit</Text>
+					<Text style={{...styles.button, ...styles.mright}} onPress={()=>this.handleDelete(address.id)}>Delete</Text>
+				</View>
         	</View>
             </TouchableOpacity>
 
@@ -289,22 +283,20 @@ class Delivery extends Component {
                   <View >
                     {shippingOptions.map(function(option, index) {
                       return (
-
-                        <View key={index} style={styles.delivery_options} >
-                        <RadioButton style={styles.radio_btn}
-                        value={option.shipping_id}
-                        status={checked === option.shipping_id ? 'checked' : 'unchecked'}
-                        onPress={() => {
+                        <TouchableOpacity key={index} style={styles.delivery_options} onPress={() => {
                           let state = this_ref.state;
                           state["shippingoption"] = option.shipping_id ;
                           state["checked"] = option.shipping_id ;
                           this_ref.setState(state);
                           this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
                           this_ref.props.setShippingOption(option);
-                       }}
+                       }} >
+                        <RadioButton style={styles.radio_btn}
+                        value={option.shipping_id}
+                        status={checked === option.shipping_id ? 'checked' : 'unchecked'}
                         />
 								<Text style={styles.options}>{option.shipping_type}</Text>
-                        </View>
+                        </TouchableOpacity>
                       );
                     })}
                   </View>

@@ -560,6 +560,14 @@ export const styles = StyleSheet.create({
 		flexDirection:'row',
 		marginTop:8,
 		fontWeight:'700',
+		color:'#000',
+	},
+	mright:{
+		marginRight:15,		
+	},
+	selected:{
+		borderColor:'#ff0000',
+		borderWidth: 1,
 	},
 
 });
