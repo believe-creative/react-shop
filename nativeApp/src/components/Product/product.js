@@ -8,13 +8,15 @@ import NavigationService from '../../routes/NavigationService.js';
 import {styles} from '../../containers/Home/home-styles';
 import AsyncStorage from '@react-native-community/async-storage';
 import SyncStorage from 'sync-storage';
+import {SERVER_ROOT} from '../../services/constants';
+
 
  class Product extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      text: '',
+      text: '',      
     };
   }
   addtoCart(e) {
@@ -51,17 +53,19 @@ import SyncStorage from 'sync-storage';
     }, 1000);
   }
   render() {
-    let productImage='../../images/product_images/a-partridge-in-a-pear-tree-2.gif';
-    if(this.props.product){
-      productImage='../../images/product_images/'+this.props.product.thumbnail;
+    let productImage = '';
+    if(this.props.product.thumbnail){
+        productImage = SERVER_ROOT + "images/product_images/" +this.props.product.thumbnail;
+    }else{
+        productImage = "";
     }
     return (
           <View style={styles.item}>
             <Image style={{width: 320, height: 250, marginBottom: 10}}
-              source={require('../../images/product_images/a-partridge-in-a-pear-tree-2.gif')}
+              source={{uri:productImage}}
             />
-            <Text style={{...styles.h2, ...styles.black}}>{this.props.product && this.props.product.name}</Text>
-				<Text style={{...styles.price, ...styles.red}}>{this.props.product && this.props.product.price}</Text>
+            <Text style={{...styles.h2, ...styles.black}}>{this.props.product.name && this.props.product.name}</Text>
+				<Text style={{...styles.price, ...styles.red}}>{this.props.product.price && this.props.product.price}</Text>
             <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
         </View>
         );
