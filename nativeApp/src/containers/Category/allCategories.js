@@ -68,7 +68,7 @@ class allCategories extends Component {
       <View>
         <NavBar />
       <ScrollView style={styles.body}>
-     <Text>All Categories</Text>
+     <Text style={{...styles.h2, ...styles.black, ...styles.cart_page_wraper}}>All Products</Text>
       <View>
 
       {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{
