@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
 		paddingLeft: 30,
 		paddingRight: 30,
 		textAlign: 'center',
-		minWidth: 150, 
+		minWidth: 110, 
 	},
 	shop_now_panel:{
 		margin:15,
@@ -520,6 +520,11 @@ export const styles = StyleSheet.create({
 		fontWeight:'600',
 		color:'#6c6c6c',
 		opacity:0.5, 
+	},
+	center_position:{
+		flex:1, 
+		alignItems:'center', 
+		justifyContent:'center',
 	},
 
 });

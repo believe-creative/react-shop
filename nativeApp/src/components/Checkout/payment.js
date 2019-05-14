@@ -101,7 +101,7 @@ class Payment extends Component {
       
       <View style={styles.confirmation_block}>
       {this.showErrors()}
-      <View style={{flex:1, alignItems:'flex-start', justifyContent:'flex-start'}}>
+      <View style={styles.center_position}>
 		  <TouchableOpacity onPress={this.requestPayment}><Text style={styles.button}>Make a Payment</Text></TouchableOpacity>
         </View>
       </View>
