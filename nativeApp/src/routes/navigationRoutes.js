@@ -11,6 +11,7 @@ import Checkout from '../components/Checkout/checkout';
 import Delivery from '../components/Checkout/delivery';
 import Conformation from '../components/Checkout/conformation';
 import SetPassword from '../containers/Login/passwordSet';
+import SearchItem from '../components/Search/searchitem';
 
 export const RootStack = createStackNavigator(
   {
@@ -24,7 +25,8 @@ export const RootStack = createStackNavigator(
     Checkout:Checkout,
     Delivery:Delivery,
     Conformation:Conformation,
-    SetPassword:SetPassword
+    SetPassword:SetPassword,
+    SearchItem:SearchItem
   },
   {
     initialRouteName: 'Home',
