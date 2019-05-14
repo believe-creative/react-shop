@@ -215,13 +215,13 @@ class Delivery extends Component {
     return getAddress.map((address, index) => {
       return (
         <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
-          <View style={styles.confirmation_block}>
+          <View style={styles.address_block}>
 				 <View >
-					 <Text>{address.address_name} Address</Text>
+					 <Text style={{...styles.h3, ...styles.black}}>{address.address_name} Address</Text>
 					 <Text>{address.address_1} </Text>
 					 <Text>{address.address_2}</Text>
 					 <Text>{address.city}, {address.postal_code}</Text>
-					 <Text> {address.country}</Text>
+					 <Text>{address.country}</Text>
 					 <Text>Mobile number : {address.mob_phone} </Text>
 				 </View>
         	</View>
@@ -284,16 +284,13 @@ class Delivery extends Component {
 							</TouchableOpacity>
               {this.state.region ? (
                 <View >
-                  <Text >
-                    Delivery Options
-                  </Text>
+                  <Text style={{...styles.h3, ...styles.black}}>Delivery Options</Text>
                   <View >
                     {shippingOptions.map(function(option, index) {
                       return (
 
-                        <View key={index} >
-                        <Text>{option.shipping_type}</Text>
-                        <RadioButton
+                        <View key={index} style={styles.delivery_options} >
+                        <RadioButton style={styles.radio_btn}
                         value={option.shipping_id}
                         status={checked === option.shipping_id ? 'checked' : 'unchecked'}
                         onPress={() => {
@@ -306,7 +303,7 @@ class Delivery extends Component {
                           this_ref.props.setShippingOption(option);
                        }}
                         />
-
+								<Text style={styles.options}>{option.shipping_type}</Text>
                         </View>
                       );
                     })}
