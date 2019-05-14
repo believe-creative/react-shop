@@ -105,9 +105,11 @@ class NavBar extends Component {
           <TouchableOpacity onPress={() => {
 					      NavigationService.navigate('SearchItem');
 					 }}>
-           <Text>
-             <Image source={require('../../images/search-icon.png')} style={{ width: 32, height: 32, marginTop: 10, }} />
-            </Text>
+
+             <Image 
+			  		source={require('../../images/search-icon.png')}
+					style={{ width: 32, height: 32, marginTop:10, marginRight:10}} />
+
           </TouchableOpacity>
       </View>
 		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 15, }}><Cart cartItems={cart.count} /></View>

@@ -607,5 +607,40 @@ export const styles = StyleSheet.create({
 		justifyContent:'flex-start',
 		flexDirection:'column',
 	},
-
+	
+	/* Search results css */
+	
+	search_icon:{
+		marginRight:5,
+		height:32,
+		width:32,
+	},
+	search_main:{
+		padding: 15,
+		backgroundColor: '#f7f7f7',
+		flex:1,
+		alignItems:'flex-start',
+		justifyContent:'space-between',
+		flexDirection:'row',
+	},
+	search_input:{
+		borderColor:'#6c6c6c',
+		borderWidth:1,
+		borderRadius:10,
+		backgroundColor:'#fff',
+		paddingTop:5,
+		paddingBottom:5,
+		paddingLeft:10,
+		paddingRight:10,
+		color:'#000',
+		height:45,
+		marginBottom: 10,
+		width:'65%',
+	},
+	space:{
+		padding:15,
+	},
+	search_results:{
+		backgroundColor: '#f7f7f7',
+	},
 });

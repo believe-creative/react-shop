@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import * as Actions from "../../actions";
 import { connect } from "react-redux";
 import ProductList from "../Product/productlist";
-import {Text, View,ScrollView, TextInput, TouchableOpacity} from 'react-native';
-
-
+import {Text, StyleSheet, View,ScrollView, TextInput, TouchableOpacity} from 'react-native';
+import {styles} from '../../containers/Home/home-styles'; 
+import NavBar from '../../components/Navbar/navbar';
+import Footer from '../../components/Footer/footer';
 class SearchItem extends Component {
   constructor(props) {
     super(props);
@@ -30,8 +31,8 @@ class SearchItem extends Component {
   SearchProducts() {
     if (this.props.searchItems && this.props.searchItems.length > 0) {      
       return (
-        <ScrollView>          
-            <Text>Search Results For "{this.state.searchitem}"</Text>          
+        <View>          
+            <Text style={{...styles.space, ...styles.h2, ...styles.black}}>Search Results For "{this.state.searchitem}"</Text>          
           <View>
             {
               <ProductList
@@ -39,28 +40,34 @@ class SearchItem extends Component {
               />
             }
           </View>
-        </ScrollView>
+        </View>
       );
     } else {
       return (
         <View>
-            <Text>No Search Results For "{this.state.searchitem}"</Text>
+            <Text style={{...styles.space, ...styles.h2, ...styles.black}}>No Search Results For "{this.state.searchitem}"</Text>
         </View>
       );
     }
   }
   render() {
     return (
-      <ScrollView>               
-            <TextInput
-                placeholder="Search"
-                onChangeText={this.searchItems.bind(this)}                                
-              />              
-              <TouchableOpacity onPress={this.searchSubmit.bind(this)}>
-                <Text>Search</Text>
-              </TouchableOpacity>                       
-          {this.SearchProducts()} 
-      </ScrollView>
+		 <View style={styles.search_main_block}>
+		 	<NavBar />
+			<ScrollView>
+		 		<View style={styles.search_main}>
+					<TextInput style={styles.search_input}
+						 placeholder="Search"
+						 onChangeText={this.searchItems.bind(this)}                                
+					  />              
+					 <TouchableOpacity onPress={this.searchSubmit.bind(this)}>
+						<Text style={styles.button}>Search</Text>
+					 </TouchableOpacity>  
+				</View>
+				<View style={styles.search_results}>{this.SearchProducts()}</View>
+				 <Footer />
+			</ScrollView>
+		</View> 
     );
   }
 }
