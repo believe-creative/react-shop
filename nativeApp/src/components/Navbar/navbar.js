@@ -63,22 +63,23 @@ class NavBar extends Component {
         <View style={styles.header}>
         <UserBlock/>
 		 <View style={styles.headtop}>
-        <View style={styles.logo}>
-		 <Image
-        style={{width: 120, height: 60}}
-        source={require('../../images/proof-of-concept.png')}
-        />
-		  </View>
-		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 20, }}><Cart cartItems={cart.count} /></View>
-		  <View style={styles.burgermenu}>
+		 <View style={styles.burgermenu}>
         <TouchableOpacity  onPress={()=>this.setState({menuOpen:!this.state.menuOpen})}>
           {/*Donute Button Image */}
           <Image
             source={require('../../images/menu_icon.png')}
-            style={{ width: 40, height: 25, marginLeft: 5, marginTop: 20, }}
+            style={{ width: 40, height: 25, marginTop: 20, }}
           />
         </TouchableOpacity  >
 			 </View>
+        <View style={styles.logo}>
+		 <Image
+        style={{width: 112, height: 66}}
+        source={require('../../images/proof-of-concept.png')}
+        />
+		  </View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 20, }}><Cart cartItems={cart.count} /></View>
+		  
 			 </View>
 			 <View style={styles.menu_block}>
         {this.state.menuOpen ? this.props.categories && Object.values(this.props.categories).map((e,index)=>{
