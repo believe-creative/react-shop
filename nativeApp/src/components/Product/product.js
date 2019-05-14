@@ -16,11 +16,11 @@ import {SERVER_ROOT} from '../../services/constants';
   constructor(props) {
     super(props);
     this.state = {
-      text: '',      
+      text: '',
     };
   }
   addtoCart(e) {
-    let cart = SyncStorage.get("react-shop-cart");    
+    let cart = SyncStorage.get("react-shop-cart");
     let props = this.props;
     if (cart) {
       if(cart.count){
@@ -29,7 +29,7 @@ import {SERVER_ROOT} from '../../services/constants';
       else{
         cart = cart;
       }
-      
+
       props.AddToCart({
         token: props.token,
         inCartId: cart.inCartId,
@@ -53,17 +53,25 @@ import {SERVER_ROOT} from '../../services/constants';
     }, 1000);
   }
   render() {
-    let productImage = '';
+    let productImage,productId = '';
+
     if(this.props.product.thumbnail){
         productImage = SERVER_ROOT + "images/product_images/" +this.props.product.thumbnail;
+        productId= this.props.product.product_id;
     }else{
         productImage = "";
+        productId="";
     }
+    console.log("productId",productId);
     return (
           <View style={styles.item}>
+           <TouchableOpacity  onPress={() => { NavigationService.navigate('ProductDetails', {
+         productid: productId,
+       }); }} style={styles.center}>
             <Image style={{width: 320, height: 250, marginBottom: 10}}
               source={{uri:productImage}}
             />
+            </TouchableOpacity>
             <Text style={{...styles.h2, ...styles.black}}>{this.props.product.name && this.props.product.name}</Text>
 				<Text style={{...styles.price, ...styles.red}}>{this.props.product.price && this.props.product.price}</Text>
             <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>

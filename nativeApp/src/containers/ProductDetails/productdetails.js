@@ -1,0 +1,336 @@
+import React, { Component } from "react";
+import {Platform, StyleSheet, Text, View,Button, Linking, TouchableOpacity, Image, ScrollView} from 'react-native';
+import { connect } from "react-redux";
+import * as Actions from "../../actions";
+import Carousel from "react-native-carousel";
+import Footer from '../../components/Footer/footer';
+import NavBar from '../../components/Navbar/navbar';
+import {SERVER_ROOT} from '../../services/constants';
+import SyncStorage from 'sync-storage';
+const handleOnDragStart = e => e.preventDefault();
+
+
+class ProductDetails extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      show: "",
+      buttonStyles: { cursor: "pointer" },
+      cart: null,
+      productImageName: "",
+      activeClass: "active",
+      adding: false,
+      link: null
+    };
+     this.productid = props.navigation.getParam('productid');
+
+  }
+
+  addtoCart(e) {
+    let cart = SyncStorage.get("react-shop-cart");
+    let props = this.props;
+    console.log(props, "=0___", cart);
+    if (cart) {
+      cart = JSON.parse(cart);
+      props.AddToCart({
+        token: props.token,
+        inCartId: cart.inCartId,
+        inProductId: this.props.productdetails[0].product_id,
+        inAttributes: null
+      });
+    } else {
+      console.log(props, "here");
+      props.AddToCart({
+        token: props.token,
+        inCartId: null,
+        inProductId: this.props.productdetails[0].product_id,
+        inAttributes: null
+      });
+    }
+
+    this.setState({ show: "show", adding: true });
+    setTimeout(() => {
+      this.setState({
+        show: ""
+      });
+    }, 1000);
+  }
+  componentDidMount() {
+    this.props.loadProduct({
+      token: this.props.token,
+      inProductId: this.productid
+    });
+    this.props.getProductRecommendations({
+      token: this.props.token,
+      inProductId: this.productid
+    });
+    this.props.getProductLocations({
+      token: this.props.token,
+      inProductId: this.productid
+    });
+    this.props.setSubCategory(false);
+    this.setState({ link: this.productid });
+  }
+
+  componentWillReceiveProps(props) {
+    let localCart = SyncStorage.get("react-shop-cart");
+    if (localCart != null) {
+      if (this.state.cart === null || this.state.cart === undefined) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: localCart.inCartId
+        });
+      } else if (props.cart.count !== this.state.cart.count) {
+        this.props.getCartProducts({
+          token: props.token,
+          inCartId: props.cart.inCartId
+        });
+      }
+
+      this.setState({ cart: props.cart, adding: false });
+    }
+
+    if (this.state.link !== this.productid) {
+      console.log("call");
+      props.loadProduct({
+        token: props.token,
+        inProductId: this.productid
+      });
+      props.getProductRecommendations({
+        token: props.token,
+        inProductId: this.productid
+      });
+      props.getProductLocations({
+        token: props.token,
+        inProductId: this.productid
+      });
+      this.setState({ link: this.productid });
+    }
+  }
+
+  update(e) {
+    let state = this.state;
+    state["buttonStyles"] = { pointerEvents: "none" };
+    this.setState(state);
+    let count = parseInt(e.currentTarget.getAttribute("data-quantity"));
+    let param = parseInt(e.currentTarget.getAttribute("data-param"));
+    count = count + param;
+    if (count < 0) {
+      let state = this.state;
+      state["buttonStyles"] = { pointerEvents: "auto", cursor: "pointer" };
+      this.setState(state);
+    } else {
+      this.props.updateProductQuantity({
+        token: this.props.token,
+        inItemId: e.currentTarget.getAttribute("data-item"),
+        inQuantity: count
+      });
+    }
+  }
+  handleClick(name) {
+    this.setState({ productImageName: name, activeClass: "" });
+  }
+
+  productPrice() {
+    let discountedPrice = this.props.productdetails[0]
+      ? this.props.productdetails[0].discounted_price
+      : "";
+    if (discountedPrice !== "0.00") {
+      return (
+        <View>
+          <Text>
+
+             Price:
+            {this.props.productdetails[0]
+              ? "$" + this.props.productdetails[0].price
+              : ""}
+            
+
+            Discounted Price:
+            {this.props.productdetails[0]
+              ? "$" + this.props.productdetails[0].discounted_price
+              : ""}
+
+            </Text>
+            </View>
+      );
+    } else {
+      return (
+        <View>
+         <Text>
+        Price:
+          {this.props.productdetails[0]
+            ? "$" + this.props.productdetails[0].price
+            : ""}
+          </Text>
+          </View>
+      );
+    }
+  }
+  render() {
+    console.log(this.productid);
+    let productImg1 = this.props.productdetails[0]
+      ? this.props.productdetails[0].image
+      : "";
+    let productImg2 = this.props.productdetails[0]
+      ? this.props.productdetails[0].image_2
+      : "";
+    let productId = this.props.productdetails[0]
+      ? this.props.productdetails[0].product_id.toString()
+      : "";
+    let productlocations = this.props.productlocations[0]
+      ? this.props.productlocations[0].department_name.toLowerCase()
+      : "";
+    // console.log(this.props.productdetails[0]);
+    let cart = { count: 0, products: [] };
+    if (this.props.cart) cart = this.props.cart;
+    let hasItems = cart.count > 0 ? true : false;
+    let this_ref = this;
+    let items = "";
+    if (this.props.productrecommendations.length > 0) {
+      items = this.props.productrecommendations.map((item, index) => {
+        return (
+          <View
+            key={index}
+            onDragStart={handleOnDragStart}
+          >
+                  <Text>{item.product_name}</Text>
+                  <Text>{item.description}</Text>
+                  <Text>&#163;14.99</Text>
+            </View>
+        );
+      });
+    }
+
+
+      return (
+        <View>
+        <NavBar/>
+        <ScrollView>
+          <View>
+                  <View>
+                  <Image style={{width: 300, height: 360, marginBottom: 10}}
+                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                    this.state.productImageName
+                      ? this.state.productImageName
+                      : this.props.productdetails[0]
+                        ? this.props.productdetails[0].image
+                        : "a-partridge-in-a-pear-tree-2.gif"
+                  }`}}
+                      />
+                      </View>
+                      <View >
+                            <View   onPress={() => {
+                              this.handleClick(
+                                this.props.productdetails[0]
+                                  ? this.props.productdetails[0].image
+                                  : "a-partridge-in-a-pear-tree-2.gif"
+                              );
+                              }}
+                              >
+                            <Image style={{width: 50, height: 50, marginBottom: 10}}
+                                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                    this.props.productdetails[0]
+                                      ? this.props.productdetails[0].image
+                                      : "a-partridge-in-a-pear-tree-2.gif"
+                                  }`}}
+                                />
+                                </View>
+
+                                <View onPress={() => {
+                              this.handleClick(
+                                this.props.productdetails[0]
+                                  ? this.props.productdetails[0].image_2
+                                  : "a-partridge-in-a-pear-tree-2.gif"
+                              );
+                            }}
+                            >
+
+                            <Image style={{width: 50, height: 50, marginBottom: 10}}
+                                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                    this.props.productdetails[0]
+                                      ? this.props.productdetails[0].image_2
+                                      : "a-partridge-in-a-pear-tree-2.gif"
+                                  }`}}
+                                />
+                          </View>
+                    </View>
+
+                  <View>
+                      <Text>
+                        {this.props.productdetails[0]
+                          ? this.props.productdetails[0].name
+                          : ""}
+                      </Text>
+                      <Text>
+                        {this.props.productdetails[0]
+                          ? this.props.productdetails[0].description
+                          : ""}
+                      </Text>
+                      </View>
+                    {this.productPrice()}
+
+                    <View>
+                      <Carousel width={375}>
+                        <Image style={{width: 300, height: 360, marginBottom: 10}}
+                              onDragStart={handleOnDragStart}
+                              source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                this.props.productdetails[0]
+                                  ? this.props.productdetails[0].image
+                                  : "a-partridge-in-a-pear-tree-2.gif"
+                              }`}}
+                            />
+                            <Image style={{width: 300, height: 360, marginBottom: 10}}
+                                   onDragStart={handleOnDragStart}
+                                   source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                    this.props.productdetails[0]
+                                      ? this.props.productdetails[0].image_2
+                                      : "a-partridge-in-a-pear-tree-2.gif"
+                                  }`}}
+                                />
+                      </Carousel>
+                    </View>
+
+
+
+
+
+            </View>
+              <Footer/>
+          </ScrollView>
+        </View>
+      );
+
+  }
+}
+const mapStateToProps = state => {
+  return {
+    cart: state.get("products").cart,
+    productdetails: state.get("products").product,
+    productrecommendations: state.get("products").productrecommendations,
+    productlocations: state.get("products").productLocations,
+    token: state.get("user").token,
+    showSubCategory: state.get("showSubCategory").showSubCategory
+  };
+};
+
+const mapStateToDispatch = dispatch => ({
+  setSubCategory: data => dispatch(Actions.setSubCategory(data)),
+  loadProduct: data => dispatch(Actions.product.request(data)),
+  AddToCart: (inCartId, inProductId, inAttributes) =>
+    dispatch(Actions.AddToCart.request(inCartId, inProductId, inAttributes)),
+  updateProductQuantity: data =>
+    dispatch(Actions.updateProductQuantity.request(data)),
+  getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),
+  getProductRecommendations: data =>
+    dispatch(Actions.getProductRecommendations.request(data)),
+  getProductLocations: data => dispatch(Actions.productLocations.request(data))
+});
+
+export default connect(
+  mapStateToProps,
+  mapStateToDispatch,
+  null,
+  {pure:false}
+)(ProductDetails);

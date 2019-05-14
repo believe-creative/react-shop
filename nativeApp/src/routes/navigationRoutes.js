@@ -4,6 +4,7 @@ import HomeScreen from '../containers/Home/home';
 import Categories from '../containers/Category/categories';
 import allCategories from '../containers/Category/allCategories';
 import DetailsScreen from '../containers/Home/detailsScreen';
+ import ProductDetails from '../containers/ProductDetails/productdetails';
 import Login from '../containers/Login/login';
 import NavBar from '../components/Navbar/navbar';
 import Items from '../components/Items/items';
@@ -19,6 +20,7 @@ export const RootStack = createStackNavigator(
     Details: DetailsScreen,
     Categories:Categories,
     allCategories:allCategories,
+    ProductDetails:ProductDetails,
     Navbar:NavBar,
     Items:Items,
     Login:Login,
