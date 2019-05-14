@@ -89,7 +89,7 @@ class Conformation extends Component {
               <Text style={{...styles.h3, ...styles.black}}>{"Grand Total"} {(totalAmount + parseInt(shippingoption.shipping_cost)).toFixed(2)} </Text>
             </View>
         </View>
-      <View style={styles.back_and_next_btn_block}>
+      <View style={{...styles.back_and_next_btn_block, ...styles.space_top}}>
 			 <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
 			 <TouchableOpacity onPress={this.nextStage.bind(this)}><Text style={styles.button}>Next Step</Text></TouchableOpacity>
       </View>

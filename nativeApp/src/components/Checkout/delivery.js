@@ -212,20 +212,16 @@ class Delivery extends Component {
     return getAddress.map((address, index) => {
       return (
         <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
-          <View style={styles.addaddress_block}>
-          <View onPress={add => this.itemInsert(address.id)}>
-          <Text>{address.address_name} Address</Text>
-
-
-          <Text>{address.address_1} </Text>
-          <Text> {address.address_2}</Text>
-          <Text>
-            {address.city}, {address.postal_code}
-          </Text>
-          <Text> {address.country}</Text>
-          <Text>Mobile number : {address.mob_phone} </Text>
-            </View>
-        </View>
+          <View style={styles.confirmation_block}>
+				 <View onPress={add => this.itemInsert(address.id)}>
+					 <Text>{address.address_name} Address</Text>
+					 <Text>{address.address_1} </Text>
+					 <Text>{address.address_2}</Text>
+					 <Text>{address.city}, {address.postal_code}</Text>
+					 <Text> {address.country}</Text>
+					 <Text>Mobile number : {address.mob_phone} </Text>
+				 </View>
+        	</View>
             </TouchableOpacity>
 
       );
@@ -270,9 +266,9 @@ class Delivery extends Component {
             region={this.state.region ? this.state.region : "hello"}
             setDefaultAddress={address => this.setDefaultAddress(address)}
           />
-			 	<View style={styles.addaddress_block}>
-            <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
-            {getAddress ? this.addressList(getAddress) : <Text>""</Text>}
+			 <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
+			 	<View>       
+            	{getAddress ? this.addressList(getAddress) : <Text>""</Text>}
 				</View>
 
 					<TouchableOpacity onPress={() => this.handleAdd()}>
