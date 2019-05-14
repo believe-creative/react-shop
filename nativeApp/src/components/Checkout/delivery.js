@@ -292,8 +292,17 @@ class Delivery extends Component {
                           this_ref.props.setShippingOption(option);
                        }} >
                         <RadioButton style={styles.radio_btn}
+				  				color={color='#f62f5e'}
                         value={option.shipping_id}
                         status={checked === option.shipping_id ? 'checked' : 'unchecked'}
+								onPress={() => {
+                          let state = this_ref.state;
+                          state["shippingoption"] = option.shipping_id ;
+                          state["checked"] = option.shipping_id ;
+                          this_ref.setState(state);
+                          this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                          this_ref.props.setShippingOption(option);
+                       }}
                         />
 								<Text style={styles.options}>{option.shipping_type}</Text>
                         </TouchableOpacity>
