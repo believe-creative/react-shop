@@ -11,6 +11,7 @@ import {Platform, StyleSheet, Text, View,Button,ScrollView} from 'react-native';
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
 import { getCookie } from "../../services/helpers";
+import NavBar from '../../components/Navbar/navbar';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import Immutable from "immutable";
 import { Provider } from "react-redux";
@@ -67,6 +68,8 @@ class Categories extends Component {
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
       return (
+        <View>
+          <NavBar />
         <ScrollView style={styles.body}>
         <View>
         {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
@@ -77,11 +80,12 @@ class Categories extends Component {
                 return  (<ProductList products={productsList} />);
 
           }
-        }) : <Text>""</Text>}
+        }) : <Text/>}
 
         </View>
           <Footer />
         </ScrollView>
+        </View>
         );
       }
 }

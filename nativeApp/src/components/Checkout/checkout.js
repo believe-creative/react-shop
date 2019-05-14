@@ -7,6 +7,7 @@ import Delivery from "./delivery";
 import Conformation from "./conformation";
 import Payment from "./payment";
 import Home from "../../containers/Home/home";
+import NavBar from '../Navbar/navbar';
 import Login from "../../containers/Login/login";
 import { connect } from "react-redux";
 import * as Actions from "../../actions";
@@ -51,7 +52,7 @@ class Checkout extends Component {
   setDelivarydetails(e, child) {
     let state = this.state;
     state["delivery"] = child;
-    state["delivery"]["errors"] = []; 
+    state["delivery"]["errors"] = [];
 
     this.setState(state);
   }
@@ -150,6 +151,8 @@ class Checkout extends Component {
     let finalstage = false;
     if (this.state.stage >= 2) finalstage = true;
     return (
+      <View>
+      <NavBar />
         <ScrollView style={styles.gray_bg}>
           <View>
               <Text style={{...styles.h2, ...styles.black}}>Checkout</Text>
@@ -157,6 +160,7 @@ class Checkout extends Component {
           </View>
 			 <Footer/>
         </ScrollView>
+        </View>
     );
   }
 }

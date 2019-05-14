@@ -79,7 +79,7 @@ class App extends Component {
     console.log("App",this.props);
       return (
         <Provider store={this.store}>
-          <NavBar />
+          
           <AppContainer ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }} />

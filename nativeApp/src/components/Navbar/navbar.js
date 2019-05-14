@@ -55,13 +55,29 @@ class NavBar extends Component {
     this.props.navigationProps.toggleDrawer();
   };
 
+  menuItemsList(){
+      console.log("Menu Items",this.props.categories);
+        if(this.props.categories){
+        return Object.values(this.props.categories).map((e,index)=>{
+          return (<Text key={index} style={styles.menu_list} onPress={() => {
+                 this.setState({menuOpen:!this.state.menuOpen})
+                 NavigationService.navigate('Categories', {
+               itemId: e.department_id,
+               categoryName: e.name,
+             });
+             }}>
+            {e.name}
+            </Text>
+        );
+      })
+      }
+    }
 
   render() {
     let { cart }  = this.props;
     if (!cart) cart = { count: 0 };
     return (
         <View style={styles.header}>
-        <UserBlock/>
 		 <View style={styles.headtop}>
 		 <View style={styles.burgermenu}>
         <TouchableOpacity  onPress={()=>this.setState({menuOpen:!this.state.menuOpen})}>
@@ -74,28 +90,17 @@ class NavBar extends Component {
 			 </View>
         <View style={styles.logo}>
 		 <Image
-        style={{width: 84, height: 38}}
+        style={{width: 84, height: 38 }}
         source={require('../../images/proof-of-concept.png')}
         />
 		  </View>
 		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 15, }}><Cart cartItems={cart.count} /></View>
-		  
+
 			 </View>
-			 <View style={styles.menu_block}>
-        {this.state.menuOpen ? this.props.categories && Object.values(this.props.categories).map((e,index)=>{
-          return(
-            <Text style={styles.menu_list} onPress={() => {
-                this.setState({menuOpen:!this.state.menuOpen})
-                NavigationService.navigate('Categories', {
-              itemId: e.department_id,
-              categoryName: e.name,
-            });
-            }}>
-           {e.name}
-           </Text>
-       );
-     }) :<Text> </Text>}
-		  </View>
+       <View style={styles.menu_block}>
+             {this.state.menuOpen ? <UserBlock/> : (<Text style={styles.menu_item_block}> </Text>)}
+             {this.state.menuOpen ?  this.menuItemsList()  : (<Text style={styles.menu_item_block}> </Text>) }
+        </View>
      </View>
 
     );
