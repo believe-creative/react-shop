@@ -7,6 +7,7 @@ import { setUser } from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
 import {styles} from '../../containers/Home/home-styles'; 
+import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
 
 
 class UserBlock extends Component {
@@ -55,6 +56,7 @@ class UserBlock extends Component {
     }
   }
   logout() {
+    LoginManager.logOut();
     SyncStorage.remove('s-atk');
     this.props.setUser({ email: null, name: null, photo: null });
   }
