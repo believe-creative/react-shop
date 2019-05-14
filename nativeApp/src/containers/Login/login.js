@@ -9,8 +9,9 @@ import {Modal,Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,Te
 import axios from "axios";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
-import {styles} from '../Home/home-styles'; 
+import {styles} from '../Home/home-styles';
 import Footer from '../../components/Footer/footer';
+import NavBar from '../../components/Navbar/navbar';
 import {LoginManager} from 'react-native-fbsdk';
 
 
@@ -37,7 +38,7 @@ class Login extends Component {
         } else {
           console.log('Login was successful with permissions: '
             + result.grantedPermissions.toString());
-            
+
         }
       },
       function (error) {
@@ -78,7 +79,7 @@ class Login extends Component {
     var c = SyncStorage.get("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
-    } 
+    }
     var props = this.props;
 
     PROVIDERS.map(provider => {
@@ -119,6 +120,8 @@ class Login extends Component {
     }
 
     return (
+      <View>
+        <NavBar />
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
 		 		{name ? (
@@ -126,8 +129,8 @@ class Login extends Component {
 			) : (
 			  <View>
 		 	<View style={styles.social_media}>
-				 {PROVIDERS.map((provider, key) => (
-					<TouchableOpacity onPress={this.fbAuth.bind(this)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
+				 {PROVIDERS.map((provider, ind) => (
+					<TouchableOpacity  key={ind} onPress={this.fbAuth.bind(this)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
 				 ))}
 	</View>
 				 <View>
@@ -155,8 +158,9 @@ class Login extends Component {
 			  </View>
 			)}
 		 	</View>
-			<Footer />           
+			<Footer />
       </ScrollView>
+      </View>
     );
   }
 }

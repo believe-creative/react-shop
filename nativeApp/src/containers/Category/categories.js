@@ -77,7 +77,7 @@ class Categories extends Component {
           if(categoryName.toLowerCase()== key){
                 console.log(productsList);
 
-                return  (<ProductList products={productsList} />);
+                return  (<ProductList key={key} products={productsList} />);
 
           }
         }) : <Text/>}

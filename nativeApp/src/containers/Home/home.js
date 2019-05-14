@@ -77,7 +77,10 @@ class HomeScreen extends Component {
                 <Text style={styles.shoptxt}>
                   Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed.
                 </Text>
-                <TouchableOpacity onPress={() => Linking.openURL('/categories')}><Text style={styles.button}>Shop Now</Text></TouchableOpacity>
+                <TouchableOpacity  onPress={() => {
+
+               NavigationService.navigate('allCategories');
+           }}><Text style={styles.button}>Shop Now</Text></TouchableOpacity>
               </View>
             </View>
           </View>
@@ -96,16 +99,15 @@ class HomeScreen extends Component {
 				<View style={{...styles.game_sub_block, ...styles.shop_now}}>
 				  <Text style={{...styles.h1, ...styles.black, ...styles.center}}>Let The Game begin</Text>
 				  <Text style={{...styles.h2, ...styles.black, ...styles.center}}>Registration is on - get ready for the Open</Text>
-				  <TouchableOpacity onPress={() => Linking.openURL('/login')} style={styles.center}>
+				  <TouchableOpacity  onPress={() => { NavigationService.navigate('Login'); }} style={styles.center}>
 					 <Text style={styles.button}>
 						Register
 					 </Text>
 				  </TouchableOpacity>
-				</View>
-
-
+				      </View>
           <Footer />
-      </ScrollView>
+      
+          </ScrollView>
       </View>
         );
       }

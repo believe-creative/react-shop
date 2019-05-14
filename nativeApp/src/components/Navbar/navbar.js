@@ -89,10 +89,17 @@ class NavBar extends Component {
         </TouchableOpacity  >
 			 </View>
         <View style={styles.logo}>
-		 <Image
-        style={{width: 84, height: 38 }}
-        source={require('../../images/proof-of-concept.png')}
-        />
+        <TouchableOpacity  onPress={() => {
+              if(this.state.menuOpen == true ){
+                 this.setState({menuOpen:!this.state.menuOpen})
+              }
+               NavigationService.navigate('Home');
+           }}>
+		         <Image
+             style={{width: 84, height: 38 }}
+             source={require('../../images/proof-of-concept.png')}
+             />
+          </TouchableOpacity  >
 		  </View>
 		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 15, }}><Cart cartItems={cart.count} /></View>
 
