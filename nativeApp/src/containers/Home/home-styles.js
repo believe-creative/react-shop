@@ -14,11 +14,11 @@ export const styles = StyleSheet.create({
 	banner: {
 		backgroundColor: '#6c6c6c',
 		paddingTop: 25,
-		paddingBottom: 25,
+		paddingBottom: 50,
 		paddingLeft: 50,
 		paddingRight: 50,
 		flex:1,
-		justifyContent: 'flex-start',
+		justifyContent: 'center',
 		alignItems: 'flex-start',
 	},
 	img: {
@@ -136,7 +136,7 @@ export const styles = StyleSheet.create({
 		marginLeft:15,
 		marginRight: 15,
 		marginTop: 0,
-		marginBottom: 40,
+		marginBottom: 60,
 		padding: 30,
 		backgroundColor: '#fff',
 		position: 'relative',

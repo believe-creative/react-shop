@@ -155,7 +155,7 @@ class Checkout extends Component {
       <NavBar />
         <ScrollView style={styles.gray_bg}>
           <View>
-              <Text style={{...styles.h2, ...styles.black}}>Checkout</Text>
+              
               {this.showstages()}
           </View>
 			 <Footer/>

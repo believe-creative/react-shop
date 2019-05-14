@@ -4,8 +4,8 @@ export const styles = StyleSheet.create({
   footer: {
     backgroundColor: '#fff',
 	 fontSize: 16,
-	 padding: 10,
-	 paddingBottom: 20,
+	 padding: 15,
+	 paddingBottom: 50,
   },
 	footertext: {
 		color: '#333',
@@ -38,5 +38,6 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		color: '#f62f5e',
 		fontStyle: 'italic',
+		paddingBottom:70,
 	},
 });
