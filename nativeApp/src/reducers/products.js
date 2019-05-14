@@ -194,13 +194,13 @@ export default (state = intialState, action) => {
     case ActionTypes.SETREGION:
       cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-        cart = JSON.parse(cart);
+       
       } else {
         cart = { inCartId: null, count: 0, products: [], region: null };
       }
 
       cart.region = action.payload;
-      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,

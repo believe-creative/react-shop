@@ -22,23 +22,20 @@ class AddressPopupForm extends Component {
   componentDidMount() {
     console.log("mount", this.props, this.state);
   }
-  componentWillReceiveProps(props) {
-    console.log(props);
-    if (this.props.addressDetails) {
+  componentWillReceiveProps(props) {    
+    if (props.addressDetails) {      
       this.setState({
-        address: this.props.addressDetails
+        address: props.addressDetails
       });
     }
   }
   changeRegion(itemValue,itemIndex) {
-    let state = this.state;
-    console.log(itemValue);
+    let state = this.state;    
     state["address"]["shipping_region_id"] = itemValue;
     state["address"]["region"] = itemValue;
 
     state["completeRegion"] = itemValue;
-    this.setState(state);
-    console.log(this.state);
+    this.setState(state);    
   }
   setShippingOption(e) {
     let state = this.state;
@@ -51,10 +48,8 @@ class AddressPopupForm extends Component {
     this.props.setShippingOption(state["shippingoption"]);
   }
 
-  changed(value,title) {
-    console.log("djksfkjd");
+  changed(value,title) {    
     let state = this.state;
-    console.log(value);
     state["address"][title] = value;
     this.setState(state);
     this.props.setDelivarydetails(this.state, this.state);
@@ -110,8 +105,7 @@ class AddressPopupForm extends Component {
   }
   saveAddress() {
 
-    let state = this.state;
-    console.log("Hello",state);
+    let state = this.state;    
     this.props.addAddress({
       token: this.props.token,
       inEmail: this.props.user ? this.props.user.email : "",
@@ -158,12 +152,11 @@ class AddressPopupForm extends Component {
       zip: "",
       country: ""
     };
+    
     let addAddressList = this.state.address;
     addressList = this.state.address ? this.state.address : "";
-
-    let getAddress =
-      this.props.getaddress.length > 0 ? this.props.getaddress : "";
-      console.log(this.state);
+    let getAddress = this.props.getaddress.length > 0 ? this.props.getaddress : "";
+      
     return (
       <ScrollView >
         <Modal
@@ -176,7 +169,7 @@ class AddressPopupForm extends Component {
 
           <ScrollView style={styles.add_address_block}>
 				 <View style={styles.address_top_block}>
-          		<Text style={styles.address_title}>Add Address</Text>
+          		<Text style={styles.address_title}>{this.props.addNewAddress ? "Edit Address" : "Add Address"}</Text>
             	<TouchableOpacity onPress={this.props.onHide}><Text style={styles.close}>x</Text></TouchableOpacity>
           	 </View>
 
@@ -191,7 +184,6 @@ class AddressPopupForm extends Component {
               title="address_name" onChangeText={
 
                   function(text){
-                    console.log(text);
 
                     state["address"]["address_name"] = text;
                     this_ref.setState(state);
@@ -410,5 +402,7 @@ function mapDispatchToProps(dispatch) {
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {pure:false}
 )(AddressPopupForm);

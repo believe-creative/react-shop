@@ -224,6 +224,16 @@ class Delivery extends Component {
 					 <Text>{address.country}</Text>
 					 <Text>Mobile number : {address.mob_phone} </Text>
 				 </View>
+            <Button
+              onPress={()=>this.handleEdit(address.id)}
+              title="Edit"
+              color="#f62f5e"
+            />
+            <Button
+              onPress={()=>this.handleDelete(address.id)}
+              title="Delete"
+              color="#f62f5e"
+            />
         	</View>
             </TouchableOpacity>
 
