@@ -106,7 +106,7 @@ export default (state = intialState, action) => {
     case ActionTypes.REMOVEFROMCART.SUCCESS:
       cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-       
+
       } else {
         cart = { inCartId: null, count: 0 };
       }
@@ -119,8 +119,8 @@ export default (state = intialState, action) => {
       };
 
     case ActionTypes.UPDATEQUANTITY.SUCCESS:
-      cart = SyncStorage.get("react-shop-cart");      
-      if (cart) {        
+      cart = SyncStorage.get("react-shop-cart");
+      if (cart) {
       } else {
         cart = { inCartId: null, count: 0 };
       }
@@ -170,7 +170,7 @@ export default (state = intialState, action) => {
         count = count + action.response[i].quantity;
       }
       cart.count = count;
-      cart.products = action.response;      
+      cart.products = action.response;
       SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
@@ -217,7 +217,7 @@ export default (state = intialState, action) => {
     case ActionTypes.SETSHIPPINGOPTION:
       cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-        cart = JSON.parse(cart);
+
       } else {
         cart = {
           inCartId: null,
@@ -229,7 +229,7 @@ export default (state = intialState, action) => {
       }
 
       cart.shippingoption = action.payload;
-      SyncStorage.set("react-shop-cart", JSON.stringify(cart));
+      SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,
         isLoading: false,

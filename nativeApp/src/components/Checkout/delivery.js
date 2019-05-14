@@ -211,19 +211,23 @@ class Delivery extends Component {
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <View onPress={() => this.setDefaultAddress(address)}>
-        <View onPress={add => this.itemInsert(address.id)}>
-        <Text>{address.address_name} Address</Text>
-          </View>
+        <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
+          <View style={styles.addaddress_block}>
+          <View onPress={add => this.itemInsert(address.id)}>
+          <Text>{address.address_name} Address</Text>
 
-        <Text>{address.address_1} </Text>
-        <Text> {address.address_2}</Text>
-        <Text>
-          {address.city}, {address.postal_code}
-        </Text>
-        <Text> {address.country}</Text>
-        <Text>Mobile number : {address.mob_phone} </Text>
+
+          <Text>{address.address_1} </Text>
+          <Text> {address.address_2}</Text>
+          <Text>
+            {address.city}, {address.postal_code}
+          </Text>
+          <Text> {address.country}</Text>
+          <Text>Mobile number : {address.mob_phone} </Text>
+            </View>
         </View>
+            </TouchableOpacity>
+
       );
     });
   }
@@ -270,13 +274,13 @@ class Delivery extends Component {
             <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
             {getAddress ? this.addressList(getAddress) : <Text>""</Text>}
 				</View>
-              
+
 					<TouchableOpacity onPress={() => this.handleAdd()}>
-						<View style={styles.addaddress_block}>		
+						<View style={styles.addaddress_block}>
 							<Text style={styles.plus}>+</Text>
 							<Text  style={{...styles.h2, ...styles.black, ...styles.nospace}}>
-                		Add Address 
-              			</Text> 
+                		Add Address
+              			</Text>
 					</View>
 							</TouchableOpacity>
               {this.state.region ? (
@@ -293,7 +297,15 @@ class Delivery extends Component {
                         <RadioButton
                         value={option.shipping_id}
                         status={checked === option.shipping_id ? 'checked' : 'unchecked'}
-                        onPress={() => { this.setState({ checked: option.shipping_id }); }}
+                        onPress={() => {
+                          let state = this_ref.state;
+                          console.log("heeee",state,option.shipping_id);
+                          state["shippingoption"] = option.shipping_id ;
+                          state["checked"] = option.shipping_id ;
+                          this_ref.setState(state);
+                          this_ref.props.setDelivarydetails(this_ref.state, this_ref.state);
+                        this_ref.props.setShippingOption(option.shipping_id);
+                       }}
                         />
 
                         </View>
