@@ -101,7 +101,8 @@ class Payment extends Component {
       
       <View style={styles.confirmation_block}>
       {this.showErrors()}
-      <View style={styles.center_position}>
+      <View style={styles.back_and_next_btn_block}>
+		  <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>
 		  <TouchableOpacity onPress={this.requestPayment}><Text style={styles.button}>Make a Payment</Text></TouchableOpacity>
         </View>
       </View>

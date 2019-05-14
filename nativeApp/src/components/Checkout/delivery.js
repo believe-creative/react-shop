@@ -180,7 +180,7 @@ class Delivery extends Component {
   showError(opt) {
     if (this.state["errors"][opt]) {
       return (
-        <Text >{this.state["errors"][opt]}</Text>
+        <Text style={{...styles.basefont,...styles.error}}>{this.state["errors"][opt]}</Text>
       );
     } else {
       return <Text />;
@@ -212,11 +212,11 @@ class Delivery extends Component {
           <View style={address.id == this.state.address_id ? styles.selected:styles.notselected}>
 				 <View >
 					 <Text style={{...styles.h3, ...styles.black}}>{address.address_name} Address</Text>
-					 <Text>{address.address_1}</Text>
-					 <Text>{address.address_2}</Text>
-					 <Text>{address.city}, {address.postal_code}</Text>
-					 <Text>{address.country}</Text>
-					 <Text>Mobile number : {address.mob_phone} </Text>
+					 <Text style={styles.basefont}>{address.address_1}</Text>
+					 <Text style={styles.basefont}>{address.address_2}</Text>
+					 <Text style={styles.basefont}>{address.city}, {address.postal_code}</Text>
+					 <Text style={styles.basefont}>{address.country}</Text>
+					 <Text style={styles.basefont}>Mobile number : {address.mob_phone} </Text>
 				 </View>
 				<View style={{...styles.delivery_options, ...styles.space_top}}>
 					<Text style={{...styles.button, ...styles.mright}} onPress={()=>this.handleEdit(address.id)}>Edit</Text>

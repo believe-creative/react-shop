@@ -1,9 +1,13 @@
 import {StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
-  home: {
-    backgroundColor: '#f7f7f7',
-  },
+   home: {
+     backgroundColor: '#f7f7f7',
+   },
+   basefont:{
+		fontSize: 16,
+		fontWeight:'400',
+	},
 	gray_bg:{
 		backgroundColor: '#f7f7f7',
 	},
@@ -47,6 +51,11 @@ export const styles = StyleSheet.create({
 	},
 	white: {
 		color: '#fff',
+	},
+	error:{
+		color: '#f62f5e',
+		marginTop:10,
+		marginBottom:15,
 	},
 	button: {
 		backgroundColor: '#f62f5e',
@@ -561,6 +570,7 @@ export const styles = StyleSheet.create({
 		marginTop:8,
 		fontWeight:'700',
 		color:'#000',
+		fontSize:16,
 	},
 	mright:{
 		marginRight:15,		
