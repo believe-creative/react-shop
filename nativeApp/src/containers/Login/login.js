@@ -5,12 +5,13 @@ import { PROVIDERS } from "../../services/constants";
 import { API_ROOT } from "../../services/constants";
 import { setUser } from "../../actions";
 import * as Actions from "../../actions";
-import {Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,TextInput,Linking, ScrollView} from 'react-native';
+import {Modal,Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,TextInput,Linking,ScrollView,deviceHeight} from 'react-native';
 import axios from "axios";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
 import {styles} from '../Home/home-styles'; 
 import Footer from '../../components/Footer/footer';
+import {LoginManager} from 'react-native-fbsdk';
 
 
 const socket = io(API_ROOT.split("/api/")[0]);
@@ -26,6 +27,25 @@ class Login extends Component {
       errors: null
     };
   }
+
+  fbAuth() {
+    let this_ref=this;
+    LoginManager.logInWithReadPermissions(['public_profile','email']).then(
+      function (result) {
+        if (result.isCancelled) {
+          console.log('Login was cancelled');
+        } else {
+          console.log('Login was successful with permissions: '
+            + result.grantedPermissions.toString());
+            
+        }
+      },
+      function (error) {
+        console.log('Login failed with error: ' + error);
+      }
+    );
+  }
+
   login() {
     let props = this.props;
     let this_ref = this;
@@ -107,11 +127,7 @@ class Login extends Component {
 			  <View>
 		 	<View style={styles.social_media}>
 				 {PROVIDERS.map((provider, key) => (
-					<TouchableOpacity onPress={this.openPopup.bind(this,API_ROOT +
-						 "sociallogin/" +
-						 provider +
-						 "?socketId=" +
-						 socket.id)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
+					<TouchableOpacity onPress={this.fbAuth.bind(this)}><Text style={{...styles.button, ...styles.sm_btns}}>{provider}</Text></TouchableOpacity>
 				 ))}
 	</View>
 				 <View>

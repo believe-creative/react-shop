@@ -10,10 +10,14 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
 
 import java.util.Arrays;
 import java.util.List;
 import com.gettipsi.stripe.StripeReactPackage;
+import com.facebook.FacebookSdk;
+import com.facebook.CallbackManager;
+import com.facebook.appevents.AppEventsLogger;
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -30,7 +34,8 @@ public class MainApplication extends Application implements ReactApplication {
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
-          new StripeReactPackage()
+          new StripeReactPackage(),
+          new FBSDKPackage(mCallbackManager)
       );
     }
 
@@ -40,6 +45,12 @@ public class MainApplication extends Application implements ReactApplication {
     }
   };
 
+  private static CallbackManager mCallbackManager = CallbackManager.Factory.create();
+
+  protected static CallbackManager getCallbackManager() {
+    return mCallbackManager;
+  } 
+
   @Override
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
@@ -48,6 +59,8 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
+    FacebookSdk.setApplicationId("296478381042343");
+    FacebookSdk.sdkInitialize(this);
     SoLoader.init(this, /* native exopackage */ false);
   }
 }

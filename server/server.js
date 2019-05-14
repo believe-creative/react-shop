@@ -99,6 +99,28 @@ app.get("/api/get_token", (req, res) => {
 // Define routes.
 app.get("/api/checkuser", checkToken, checklogin);
 
+app.get("/api/setPassword", checkToken, 
+  function(req, res) {
+        cryptPassword(req.pwd, function(error, hash) {
+          if (hash) {
+            sequelize
+              .query("CALL customer_add(:inName,:inEmail,:inPassword)", {
+                replacements: {
+                  inName: req.name,
+                  inEmail: req.email,
+                  inPassword: hash
+                }
+              })
+              .then(function() {
+                let token = jwt.sign({ email:req.email, user: {name:req.name,email:req.email} }, secret_key, {
+                  expiresIn: "2h"
+                });
+                return res.json({ status: "success",user: {name:req.name,email:req.email}, token: token });
+              });
+          }
+        });
+      });
+
 app.post("/api/payment", checkToken, jsonParser, (req, response) => {
   let amount = Math.round(req.body.amount) * 100;
   let inOrderAddress = req.body.inOrderAddress;
