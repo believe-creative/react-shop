@@ -210,7 +210,6 @@ class ProductDetails extends Component {
         <NavBar/>
         <ScrollView style={styles.home}>
           <View style={styles.cart_page_wraper}>
-
                   <View>
                       <Text style={{...styles.h2, ...styles.black}}>
                         {this.props.productdetails[0]
@@ -222,9 +221,9 @@ class ProductDetails extends Component {
                           ? this.props.productdetails[0].description
                           : ""}
                       </Text>
-                      </View>
-                    {this.productPrice()}
-                    <View>
+                  </View>
+                  {this.productPrice()}
+                  <View>
                     <Image style={{width: 300, height: 360, marginBottom: 10}}
                     source={{uri: SERVER_ROOT + "images/product_images/" +`${
                       this.state.productImageName
@@ -234,8 +233,8 @@ class ProductDetails extends Component {
                           : "a-partridge-in-a-pear-tree-2.gif"
                     }`}}
                         />
-                        </View>
-                        <View >
+                    </View>
+                        <View>
                               <View   onPress={() => {
                                 this.handleClick(
                                   this.props.productdetails[0]
@@ -270,7 +269,6 @@ class ProductDetails extends Component {
                                     }`}}
                                   />
                             </View>
-
                       </View>
                       <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
                     <View>

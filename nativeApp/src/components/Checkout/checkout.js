@@ -116,10 +116,7 @@ class Checkout extends Component {
                 details.
               </Text>
 				 <TouchableOpacity onPress={() => {
-                  NavigationService.navigate('Categories', {
-                itemId: e.department_id,
-                categoryName: e.name,
-              });
+                  NavigationService.navigate('allCategories');
               }}><Text style={styles.button}>Back to Shop</Text></TouchableOpacity>
              </View>
       );
@@ -155,7 +152,7 @@ class Checkout extends Component {
       <NavBar />
         <ScrollView style={styles.gray_bg}>
           <View>
-              
+
               {this.showstages()}
           </View>
 			 <Footer/>
