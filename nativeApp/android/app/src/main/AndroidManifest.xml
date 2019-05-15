@@ -10,9 +10,9 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="false"
       android:theme="@style/AppTheme">
-      <meta-data android:name="com.facebook.sdk.ApplicationId" 
+      <meta-data android:name="com.facebook.sdk.ApplicationId"
         android:value="296478381042343"/>
-    
+
       <activity android:name="com.facebook.FacebookActivity"
           android:configChanges=
                   "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -32,7 +32,8 @@
         android:name=".MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustResize"
+        android:screenOrientation="portrait">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />

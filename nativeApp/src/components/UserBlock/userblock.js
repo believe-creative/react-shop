@@ -6,7 +6,7 @@ import { getCookie, deleteCookie } from "../../services/helpers";
 import { setUser } from "../../actions";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
-import {styles} from '../../containers/Home/home-styles'; 
+import {styles} from '../../containers/Home/home-styles';
 import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
 
 
@@ -22,12 +22,12 @@ class UserBlock extends Component {
     var c = SyncStorage.get("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
-    } 
+    }
   }
   componentWillReceiveProps(props, b, c) {
     console.log("props.cart",props.cart,this.state.cart);
-    
-    
+
+
     if (props.cart) {
       let productsCounts=0;
       if(props.cart.products)
@@ -80,16 +80,16 @@ class UserBlock extends Component {
     return (
         <View style={styles.topbar}>
             <View style={styles.topleft}>
-                <Text style={{...styles.hiblock, ...styles.toptext}}>Hi! </Text>
+                <Text style={{...styles.hiblock, ...styles.toptext}}>Hi{" "}</Text>    
               {name ? (
                 <Text style={{...styles.login_name_block, ...styles.toptext}}>{name}</Text>
               ) : (
 		 				<TouchableOpacity  onPress={() => {NavigationService.navigate('Login');}}><Text style={{...styles.signin}}>Sign in</Text></TouchableOpacity>
               )}
-				  
+
             </View>
             <View style={styles.toprightblock}>
-                <Text style={styles.toptext}>Your bag: ${totalAmount}</Text>
+
               {name ? (
 				  	 <TouchableOpacity  onPress={this.logout.bind(this)}><Text style={{...styles.toptext, ...styles.signin}}>Logout</Text></TouchableOpacity>
             ) : (

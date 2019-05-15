@@ -14,7 +14,6 @@ import Footer from './components/Footer/footer';
 import { connect } from "react-redux";
 import * as Actions from "./actions";
 import { getCookie } from "./services/helpers";
-import Orientation, { orientation } from "react-native-orientation";
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import NavigationService from './routes/NavigationService.js';
 import Immutable from "immutable";
@@ -73,7 +72,6 @@ class App extends Component {
 
   async componentWillMount(): void {
     const data = await SyncStorage.init();
-    Orientation.lockToPortrait();
     console.log('AsyncStorage is ready!', data);
    }
 

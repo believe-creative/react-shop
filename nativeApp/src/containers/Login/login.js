@@ -196,7 +196,7 @@ class Login extends Component {
                 }
               }
               onLogoutFinished={() => this.logout.bind(this)}
-
+              key={key}
                />
            }
            else{

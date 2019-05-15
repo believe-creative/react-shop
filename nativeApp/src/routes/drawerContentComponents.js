@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import {NavigationActions} from 'react-navigation';
 import UserBlock from '../components/UserBlock/userblock';
-import { white } from 'ansi-colors';
 import {Platform, StyleSheet, Text, View, Image,ImageBackground,TouchableOpacity, Animated,Easing} from 'react-native';
-import DropdownMenu from 'react-native-dropdown-menu';
 import { connect } from "react-redux";
 import * as Actions from "../actions";
 import NavigationService from './NavigationService.js';
@@ -16,24 +14,14 @@ class drawerContentComponents extends Component {
       text: '',
       menuOpen:false,
     };
-    this.spinValue = new Animated.Value(0);
   }
   componentDidMount() {
   this.props.getToken();
-  this.spin();
+  var c = SyncStorage.get("s-atk");
+  if (c) {
+    this.props.checkUserLogin(c);
   }
-
-  spin () {
-  this.spinValue.setValue(0)
-  Animated.timing(
-    this.spinValue,
-    {
-      toValue: 1,
-      duration: 4000,
-      easing: Easing.linear
-    }
-  ).start(() => this.spin())
-}
+  }
 
   componentWillReceiveProps(props) {
 
@@ -92,15 +80,12 @@ class drawerContentComponents extends Component {
   render() {
     let { cart }  = this.props;
     if (!cart) cart = { count: 0 };
-    console.log(this);
+
     return (
         <View style={styles.container}>
             <View style={styles.screenContainer}>
-                <View ><UserBlock/></View>
+                <View ><UserBlock /></View>
                 <View >{this.menuItemsList()}</View >
-                <View style={[styles.screenStyle, (this.props.activeItemKey=='Login') ? styles.activeBackgroundColor : null]}>
-                    <Text style={[styles.screenTextStyle, (this.props.activeItemKey=='Login') ? styles.selectedTextStyle : null]} onPress={this.navigateToScreen('Login')}>Logout</Text>
-                </View>
             </View>
         </View>
     )
@@ -110,6 +95,7 @@ const productRequest = Actions.products.request;
 const checkUserLogin = Actions.checkUserLogin.request;
 
 const mapStateToProps = state => ({
+  user: state.get("user"),
   categories: state.get("products").categories,
   cart: state.get("products").cart,
   token: state.get("user").token
@@ -118,6 +104,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   productRequest,
   checkUserLogin,
+    setUser: user => dispatch(setUser(user)),
+    checkUserLogin: token => dispatch(Actions.checkUserLogin.request(token)),
   getCategories: data => dispatch(Actions.getCategories.request(data)),
   getCartProducts: inCartId =>
     dispatch(Actions.getCartProducts.request(inCartId)),
@@ -126,9 +114,7 @@ const mapDispatchToProps = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
-  null,
-  { pure: false }
+  mapDispatchToProps
 )(drawerContentComponents);
 
 const styles = StyleSheet.create({
