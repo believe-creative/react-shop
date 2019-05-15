@@ -219,7 +219,8 @@ class Login extends Component {
 					  <TextInput
 						 style={{height: 40, borderColor: 'gray', borderWidth: 1, paddingLeft:10, paddingRight:10}}
 						 onChangeText={(text) => this.setState({pwd:text})}
-						 value={this.state.pwd}
+             value={this.state.pwd}
+             secureTextEntry={true}
 					  />
 					</View>
 					  <View style={styles.login_btn_block}>
