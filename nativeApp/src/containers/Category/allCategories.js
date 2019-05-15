@@ -15,16 +15,17 @@ import {store} from "../../store";
 import ProductList from '../../components/Product/productlist';
 import Footer from '../../components/Footer/footer';
 import {styles} from '../Home/home-styles';
+import AnimatedLoader from "react-native-animated-loader";
 
 class AllCategories extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      activePage: 1
+      activePage: 1,
+      visible: true 
     };
   }
-  componentDidMount() {
-    // console.log(this.props);
+  componentDidMount() {    
     if (this.props.categories) {
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
@@ -38,11 +39,18 @@ class AllCategories extends Component {
       });
     }
   }
-
+  componentWillReceiveProps(){
+    if(this.props.categoryProducts){  
+      this.setState({
+        visible: false
+      });  
+    }
+  }
   handlePageChange(pageNumber) {
     this.setState({ activePage: pageNumber });
   }
   render() {
+    const { visible } = this.state;
     let productsList = [];
     let productCategoriesList = this.props.categoryProducts
       ? Object.values(this.props.categoryProducts)
@@ -70,9 +78,14 @@ class AllCategories extends Component {
       <ScrollView style={styles.body}>
      <Text style={{...styles.h2, ...styles.black, ...styles.cart_page_wraper}}>All Products</Text>
       <View>
-
-      {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{
-        console.log(productsList);
+      <AnimatedLoader
+        visible={visible}
+        overlayColor="rgba(255,255,255,0.75)"
+        source={require("../../lottie-loader.json")}
+        animationStyle={{width: 100, height: 100}}
+        speed={1}
+      />
+      {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{        
           return  (<ProductList products={productsList} />);
       }) : <Text/>}
 

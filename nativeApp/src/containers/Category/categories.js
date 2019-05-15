@@ -23,13 +23,13 @@ import {store} from "../../store";
 import ProductList from '../../components/Product/productlist';
 import Footer from '../../components/Footer/footer';
 import {styles} from '../Home/home-styles';
-
+import AnimatedLoader from "react-native-animated-loader";
 type Props = {};
 
 class Categories extends Component {
   constructor(props) {
     super(props);
-    this.state = { token: "null", loaded: true, loading: true };
+    this.state = { token: "null", loaded: true, loading: true,visible: true };
 
   }
   componentDidMount() {
@@ -59,11 +59,15 @@ class Categories extends Component {
           this.props.getCategories({ token: props.token });
       }
     }
+    if(props){
+      this.setState({
+        visible: false
+      });
+    }
 
   }
   render() {
-
-
+    const { visible } = this.state;
     const { navigation } = this.props;
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
@@ -73,11 +77,17 @@ class Categories extends Component {
           <NavBar />
         <ScrollView style={styles.body}>
         <View >
-
+        <AnimatedLoader
+        visible={visible}
+        overlayColor="rgba(255,255,255,0.75)"
+        source={require("../../lottie-loader.json")}
+        animationStyle={{width: 100, height: 100}}
+        speed={1}
+      />
         <Text style={{...styles.h2, ...styles.black,...styles.cart_header}}>
           {categoryName}
         </Text>
-    
+        
         {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
           console.log(key,productsList,categoryName.toLowerCase()== key);
           if(categoryName.toLowerCase()== key){
