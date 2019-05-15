@@ -82,7 +82,7 @@ class Categories extends Component {
         overlayColor="rgba(255,255,255,0.75)"
         source={require("../../lottie-loader.json")}
         animationStyle={{width: 100, height: 100}}
-        speed={1}
+        speed={2}
       />
         <Text style={{...styles.h2, ...styles.black,...styles.cart_header}}>
           {categoryName}

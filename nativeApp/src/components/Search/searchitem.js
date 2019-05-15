@@ -6,13 +6,15 @@ import {Text, StyleSheet, View,ScrollView, TextInput, TouchableOpacity} from 're
 import {styles} from '../../containers/Home/home-styles'; 
 import NavBar from '../../components/Navbar/navbar';
 import Footer from '../../components/Footer/footer';
+import AnimatedLoader from "react-native-animated-loader";
 class SearchItem extends Component {
   constructor(props) {
     super(props);
     this.state = {
       searchitem: "",
       buttonClicked:false,
-      finalTerm:null      
+      finalTerm:null,
+      visible:false      
     };
   }
   componentDidMount() {
@@ -29,11 +31,11 @@ class SearchItem extends Component {
       token: this.props.token,
       searchTerm: this.state.searchitem
     });    
-    this.setState({buttonClicked:false,finalTerm:this.state.searchitem});
+    this.setState({buttonClicked:false,finalTerm:this.state.searchitem, visible:true});
   }
   componentWillReceiveProps(){
     if (this.props.searchItems && this.state.finalTerm) {
-      this.setState({buttonClicked:true});
+      this.setState({buttonClicked:true, visible:false});
     }
   }
   SearchProducts() {    
@@ -66,10 +68,18 @@ class SearchItem extends Component {
     
   }
   render() {
+    const {visible} = this.state;
     return (
 		 <View style={styles.search_main_block}>
 		 	<NavBar />
 			<ScrollView>
+        <AnimatedLoader
+          visible={visible}
+          overlayColor="rgba(255,255,255,0.75)"
+          source={require("../../lottie-loader.json")}
+          animationStyle={{width: 500, height: 500}}
+          speed={2}
+        />
 		 		<View style={styles.search_main}>
 					<TextInput style={styles.search_input}
 						 placeholder="Search"

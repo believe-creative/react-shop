@@ -83,7 +83,7 @@ class AllCategories extends Component {
         overlayColor="rgba(255,255,255,0.75)"
         source={require("../../lottie-loader.json")}
         animationStyle={{width: 100, height: 100}}
-        speed={1}
+        speed={2}
       />
       {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{        
           return  (<ProductList products={productsList} />);
