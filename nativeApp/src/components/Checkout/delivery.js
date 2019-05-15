@@ -266,7 +266,7 @@ class Delivery extends Component {
           />
 			 <Text style={{...styles.h2, ...styles.black, ...styles.nospace}}>Select Address</Text>
 			 	<View>
-            	{getAddress ? this.addressList(getAddress) : <Text>""</Text>}
+            	{getAddress ? this.addressList(getAddress) : <Text></Text>}
 				</View>
 
 					<TouchableOpacity onPress={() => this.handleAdd()}>
