@@ -7,6 +7,8 @@ import * as Actions from "../actions";
 import NavigationService from './NavigationService.js';
 import Cart from "../components/Cart/cart";
 import SyncStorage from 'sync-storage';
+import {styles} from '../components/Navbar/navbar-styles';
+
 class drawerContentComponents extends Component {
   constructor(props) {
     super(props);
@@ -85,7 +87,7 @@ class drawerContentComponents extends Component {
         <View style={styles.container}>
             <View style={styles.screenContainer}>
                 <View ><UserBlock /></View>
-                <View >{this.menuItemsList()}</View >
+                <View style={styles.menu_list} >{this.menuItemsList()}</View >
             </View>
         </View>
     )
@@ -116,39 +118,3 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(drawerContentComponents);
-
-const styles = StyleSheet.create({
-    container: {
-        alignItems: 'center',
-    },
-    headerContainer: {
-        height: 150,
-    },
-    headerText: {
-        color: '#fff8f8',
-    },
-    screenContainer: {
-        paddingTop: 0,
-        width: '100%',
-    },
-    screenStyle: {
-        paddingTop: 50,
-        height: 30,
-        marginTop: 2,
-        flexDirection: 'row',
-        alignItems: 'center',
-        width: '100%'
-    },
-    screenTextStyle:{
-        fontSize: 20,
-        marginLeft: 20,
-        textAlign: 'center'
-    },
-    selectedTextStyle: {
-        fontWeight: 'bold',
-        color: '#00adff'
-    },
-    activeBackgroundColor: {
-        backgroundColor: 'grey'
-    }
-});

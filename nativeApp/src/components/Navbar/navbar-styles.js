@@ -16,21 +16,20 @@ export const styles = StyleSheet.create({
 	  paddingLeft:15,
 	  paddingRight:15,
 	  paddingTop:15,
-	  paddingBottom:0,
+	  paddingBottom:10,
   },
   logo:{
 	  flex:1,
 	  flexDirection:'row',
 	  justifyContent:'center',
 	  alignItems:'center',
-	  marginTop:5,
   },
 	menu_block:{
 		paddingTop:0,
 	},
   menu_item_block:{
     	paddingTop:0,
-      	paddingBottom:0,
+      paddingBottom:0,
   },
 	menu_list:{
 		fontSize: 18,
@@ -40,7 +39,14 @@ export const styles = StyleSheet.create({
 		paddingBottom:10,
 		paddingLeft:15,
 		paddingRight:15,
-		borderBottomWidth:1,
-		borderColor:'#b4b4b4',
-	},
+	},   
+    screenTextStyle:{
+       fontSize: 18,
+		 paddingTop:10,
+		 paddingBottom:10,
+		 borderBottomColor: '#b4b4b4',
+		 borderBottomWidth:1,
+		 color: '#000',
+		 fontWeight:'600',
+    },
 });

@@ -58,7 +58,7 @@ class NavBar extends Component {
           <TouchableOpacity  onPress={()=>NavigationService.openDrawer()}>
           <Image
             source={require('../../images/menu_icon.png')}
-            style={{ width: 40, height: 25, marginTop: 10, }}
+            style={{ width: 40, height: 25, marginTop: 5, }}
           />
         </TouchableOpacity  >
 			 </View>
@@ -81,10 +81,10 @@ class NavBar extends Component {
 					 }}>
           <Image
 			  		source={require('../../images/search-icon.png')}
-					  style={{ width: 32, height: 32, marginTop:10, marginRight:10}} />
+					  style={{ width: 32, height: 32, marginTop:5, marginRight:10}} />
           </TouchableOpacity>
       </View>
-		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 15, }}><Cart cartItems={cart.count} /></View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 10, }}><Cart cartItems={cart.count} /></View>
 			</View>
    </View>
     );
