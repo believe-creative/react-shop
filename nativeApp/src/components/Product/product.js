@@ -62,7 +62,6 @@ import {SERVER_ROOT} from '../../services/constants';
         productImage = "";
         productId="";
     }
-    console.log("productId",productId);
     return (
           <View style={styles.item}>
            <TouchableOpacity  onPress={() => { NavigationService.navigate('ProductDetails', {

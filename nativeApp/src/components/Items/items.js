@@ -5,6 +5,7 @@ import * as Actions from "../../actions";
 import {styles} from '../../containers/Home/home-styles';
 //import "react-confirm-alert/src/react-confirm-alert.css";
 import NavBar from '../Navbar/navbar';
+import {SERVER_ROOT} from '../../services/constants';
 
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 import NavigationService from '../../routes/NavigationService.js';
@@ -103,7 +104,7 @@ class Items extends Component {
       {cancelable: false},
     );
   }
-  update(pid, pqty, qtyNum) {
+  update(pid, pqty, qtyNum) {    
     let state = this.state;
     state["buttonStyles"] = {};
     this.setState(state);
@@ -136,13 +137,13 @@ class Items extends Component {
               <View style={styles.cart_page_block}>
                     <View style={styles.cart_top_block}>
 		 					<Text style={{...styles.h2, ...styles.black, ...styles.ptitle}}>{cart.count} Items In Your Cart</Text>
-                      {cart.products.map(function(product, key) {
+                      {cart.products.map(function(product, key) {              
                         return (
                           <View key={key}>
                             <View style={styles.cart_single_block}>
                               <View style={styles.product_img}>
                                 <Image style={{width: 100, height: 100,}}
-                                  source={require("../../images/product_images/afghan-flower-2.gif")}
+                                  source={{uri:product.thumbnail ? SERVER_ROOT + "images/product_images/"+product.thumbnail : ""}}
                                 />
                               </View>
 										<View style={styles.img_right_block}>
@@ -154,16 +155,19 @@ class Items extends Component {
 									<View style={styles.cart_size_block}>
 										<Text style={{...styles.product_size}}>XXL</Text>
                               <View style={{...styles.numberof_products}}>
-                                  <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}                                  >
+                              <TouchableOpacity onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, -1)}>
+                                  <Text style={styles.quantity}>
                                     &#8722;
                                   </Text>
-
+                              </TouchableOpacity>
                                 <Text style={{...styles.noof_items}}>
                                   {product.quantity}
                                 </Text>
-                                  <Text style={styles.quantity} onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
+                                <TouchableOpacity onPress={this_ref.update.bind(this_ref, product.item_id, product.quantity, 1)}>
+                                  <Text style={styles.quantity}>
                                     &#43;
                                   </Text>
+                                </TouchableOpacity>
                               </View>
                               <Text style={{...styles.product_price}}>
                                 ${(product.quantity * product.price).toFixed(2)}
