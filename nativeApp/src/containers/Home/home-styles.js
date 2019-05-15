@@ -186,8 +186,24 @@ export const styles = StyleSheet.create({
 	},
 	price: {
 		fontWeight: 'bold',
-		fontSize: 18,
-		marginBottom: 15,
+		fontSize: 22,
+		marginBottom: 5,
+		marginTop:5, 
+	},
+	price_stripe:{
+		textDecorationLine: 'line-through', 
+		textDecorationStyle: 'solid'
+	},
+	price_text:{
+		fontSize:18,
+		fontWeight: '300',
+	},
+	thumb_block_main:{
+		flex:1,
+		alignItems:'center',
+		justifyContent:'center',
+		flexDirection:'row',
+		marginTop:15,
 	},
 
 	/* Topblock styles */
