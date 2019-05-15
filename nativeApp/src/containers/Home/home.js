@@ -54,11 +54,11 @@ class HomeScreen extends Component {
 			       <ScrollView style={styles.home}>
              <View style={styles.banner}>
 			 	        <Text style={styles.h1}>Background and development</Text>
-			 	           <Text style={styles.h2}>Convergent the dictates of the consumer: background and development</Text>
+			 	           <Text style={{...styles.h3, ...styles.white}}>Convergent the dictates of the consumer: background and development</Text>
           	        <TouchableOpacity onPress={() => {
 
                    NavigationService.navigate('AllCategories');
-               }}><Text style={styles.button} >View All</Text></TouchableOpacity>
+               }}><Text style={{...styles.button,...styles.space_top}} >View All</Text></TouchableOpacity>
 			 </View>
             <View style={styles.shop_now_panel}>
             <View style={styles.product_panel}>

@@ -27,7 +27,7 @@ export const styles = StyleSheet.create({
 		flex:1,
 	},
 	h1: {
-		fontSize: 36,
+		fontSize: 26,
 		fontWeight: '700',
 		color: '#fff',
 		marginBottom: 10,
