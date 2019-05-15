@@ -43,6 +43,11 @@ export const styles = StyleSheet.create({
 		fontWeight: '700',
 		marginBottom: 10,
 	},
+	h4: {
+		fontSize: 14,
+		fontWeight: '300',
+		marginBottom: 10,
+	},
 	black: {
 		color: '#2e2e2e',
 	},
@@ -577,9 +582,9 @@ export const styles = StyleSheet.create({
 		justifyContent:'flex-end',
 		flexDirection:'row',
 		marginTop:8,
-		fontWeight:'700',
+		fontWeight:'300',
 		color:'#000',
-		fontSize:16,
+		fontSize:14,
 	},
 	mright:{
 		marginRight:15,

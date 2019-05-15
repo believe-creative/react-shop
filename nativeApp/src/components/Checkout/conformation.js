@@ -76,17 +76,17 @@ class Conformation extends Component {
         </View>
         <View>
             <Text style={{...styles.h3, ...styles.black, ...styles.space_top}}>{"Delivery Options"}</Text>
-            <Text style={{...styles.h3, ...styles.black}}>{shippingoption.shipping_type}</Text>
+            <Text style={{...styles.h4, ...styles.black}}>{shippingoption.shipping_type}</Text>
         </View>
         <View>
             <View>
-              <Text style={{...styles.h3, ...styles.black}}>{"Subtotal"} {totalAmount.toFixed(2)}</Text>
+              <Text style={{...styles.h4, ...styles.black}}>{"Subtotal"} {totalAmount.toFixed(2)}</Text>
             </View>
             <View>
-              <Text style={{...styles.h3, ...styles.black}}>{"Shipping"} {shippingoption.shipping_cost}</Text>
+              <Text style={{...styles.h4, ...styles.black}}>{"Shipping"} {shippingoption.shipping_cost}</Text>
             </View>
             <View>
-              <Text style={{...styles.h3, ...styles.black}}>{"Grand Total"} {(totalAmount + parseInt(shippingoption.shipping_cost)).toFixed(2)} </Text>
+              <Text style={{...styles.h4, ...styles.black}}>{"Grand Total"} {(totalAmount + parseInt(shippingoption.shipping_cost)).toFixed(2)} </Text>
             </View>
         </View>
       <View style={{...styles.back_and_next_btn_block, ...styles.space_top}}>
