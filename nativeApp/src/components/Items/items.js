@@ -6,7 +6,7 @@ import {styles} from '../../containers/Home/home-styles';
 //import "react-confirm-alert/src/react-confirm-alert.css";
 import NavBar from '../Navbar/navbar';
 import {SERVER_ROOT} from '../../services/constants';
-
+import AnimatedLoader from "react-native-animated-loader";
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 import NavigationService from '../../routes/NavigationService.js';
 class Items extends Component {
@@ -14,7 +14,8 @@ class Items extends Component {
     super(props);
     this.state = {
       buttonStyles: {},
-      cart: {}
+      cart: {},
+      visible:false
     };
   }
   componentDidMount() {
@@ -79,6 +80,7 @@ class Items extends Component {
         state["cart"] = props.cart;
       }
     }
+    state["visible"] = false;
     this.setState(state);
   }
   remove(pid, pname) {
@@ -91,7 +93,9 @@ class Items extends Component {
       [
         {text: 'Yes', onPress: () => {
           let state = this_ref.state;
+          state["visible"] = true;
           this_ref.setState(state);
+          
           return props.removeFromCart({ token: props.token, inItemId: item });
         }},
         {
@@ -119,11 +123,15 @@ class Items extends Component {
       this.props.updateProductQuantity({
         token: this.props.token,
         inItemId: pid,
-        inQuantity: count
+        inQuantity: count,
+        inCartId:this.props.cart.inCartId
       });
+      this.setState({visible:true});
     }
+
   }
   render() {
+    const {visible} = this.state;
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
     let hasItems = cart.count > 0 ? true : false;
@@ -131,7 +139,14 @@ class Items extends Component {
     return (
       <View>
       <NavBar />
-      <ScrollView style={styles.home}>
+      <AnimatedLoader
+          visible={visible}
+          overlayColor="rgba(255,255,255,0.75)"
+          source={require("../../lottie-loader.json")}
+          animationStyle={{width: 100, height: 100}}
+          speed={2}
+        />
+      <ScrollView style={styles.home}>      
         {hasItems ? (
           <View style={styles.cart_page_wraper}>
               <View style={styles.cart_page_block}>

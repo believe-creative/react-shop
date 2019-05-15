@@ -5,12 +5,14 @@ import stripe from 'tipsi-stripe';
 import { API_ROOT } from "../../services/constants";
 import {styles} from '../../containers/Home/home-styles';
 import Footer from '../../components/Footer/footer';
+import AnimatedLoader from "react-native-animated-loader";
 class Payment extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "",
-      errors: null
+      errors: null,
+      visible:false
     };
     this.stage = 2;
     stripe.setOptions({
@@ -65,6 +67,7 @@ class Payment extends Component {
     return stripe
       .paymentRequestWithCardForm()
       .then(stripeTokenInfo => {
+        this.setState({ visible: true });
         axios
         .post(
           API_ROOT + "payment",
@@ -88,18 +91,28 @@ class Payment extends Component {
             this_ref.setState({ errors: null });
             this_ref.props.nextStage(this_ref.stage);
           }
+          this.setState({ visible: false });
         })
         
       })
       .catch(error => {
         console.warn('Payment failed', { error });
+        this.setState({ visible: false });
       });
   };
   
   render() {
+    const {visible} = this.state;
     return (
       
       <View style={styles.confirmation_block}>
+      <AnimatedLoader
+          visible={visible}
+          overlayColor="rgba(255,255,255,0.75)"
+          source={require("../../lottie-loader.json")}
+          animationStyle={{width: 100, height: 100}}
+          speed={2}
+        />
       {this.showErrors()}
       <View style={styles.back_and_next_btn_block}>
 		  <TouchableOpacity onPress={this.backStage.bind(this)}><Text style={styles.button}>Back</Text></TouchableOpacity>

@@ -18,6 +18,7 @@ class Delivery extends Component {
       address_id: "",
       default: false,
       checked: "",
+      gotUser:false
     };
     this.handleClose = this.handleClose.bind(this);
     this.stage = 0;
@@ -29,9 +30,18 @@ class Delivery extends Component {
       inEmail: this.props.user ? this.props.user.email : ""
     });
   }
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props) {   
     if (props.user) {
       if (props.user.email) {
+        if(this.state.gotUser==false)
+        {
+          props.getAddress({
+            token: props.token,
+            inEmail: props.user.email
+          });
+          this.setState({gotUser:true});
+        }
+        
         if (props.customer) {
           if (props.customer !== this.state.customer) {
             this.setState({ customer: props.customer });

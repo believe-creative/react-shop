@@ -9,7 +9,7 @@ import {styles} from '../Home/home-styles';
 import {SERVER_ROOT} from '../../services/constants';
 import SyncStorage from 'sync-storage';
 const handleOnDragStart = e => e.preventDefault();
-
+import AnimatedLoader from "react-native-animated-loader";
 
 class ProductDetails extends Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class ProductDetails extends Component {
   addtoCart(e) {
     let cart = SyncStorage.get("react-shop-cart");
     let props = this.props;
-    console.log(props, "=0___", cart);
     if (cart) {
       cart = cart;
       props.AddToCart({
@@ -40,8 +39,7 @@ class ProductDetails extends Component {
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
       });
-    } else {
-      console.log(props, "here");
+    } else {      
       props.AddToCart({
         token: props.token,
         inCartId: null,
@@ -57,7 +55,7 @@ class ProductDetails extends Component {
       });
     }, 1000);
   }
-  componentDidMount() {
+  componentDidMount() {    
     this.props.loadProduct({
       token: this.props.token,
       inProductId: this.productid
@@ -71,10 +69,10 @@ class ProductDetails extends Component {
       inProductId: this.productid
     });
     this.props.setSubCategory(false);
-    this.setState({ link: this.productid });
+    this.setState({ link: this.productid});
   }
 
-  componentWillReceiveProps(props) {
+  componentWillReceiveProps(props) {    
     let localCart = SyncStorage.get("react-shop-cart");
     if (localCart != null) {
       if (this.state.cart === null || this.state.cart === undefined) {
@@ -89,11 +87,10 @@ class ProductDetails extends Component {
         });
       }
 
-      this.setState({ cart: props.cart, adding: false });
+      this.setState({ cart: props.cart, adding: false});
     }
 
-    if (this.state.link !== this.productid) {
-      console.log("call");
+    if (this.state.link !== this.productid) {      
       props.loadProduct({
         token: props.token,
         inProductId: this.productid
@@ -170,7 +167,7 @@ class ProductDetails extends Component {
     }
   }
   render() {
-    console.log(this.productid);
+    let visible=true;
     let productImg1 = this.props.productdetails[0]
       ? this.props.productdetails[0].image
       : "";
@@ -183,6 +180,11 @@ class ProductDetails extends Component {
     let productlocations = this.props.productlocations[0]
       ? this.props.productlocations[0].department_name.toLowerCase()
       : "";
+
+    if(this.props.productdetails[0])
+    {
+      visible=false;
+    }
     // console.log(this.props.productdetails[0]);
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
@@ -209,6 +211,13 @@ class ProductDetails extends Component {
         <View>
         <NavBar/>
         <ScrollView style={styles.home}>
+        <AnimatedLoader
+          visible={visible}
+          overlayColor="rgba(255,255,255,0.75)"
+          source={require("../../lottie-loader.json")}
+          animationStyle={{width: 100, height: 100}}
+          speed={2}
+        />
           <View style={styles.shop_now_panel}>
                   <View>
                       <Text style={{...styles.h2, ...styles.black}}>

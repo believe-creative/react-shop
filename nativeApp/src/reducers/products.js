@@ -124,7 +124,7 @@ export default (state = intialState, action) => {
       } else {
         cart = { inCartId: null, count: 0 };
       }
-      cart.count = cart.count - 1;
+      cart.count = action.response[0].quantity;
       SyncStorage.set("react-shop-cart", cart);
       return {
         ...state,

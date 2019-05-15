@@ -77,7 +77,7 @@ class SearchItem extends Component {
           visible={visible}
           overlayColor="rgba(255,255,255,0.75)"
           source={require("../../lottie-loader.json")}
-          animationStyle={{width: 500, height: 500}}
+          animationStyle={{width: 100, height: 100}}
           speed={2}
         />
 		 		<View style={styles.search_main}>

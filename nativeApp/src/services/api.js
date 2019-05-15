@@ -81,7 +81,7 @@ export const removeFromCart = function(data) {
 
 export const updateProductQuantity = function(data) {
   return callAPI(
-    `cart-update/`,
+    `get-cart-quantity/`,
     {
       "Content-Type": "application/x-www-form-urlencoded",
       Accept: "application/json; charset=utf-8",
@@ -89,7 +89,8 @@ export const updateProductQuantity = function(data) {
     },
     getParams({
       inItemId: data.inItemId,
-      inQuantity: data.inQuantity
+      inQuantity: data.inQuantity,
+      inCartId : data.inCartId
     })
   );
 };
