@@ -116,7 +116,7 @@ class Checkout extends Component {
                 details.
               </Text>
 				 <TouchableOpacity onPress={() => {
-                  NavigationService.navigate('allCategories');
+                  NavigationService.navigate('AllCategories');
               }}><Text style={styles.button}>Back to Shop</Text></TouchableOpacity>
              </View>
       );

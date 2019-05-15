@@ -2,7 +2,7 @@
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import HomeScreen from '../containers/Home/home';
 import Categories from '../containers/Category/categories';
-import allCategories from '../containers/Category/allCategories';
+import AllCategories from '../containers/Category/allCategories';
 import DetailsScreen from '../containers/Home/detailsScreen';
  import ProductDetails from '../containers/ProductDetails/productdetails';
 import Login from '../containers/Login/login';
@@ -16,22 +16,24 @@ import SearchItem from '../components/Search/searchitem';
 
 export const RootStack = createStackNavigator(
   {
-    Home: HomeScreen,
-    Details: DetailsScreen,
-    Categories:Categories,
-    allCategories:allCategories,
-    ProductDetails:ProductDetails,
-    Navbar:NavBar,
-    Items:Items,
-    Login:Login,
-    Checkout:Checkout,
-    Delivery:Delivery,
-    Conformation:Conformation,
-    SetPassword:SetPassword,
-    SearchItem:SearchItem
+    
+    Home: { screen: HomeScreen, navigationOptions: { header: null } },
+    Details: { screen: DetailsScreen, navigationOptions: { header: null } },
+    Categories:{ screen: Categories, navigationOptions: { header: null } },
+    AllCategories:{ screen: AllCategories, navigationOptions: { header: null } },
+    ProductDetails:{ screen: ProductDetails, navigationOptions: { header: null } },
+    Navbar:{ screen: NavBar, navigationOptions: { header: null } },
+    Items:{ screen: Items, navigationOptions: { header: null } },
+    Login:{ screen: Login, navigationOptions: { header: null } },
+    Checkout:{ screen: Checkout, navigationOptions: { header: null } },
+    Delivery:{ screen: Delivery, navigationOptions: { header: null } },
+    Conformation:{ screen: Conformation, navigationOptions: { header: null } },
+    SetPassword:{ screen: SetPassword, navigationOptions: { header: null } },
+    SearchItem:{ screen: SearchItem, navigationOptions: { header: null } }
   },
   {
     initialRouteName: 'Home',
 
   }
+ 
 );

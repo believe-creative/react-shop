@@ -36,13 +36,7 @@ class HomeScreen extends Component {
     super(props);
     this.state = { token: "null", loaded: true, loading: true };
 
-  }
-  componentDidMount() {
-
-
-
-  }
-
+  }  
   componentWillReceiveProps(props) {
     if (props.token) {
       if (this.state.token !== props.token) {
@@ -63,7 +57,7 @@ class HomeScreen extends Component {
 			 	           <Text style={styles.h2}>Convergent the dictates of the consumer: background and development</Text>
           	        <TouchableOpacity onPress={() => {
 
-                   NavigationService.navigate('allCategories');
+                   NavigationService.navigate('AllCategories');
                }}><Text style={styles.button} >View All</Text></TouchableOpacity>
 			 </View>
             <View style={styles.shop_now_panel}>
@@ -79,7 +73,7 @@ class HomeScreen extends Component {
                 </Text>
                 <TouchableOpacity  onPress={() => {
 
-               NavigationService.navigate('allCategories');
+               NavigationService.navigate('AllCategories');
            }}><Text style={styles.button}>Shop Now</Text></TouchableOpacity>
               </View>
             </View>

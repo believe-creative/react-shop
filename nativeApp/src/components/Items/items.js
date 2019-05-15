@@ -180,10 +180,7 @@ class Items extends Component {
               </View>
               <View style={styles.cart_bottom_block}>
 					 <TouchableOpacity onPress={() => {
-					 NavigationService.navigate('Categories', {
-						itemId: 1,
-						categoryName: "Regional",
-					 });
+					  NavigationService.navigate('AllCategories');
 					 }}><Text style={styles.button}>Back to shop</Text></TouchableOpacity>
 
 					 <TouchableOpacity onPress={() => {
@@ -198,10 +195,7 @@ class Items extends Component {
               </View>
               <View style={styles.back_to_shop_btn}>
 						<TouchableOpacity onPress={() => {
-                    NavigationService.navigate('Categories', {
-                      itemId: 1,
-                      categoryName: "Regional",
-                    });
+                    NavigationService.navigate('AllCategories');
                     }}><Text style={styles.button}>Back to shop</Text></TouchableOpacity>
               </View>
           </View>

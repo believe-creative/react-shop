@@ -16,7 +16,7 @@ import ProductList from '../../components/Product/productlist';
 import Footer from '../../components/Footer/footer';
 import {styles} from '../Home/home-styles';
 
-class allCategories extends Component {
+class AllCategories extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -103,4 +103,4 @@ const mapStateToDispatch = dispatch => ({
 export default connect(
   mapStateToProps,
   mapStateToDispatch
-)(allCategories);
+)(AllCategories);

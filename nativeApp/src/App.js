@@ -76,10 +76,8 @@ class App extends Component {
    }
 
   render() {
-    console.log("App",this.props);
       return (
-        <Provider store={this.store}>
-          
+        <Provider store={this.store}>          
           <AppContainer ref={navigatorRef => {
           NavigationService.setTopLevelNavigator(navigatorRef);
         }} />
