@@ -9,8 +9,9 @@ import {Modal,Platform, StyleSheet, Text, View, Image,TouchableOpacity,Button,Te
 import axios from "axios";
 import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
-import {styles} from '../Home/home-styles'; 
+import {styles} from '../Home/home-styles';
 import Footer from '../../components/Footer/footer';
+import NavBar from '../../components/Navbar/navbar';
 import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
 
 
@@ -67,7 +68,7 @@ class Login extends Component {
     var c = SyncStorage.get("s-atk");
     if (c) {
       this.props.checkUserLogin(c);
-    } 
+    }
     var props = this.props;
 
     PROVIDERS.map(provider => {
@@ -108,7 +109,7 @@ class Login extends Component {
     fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
     .then((response) => response.json())
     .then((json) => {
-      console.log("dataaaaa",json,props.token,API_ROOT + "userExists"); 
+      console.log("dataaaaa",json,props.token,API_ROOT + "userExists");
 
       axios
       .post(
@@ -152,7 +153,7 @@ class Login extends Component {
         console.log("some error 4444");
       });
 
-      
+
     })
     .catch(() => {
       console.log("some error 66666");
@@ -165,6 +166,8 @@ class Login extends Component {
     }
 
     return (
+      <View>
+      <NavBar />
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
 		 		{name ? (
@@ -193,12 +196,12 @@ class Login extends Component {
                 }
               }
               onLogoutFinished={() => this.logout.bind(this)}
-              
+
                />
            }
            else{
            }
-           
+
          })}
 	</View>
 				 <View>
@@ -226,8 +229,9 @@ class Login extends Component {
 			  </View>
 			)}
 		 	</View>
-			<Footer />           
+			<Footer />
       </ScrollView>
+      </View>
     );
   }
 }

@@ -1,5 +1,6 @@
 
-import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { createBottomTabNavigator,createSwitchNavigator,createStackNavigator, createAppContainer ,createDrawerNavigator,} from 'react-navigation';
+import {Platform, StyleSheet, Text, View,Button, Linking, TouchableOpacity, Image, ScrollView} from 'react-native';
 import HomeScreen from '../containers/Home/home';
 import Categories from '../containers/Category/categories';
 import AllCategories from '../containers/Category/allCategories';
@@ -13,27 +14,28 @@ import Delivery from '../components/Checkout/delivery';
 import Conformation from '../components/Checkout/conformation';
 import SetPassword from '../containers/Login/passwordSet';
 import SearchItem from '../components/Search/searchitem';
+import drawerContentComponents from './drawerContentComponents';
 
-export const RootStack = createStackNavigator(
+export const RootStack = createDrawerNavigator(
   {
-    
-    Home: { screen: HomeScreen, navigationOptions: { header: null } },
-    Details: { screen: DetailsScreen, navigationOptions: { header: null } },
-    Categories:{ screen: Categories, navigationOptions: { header: null } },
-    AllCategories:{ screen: AllCategories, navigationOptions: { header: null } },
-    ProductDetails:{ screen: ProductDetails, navigationOptions: { header: null } },
-    Navbar:{ screen: NavBar, navigationOptions: { header: null } },
-    Items:{ screen: Items, navigationOptions: { header: null } },
-    Login:{ screen: Login, navigationOptions: { header: null } },
-    Checkout:{ screen: Checkout, navigationOptions: { header: null } },
-    Delivery:{ screen: Delivery, navigationOptions: { header: null } },
-    Conformation:{ screen: Conformation, navigationOptions: { header: null } },
-    SetPassword:{ screen: SetPassword, navigationOptions: { header: null } },
-    SearchItem:{ screen: SearchItem, navigationOptions: { header: null } }
+
+    Home: HomeScreen,
+    Details: DetailsScreen,
+    Categories:Categories,
+    AllCategories:AllCategories,
+    ProductDetails:ProductDetails,
+    Navbar:NavBar,
+    Items:Items,
+    Login:Login,
+    Checkout:Checkout,
+    Delivery:Delivery,
+    Conformation:Conformation,
+    SetPassword:SetPassword,
+    SearchItem:SearchItem
   },
   {
     initialRouteName: 'Home',
-
+    contentComponent: drawerContentComponents
   }
- 
+
 );
