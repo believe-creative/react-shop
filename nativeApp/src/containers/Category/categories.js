@@ -63,15 +63,21 @@ class Categories extends Component {
   }
   render() {
 
-    console.log("Home screenffff",this.props);
+
     const { navigation } = this.props;
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
+      console.log("Home screenffff",categoryName);
       return (
         <View>
           <NavBar />
         <ScrollView style={styles.body}>
-        <View>
+        <View >
+
+        <Text style={{...styles.h2, ...styles.black,...styles.cart_header}}>
+          {categoryName}
+        </Text>
+    
         {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
           console.log(key,productsList,categoryName.toLowerCase()== key);
           if(categoryName.toLowerCase()== key){

@@ -73,7 +73,7 @@ import {SERVER_ROOT} from '../../services/constants';
             />
             </TouchableOpacity>
             <Text style={{...styles.h2, ...styles.black}}>{this.props.product.name && this.props.product.name}</Text>
-				<Text style={{...styles.price, ...styles.red}}>{this.props.product.price && this.props.product.price}</Text>
+				        <Text style={{...styles.price, ...styles.red}}>{this.props.product.price && this.props.product.price}</Text>
             <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
         </View>
         );

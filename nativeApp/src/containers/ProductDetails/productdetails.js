@@ -5,6 +5,7 @@ import * as Actions from "../../actions";
 import Carousel from "react-native-carousel";
 import Footer from '../../components/Footer/footer';
 import NavBar from '../../components/Navbar/navbar';
+import {styles} from '../Home/home-styles';
 import {SERVER_ROOT} from '../../services/constants';
 import SyncStorage from 'sync-storage';
 const handleOnDragStart = e => e.preventDefault();
@@ -32,7 +33,7 @@ class ProductDetails extends Component {
     let props = this.props;
     console.log(props, "=0___", cart);
     if (cart) {
-      cart = JSON.parse(cart);
+      cart = cart;
       props.AddToCart({
         token: props.token,
         inCartId: cart.inCartId,
@@ -139,14 +140,14 @@ class ProductDetails extends Component {
     if (discountedPrice !== "0.00") {
       return (
         <View>
-          <Text>
+          <Text style={{...styles.price, ...styles.red}}>
 
              Price:
             {this.props.productdetails[0]
               ? "$" + this.props.productdetails[0].price
               : ""}
-            
-
+                </Text>
+          <Text style={{...styles.price, ...styles.red}}>
             Discounted Price:
             {this.props.productdetails[0]
               ? "$" + this.props.productdetails[0].discounted_price
@@ -158,7 +159,7 @@ class ProductDetails extends Component {
     } else {
       return (
         <View>
-         <Text>
+         <Text style={{...styles.price, ...styles.red}}>
         Price:
           {this.props.productdetails[0]
             ? "$" + this.props.productdetails[0].price
@@ -207,72 +208,73 @@ class ProductDetails extends Component {
       return (
         <View>
         <NavBar/>
-        <ScrollView>
-          <View>
-                  <View>
-                  <Image style={{width: 300, height: 360, marginBottom: 10}}
-                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
-                    this.state.productImageName
-                      ? this.state.productImageName
-                      : this.props.productdetails[0]
-                        ? this.props.productdetails[0].image
-                        : "a-partridge-in-a-pear-tree-2.gif"
-                  }`}}
-                      />
-                      </View>
-                      <View >
-                            <View   onPress={() => {
-                              this.handleClick(
-                                this.props.productdetails[0]
-                                  ? this.props.productdetails[0].image
-                                  : "a-partridge-in-a-pear-tree-2.gif"
-                              );
-                              }}
-                              >
-                            <Image style={{width: 50, height: 50, marginBottom: 10}}
-                                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
-                                    this.props.productdetails[0]
-                                      ? this.props.productdetails[0].image
-                                      : "a-partridge-in-a-pear-tree-2.gif"
-                                  }`}}
-                                />
-                                </View>
-
-                                <View onPress={() => {
-                              this.handleClick(
-                                this.props.productdetails[0]
-                                  ? this.props.productdetails[0].image_2
-                                  : "a-partridge-in-a-pear-tree-2.gif"
-                              );
-                            }}
-                            >
-
-                            <Image style={{width: 50, height: 50, marginBottom: 10}}
-                                  source={{uri: SERVER_ROOT + "images/product_images/" +`${
-                                    this.props.productdetails[0]
-                                      ? this.props.productdetails[0].image_2
-                                      : "a-partridge-in-a-pear-tree-2.gif"
-                                  }`}}
-                                />
-                          </View>
-                    </View>
+        <ScrollView style={styles.home}>
+          <View style={styles.cart_page_wraper}>
 
                   <View>
-                      <Text>
+                      <Text style={{...styles.h2, ...styles.black}}>
                         {this.props.productdetails[0]
                           ? this.props.productdetails[0].name
                           : ""}
                       </Text>
-                      <Text>
+                      <Text style={styles.productdesc}>
                         {this.props.productdetails[0]
                           ? this.props.productdetails[0].description
                           : ""}
                       </Text>
                       </View>
                     {this.productPrice()}
-
                     <View>
-                      <Carousel width={375}>
+                    <Image style={{width: 300, height: 360, marginBottom: 10}}
+                    source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                      this.state.productImageName
+                        ? this.state.productImageName
+                        : this.props.productdetails[0]
+                          ? this.props.productdetails[0].image
+                          : "a-partridge-in-a-pear-tree-2.gif"
+                    }`}}
+                        />
+                        </View>
+                        <View >
+                              <View   onPress={() => {
+                                this.handleClick(
+                                  this.props.productdetails[0]
+                                    ? this.props.productdetails[0].image
+                                    : "a-partridge-in-a-pear-tree-2.gif"
+                                );
+                                }}
+                                >
+                              <Image style={{width: 50, height: 50, marginBottom: 10}}
+                                    source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                      this.props.productdetails[0]
+                                        ? this.props.productdetails[0].image
+                                        : "a-partridge-in-a-pear-tree-2.gif"
+                                    }`}}
+                                  />
+                                  </View>
+
+                                  <View onPress={() => {
+                                this.handleClick(
+                                  this.props.productdetails[0]
+                                    ? this.props.productdetails[0].image_2
+                                    : "a-partridge-in-a-pear-tree-2.gif"
+                                );
+                              }}
+                              >
+
+                              <Image style={{width: 50, height: 50, marginBottom: 10}}
+                                    source={{uri: SERVER_ROOT + "images/product_images/" +`${
+                                      this.props.productdetails[0]
+                                        ? this.props.productdetails[0].image_2
+                                        : "a-partridge-in-a-pear-tree-2.gif"
+                                    }`}}
+                                  />
+                            </View>
+
+                      </View>
+                      <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
+                    <View>
+                      <Carousel >
                         <Image style={{width: 300, height: 360, marginBottom: 10}}
                               onDragStart={handleOnDragStart}
                               source={{uri: SERVER_ROOT + "images/product_images/" +`${
@@ -291,12 +293,7 @@ class ProductDetails extends Component {
                                 />
                       </Carousel>
                     </View>
-
-
-
-
-
-            </View>
+                  </View>
               <Footer/>
           </ScrollView>
         </View>
