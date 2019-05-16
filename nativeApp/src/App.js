@@ -72,7 +72,7 @@ class App extends Component {
 
   async componentWillMount(): void {
     const data = await SyncStorage.init();
-    console.log('AsyncStorage is ready!', data);
+    // console.log('AsyncStorage is ready!', data);
    }
 
   render() {

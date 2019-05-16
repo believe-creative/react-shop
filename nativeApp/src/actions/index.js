@@ -82,7 +82,7 @@ export const product = {
 };
 
 export const getToken = {
-  request: () => {console.log("dgdgfdgfdgdfgfdghjgh"); return action(GETTOKEN[REQUEST], {})},
+  request: () => { return action(GETTOKEN[REQUEST], {})},
   success: (status, response) => action(GETTOKEN[SUCCESS], { response }),
   failure: error => action(GETTOKEN[FAILURE], { error })
 };

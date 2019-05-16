@@ -22,10 +22,10 @@ class AllCategories extends Component {
     super(props);
     this.state = {
       activePage: 1,
-      visible: true 
+      visible: true
     };
   }
-  componentDidMount() {    
+  componentDidMount() {
     if (this.props.categories) {
       Object.values(this.props.categories).map((category, index) => {
         this.props.loadCategoryProducts({
@@ -40,10 +40,10 @@ class AllCategories extends Component {
     }
   }
   componentWillReceiveProps(){
-    if(this.props.categoryProducts){  
+    if(this.props.categoryProducts){
       this.setState({
         visible: false
-      });  
+      });
     }
   }
   handlePageChange(pageNumber) {
@@ -85,8 +85,8 @@ class AllCategories extends Component {
         animationStyle={{width: 100, height: 100}}
         speed={2}
       />
-      {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{        
-          return  (<ProductList products={productsList} />);
+      {this.props.categoryProducts ? Object.values(this.props.categoryProducts).map((productsList,index)=>{
+          return  (<ProductList products={productsList} key={index} />);
       }) : <Text/>}
 
       </View>
