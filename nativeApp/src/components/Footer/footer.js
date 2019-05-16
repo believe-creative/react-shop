@@ -25,9 +25,9 @@ export default class Footer extends Component {
 		  <Text style={styles.ftitle}>Follow Us</Text> 
 		 <FlatList style={styles.block1}
           data={[
-            {key: 'Facebook', url: '#'},
-            {key: 'Twitter', url: '#'},
-            {key: 'Youtube', url: '#'},
+            {key: 'Facebook', url: 'https://www.facebook.com/believecreative.global'},
+            {key: 'Twitter', url: 'https://twitter.com/believecreative'},
+            {key: 'Youtube', url: 'https://www.believecreative.com/wp-content/themes/cluster-child/video/HTML5%20games.mp4'},
           ]}
           renderItem={({item}) => <View style={styles.footer_block}><TouchableOpacity onPress={() => Linking.openURL(item.url)}><Text style={styles.footerlinks}>{item.key}</Text></TouchableOpacity></View> }
         />
