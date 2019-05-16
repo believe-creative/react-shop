@@ -17,22 +17,24 @@ export const styles = StyleSheet.create({
     height: 44,
   },
 	block1: {
-		marginBottom: 15,
+		marginBottom: 0,
 	},
 	ftitle: {
 		fontSize: 22,
 		fontWeight: 'bold',
 		color: '#333',
-		marginBottom: 5,
+		marginTop: 5,
+	},
+	footer_block:{
+		flex:1,
+		alignItems:'flex-start',
+		justifyContent:'flex-start',
+		flexDirection:'column',
 	},
 	footerlinks: {
 		fontSize: 16,
 		color: '#2e2e2e',
 		fontWeight: '400',
-		flex:1,
-		justifyContent: 'flex-start',
-		alignItems: 'flex-start',
-		flexDirection: 'row',
 		marginBottom:5,
 	},
 	copyright:{

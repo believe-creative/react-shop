@@ -17,9 +17,11 @@ export default class Footer extends Component {
     return (
       <ScrollView style={styles.footer}>
 		 <Text style={styles.ftitle}>WHAT'S IN STORE</Text>
-		  <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 1, categoryName: "Regional"})}><Text style={styles.footerlinks}>Regional</Text></TouchableOpacity>
-		  <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 2, categoryName: "Nature"})}><Text style={styles.footerlinks}>Nature</Text></TouchableOpacity>
-		  <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 3, categoryName: "Seasonal"})}><Text style={styles.footerlinks}>Seasonal</Text></TouchableOpacity>
+		 <View style={styles.footer_block}>
+		 	<TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 1, categoryName: "Regional"})}><Text style={styles.footerlinks}>Regional</Text></TouchableOpacity>
+		   <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 2, categoryName: "Nature"})}><Text style={styles.footerlinks}>Nature</Text></TouchableOpacity>
+		   <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 3, categoryName: "Seasonal"})}><Text style={styles.footerlinks}>Seasonal</Text></TouchableOpacity>
+		 </View>
 		  <Text style={styles.ftitle}>Follow Us</Text> 
 		 <FlatList style={styles.block1}
           data={[
@@ -27,11 +29,11 @@ export default class Footer extends Component {
             {key: 'Twitter', url: '#'},
             {key: 'Youtube', url: '#'},
           ]}
-          renderItem={({item}) => <TouchableOpacity onPress={() => Linking.openURL(item.url)}><Text style={styles.footerlinks}>{item.key}</Text></TouchableOpacity> }
+          renderItem={({item}) => <View style={styles.footer_block}><TouchableOpacity onPress={() => Linking.openURL(item.url)}><Text style={styles.footerlinks}>{item.key}</Text></TouchableOpacity></View> }
         />
 		 <View>
-			 <Text style={styles.footertext}>Developed by</Text>
-			 <TouchableOpacity onPress={() => Linking.openURL('https://www.believecreative.com/')}><Text style={styles.copyright}>Believe Creative</Text></TouchableOpacity> 
+			 <Text style={styles.ftitle}>Developed by</Text>
+			 <View style={styles.footer_block}><TouchableOpacity onPress={() => Linking.openURL('https://www.believecreative.com/')}><Text style={styles.copyright}>Believe Creative</Text></TouchableOpacity></View> 
 		 </View>
       </ScrollView>
     );
