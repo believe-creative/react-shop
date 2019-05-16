@@ -33,6 +33,7 @@ export const styles = StyleSheet.create({
 		justifyContent: 'flex-start',
 		alignItems: 'flex-start',
 		flexDirection: 'row',
+		marginBottom:5,
 	},
 	copyright:{
 		fontSize: 16,
