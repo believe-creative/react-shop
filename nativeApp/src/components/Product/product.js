@@ -52,6 +52,14 @@ import {SERVER_ROOT} from '../../services/constants';
       });
     }, 1000);
   }
+  componentDidMount(){
+    // if(this.props.product){
+    //    this.props.setCurrentProduct(this.props.product.product_id);
+    // }
+  }
+  componentWillReceiveProps(props){
+
+  }
   render() {
     let productImage,productId = '';
 
@@ -64,9 +72,13 @@ import {SERVER_ROOT} from '../../services/constants';
     }
     return (
           <View style={styles.item}>
-           <TouchableOpacity  onPress={() => { NavigationService.navigate('ProductDetails', {
-         productid: productId,
-       }); }} style={styles.center}>
+           <TouchableOpacity
+            onPress={() => {
+            // this.props.setCurrentProduct(productId);
+             NavigationService.navigate('ProductDetails', {productid: productId});
+            }}
+
+            style={styles.center} >
             <Image style={{width: 320, height: 250, marginBottom: 10}}
               source={{uri:productImage}}
             />
@@ -82,18 +94,22 @@ import {SERVER_ROOT} from '../../services/constants';
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
-    token: state.get("user").token
+    token: state.get("user").token,
   };
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     AddToCart: (data) =>
-      dispatch(Actions.AddToCart.request(data))
+      dispatch(Actions.AddToCart.request(data)),
+    setCurrentProduct: (product_id) =>
+        dispatch(Actions.setCurrentProduct(product_id))
   };
 }
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
+  null,
+  {pure:false}
 )(Product);

@@ -10,7 +10,8 @@ const intialState = {
   productLocations: [],
   addAddress: [],
   getAddress: [],
-  address: {}
+  address: {},
+  currentProduct:""
 };
 
 function getCategoryName(categories, id) {
@@ -43,7 +44,12 @@ export default (state = intialState, action) => {
         isLoading: false,
         error: action.errors
       };
-
+      case ActionTypes.CURRENTPRODUCT:
+        return {
+          ...state,
+          isLoading: false,
+          currentProduct: action.payload
+        };
     case ActionTypes.PRODUCTS.REQUEST:
       return {
         ...state,
@@ -194,7 +200,7 @@ export default (state = intialState, action) => {
     case ActionTypes.SETREGION:
       cart = SyncStorage.get("react-shop-cart");
       if (cart) {
-       
+
       } else {
         cart = { inCartId: null, count: 0, products: [], region: null };
       }

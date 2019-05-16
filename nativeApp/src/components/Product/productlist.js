@@ -9,14 +9,12 @@ import Product from "./product";
 export default class ProductList extends Component {
 
   constructor(props) {
-    console.log("ProductList",props);
     super(props);
     this.state = {
       text: ''
     };
   }
   render() {
-    console.log("ProductList",this.props);
     return (
         <View style={{flex: 0}}>
         {this.props.products &&

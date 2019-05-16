@@ -24,7 +24,7 @@ class ProductDetails extends Component {
       adding: false,
       link: null
     };
-     this.productid = props.navigation.getParam('productid');
+     this.productid = "props.navigation.getParam('productid')";
 
   }
 
@@ -39,7 +39,7 @@ class ProductDetails extends Component {
         inProductId: this.props.productdetails[0].product_id,
         inAttributes: null
       });
-    } else {      
+    } else {
       props.AddToCart({
         token: props.token,
         inCartId: null,
@@ -55,24 +55,25 @@ class ProductDetails extends Component {
       });
     }, 1000);
   }
-  componentDidMount() {    
+  componentDidMount() {
+
     this.props.loadProduct({
       token: this.props.token,
-      inProductId: this.productid
+      inProductId: this.props.navigation.getParam('productid')
     });
     this.props.getProductRecommendations({
       token: this.props.token,
-      inProductId: this.productid
+      inProductId: this.props.navigation.getParam('productid')
     });
     this.props.getProductLocations({
       token: this.props.token,
-      inProductId: this.productid
+      inProductId: this.props.navigation.getParam('productid')
     });
     this.props.setSubCategory(false);
-    this.setState({ link: this.productid});
+    this.setState({ link: this.props.navigation.getParam('productid')});
   }
 
-  componentWillReceiveProps(props) {    
+  componentWillReceiveProps(props) {
     let localCart = SyncStorage.get("react-shop-cart");
     if (localCart != null) {
       if (this.state.cart === null || this.state.cart === undefined) {
@@ -90,20 +91,20 @@ class ProductDetails extends Component {
       this.setState({ cart: props.cart, adding: false});
     }
 
-    if (this.state.link !== this.productid) {      
+    if (this.state.link !== props.navigation.getParam('productid')) {
       props.loadProduct({
         token: props.token,
-        inProductId: this.productid
+        inProductId: props.navigation.getParam('productid')
       });
       props.getProductRecommendations({
         token: props.token,
-        inProductId: this.productid
+        inProductId: props.navigation.getParam('productid')
       });
       props.getProductLocations({
         token: props.token,
-        inProductId: this.productid
+        inProductId: props.navigation.getParam('productid')
       });
-      this.setState({ link: this.productid });
+      this.setState({ link: props.navigation.getParam('productid') , productImageName:""});
     }
   }
 
@@ -167,6 +168,7 @@ class ProductDetails extends Component {
     }
   }
   render() {
+
     let visible=true;
     let productImg1 = this.props.productdetails[0]
       ? this.props.productdetails[0].image
@@ -185,7 +187,6 @@ class ProductDetails extends Component {
     {
       visible=false;
     }
-    // console.log(this.props.productdetails[0]);
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
     let hasItems = cart.count > 0 ? true : false;
@@ -246,30 +247,29 @@ class ProductDetails extends Component {
 
 							<View style={styles.thumb_block_main}>
 
-									<Image onPress={() => { this.handleClick(this.props.productdetails[0]? this.props.productdetails[0].image: "a-partridge-in-a-pear-tree-2.gif");}} 
-									style={{width: 60, height: 60, }} 
-									source={{uri: SERVER_ROOT + "images/product_images/" +`${
-										  this.props.productdetails[0]
-											 ? this.props.productdetails[0].image
-											 : "a-partridge-in-a-pear-tree-2.gif"
+								<TouchableOpacity onPress={() => { this.handleClick(this.props.productdetails[0]? this.props.productdetails[0].image: "a-partridge-in-a-pear-tree-2.gif");}}>
+                <Image style={{width: 60, height: 60, }}
+									       source={{uri: SERVER_ROOT + "images/product_images/" +`${
+										                 this.props.productdetails[0]
+											                ? this.props.productdetails[0].image
+											                : "a-partridge-in-a-pear-tree-2.gif"
 										}`}}
-								 />
-
-									<Image onPress={() => { this.handleClick( this.props.productdetails[0]? this.props.productdetails[0].image_2: "a-partridge-in-a-pear-tree-2.gif");}} 
-										style={{width: 60, height: 60, marginLeft:15,}}
+								 /></TouchableOpacity>
+                 	<TouchableOpacity onPress={() => { this.handleClick(this.props.productdetails[0]? this.props.productdetails[0].image_2: "a-partridge-in-a-pear-tree-2.gif");}}>
+									<Image style={{width: 60, height: 60, marginLeft:15,}}
 										source={{uri: SERVER_ROOT + "images/product_images/" +`${
 											  this.props.productdetails[0]
 												 ? this.props.productdetails[0].image_2
 												 : "a-partridge-in-a-pear-tree-2.gif"
 											}`}}
 									 />
-
+                   </TouchableOpacity>
 						 	</View>
 
                       <View style={{...styles.center_position, ...styles.space_top}}>
 							 	<TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
 							 </View>
-                    
+
                   </View>
               <Footer/>
           </ScrollView>

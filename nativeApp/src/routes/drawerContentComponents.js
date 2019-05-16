@@ -62,7 +62,6 @@ class drawerContentComponents extends Component {
     })
 
     menuItemsList(){
-        console.log("Menu Items",this.props.categories);
           if(this.props.categories){
           return Object.values(this.props.categories).map((e,index)=>{
             return (<View key={index} style={[styles.screenStyle, (this.props.activeItemKey=='Login') ? styles.activeBackgroundColor : null]}>

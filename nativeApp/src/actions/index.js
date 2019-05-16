@@ -12,6 +12,7 @@ function createRequestTypes(base) {
 //Action Types
 export const PRODUCTS = createRequestTypes("PRODUCTS");
 export const PRODUCT = createRequestTypes("PRODUCT");
+export const CURRENTPRODUCT = "CURRENTPRODUCT";
 export const ADDPRODUCTTOCART = createRequestTypes("ADDPRODUCTTOCART");
 export const REMOVEFROMCART = createRequestTypes("REMOVEFROMCART");
 export const UPDATEQUANTITY = createRequestTypes("UPDATEQUANTITY");
@@ -43,6 +44,9 @@ export const DELETEADDRESS = createRequestTypes("DELETEADDRESS");
 export const SETADDRESS = "SETADDRESS";
 export function setUser(payload) {
   return { type: "SETUSER", payload };
+}
+export function setCurrentProduct(payload) {
+  return { type: "CURRENTPRODUCT", payload };
 }
 export function setAddress(payload) {
   return { type: "SETADDRESS", payload };
