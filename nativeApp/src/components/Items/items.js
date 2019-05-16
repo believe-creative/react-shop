@@ -9,6 +9,7 @@ import {SERVER_ROOT} from '../../services/constants';
 import AnimatedLoader from "react-native-animated-loader";
 import {Alert, Text, View,Button, TouchableOpacity, Image, ScrollView} from 'react-native';
 import NavigationService from '../../routes/NavigationService.js';
+import SyncStorage from 'sync-storage';
 class Items extends Component {
   constructor(props) {
     super(props);
@@ -199,7 +200,15 @@ class Items extends Component {
 					 }}><Text style={styles.button}>Back to shop</Text></TouchableOpacity>
 
 					 <TouchableOpacity onPress={() => {
-					 NavigationService.navigate('Checkout');
+             if (!this.props.user.email) {
+              SyncStorage.set("nextRoute", "Checkout");
+              NavigationService.navigate('Login');
+          }
+          else
+          {
+            NavigationService.navigate('Checkout');
+          }
+					 
 					 }}><Text style={styles.button}>Checkout</Text></TouchableOpacity>
               </View>
           </View>
@@ -224,7 +233,8 @@ class Items extends Component {
 const mapStateToProps = state => {
   return {
     cart: state.get("products").cart,
-    token: state.get("user").token
+    token: state.get("user").token,
+    user: state.get("user")
   };
 };
 
