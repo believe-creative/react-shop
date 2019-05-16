@@ -166,7 +166,7 @@ class Login extends Component {
       name = this.props.user.name;
     }
     if(name){
-      let route =SyncStorage.get("nextRoute");
+      let route =SyncStorage.get("nextRoute");      
       if (route) {
         if (route.length > 0) {
           SyncStorage.remove("nextRoute");
