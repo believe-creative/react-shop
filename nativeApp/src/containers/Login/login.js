@@ -166,7 +166,17 @@ class Login extends Component {
       name = this.props.user.name;
     }
     if(name){
-      NavigationService.navigate(SyncStorage.get("nextRoute"));
+      let route =SyncStorage.get("nextRoute");
+      if (route) {
+        if (route.length > 0) {
+          SyncStorage.remove("nextRoute");
+          NavigationService.navigate(route);
+        } else {
+          NavigationService.navigate("Home");
+        }
+      } else {
+        NavigationService.navigate("Home");
+      }
     }
 
     return (
