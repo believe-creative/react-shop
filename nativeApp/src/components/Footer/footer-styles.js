@@ -20,7 +20,7 @@ export const styles = StyleSheet.create({
 		marginBottom: 0,
 	},
 	ftitle: {
-		fontSize: 22,
+		fontSize: 20,
 		fontWeight: 'bold',
 		color: '#333',
 		marginTop: 5,
