@@ -48,29 +48,30 @@ class Checkout extends Component {
       finish: {},
       errors: []
     };
+
   }
   setDelivarydetails(e, child) {
     let state = this.state;
     state["delivery"] = child;
     state["delivery"]["errors"] = [];
-
     this.setState(state);
   }
-
-  componentDidMount() {
+ 
+  componentDidMount() {    
     if (!this.props.user.email) {
-
-        NavigationService.navigate('Login');
         SyncStorage.set("nextRoute", "Checkout");
-
+        NavigationService.navigate('Login');
     }
-    if (!this.props.cart) {
-      NavigationService.navigate('Home');
-    } else if (this.props.cart.count <= 0) {
-      NavigationService.navigate('Home');
+    else
+    {
+      if (!this.props.cart) {
+        NavigationService.navigate('Home');
+      } else if (this.props.cart.count <= 0) {
+        NavigationService.navigate('Home');
+      }
     }
+    
   }
-
   showstages() {
     if (this.state.stage === 0) {
       return (
@@ -107,18 +108,17 @@ class Checkout extends Component {
         <Image
           source={require('../../images/success-image.png')}
           style={{ width: 50, height: 50, marginLeft: 5, marginTop: 20, }}
-
         />
-
-              <Text style={{...styles.h2, ...styles.black}}>Success!</Text>
-              <Text style={styles.success_txt}>
-                Your items will be shipped shortly, you will get email with
-                details.
-              </Text>
-				 <TouchableOpacity onPress={() => {
-                  NavigationService.navigate('AllCategories');
-              }}><Text style={styles.button}>Back to Shop</Text></TouchableOpacity>
-             </View>
+          <Text style={{...styles.h2, ...styles.black}}>Success!</Text>
+          <Text style={styles.success_txt}>
+            Your items will be shipped shortly, you will get email with
+            details.
+          </Text>
+          <TouchableOpacity onPress={() => {
+              this.setState({stage:0});
+              NavigationService.navigate('AllCategories');
+          }}><Text style={styles.button}>Back to Shop</Text></TouchableOpacity>
+          </View>
       );
     }
   }
@@ -132,30 +132,30 @@ class Checkout extends Component {
       NavigationService.navigate('Items');
     }
   }
-  nextStage(stage) {
+  nextStage(stage) {    
     if (stage >= 2) {
       SyncStorage.remove("react-shop-cart");
       SyncStorage.remove("nextRoute");
 
       this.props.clearCart();
+      this.setState({stage:0});
     }
     let state = this.state;
-    state["stage"] = stage + 1;
+    state["stage"] = stage + 1;    
     this.setState(state);
   }
-
-  render() {
-    let finalstage = false;
-    if (this.state.stage >= 2) finalstage = true;
+  stageNumber(stageNo){
+    this.setState({stage:stageNo});
+  }
+  render() {   
     return (
       <View>
-      <NavBar />
+      <NavBar stage={(stage)=>{this.stageNumber(stage)}}/>
         <ScrollView style={styles.gray_bg}>
           <View>
-
               {this.showstages()}
           </View>
-			 <Footer/>
+			 <Footer stage={(stage)=>{this.stageNumber(stage)}}/>
         </ScrollView>
         </View>
     );
@@ -167,7 +167,7 @@ const mapStateToProps = state => {
     cart: state.get("products").cart,
     user: state.get("user"),
     token: state.get("user").token,
-    address: state.get("order").address
+    address: state.get("order").address    
   };
 };
 
@@ -177,5 +177,7 @@ const mapStateToDispatch = dispatch => ({
 
 export default connect(
   mapStateToProps,
-  mapStateToDispatch
+  mapStateToDispatch,
+  null,
+  {pure:false}
 )(Checkout);

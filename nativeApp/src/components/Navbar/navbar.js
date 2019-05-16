@@ -47,8 +47,8 @@ class NavBar extends Component {
       }
 
   }
-
-  render() {
+ 
+  render() {    
     let { cart }  = this.props;
     if (!cart) cart = { count: 0 };
     return (
@@ -64,6 +64,9 @@ class NavBar extends Component {
 			 </View>
         <View style={styles.logo}>
         <TouchableOpacity  onPress={() => {
+              if(this.props.stage){
+                this.props.stage(0);
+              }
               if(this.state.menuOpen == true ){
                  this.setState({menuOpen:!this.state.menuOpen})
               }
@@ -77,6 +80,9 @@ class NavBar extends Component {
 		  </View>
       <View>
           <TouchableOpacity onPress={() => {
+            if(this.props.stage){
+              this.props.stage(0);
+            }
 					      NavigationService.navigate('SearchItem');
 					 }}>
           <Image
@@ -84,7 +90,7 @@ class NavBar extends Component {
 					  style={{ width: 32, height: 32, marginTop:5, marginRight:10}} />
           </TouchableOpacity>
       </View>
-		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 10, }}><Cart cartItems={cart.count} /></View>
+		  <View style={{ width: 20, height: 25, marginLeft: 5, marginTop: 10, }}><Cart stage={this.props.stage} cartItems={cart.count} /></View>
 			</View>
    </View>
     );

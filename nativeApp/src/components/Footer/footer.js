@@ -18,9 +18,9 @@ export default class Footer extends Component {
       <ScrollView style={styles.footer}>
 		 <Text style={styles.ftitle}>WHAT'S IN STORE</Text>
 		 <View style={styles.footer_block}>
-		 	<TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 1, categoryName: "Regional"})}><Text style={styles.footerlinks}>Regional</Text></TouchableOpacity>
-		   <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 2, categoryName: "Nature"})}><Text style={styles.footerlinks}>Nature</Text></TouchableOpacity>
-		   <TouchableOpacity onPress={() => NavigationService.navigate('Categories',{itemId: 3, categoryName: "Seasonal"})}><Text style={styles.footerlinks}>Seasonal</Text></TouchableOpacity>
+		 	<TouchableOpacity onPress={() => {if(this.props.stage){ this.props.stage(0);} NavigationService.navigate('Categories',{itemId: 1, categoryName: "Regional"})}}><Text style={styles.footerlinks}>Regional</Text></TouchableOpacity>
+		   <TouchableOpacity onPress={() => {if(this.props.stage){ this.props.stage(0);}NavigationService.navigate('Categories',{itemId: 2, categoryName: "Nature"})}}><Text style={styles.footerlinks}>Nature</Text></TouchableOpacity>
+		   <TouchableOpacity onPress={() => {if(this.props.stage){ this.props.stage(0);}NavigationService.navigate('Categories',{itemId: 3, categoryName: "Seasonal"})}}><Text style={styles.footerlinks}>Seasonal</Text></TouchableOpacity>
 		 </View>
 		  <Text style={styles.ftitle}>Follow Us</Text> 
 		 <FlatList style={styles.block1}
