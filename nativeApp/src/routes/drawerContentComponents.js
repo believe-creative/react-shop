@@ -66,12 +66,12 @@ class drawerContentComponents extends Component {
           if(this.props.categories){
           return Object.values(this.props.categories).map((e,index)=>{
             return (<View key={index} style={[styles.screenStyle, (this.props.activeItemKey=='Login') ? styles.activeBackgroundColor : null]}>
-                <Text style={[styles.screenTextStyle, (this.props.activeItemKey=='Login') ? styles.selectedTextStyle : null]} onPress={() => {
+                <TouchableOpacity onPress={() => {
                        NavigationService.navigate('Categories', {
                      itemId: e.department_id,
                      categoryName: e.name,
                    });
-                   }}>{e.name}</Text>
+                   }}><Text style={[styles.screenTextStyle, (this.props.activeItemKey=='Login') ? styles.selectedTextStyle : null]}>{e.name}</Text></TouchableOpacity>
             </View>
 
           );

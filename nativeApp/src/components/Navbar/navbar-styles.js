@@ -44,9 +44,13 @@ export const styles = StyleSheet.create({
        fontSize: 18,
 		 paddingTop:10,
 		 paddingBottom:10,
-		 borderBottomColor: '#b4b4b4',
-		 borderBottomWidth:1,
 		 color: '#000',
 		 fontWeight:'600',
     },
+	screenStyle:{
+		borderBottomColor: '#b4b4b4',
+		borderBottomWidth:1,
+		flex:0,
+		alignItems:'flex-start',
+	},
 });
