@@ -63,6 +63,7 @@ class Login extends Component {
     console.log("logged out");
     SyncStorage.remove('s-atk');
     this.props.setUser({ email: null, name: null, photo: null });
+    NavigationService.navigate("Home");
   }
   componentDidMount() {
     var c = SyncStorage.get("s-atk");
@@ -164,14 +165,17 @@ class Login extends Component {
     if (this.props.user) {
       name = this.props.user.name;
     }
+    if(name){
+      NavigationService.navigate(SyncStorage.get("nextRoute"));
+    }
 
     return (
       <View>
       <NavBar />
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
-		 		{name ? (
-			  <Text style={styles.loggedin_text}>You have already logged.</Text>
+         {name ?
+         (<Text style={styles.loggedin_text}>You have already logged.</Text>
 			) : (
 			  <View>
 		 	<View style={styles.social_media}>
