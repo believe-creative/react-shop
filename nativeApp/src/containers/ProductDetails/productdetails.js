@@ -22,9 +22,11 @@ class ProductDetails extends Component {
       productImageName: "",
       activeClass: "active",
       adding: false,
-      link: null
+      link: null,
+      productId:""
     };
      this.productid = "props.navigation.getParam('productid')";
+     this.visible=true;
 
   }
 
@@ -56,24 +58,26 @@ class ProductDetails extends Component {
     }, 1000);
   }
   componentDidMount() {
+    console.log(this.props);
+    let currentProductId=this.props.currentProductId;
+    if(currentProductId)
+    {
+      this.props.loadProduct({
+        token: this.props.token,
+        inProductId: currentProductId
+      });
 
-    this.props.loadProduct({
-      token: this.props.token,
-      inProductId: this.props.navigation.getParam('productid')
-    });
-    this.props.getProductRecommendations({
-      token: this.props.token,
-      inProductId: this.props.navigation.getParam('productid')
-    });
-    this.props.getProductLocations({
-      token: this.props.token,
-      inProductId: this.props.navigation.getParam('productid')
-    });
-    this.props.setSubCategory(false);
-    this.setState({ link: this.props.navigation.getParam('productid')});
+      this.props.setSubCategory(false);
+      this.setState({ link:currentProductId});
+    }
+
   }
 
   componentWillReceiveProps(props) {
+    let currentProductId="";
+    currentProductId=props.currentProductId;
+
+    console.log("productId0",props.currentProductId,this.props.currentProductId,this.state.link,currentProductId);
     let localCart = SyncStorage.get("react-shop-cart");
     if (localCart != null) {
       if (this.state.cart === null || this.state.cart === undefined) {
@@ -81,30 +85,25 @@ class ProductDetails extends Component {
           token: props.token,
           inCartId: localCart.inCartId
         });
-      } else if (props.cart.count !== this.state.cart.count) {
+      } else if (props.cart.count !== this.state.cart.count)   {
         this.props.getCartProducts({
           token: props.token,
           inCartId: props.cart.inCartId
         });
       }
-
-      this.setState({ cart: props.cart, adding: false});
+      this.setState({ cart: props.cart, adding: false, productId:""});
     }
 
-    if (this.state.link !== props.navigation.getParam('productid')) {
-      props.loadProduct({
+    if (this.state.link !== currentProductId) {
+
+      console.log("this.state.link",this.state.link,currentProductId);
+      this.props.loadProduct({
         token: props.token,
-        inProductId: props.navigation.getParam('productid')
+        inProductId: currentProductId
       });
-      props.getProductRecommendations({
-        token: props.token,
-        inProductId: props.navigation.getParam('productid')
-      });
-      props.getProductLocations({
-        token: props.token,
-        inProductId: props.navigation.getParam('productid')
-      });
-      this.setState({ link: props.navigation.getParam('productid') , productImageName:""});
+
+      this.setState({ link: currentProductId , productImageName:""});
+    
     }
   }
 
@@ -169,7 +168,7 @@ class ProductDetails extends Component {
   }
   render() {
 
-    let visible=true;
+    this.visible=true;
     let productImg1 = this.props.productdetails[0]
       ? this.props.productdetails[0].image
       : "";
@@ -183,9 +182,9 @@ class ProductDetails extends Component {
       ? this.props.productlocations[0].department_name.toLowerCase()
       : "";
 
-    if(this.props.productdetails[0])
+    if(this.props.productdetails[0] && this.state.link === this.props.productdetails[0].product_id )
     {
-      visible=false;
+      this.visible=false;
     }
     let cart = { count: 0, products: [] };
     if (this.props.cart) cart = this.props.cart;
@@ -213,7 +212,7 @@ class ProductDetails extends Component {
         <NavBar/>
         <ScrollView style={styles.home}>
         <AnimatedLoader
-          visible={visible}
+          visible={this.visible}
           overlayColor="rgba(255,255,255,0.75)"
           source={require("../../lottie-loader.json")}
           animationStyle={{width: 100, height: 100}}
@@ -285,7 +284,8 @@ const mapStateToProps = state => {
     productrecommendations: state.get("products").productrecommendations,
     productlocations: state.get("products").productLocations,
     token: state.get("user").token,
-    showSubCategory: state.get("showSubCategory").showSubCategory
+    showSubCategory: state.get("showSubCategory").showSubCategory,
+    currentProductId:state.get("products").currentProduct,
   };
 };
 
@@ -297,9 +297,6 @@ const mapStateToDispatch = dispatch => ({
   updateProductQuantity: data =>
     dispatch(Actions.updateProductQuantity.request(data)),
   getCartProducts: data => dispatch(Actions.getCartProducts.request(data)),
-  getProductRecommendations: data =>
-    dispatch(Actions.getProductRecommendations.request(data)),
-  getProductLocations: data => dispatch(Actions.productLocations.request(data))
 });
 
 export default connect(

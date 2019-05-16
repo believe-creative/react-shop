@@ -30,7 +30,7 @@ class Delivery extends Component {
       inEmail: this.props.user ? this.props.user.email : ""
     });
   }
-  componentWillReceiveProps(props) {   
+  componentWillReceiveProps(props) {
     if (props.user) {
       if (props.user.email) {
         if(this.state.gotUser==false)
@@ -41,7 +41,7 @@ class Delivery extends Component {
           });
           this.setState({gotUser:true});
         }
-        
+
         if (props.customer) {
           if (props.customer !== this.state.customer) {
             this.setState({ customer: props.customer });
@@ -123,7 +123,7 @@ class Delivery extends Component {
     Alert.alert(
       "Delete Address",
       "Are you sure to delete this address?",
-      [  
+      [
         {text: 'Yes', onPress: () => {
           this.props.deleteAddress({
             token: this.props.token,
@@ -134,16 +134,16 @@ class Delivery extends Component {
             inEmail: this.props.user ? this.props.user.email : ""
           });
           this.setState({ region: null });
-        }},      
+        }},
         {
           text: 'No',
           onPress: () => {},
           style: 'cancel',
         },
-        
+
       ],
       {cancelable: false},
-    );    
+    );
   }
 
   handleAdd() {
@@ -212,13 +212,13 @@ class Delivery extends Component {
       token: this.props.token,
       inShippingRegionId: address.shipping_region_id
     });
-  
+
 
   }
   addressList(getAddress) {
     return getAddress.map((address, index) => {
       return (
-        <TouchableOpacity onPress={() => this.setDefaultAddress(address)}>
+        <TouchableOpacity onPress={() => this.setDefaultAddress(address)} key={index}>
           <View style={address.id == this.state.address_id ? styles.selected:styles.notselected}>
 				 <View >
 					 <Text style={{...styles.h3, ...styles.black}}>{address.address_name} Address</Text>

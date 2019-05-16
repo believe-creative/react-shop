@@ -33,8 +33,6 @@ class Categories extends Component {
 
   }
   componentDidMount() {
-
-  console.log("dfgdfgdfg0fgfgfgf000");
   this.props.getToken();
   if (this.props.categories) {
     Object.values(this.props.categories).map((category, index) => {
@@ -71,7 +69,6 @@ class Categories extends Component {
     const { navigation } = this.props;
      const itemId = navigation.getParam('itemId', 'NO-ID');
      const categoryName = navigation.getParam('categoryName', 'NO-ID');
-      console.log("Home screenffff",categoryName);
       return (
         <View>
           <NavBar />
@@ -87,14 +84,10 @@ class Categories extends Component {
         <Text style={{...styles.h2, ...styles.black,...styles.cart_header}}>
           {categoryName}
         </Text>
-        
+
         {this.props.categoryProducts ? Object.entries(this.props.categoryProducts).map(([key,productsList])=>{
-          console.log(key,productsList,categoryName.toLowerCase()== key);
           if(categoryName.toLowerCase()== key){
-                console.log(productsList);
-
                 return  (<ProductList key={key} products={productsList} />);
-
           }
         }) : <Text/>}
 
