@@ -58,18 +58,12 @@ class Checkout extends Component {
   }
  
   componentDidMount() {    
-    if (!this.props.user.email) {
-        SyncStorage.set("nextRoute", "Checkout");
-        NavigationService.navigate('Login');
-    }
-    else
-    {
+    
       if (!this.props.cart) {
         NavigationService.navigate('Home');
       } else if (this.props.cart.count <= 0) {
         NavigationService.navigate('Home');
       }
-    }
     
   }
   showstages() {

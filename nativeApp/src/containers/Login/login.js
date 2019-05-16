@@ -164,20 +164,7 @@ class Login extends Component {
     let name = null;
     if (this.props.user) {
       name = this.props.user.name;
-    }
-    if(name){
-      let route =SyncStorage.get("nextRoute");      
-      if (route) {
-        if (route.length > 0) {
-          SyncStorage.remove("nextRoute");
-          NavigationService.navigate(route);
-        } else {
-          NavigationService.navigate("Home");
-        }
-      } else {
-        NavigationService.navigate("Home");
-      }
-    }
+    }    
 
     return (
       <View>
@@ -185,7 +172,7 @@ class Login extends Component {
       <ScrollView style={styles.home}>
 			<View style={styles.login_block_main}>
          {name ?
-         (<Text style={styles.loggedin_text}>You have already logged.</Text>
+         (<Text style={styles.loggedin_text}>You have logged successfully.</Text>
 			) : (
 			  <View>
 		 	<View style={styles.social_media}>
