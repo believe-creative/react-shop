@@ -53,9 +53,7 @@ import {SERVER_ROOT} from '../../services/constants';
     }, 1000);
   }
   componentDidMount(){
-    // if(this.props.product){
-    //    this.props.setCurrentProduct(this.props.product.product_id);
-    // }
+  
   }
   componentWillReceiveProps(props){
 
@@ -74,7 +72,7 @@ import {SERVER_ROOT} from '../../services/constants';
           <View style={styles.item}>
            <TouchableOpacity
             onPress={() => {
-            // this.props.setCurrentProduct(productId);
+            this.props.setCurrentProduct(productId);
              NavigationService.navigate('ProductDetails', {productid: productId});
             }}
 
