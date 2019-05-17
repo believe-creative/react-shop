@@ -7,7 +7,7 @@
  */
 
 import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View,YellowBox } from 'react-native';
 import NavBar from './components/Navbar/navbar';
 import {RootStack} from './routes/navigationRoutes';
 import Footer from './components/Footer/footer';
@@ -26,6 +26,10 @@ import rootSaga from "./sagas";
 
 import SyncStorage from 'sync-storage';
 
+YellowBox.ignoreWarnings(['Remote debugger']);
+YellowBox.ignoreWarnings([
+    'Unrecognized WebSocket connection option(s) `agent`, `perMessageDeflate`, `pfx`, `key`, `passphrase`, `cert`, `ca`, `ciphers`, `rejectUnauthorized`. Did you mean to put these under `headers`?'
+]);
 const AppContainer = createAppContainer(RootStack);
 
 type Props = {};

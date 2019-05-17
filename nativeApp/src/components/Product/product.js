@@ -53,10 +53,44 @@ import {SERVER_ROOT} from '../../services/constants';
     }, 1000);
   }
   componentDidMount(){
-  
+
   }
   componentWillReceiveProps(props){
 
+  }
+  productPrice() {
+    let discountedPrice = this.props.product
+      ? this.props.product.discounted_price
+      : "";
+    if (discountedPrice !== "0.00") {
+      return (
+        <View>
+          <Text style={{...styles.price, ...styles.red}}>
+
+          <Text style={{...styles.price, ...styles.red}}>
+
+            {this.props.product
+              ? "$" + this.props.product.discounted_price+" "
+              : ""}
+            </Text>
+            <Text style={styles.price_stripe}>{this.props.product
+              ? "$" + this.props.product.price
+              : ""}</Text>
+                </Text>
+
+            </View>
+      );
+    } else {
+      return (
+        <View>
+         <Text style={{...styles.price, ...styles.red}}>
+          {this.props.product
+            ? "$" + this.props.product.price
+            : ""}
+          </Text>
+          </View>
+      );
+    }
   }
   render() {
     let productImage,productId = '';
@@ -68,6 +102,7 @@ import {SERVER_ROOT} from '../../services/constants';
         productImage = "";
         productId="";
     }
+    console.log(this.props.product);
     return (
           <View style={styles.item}>
            <TouchableOpacity
@@ -82,7 +117,7 @@ import {SERVER_ROOT} from '../../services/constants';
             />
             </TouchableOpacity>
             <Text style={{...styles.h2, ...styles.black}}>{this.props.product.name && this.props.product.name}</Text>
-				        <Text style={{...styles.price, ...styles.red}}>{this.props.product.price && this.props.product.price}</Text>
+				    {this.productPrice()}
             <TouchableOpacity onPress={this.addtoCart.bind(this)}><Text style={styles.button}>Add to cart</Text></TouchableOpacity>
         </View>
         );
