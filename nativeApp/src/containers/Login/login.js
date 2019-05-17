@@ -12,7 +12,7 @@ import SyncStorage from 'sync-storage';
 import {styles} from '../Home/home-styles';
 import Footer from '../../components/Footer/footer';
 import NavBar from '../../components/Navbar/navbar';
-import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
+import {LoginManager,LoginButton,AccessToken ,GraphRequest,GraphRequestManager } from 'react-native-fbsdk';
 
 
 const socket = io(API_ROOT.split("/api/")[0]);
@@ -28,6 +28,7 @@ class Login extends Component {
       errors: null,
       isSigninInProgress:false
     };
+    this._responseInfoCallback=this._responseInfoCallback.bind(this);
   }
 
   login() {
@@ -104,61 +105,66 @@ class Login extends Component {
   openPopup(url) {
     Linking.openURL(url)
   }
-
+  _responseInfoCallback(data,json,data2){  
+    
+    let props = this.props;  
+    console.log("ereeeeee",props);
+    
+  }
   initUser(token) {
+   
     let props=this.props;
-    fetch('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + token)
-    .then((response) => response.json())
-    .then((json) => {
-      console.log("dataaaaa",json,props.token,API_ROOT + "userExists");
-
-      axios
-      .post(
-        API_ROOT + "userExists",
-        {
-          name: json.name,
-          email: json.email
-        },
-        { headers: { Authorization: `Bearer ${props.token}` } }
-      )
-      .then(function(response) {
-        console.log("here");
-        if(response.data.user)
-        {
-          console.log("here 2");
-          SyncStorage.set("s-atk",response.data.token);
-          props.setUser(response.data.user);
-          let route =SyncStorage.get("nextRoute");
-          if (route) {
-            if (route.length > 0) {
-              SyncStorage.remove("nextRoute");
-              NavigationService.navigate(route);
+    const infoRequest = new GraphRequest(
+      '/me?fields=name,email&access_token='+ token,
+      null,
+      function(err,json){
+        console.log("sdd",json, err); 
+        axios
+        .post(
+          API_ROOT + "userExists",
+          {
+            name: json.name,
+            email: json.email
+          },
+          { headers: { Authorization: `Bearer ${props.token}` } }
+        )
+        .then(function(response) {
+          console.log("here");
+          if(response.data.user)
+          {
+            console.log("here 2");
+            SyncStorage.set("s-atk",response.data.token);
+            props.setUser(response.data.user);
+            let route =SyncStorage.get("nextRoute");
+            if (route) {
+              if (route.length > 0) {
+                SyncStorage.remove("nextRoute");
+                NavigationService.navigate(route);
+              } else {
+                NavigationService.navigate("Home");
+              }
             } else {
               NavigationService.navigate("Home");
             }
-          } else {
-            NavigationService.navigate("Home");
+            console.log("here 3");
           }
-          console.log("here 3");
-        }
-        else
-        {
-          console.log("here 4");
-            NavigationService.navigate("SetPassword",{username:json.name,email:json.email});
-        }
-        console.log("here 5");
-      },function(e){
-        console.log("some error 22",e);
-      })
-      .catch(function(error) {
-        console.log("some error 4444");
-      });
+          else
+          {
+            console.log("here 4");
+              NavigationService.navigate("SetPassword",{username:json.name,email:json.email});
+          }
+          console.log("here 5");
+        },function(e){
+          console.log("some error 22",e);
+        })
+        .catch(function(error) {
+          console.log("some error 4444");
+        });
 
-
-    })
-    .catch(() => {
-      console.log("some error 66666");
-    })
+      }
+    );
+    // Start the graph request.
+    new GraphRequestManager().addRequest(infoRequest).start();    
   }
   render() {
     let name = null;
@@ -180,9 +186,10 @@ class Login extends Component {
            if(provider=="facebook")
            {
               return <LoginButton
-              readPermissions={['public_profile']}
+              readPermissions={['public_profile', "email"]}
               onLoginFinished={
                 (error, result) => {
+                  console.log("logib",error);
                   if (error) {
                     console.log('login has error: ', result.error)
                   } else if (result.isCancelled) {

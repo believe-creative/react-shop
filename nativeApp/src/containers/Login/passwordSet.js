@@ -12,7 +12,7 @@ import SyncStorage from 'sync-storage';
 import {styles} from '../Home/home-styles'; 
 import Footer from '../../components/Footer/footer';
 import { WebView } from 'react-native-webview';
-
+import NavBar from '../../components/Navbar/navbar';
 
 const socket = io(API_ROOT.split("/api/")[0]);
 
@@ -108,7 +108,9 @@ class SetPassword extends Component {
   render() {
 
     return (
-      <ScrollView style={styles.home}>
+      <View>
+        <NavBar />
+      <ScrollView style={[styles.home,{paddingRight:10,paddingLeft:10}]}>
             {this.show_errors()}
 		    <View style={styles.input_block}>
             <Text htmlFor="email" style={styles.input_text}>Name:</Text>
@@ -149,6 +151,7 @@ class SetPassword extends Component {
             </View>
 			<Footer />           
       </ScrollView>
+      </View>
     );
   }
 }
