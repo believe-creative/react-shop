@@ -102,7 +102,6 @@ import {SERVER_ROOT} from '../../services/constants';
         productImage = "";
         productId="";
     }
-    console.log(this.props.product);
     return (
           <View style={styles.item}>
            <TouchableOpacity
@@ -110,7 +109,6 @@ import {SERVER_ROOT} from '../../services/constants';
             this.props.setCurrentProduct(productId);
              NavigationService.navigate('ProductDetails', {productid: productId});
             }}
-
             style={styles.center} >
             <Image style={{width: 320, height: 250, marginBottom: 10}}
               source={{uri:productImage}}
