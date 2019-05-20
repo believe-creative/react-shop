@@ -8,6 +8,9 @@ export const styles = StyleSheet.create({
 		fontSize: 16,
 		fontWeight:'400',
 	},
+	defaultFontFamily: {
+		fontFamily: 'Roboto, lucida grande',
+	},
 	gray_bg:{
 		backgroundColor: '#f7f7f7',
 	},

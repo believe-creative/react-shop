@@ -88,7 +88,20 @@ class App extends Component {
 
         </Provider>
         );
+		const oldRender = Text.prototype.render;
+   Text.prototype.render = function render(...args) {
+     const origin = oldRender.call(this, ...args);
+     return React.cloneElement(origin, {
+     style: [styles.defaultFontFamily, origin.props.style],
+     });
+   };
       }
 }
+const styles = StyleSheet.create({
+   defaultFontFamily: {
+     fontFamily: 'Roboto',
+   },
+ });
+
 
 export default App;
