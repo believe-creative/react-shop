@@ -14,7 +14,8 @@ class SearchItem extends Component {
       searchitem: "",
       buttonClicked:false,
       finalTerm:null,
-      visible:false      
+      visible:false,
+      errors:null      
     };
   }
   componentDidMount() {
@@ -27,11 +28,24 @@ class SearchItem extends Component {
     this.setState({ searchitem:searchInfo});
   }
   searchSubmit(){
-    this.props.getSearchItems({
-      token: this.props.token,
-      searchTerm: this.state.searchitem
-    });    
-    this.setState({buttonClicked:false,finalTerm:this.state.searchitem, visible:true});
+    if(this.state.searchitem == ""){
+      this.setState({visible:false,errors:"Please enter the search term"});
+    }else{
+      this.props.getSearchItems({
+        token: this.props.token,
+        searchTerm: this.state.searchitem
+      });    
+      this.setState({buttonClicked:false,finalTerm:this.state.searchitem, visible:true, errors:null});
+    }    
+  }
+  showError() {
+    if (this.state["errors"]) {
+      return (
+        <Text style={{...styles.basefont,...styles.space,...styles.error}}>{this.state["errors"]}</Text>
+      );
+    } else {
+      return <Text />;
+    }
   }
   componentWillReceiveProps(){
     if (this.props.searchItems && this.state.finalTerm) {
@@ -72,7 +86,7 @@ class SearchItem extends Component {
     return (
 		 <View style={styles.search_main_block}>
 		 	<NavBar />
-			<ScrollView>
+			<ScrollView>       
         <AnimatedLoader
           visible={visible}
           overlayColor="rgba(255,255,255,0.75)"
@@ -87,9 +101,12 @@ class SearchItem extends Component {
 					  />              
 					 <TouchableOpacity onPress={this.searchSubmit.bind(this)}>
 						<Text style={styles.button}>Search</Text>
-					 </TouchableOpacity>  
-				</View>
-				<View style={styles.search_results}>{this.SearchProducts()}</View>
+					 </TouchableOpacity>            
+				</View>        
+        <View style={styles.search_results}>
+        {this.showError()}
+        {this.SearchProducts()}
+        </View>
 				 <Footer />
 			</ScrollView>
 		</View> 
