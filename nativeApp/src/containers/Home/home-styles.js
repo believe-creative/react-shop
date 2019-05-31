@@ -191,10 +191,10 @@ export const styles = StyleSheet.create({
 		fontWeight: 'bold',
 		fontSize: 22,
 		marginBottom: 5,
-		marginTop:5, 
+		marginTop:5,
 	},
 	price_stripe:{
-		textDecorationLine: 'line-through', 
+		textDecorationLine: 'line-through',
 		textDecorationStyle: 'solid'
 	},
 	price_text:{
@@ -298,7 +298,7 @@ export const styles = StyleSheet.create({
 
 	social_media:{
 		flex:1,
-		justifyContent:'space-between',
+		justifyContent:'center',
 		alignItems:'center',
 		flexDirection:'row',
 	},
@@ -314,7 +314,7 @@ export const styles = StyleSheet.create({
 	},
   cart_header:{
     paddingLeft:15,
-    paddingRight:15,   
+    paddingRight:15,
 	},
 	cart_top_block:{
 		backgroundColor: '#fff',

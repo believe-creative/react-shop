@@ -3,6 +3,9 @@ package com.nativeapp;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.reactnativecommunity.webview.RNCWebViewPackage;
+import com.github.yamill.orientation.OrientationPackage;
+import co.apptailor.googlesignin.RNGoogleSigninPackage;
 import com.airbnb.android.react.lottie.LottiePackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
@@ -32,12 +35,15 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNCWebViewPackage(),
+            new OrientationPackage(),
+            new RNGoogleSigninPackage(),
             new LottiePackage(),
             new VectorIconsPackage(),
             new AsyncStoragePackage(),
             new RNGestureHandlerPackage(),
-          new StripeReactPackage(),
-          new FBSDKPackage(mCallbackManager)
+            new StripeReactPackage(),
+            new FBSDKPackage(mCallbackManager)
       );
     }
 
@@ -51,7 +57,7 @@ public class MainApplication extends Application implements ReactApplication {
 
   protected static CallbackManager getCallbackManager() {
     return mCallbackManager;
-  } 
+  }
 
   @Override
   public ReactNativeHost getReactNativeHost() {
