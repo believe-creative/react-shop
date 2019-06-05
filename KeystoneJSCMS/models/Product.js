@@ -12,16 +12,19 @@ var Product = new keystone.List('Product', {
 });
 
 Product.add({
-	title: { type: String, required: true },
+	title: { type: String, required: true },	
+	content: {		
+		extended: { type: Types.Html, wysiwyg: true, height: 400 },
+	},
+	price: {type: Types.Money, format: '$0,0.00'},
+	discounted_price: {type: Types.Money, format: '$0,0.00'},
+	image: { type: Types.CloudinaryImage },
+	image2: { type: Types.CloudinaryImage },
+	thumbnail: {type: Types.CloudinaryImage},
+	categories: { type: Types.Relationship, ref: 'Category', many: true },
 	state: { type: Types.Select, options: 'draft, published, archived', default: 'draft', index: true },
 	author: { type: Types.Relationship, ref: 'User', index: true },
 	publishedDate: { type: Types.Date, index: true, dependsOn: { state: 'published' } },
-	image: { type: Types.CloudinaryImage },
-	content: {
-		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		extended: { type: Types.Html, wysiwyg: true, height: 400 },
-	},
-	categories: { type: Types.Relationship, ref: 'Category', many: true },
 });
 
 Product.schema.virtual('content.full').get(function () {

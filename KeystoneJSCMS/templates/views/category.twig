@@ -34,7 +34,7 @@
 							{% for post in data.products.results %}
 								<div class="post" data-ks-editable="editable(user, { list: 'Post', id: post.id })">
 									<h2>
-										<a href="/category/post/{{ post.slug }}">{{ post.title }}</a>
+										<a href="/category/product/{{ post.slug }}">{{ post.title }}</a>
 									</h2>
 									<p class="lead text-muted">Posted
 										{% if post.publishedDate %}
@@ -57,7 +57,7 @@
 									<p>{{ post.content.brief | striptags }}</p>
 									{% if post.content.extended %}
 										<p class="read-more">
-											<a href="/category/post/{{ post.slug }}">Read more...</a>
+											<a href="/category/product/{{ post.slug }}">Read more...</a>
 										</p>
 									{% endif %}
 								</div>
