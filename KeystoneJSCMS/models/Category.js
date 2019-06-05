@@ -19,5 +19,5 @@ Category.add({
 });
 
 Category.relationship({ ref: 'Product', path: 'products', refPath: 'categories' });
-
+Category.defaultColumns = 'title, department|20%, state|20%, publishedDate|20%';
 Category.register();
