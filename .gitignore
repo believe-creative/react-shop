@@ -28,3 +28,4 @@ yarn-error.log*
 /nativeApp/android
 /nativeApp/ios
 /nativeApp/node_modules
+/web-app/node_modules
