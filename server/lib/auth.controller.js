@@ -1,5 +1,4 @@
 let jwt = require("jsonwebtoken");
-const { checkUserWithEmail } = require("../server");
 let secret_key = require("../config.js").secret_key;
 exports.facebook = (req, res) => {
   const io = req.app.get("io");
