@@ -18,6 +18,8 @@ Product.add({
 	},
 	price: {type: Types.Money, format: '$0,0.00'},
 	discounted_price: {type: Types.Money, format: '$0,0.00'},
+	size: { type: Types.Relationship, ref: 'AttributeValue', many: true, filters: { attribute: '5cff5065f4b4e0f0ec566608' } },
+	color: { type: Types.Relationship, ref: 'AttributeValue', many: true, filters: { attribute: '5cff5071f4b4e0f0ec566609' } },
 	image: { type: Types.CloudinaryImage },
 	image2: { type: Types.CloudinaryImage },
 	thumbnail: {type: Types.CloudinaryImage},
@@ -30,5 +32,5 @@ Product.schema.virtual('content.full').get(function () {
 	return this.content.extended;
 });
 
-Product.defaultColumns = 'title, state|20%, author|20%, publishedDate|20%';
+Product.defaultColumns = 'title, size|15%, color|15% state|10%, author|10%, publishedDate|20%';
 Product.register();
