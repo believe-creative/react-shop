@@ -32,28 +32,6 @@ const stripe = require("stripe")("sk_test_rxGG6bAyvVn3goQP3AimI5dz");
 
 let secret_key = require("./config.js").secret_key;
 
-
-
-const mongoose = require('mongoose');
-
-// const options = {
-//   key: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/privkey.pem'),
-//   cert: fs.readFileSync('/etc/letsencrypt/live/reactshop.amoha.co/fullchain.pem')
-//   };
-
-// const sequelize = new Sequelize("tshirtshop_db", "root", "", {
-//   host: "192.168.0.135",
-//   dialect: "mysql",
-//   port: 3306
-// });
-
-// const sequelize = new Sequelize('tshirtshop_db', 'tshirtshop_dba', 'T$h!Rt$h$o@p!D@b@', {
-//   host: 'localhost',
-//   dialect: 'mysql',
-//   port:3306
-// });
-//const sequelize = mongoose.connect('mongodb://localhost:27017/react-shop-admin');
-
 const port = 5000;
 var app = express();
 app.use(require("morgan")("combined"));
@@ -67,11 +45,6 @@ app.use(
     saveUninitialized: true
   })
 );
-
-
-// const httpServer = https.createServer(options, app).listen(5000,() => {
-//   console.log(`Running on https://reactshop.amoha.co:${port}`)
-// });
 
 const httpServer = http.createServer(app).listen(5000, () => {
   console.log(`Running on https://reactshop.amoha.co:${port}`);
@@ -94,32 +67,75 @@ var jsonParser = bodyParser.json();
 
 // create application/x-www-form-urlencoded parser
 var urlencodedParser = bodyParser.urlencoded({ extended: false });
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://localhost:27017/";
+var ObjectID = require('mongodb').ObjectID;
+    /*
+     * To get API token
+     */
+    app.get("/api/get_token", (req, res) => {
+      let token = jwt.sign({}, secret_key, { expiresIn: "2h" });
+      return res.json({ status: "success", token: token });
+    });
 
-/*
- * To get API token
- */
-app.get("/api/get_token", (req, res) => {
-  let token = jwt.sign({}, secret_key, { expiresIn: "2h" });
-  return res.json({ status: "success", token: token });
-});
 
-app.get("/api/get-departments", checkToken, (req, res) => {
-  // sequelize
-  //   .query("CALL catalog_get_departments()")
-  //   .then(departments => res.json(departments));
-  var MongoClient = require('mongodb').MongoClient;
-  var url = "mongodb://localhost:27017/";
 
-  MongoClient.connect(url, function(err, db) {
+MongoClient.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db("react-shop-admin");
+
+    /*
+     * To get all departments
+     */
+    app.get("/api/get-departments", checkToken, (req, res) => {
     dbo.collection("departments").find({}).toArray(function(err, departments) {
       if (err) throw err;
-      
-      res.json(departments);
-      db.close();
+      let departments_details={};
+      let departments_array=[];
+      departments.map((value,index)=>{
+      departments_details.department_id=value._id;
+      departments_details.slug=value.slug;
+      departments_details.name=value.name;
+      departments_array.push(departments_details);
+      departments_details={};
+    });
+
+    res.json(departments_array);
+         // db.close();
     });
   });
+
+  /*
+   * To get all categories using departmentid
+   * Parameters {inDepartmentId}
+   */
+   app.post("/api/get-department-categories", checkToken, (req, res) => {
+       let department =ObjectID(req.body.inDepartmentId);
+
+       dbo.collection("categories").find({department:department}).toArray(function(err, categories) {
+         if (err) throw err;
+         res.json(categories);
+         // db.close();
+       });
+    });
+   //  /*
+   //   * To get all products using department id
+   //   * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+   //   */
+   //  app.post("/api/get-department-products", checkToken, (req, res) => {
+   //    let inDepartmentId = ObjectID(req.body.inDepartmentId);
+   //    let inShortProductDescriptionLength =
+   //       ObjectID(req.body.inShortProductDescriptionLength);
+   //    let inProductsPerPage =  ObjectID(req.body.inProductsPerPage);
+   //    let inStartItem =  ObjectID(req.body.inStartItem);
+   //
+   //    dbo.collection("products").find({categories:inDepartmentId,content:inShortProductDescriptionLength,inProductsPerPage:inProductsPerPage,inStartItem:inStartItem}).toArray(function(err, products) {
+   //      if (err) throw err;
+   //      console.log(products);
+   //      res.json(products);
+   //      // db.close();
+   //    });
+   // });
 });
 
 // Define routes.

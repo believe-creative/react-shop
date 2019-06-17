@@ -1,13 +1,12 @@
 var keystone = require('keystone');
 var Types = keystone.Field.Types;
-
 /**
  * Department Model
  * =============
  */
 
- var Department = new keystone.List('Department', {     
-     autokey:{path:'slug', from:'title', unique:true},
+ var Department = new keystone.List('Department', {
+     autokey:{path:'slug', from:'name', unique:true},
  });
 
  Department.add({
@@ -15,8 +14,8 @@ var Types = keystone.Field.Types;
      state:{type:Types.Select, options:'draft,published,archived', default:'draft', index:true},
      publishedDate:{type:Types.Date, index:true, dependsOn:{state:'published'}},
      content: {
-		brief: { type: Types.Html, wysiwyg: true, height: 150 },
-		extended: { type: Types.Html, wysiwyg: true, height: 400 },
+		 brief: { type: Types.Html, wysiwyg: true, height: 150 },
+	 	 extended: { type: Types.Html, wysiwyg: true, height: 400 },
 	},
  });
  Department.schema.virtual('content.full').get(function(){
