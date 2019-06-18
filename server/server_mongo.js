@@ -118,24 +118,49 @@ MongoClient.connect(url, function(err, db) {
          // db.close();
        });
     });
-   //  /*
-   //   * To get all products using department id
-   //   * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
-   //   */
-   //  app.post("/api/get-department-products", checkToken, (req, res) => {
-   //    let inDepartmentId = ObjectID(req.body.inDepartmentId);
-   //    let inShortProductDescriptionLength =
-   //       ObjectID(req.body.inShortProductDescriptionLength);
-   //    let inProductsPerPage =  ObjectID(req.body.inProductsPerPage);
-   //    let inStartItem =  ObjectID(req.body.inStartItem);
-   //
-   //    dbo.collection("products").find({categories:inDepartmentId,content:inShortProductDescriptionLength,inProductsPerPage:inProductsPerPage,inStartItem:inStartItem}).toArray(function(err, products) {
-   //      if (err) throw err;
-   //      console.log(products);
-   //      res.json(products);
-   //      // db.close();
-   //    });
-   // });
+    /*
+     * To get all products using department id
+     * Parameters {inDepartmentId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+     */
+    app.post("/api/get-department-products", checkToken, (req, res) => {
+
+      let inDepartmentId = ObjectID(req.body.inDepartmentId);
+
+      dbo.collection("categories").find({department:inDepartmentId}).toArray(function(err, categories) {
+        if (err) throw err;
+        let category=[];
+          categories.map((cat_data, index)=>{
+            category.push(ObjectID(cat_data._id));
+          });
+          //let inShortProductDescriptionLength = ObjectID(req.body.inShortProductDescriptionLength);
+          //let inProductsPerPage =  ObjectID(req.body.inProductsPerPage);
+        //  let inStartItem =  ObjectID(req.body.inStartItem);
+        console.log(category);
+          dbo.collection("products").find({categories:{$in:category}}).toArray(function(err, products) {
+
+            let products_array=[];
+            let product_details=[];
+            products.map((value,index)=>{
+            product_details.product_id=value._id;
+            product_details.slug=value.slug;
+            product_details.name=value.name;
+            product_details.image=value.image.secure_url;
+            product_details.image2=value.image2.secure_url;
+            product_details.thumbnail=value.thumbnail.secure_url;
+            product_details.price=value.price;
+            product_details.discounted_price=value.discounted_price;
+            product_details.category_id=value.categories;
+            products_array.push(product_details);
+            product_details={};
+          });
+            if (err) throw err;
+            res.json(products_array);
+            // db.close();
+          });
+      });
+
+
+   });
 });
 
 // Define routes.
