@@ -7,9 +7,8 @@ var Types = keystone.Field.Types;
  */
 
 
-var Order_detail = new keystone.List('order_detail', {
-	map: { name: 'order_detail' }
-});
+var Order_detail = new keystone.List('order_detail');
+
 Order_detail.add({
   item_id: { type: Number , initial: true , required: true},
   order_id: { type: Number , initial: true, required: true},

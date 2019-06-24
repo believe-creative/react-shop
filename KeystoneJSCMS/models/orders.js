@@ -22,7 +22,6 @@ Orders.add({
   reference: { type: String, initial: true, required: true },
   shipping_id: { type: Number, initial: true, required: true},
   tax_id: { type: Number , initial: true, required: true},
-
 });
 
 

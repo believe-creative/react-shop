@@ -11,10 +11,9 @@ var Shipping = new keystone.List('Shipping', {
 	map: { name: 'shipping_type' }
 });
 Shipping.add({
-  shipping_id: { type: Number , initial: true , index: true,  required: true},
   shipping_type: { type: String , index: true, required: true },
 	shipping_cost: { type: Number, initial: true , required: true },
-  shipping_region: { type: Number ,initial: true , required: true},
+  shipping_region: {type: Types.Relationship, ref:'Shipping_region', index:true},
   });
 
 
