@@ -611,7 +611,11 @@ MongoClient.connect(url, function(err, db) {
             product_details.image2=value.image2.secure_url;
             product_details.thumbnail=value.thumbnail.secure_url;
             product_details.price=value.price;
-            product_details.discounted_price=value.discounted_price;
+            if(value.discounted_price<=0){
+                product_details.discounted_price=value.price;
+              }else {
+                product_details.discounted_price=value.discounted_price;
+              }
             product_details.category_id=value.categories;
             products_array.push(product_details);
 
@@ -645,7 +649,11 @@ MongoClient.connect(url, function(err, db) {
           product_details.image2=value.image2.secure_url;
           product_details.thumbnail=value.thumbnail.secure_url;
           product_details.price=value.price;
-          product_details.discounted_price=value.discounted_price;
+          if(value.discounted_price<=0){
+              product_details.discounted_price=value.price;
+            }else {
+              product_details.discounted_price=value.discounted_price;
+            }
           product_details.category_id=value.categories;
           products_array.push(product_details);
 
@@ -680,7 +688,11 @@ MongoClient.connect(url, function(err, db) {
               product_details.image2=value.image2.secure_url;
               product_details.thumbnail=value.thumbnail.secure_url;
               product_details.price=value.price;
-              product_details.discounted_price=value.discounted_price;
+              if(value.discounted_price<=0){
+                product_details.discounted_price=value.price;
+              }else {
+                product_details.discounted_price=value.discounted_price;
+              }
               product_details.category_id=value.categories;
               products_array.push(product_details);
             }
@@ -710,11 +722,11 @@ MongoClient.connect(url, function(err, db) {
               if(inProductId.toString() === product_Id.toString()){
                 dbo.collection("categories").find({_id:category_Id}).toArray(function(err, categories) {
                   let department_Id = ObjectID(categories[0].department);
-                  let catogory_name= categories[0].name;
+                  let category_name= categories[0].name;
                   dbo.collection("departments").find({_id:department_Id}).toArray(function(err, departments) {
 
-                  product_details.catogory_id=category_Id;
-                  product_details.catogory_name=catogory_name;
+                  product_details.category_id=category_Id;
+                  product_details.category_name=category_name;
                   product_details.department_id=departments[0]._id;
                   product_details.department_name=departments[0].name;
                   products_array.push(product_details);
@@ -819,7 +831,13 @@ MongoClient.connect(url, function(err, db) {
                   product_details.attributes=attributes;
                   product_details.price=value.price;
                   product_details.quantity=quantity;
-                  subTotal=quantity*value.discounted_price;
+                  if(value.discounted_price<=0){
+                    subTotal=quantity*value.price;
+                    product_details.discounted_price=value.price;
+                  }else {
+                    product_details.discounted_price=value.discounted_price;
+                    subTotal=quantity*value.discounted_price;
+                  }
                   product_details.subtotal=subTotal;
                   products_array.push(product_details);
                   product_details={};
