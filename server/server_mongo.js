@@ -27,6 +27,7 @@ let mail = require("./nodeMailer");
 const socketio = require("socket.io");
 var passport = require("passport");
 SESSION_SECRET = "justfortesting";
+
 // CLIENT_ORIGIN="https://reactshop.amoha.co"
 CLIENT_ORIGIN = "http://localhost:3000";
 const stripe = require("stripe")("sk_test_rxGG6bAyvVn3goQP3AimI5dz");
@@ -71,16 +72,14 @@ var urlencodedParser = bodyParser.urlencoded({ extended: false });
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb://localhost:27017/";
 var ObjectID = require('mongodb').ObjectID;
-    /*
-     * To get API token
-     */
-    app.get("/api/get_token", (req, res) => {
-      let token = jwt.sign({}, secret_key, { expiresIn: "2h" });
-      return res.json({ status: "success", token: token });
-    });
 
-
-
+/*
+ * To get API token
+ */
+app.get("/api/get_token", (req, res) => {
+  let token = jwt.sign({}, secret_key, { expiresIn: "2h" });
+  return res.json({ status: "success", token: token });
+});
 
 MongoClient.connect(url, function(err, db) {
     if (err) throw err;
@@ -94,28 +93,25 @@ MongoClient.connect(url, function(err, db) {
       let email = req.body.email;
       let pwd = req.body.pwd;
       dbo.collection("users").find({ email: { $eq: email } }).toArray(function(err, users) {
-        console.log(users);
+        // console.log(users);
         if(users.length>0){
             bcrypt.compare(pwd,users[0].password, function(error, result) {
               // res == true
-            console.log(result);
+            // console.log(result);
             if (error) {
               return res.json({ status: "error", msg: "Incorrect password." });
             } else if (result == false) {
               return res.json({ status: "error", msg: "Incorrect password." });
             } else if (result) {
-
                   let user = { name: users[0].name.first+' '+users[0].name.last, email: users[0].email };
                   let token = jwt.sign({ email: users[0].email, user: user }, secret_key, {
                     expiresIn: "2h"
                   });
-
                   return res.json({
                     status: "success",
                     user: user,
                     token: token
                   });
-
             }
             });
         }else {
@@ -127,13 +123,27 @@ MongoClient.connect(url, function(err, db) {
         }
       });
       });
+
+      /*
+       * To get sociallogin Details
+       */
       app.use("/api/sociallogin", authRouter);
+
+      /*
+       * To get Login Success
+       */
       app.get("/loginsuccess", function(req, res) {
         res.render("success");
       });
 
+      /*
+       * To get Check User
+       */
       app.get("/api/checkuser", checkToken, checklogin);
 
+      /*
+       * To get Set Password
+       */
       app.get("/setpassword", function(req, res) {
         let userEmail= req.session.user.email;
         dbo.collection("users").find({ email: { $eq: userEmail } }).toArray(function(err, data) {
@@ -147,10 +157,17 @@ MongoClient.connect(url, function(err, db) {
             }
           });
       });
+
+      /*
+       * To get forbidden
+       */
       app.get("/forbidden", function(req, res) {
         res.render("forbidden");
       });
 
+      /*
+       * To Post Set Password
+       */
       app.post(
         "/setpassword",
         [
@@ -200,7 +217,9 @@ MongoClient.connect(url, function(err, db) {
             res.redirect("forbidden");
           }
         });
-      // /**************** Customer cart API Calls *****************/
+
+       /**************** Customer cart API Calls *****************/
+
       // /*
       //  * creating customer
       //  * Parameters {inName,inEmail,inPassword}
@@ -220,20 +239,20 @@ MongoClient.connect(url, function(err, db) {
        * Parameters {inCustomerId}
        */
       app.post("/api/get-customer", checkToken, (req, res) => {
-        console.log("/api/get-customer",req);
+        // console.log("/api/get-customer",req);
         let inCustomerId = req.body.inCustomerId;
         let inEmail = req.body.inEmail;
 
         if (inCustomerId) {
-            console.log("inCustomerId",inCustomerId);
+            // console.log("inCustomerId",inCustomerId);
           dbo.collection("users").find({ _id: { $eq: inCustomerId } }).toArray(function(err, get_customer) {
               res.json(get_customer);
             });
 
         } else {
-          console.log("inEmail",inEmail);
+          // console.log("inEmail",inEmail);
           dbo.collection("users").find({ email: { $eq: inEmail } }).toArray(function(err, customer_info) {
-              console.log(customer_info);
+              // console.log(customer_info);
               dbo.collection("users").find({ _id: { $eq: customer_info[0]._id } }).toArray(function(err, get_customer) {
                   res.json(get_customer);
               });
@@ -256,15 +275,37 @@ MongoClient.connect(url, function(err, db) {
        */
       app.post("/api/get-address", checkToken, jsonParser, (req, res) => {
         let inEmail = req.body.inEmail;
-        //let inAddressId = req.body.inAddressId;
-        if(req.body.inEmail){
+        // let inAddressId = req.body.inAddressId;
+        console.log(inEmail);
+
           dbo.collection("users").find({ email: { $eq: inEmail } }).toArray(function(err, get_user) {
-            console.log(get_user);
+            if(get_user.length > 0){
               dbo.collection("addresses").find({ customer_id: { $eq: get_user[0]._id } }).toArray(function(err, get_address) {
-                  res.json(get_address);
+                let address_details=[];
+                get_address.map((address,ind)=>{
+                  let address_data={};
+                    address_data.id=address._id;
+                    address_data.customer_id=address.customer_id;
+                    address_data.address_name=address.address_name;
+                    address_data.address_1=address.address_1;
+                    address_data.address_2=address.address_2;
+                    address_data.city=address.city;
+                    address_data.region=address.region;
+                    address_data.postal_code=address.postal_code;
+                    address_data.country=address.country;
+                    address_data.shipping_region_id=address.shipping_region_id;
+                    address_data.day_phone=address.day_phone;
+                    address_data.eve_phone=address.eve_phone;
+                    address_data.mob_phone=address.mob_phone;
+                    address_details.push(address_data);
+                });
+
+                res.json(address_details);
               });
+            }
           });
-        }
+
+
       });
 
       /*
@@ -273,10 +314,15 @@ MongoClient.connect(url, function(err, db) {
        */
       app.get("/api/get-customer-shipping-regions", checkToken, (req, res) => {
         dbo.collection("shipping_regions").find({}).toArray(function(err, get_shipping_regions) {
-          console.log(get_shipping_regions);
-          res.json(get_shipping_regions);
+          let shipping_region_details=[];
+          get_shipping_regions.map((shipping,ind)=>{
+            let shipping_data={};
+            shipping_data.shipping_region_id=shipping._id;
+            shipping_data.shipping_region=shipping.shipping_region;
+            shipping_region_details.push(shipping_data);
+          })
+          res.json(shipping_region_details);
         });
-
       });
 
       /*
@@ -287,14 +333,13 @@ MongoClient.connect(url, function(err, db) {
         let inShippingRegionId = req.body.inShippingRegionId;
         dbo.collection("shippings").find({}).toArray(function(err, get_shippings) {
           let shipping_details=[];
-
           get_shippings.map((shipping,ind)=>{
             let shipping_data={};
             if(shipping.shipping_region.toString() == inShippingRegionId.toString() ){
               shipping_data.shipping_id=shipping._id;
               shipping_data.shipping_cost=shipping.shipping_cost;
               shipping_data.shipping_type=shipping.shipping_type;
-              shipping_data.shipping_region=shipping.shipping_region;
+              shipping_data.shipping_region_id=shipping.shipping_region;
               shipping_details.push(shipping_data);
             }
           })
@@ -302,6 +347,7 @@ MongoClient.connect(url, function(err, db) {
         });
       });
 
+      /*To Post Payment    .....*/
       app.post("/api/payment", checkToken, jsonParser, (req, response) => {
         let amount = Math.round(req.body.amount) * 100;
         let inOrderAddress = req.body.inOrderAddress;
@@ -322,20 +368,55 @@ MongoClient.connect(url, function(err, db) {
 
             dbo.collection("users").find({email: { $eq: req.body.email}}).toArray(function(err, get_user) {
               let order = {
-                inCartId: req.body.inCartId,
-                inOrderAddress: inOrderAddress,
-                inCustomerId: get_user[0]._id,
-                inShippingId: req.body.inShippingId,
-                inTaxId: req.body.inTaxId
-              };
+                cart_id: req.body.inCartId,
+                order_address: inOrderAddress,
+                customer_id: get_user[0]._id,
+                shipping_id: req.body.inShippingId,
+                tax_id: req.body.inTaxId,
+                shipped_on:"",
+                status:"",
+                total_amount:"",
 
+              };
+              let full_order_details = [];
               dbo.collection("orders").save(order, (err, result) => {
                 if(err) {
                   console.log(err);
                 }
-                console.log(result);
+                full_order_details.push({ order_info:  result.ops[0],shipping_address:get_user[0] });
+                  dbo.collection("shopping_carts").find({cart_id: { $eq:  result.ops[0].inCartId}}).toArray(function(err, get_cart) {
+                    // console.log(get_cart);
+                    let order_detail_array=[];
+                    get_cart.map((cart,index)=>{
+                    let order_detail={};
 
+                    dbo.collection("products").find({_id: { $eq:  cart.product_id}}).toArray(function(err, product) {
+                      // console.log("products",product);
+                      order_detail={
+                        order_id:result.ops[0]._id,
+                        product_id:cart.product_id,
+                        attributes:cart.attributes,
+                        product_name:product[0].name,
+                        quantity:cart.quantity,
+                        unit_cost:product[0].discounted_price,
+                      }
+                      order_detail_array.push(order_detail);
+                    dbo.collection("order_details").save(order_detail, (err, order_detail_result) => {
+                      if(err) {
+                        console.log(err);
+                      }
+                        full_order_details.push({ products: order_detail_array });
 
+                      // console.log(order_detail_array,full_order_details);
+                    });
+                  });
+                });
+                mail.orderEmail(
+                  full_order_details,
+                  req.body.email
+                );
+                return response.json({ status: "order created" });
+              });
                 });
 
               });
@@ -346,8 +427,112 @@ MongoClient.connect(url, function(err, db) {
           });
       });
 
+      /*
+       * To Add Customer Address
+       * Parameters {inEmail,inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
+       */
+      app.post("/api/add-address", checkToken, jsonParser, (req, res) => {
+        let inEmail = req.body.inEmail;
+        let inAddressName = req.body.inAddressName;
+        let inAddress1 = req.body.inAddress1;
+        let inAddress2 = req.body.inAddress2;
+        let inCity = req.body.inCity;
+        let inRegion = req.body.inRegion;
+        let inPostalCode = req.body.inPostalCode;
+        let inCountry = req.body.inCountry;
+        let inShippingRegionId = req.body.inShippingRegionId;
+        let inDayPhone = req.body.inDayPhone;
+        let inEvePhone = req.body.inEvePhone;
+        let inMobPhone = req.body.inMobPhone;
+        dbo.collection("users").find({email: { $eq: req.body.inEmail}}).toArray(function(err, get_user) {
+          let address_details={};
+          console.log(get_user);
 
+              address_details={
+                customer_id: get_user[0]._id,
+                address_name: inAddressName,
+                address_1: inAddress1,
+                address_2: inAddress2,
+                city: inCity,
+                region: inRegion,
+                postal_code: inPostalCode,
+                country: inCountry,
+                shipping_region_id: inShippingRegionId,
+                day_phone: inDayPhone,
+                eve_phone: inEvePhone,
+                mob_phone: inMobPhone,
 
+              };
+
+            dbo.collection("addresses").save(address_details, (err, address_detail_result) => {
+              if(err) {
+                console.log(err);
+              }
+              res.json(address_detail_result.ops[0]);
+            });
+        });
+      });
+
+      /*
+       * To Update Customer Address
+       * Parameters {inEmail, inAddressId, inCustomerId, inAddressName, inAddress1, inAddress2, inCity, inPostalCode, inCountry, inDayPhone, inEvePhone, inMobPhone}
+       */
+      app.post("/api/update-address", checkToken, jsonParser, (req, res) => {
+        let inEmail = req.body.inEmail;
+        let inAddressId = req.body.inAddressId;
+        let inAddressName = req.body.inAddressName;
+        let inAddress1 = req.body.inAddress1;
+        let inAddress2 = req.body.inAddress2;
+        let inCity = req.body.inCity;
+        let inRegion = req.body.inRegion;
+        let inPostalCode = req.body.inPostalCode;
+        let inCountry = req.body.inCountry;
+        let inShippingRegionId = req.body.inShippingRegionId;
+        let inDayPhone = req.body.inDayPhone;
+        let inEvePhone = req.body.inEvePhone;
+        let inMobPhone = req.body.inMobPhone;
+        var address_id = {
+          _id: new ObjectID(inAddressId)
+        };
+          dbo.collection("users").find({email: { $eq: req.body.inEmail}}).toArray(function(err, get_user) {
+            let address_details={};
+            console.log(get_user);
+            address_details={
+              customer_id: get_user[0]._id,
+              address_name: inAddressName,
+              address_1: inAddress1,
+              address_2: inAddress2,
+              city: inCity,
+              region: inRegion,
+              postal_code: inPostalCode,
+              country: inCountry,
+              shipping_region_id: inShippingRegionId,
+              day_phone: inDayPhone,
+              eve_phone: inEvePhone,
+              mob_phone: inMobPhone,
+
+            };
+         dbo.collection("addresses").updateOne(address_id, {$set:address_details}, (err, update_address) => {
+          if(err) {
+            throw err;
+          }
+          res.json(update_address)
+         });
+        });
+      });
+      /*
+       * To Delete Customer Address
+       * Parameters {inAddressId}
+       */
+      app.post("/api/delete-customer-address", checkToken, (req, res) => {
+        let inAddressId = {_id: ObjectID(req.body.inAddressId)};
+        dbo.collection('addresses').deleteOne(inAddressId, (err, delete_address) => {
+          if(err) {
+            throw err;
+          }
+          res.json(delete_address)
+        });
+      });
 
 
     /*
@@ -380,7 +565,18 @@ MongoClient.connect(url, function(err, db) {
 
        dbo.collection("categories").find({department:department}).toArray(function(err, categories) {
          if (err) throw err;
-         res.json(categories);
+         let category_array=[];
+         categories.map((value,index)=>{
+         let category_details={};
+         category_details.category_id=value._id;
+         category_details.slug=value.slug;
+         category_details.name=value.name;
+         category_details.state=value.state;
+         category_details.department=value.department;
+         category_details.publishedDate=value.publishedDate;
+         category_array.push(category_details);
+       });
+         res.json(category_array);
          // db.close();
        });
     });
@@ -426,6 +622,39 @@ MongoClient.connect(url, function(err, db) {
             // db.close();
           });
       });
+      });
+      /*
+       * To get all category related products using category id.
+       * Parameters {inCategoryId, inShortProductDescriptionLength, inProductsPerPage, inStartItem }
+       */
+      app.post("/api/get-category-products", checkToken, (req, res) => {
+        let inCategoryId = ObjectID(req.body.inCategoryId);
+        let inShortProductDescriptionLength =
+          req.body.inShortProductDescriptionLength;
+        let inProductsPerPage = req.body.inProductsPerPage;
+        let inStartItem = req.body.inStartItem;
+        dbo.collection("products").find({categories:{$in:[inCategoryId]}}).toArray(function(err, products) {
+          let products_array=[];
+          let product_details=[];
+          products.map((value,index)=>{
+          product_details={};
+          product_details.product_id=value._id;
+          product_details.slug=value.slug;
+          product_details.name=value.name;
+          product_details.image=value.image.secure_url;
+          product_details.image2=value.image2.secure_url;
+          product_details.thumbnail=value.thumbnail.secure_url;
+          product_details.price=value.price;
+          product_details.discounted_price=value.discounted_price;
+          product_details.category_id=value.categories;
+          products_array.push(product_details);
+
+        });
+
+          if (err) throw err;
+          res.json(products_array);
+          // db.close();
+        });
       });
       /*
        * To get product details
@@ -528,8 +757,8 @@ MongoClient.connect(url, function(err, db) {
         if (!inCartId || inCartId == "null" || inCartId == null)
             inCartId = uniqueString();
             let cart_productid="";
-            dbo.collection("shopping_carts").find({product_id:inProductId}).toArray(function(err, cart_details) {
-              console.log("cart_details.product_id:",cart_details);
+            dbo.collection("shopping_carts").find({cart_id:inCartId}).toArray(function(err, cart_details) {
+              // console.log("cart_details.product_id:",cart_details);
               if(cart_details[0]){
                 cart_productid=cart_details[0].product_id;
               }
@@ -577,12 +806,13 @@ MongoClient.connect(url, function(err, db) {
         let product_details={};
             products.map((value,index)=>{
               cart_details.map((cat_data, index)=>{
+                let cart_id=cat_data._id;
                 let attributes=cat_data.attributes;
                 let quantity=parseInt(cat_data.quantity);
                 if(cat_data.product_id.toString()==value._id.toString())
                 {
                   let subTotal="";
-                  product_details.item_id=value.slug;
+                  product_details.item_id=cart_id;
                   product_details.slug=value.slug;
                   product_details.name=value.name;
                   product_details.thumbnail=value.thumbnail.secure_url;
@@ -608,34 +838,27 @@ MongoClient.connect(url, function(err, db) {
     * Parameters{inItemId}
     */
    app.post("/api/remove-product-from-cart", checkToken, (req, res) => {
-     let inItemId = req.body.inItemId;
-     dbo.collection("products").find({slug:inItemId}).toArray(function(err, product) {
-     if (err) throw err;
-     console.log(product[0]._id,"product");
-     dbo.collection('shopping_carts').deleteOne({product_id: product[0]._id}, (err, result) => {
+     let inItemId = ObjectID(req.body.inItemId);
+
+     dbo.collection('shopping_carts').deleteOne( { _id:inItemId}, (err, result) => {
       if(err) throw err;
       res.json("removed from cart");
      });
-    });
+
    });
    /*
     * To update the shopping by increasing the quantity.
     * Parameters{inItemId,inQuantity}
     */
    app.post("/api/cart-update", checkToken, (req, res) => {
-     let inItemId = req.body.inItemId;
+     let inItemId = ObjectID(req.body.inItemId);
      let inQuantity = parseInt(req.body.inQuantity);
-     dbo.collection("products").find({slug:inItemId}).toArray(function(err, product) {
-     if (err) throw err;
-     var product_id = {
-      product_id: new ObjectID(product[0]._id)
-    };
-     console.log(product[0]._id,"product");
-     dbo.collection('shopping_carts').updateOne(product_id, {$set:{quantity: inQuantity}}, (err, result) => {
+
+     dbo.collection('shopping_carts').updateOne({_id:inItemId}, {$set:{quantity: inQuantity}}, (err, result) => {
       if(err) throw err;
       res.json("updated cart");
      });
-   });
+
    });
    /*
     * To get cart total amount.
