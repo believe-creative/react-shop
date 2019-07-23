@@ -878,6 +878,29 @@ MongoClient.connect(url, function(err, db) {
      });
 
    });
+
+   /*
+    * To get catalog search results
+    * Parameters{inSearchString,inAllWords,inShortProductDescriptionLength,inProductsPerPage,inStartItem}
+    */
+   app.post("/api/search", checkToken, (req, res) => {
+     let inSearchString = req.body.inSearchString.charAt(0).toUpperCase() + req.body.inSearchString.slice(1);
+     let inAllWords = req.body.inAllWords;
+     let inShortProductDescriptionLength = req.body.inShortProductDescriptionLength;
+     let inProductsPerPage = req.body.inProductsPerPage;
+     let inStartItem = req.body.inStartItem;
+     dbo.collection('products').find({}).toArray(function(err, products) {
+       let products_array=[];
+      if(err) throw err;
+      products.map((value,index)=>{
+      if(inSearchString && value.name.includes(inSearchString)){
+          products_array.push(value);
+      }
+      });
+      res.json(products_array);
+     });
+
+   });
    /*
     * To get cart total amount.
     * Parameters{inCartId}

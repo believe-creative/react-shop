@@ -443,6 +443,9 @@ input::-webkit-input-placeholder {
 /* Bootstrap 4 text input with search icon */
 .fa-search {
   background: transparent url(../images/search-icon.png) no-repeat 15px 18px;
+  &::before{
+    content: "";
+  }
 }
 .has-search .form-control {
   padding-left: 2.375rem;
