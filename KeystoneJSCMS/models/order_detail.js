@@ -10,7 +10,7 @@ var Types = keystone.Field.Types;
 var Order_detail = new keystone.List('order_detail');
 
 Order_detail.add({
-  item_id: { type: Number , initial: true , required: true},
+  item_id: { type: Number , initial: true , required: true },
   order_id: { type: Number , initial: true, required: true},
 	product_id:  { type: Number , initial: true, required: true},
   attributes: { type: String , initial: true, required: true},

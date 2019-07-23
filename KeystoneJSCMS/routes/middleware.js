@@ -8,7 +8,7 @@
  * modules in your project's /lib directory.
  */
 var _ = require('lodash');
-
+var keystone = require('keystone');
 
 /**
 	Initialises the standard view locals
@@ -56,3 +56,71 @@ exports.requireUser = function (req, res, next) {
 		next();
 	}
 };
+
+
+
+
+// exports.Role = keystone.createItems({
+// 					 Role:[{
+// 						'name': 'Super',
+// 						__ref: 'role_super'
+// 					},
+// 					{
+// 						'name': 'Developer',
+// 						__ref: 'role_developer'
+// 					},
+// 					{
+// 						'name': 'Author',
+// 						__ref: 'role_author'
+// 					}]
+// 				  }, { verbose: true}, function (err, stats) {
+// 					if (err) throw new Error('panic!', err);
+// 					console.log('our results', stats);
+// 				  });
+		
+
+// exports.Permission = keystone.createItems({
+// 	Permission:[{
+//         'name': 'Role List Permissions',
+//         'listName': 'Role',
+//         'create': ['role_super'],
+//         'read': ['role_super'],
+//         'update': ['role_super'],
+//         'delete': ['role_super'],
+//         __ref: 'permission_role'
+//     },
+//     {
+//         'name': 'User List Permissions',
+//         'listName': 'User',
+//         'create': ['role_super'],
+//         'read': ['role_super'],
+//         'update': ['role_super'],
+//         'delete': ['role_super'],
+//         __ref: 'permission_user'
+//     },
+//     {
+//         'name': 'Permission List Permissions',
+//         'listName': 'Permission',
+//         'create': ['role_super'],
+//         'read': ['role_super'],
+//         'update': ['role_super'],
+//         'delete': ['role_super'],
+//         __ref: 'permission_permission'
+//     }]
+// }, { verbose: true}, function (err, stats) {
+// 	if (err) throw new Error('panic!', err);
+// 	console.log('our results', stats);
+//   });
+
+// exports.User = [
+//     {
+//         'name.first': 'Admin',
+//         'name.last': '',
+//         'name.full': 'Admin',
+//         email: 'srinu@teamdevx.com',
+//         password: 'admin',
+//         isAdmin: true,
+//         roles: ['role_super'],
+//         __ref: 'admin_user'
+//     }
+// ];

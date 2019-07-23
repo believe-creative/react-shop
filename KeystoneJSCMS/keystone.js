@@ -27,6 +27,9 @@ keystone.init({
 	'session': true,
 	'auth': true,
 	'user model': 'User',
+	
+	'role model': 'Role',                    // use whatever name for the role model
+	'permission model': 'Permission'        // use whatever name for the permission model
 });
 
 // Load your project's Models
@@ -57,7 +60,5 @@ keystone.set('nav', {
 });
 
 // Start Keystone to connect to your database and initialise the web server
-
-
 
 keystone.start();
