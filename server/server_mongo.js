@@ -607,9 +607,9 @@ MongoClient.connect(url, function(err, db) {
             product_details.product_id=value._id;
             product_details.slug=value.slug;
             product_details.name=value.name;
-            product_details.image=value.image.secure_url;
-            product_details.image2=value.image2.secure_url;
-            product_details.thumbnail=value.thumbnail.secure_url;
+            product_details.image=value.image.filename;
+            product_details.image2=value.image2.filename;
+            product_details.thumbnail=value.thumbnail.filename;
             product_details.price=value.price;
             if(value.discounted_price<=0){
                 product_details.discounted_price=value.price;
@@ -645,9 +645,9 @@ MongoClient.connect(url, function(err, db) {
           product_details.product_id=value._id;
           product_details.slug=value.slug;
           product_details.name=value.name;
-          product_details.image=value.image.secure_url;
-          product_details.image2=value.image2.secure_url;
-          product_details.thumbnail=value.thumbnail.secure_url;
+          product_details.image=value.image.filename;
+          product_details.image2=value.image2.filename;
+          product_details.thumbnail=value.thumbnail.filename;
           product_details.price=value.price;
           if(value.discounted_price<=0){
               product_details.discounted_price=value.price;
@@ -670,7 +670,7 @@ MongoClient.connect(url, function(err, db) {
        */
       app.post("/api/product", checkToken, (req, res) => {
         let inProductId = ObjectID(req.body.inProductId);
-
+        console.log(req.body);
         dbo.collection("products").find({}).toArray(function(err, products) {
 
           let products_array=[];
@@ -684,9 +684,10 @@ MongoClient.connect(url, function(err, db) {
               product_details.product_id=value._id;
               product_details.slug=value.slug;
               product_details.name=value.name;
-              product_details.image=value.image.secure_url;
-              product_details.image2=value.image2.secure_url;
-              product_details.thumbnail=value.thumbnail.secure_url;
+              product_details.image=value.image.filename;
+              product_details.image_2=value.image2.filename;
+              product_details.description=value.description.extended.replace(/<[^>]+>/g, '');
+              product_details.thumbnail=value.thumbnail.filename;
               product_details.price=value.price;
               if(value.discounted_price<=0){
                 product_details.discounted_price=value.price;
@@ -700,6 +701,7 @@ MongoClient.connect(url, function(err, db) {
           product_details={};
         });
           if (err) throw err;
+          console.log(products_array);
           res.json(products_array);
           // db.close();
         });
@@ -753,6 +755,8 @@ MongoClient.connect(url, function(err, db) {
         let inProductId = ObjectID(req.body.inProductId);
         let inShortProductDescriptionLength =
           req.body.inShortProductDescriptionLength;
+
+
 
       });
 
@@ -827,7 +831,7 @@ MongoClient.connect(url, function(err, db) {
                   product_details.item_id=cart_id;
                   product_details.slug=value.slug;
                   product_details.name=value.name;
-                  product_details.thumbnail=value.thumbnail.secure_url;
+                  product_details.thumbnail=value.thumbnail.filename;
                   product_details.attributes=attributes;
                   product_details.price=value.price;
                   product_details.quantity=quantity;
@@ -891,11 +895,28 @@ MongoClient.connect(url, function(err, db) {
      let inStartItem = req.body.inStartItem;
      dbo.collection('products').find({}).toArray(function(err, products) {
        let products_array=[];
-      if(err) throw err;
-      products.map((value,index)=>{
-      if(inSearchString && value.name.includes(inSearchString)){
-          products_array.push(value);
+       let product_details={};
+       if(err) throw err;
+       products.map((value,index)=>{
+        if(inSearchString && value.name.includes(inSearchString)){
+        console.log(value);
+        product_details.product_id=value._id;
+        product_details.slug=value.slug;
+        product_details.name=value.name;
+        product_details.image=value.image.filename;
+        product_details.image_2=value.image2.filename;
+        product_details.description=value.description.extended.replace(/<[^>]+>/g, '');
+        product_details.thumbnail=value.thumbnail.filename;
+        product_details.price=value.price;
+        if(value.discounted_price<=0){
+          product_details.discounted_price=value.price;
+        }else {
+          product_details.discounted_price=value.discounted_price;
+        }
+        product_details.category_id=value.categories;
+        products_array.push(product_details);
       }
+      product_details={};
       });
       res.json(products_array);
      });
