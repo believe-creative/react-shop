@@ -13,18 +13,18 @@ class AddressPopupForm extends Component {
       editregion: "",
       customer: {},
       errors: {},
-      address: "",
+      address: {},
       add_address: "",
       modalShow: false
     };
     this.handleClose = this.handleClose.bind(this);
   }
   componentDidMount() {
-    console.log("mount", this.props, this.state);
+
   }
   componentWillReceiveProps(props) {
-    console.log(props);
-    if (this.props.addressDetails) {
+
+    if (this.props.addressDetails && Object.keys(this.props.addressDetails).length >= 1) {
       this.setState({
         address: this.props.addressDetails
       });
@@ -42,7 +42,6 @@ class AddressPopupForm extends Component {
         .getAttribute("data-region")
     );
     this.setState(state);
-    console.log(this.state);
   }
   setShippingOption(e) {
     let state = this.state;
@@ -142,7 +141,6 @@ class AddressPopupForm extends Component {
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
-
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
@@ -190,7 +188,7 @@ class AddressPopupForm extends Component {
                           : addAddressList.address_name
                       }
                       name="address_name"
-                      onChange={this.changed.bind(this)}
+                      onChange ={this.changed.bind(this)}
                     />
                   </div>
                   {this.showError("address_name")}

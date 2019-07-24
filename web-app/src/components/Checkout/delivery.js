@@ -35,7 +35,6 @@ class Delivery extends Component {
     });
   }
   componentWillReceiveProps(props) {
-    console.log(props, "propjjjjjjjjjjjjjjjjjjjjjjjjjjjjs");
     if (props.user) {
       if (props.user.email) {
         if (props.customer) {
@@ -262,7 +261,6 @@ class Delivery extends Component {
     let this_ref = this;
     let regions = [];
     let shippingOptions = [];
-    console.log(this.state, "state");
     if (this.props.regions) regions = this.props.regions;
     if (this.props.shippingOptions)
       shippingOptions = this.props.shippingOptions;
