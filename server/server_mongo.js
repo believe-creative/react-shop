@@ -276,8 +276,6 @@ MongoClient.connect(url, function(err, db) {
       app.post("/api/get-address", checkToken, jsonParser, (req, res) => {
         let inEmail = req.body.inEmail;
         // let inAddressId = req.body.inAddressId;
-        console.log(inEmail);
-
           dbo.collection("users").find({ email: { $eq: inEmail } }).toArray(function(err, get_user) {
             if(get_user.length > 0){
               dbo.collection("addresses").find({ customer_id: { $eq: get_user[0]._id } }).toArray(function(err, get_address) {
@@ -446,8 +444,6 @@ MongoClient.connect(url, function(err, db) {
         let inMobPhone = req.body.inMobPhone;
         dbo.collection("users").find({email: { $eq: req.body.inEmail}}).toArray(function(err, get_user) {
           let address_details={};
-          console.log(get_user);
-
               address_details={
                 customer_id: get_user[0]._id,
                 address_name: inAddressName,
@@ -496,7 +492,6 @@ MongoClient.connect(url, function(err, db) {
         };
           dbo.collection("users").find({email: { $eq: req.body.inEmail}}).toArray(function(err, get_user) {
             let address_details={};
-            console.log(get_user);
             address_details={
               customer_id: get_user[0]._id,
               address_name: inAddressName,
@@ -670,11 +665,10 @@ MongoClient.connect(url, function(err, db) {
        */
       app.post("/api/product", checkToken, (req, res) => {
         let inProductId = ObjectID(req.body.inProductId);
-        console.log(req.body);
         dbo.collection("products").find({}).toArray(function(err, products) {
 
           let products_array=[];
-          let product_details=[];
+          let product_details={};
 
           products.map((value,index)=>{
 
@@ -701,7 +695,7 @@ MongoClient.connect(url, function(err, db) {
           product_details={};
         });
           if (err) throw err;
-          console.log(products_array);
+          // console.log(products_array);
           res.json(products_array);
           // db.close();
         });
@@ -801,7 +795,7 @@ MongoClient.connect(url, function(err, db) {
                   };
                   dbo.collection("shopping_carts").save(shopping_cart, (err, result) => {
                     if(err) {
-                      console.log(err);
+                      // console.log(err);
                     }
                   });
                 }
@@ -899,7 +893,6 @@ MongoClient.connect(url, function(err, db) {
        if(err) throw err;
        products.map((value,index)=>{
         if(inSearchString && value.name.includes(inSearchString)){
-        console.log(value);
         product_details.product_id=value._id;
         product_details.slug=value.slug;
         product_details.name=value.name;
