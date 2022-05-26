@@ -1,4 +1,4 @@
-package com.nativeapp;
+package com.believecreative.react.shop;
 
 import com.facebook.react.ReactActivity;
 import com.facebook.react.ReactActivityDelegate;

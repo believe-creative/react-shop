@@ -1,4 +1,4 @@
-package com.nativeapp;
+package com.believecreative.react.shop;
 
 import android.app.Application;
 
