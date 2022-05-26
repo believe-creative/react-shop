@@ -69,7 +69,7 @@ class Login extends Component {
   }
   componentDidMount() {
     GoogleSignin.configure({
-    webClientId:"834565466009-ur298jn9mlfugeqtl1ctvruqhh6ljb09.apps.googleusercontent.com",
+    webClientId:"723179674220-dpuchaqikq3rrc5geg1493q63n9m35cb.apps.googleusercontent.com",
     offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
     var c = SyncStorage.get("s-atk");
