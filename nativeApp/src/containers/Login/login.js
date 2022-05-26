@@ -195,7 +195,8 @@ signOut = async () => {
   try {
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
-    this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    //this.setState({ user: null }); // Remember to remove the user from your app's state as well
+    this.logout();
   } catch (error) {
     console.error(error);
   }

@@ -66,13 +66,13 @@ class Payment extends Component {
     }
     return stripe
       .paymentRequestWithCardForm()
-      .then(stripeTokenInfo => {
+      .then(stripeTokenInfo => {        
         this.setState({ visible: true });
         axios
         .post(
           API_ROOT + "payment",
           {
-            email: this_ref.props.user.email,
+            email: this_ref.props.user.email.trim(),
             id: stripeTokenInfo.tokenId,
             inCartId: this_ref.props.cart.inCartId,
             inOrderAddress: JSON.stringify(getShippingAddress),
@@ -91,7 +91,7 @@ class Payment extends Component {
             this_ref.setState({ errors: null });
             this_ref.props.nextStage(this_ref.stage);
           }
-          this.setState({ visible: false });
+          this_ref.setState({ visible: false });
         })
         
       })

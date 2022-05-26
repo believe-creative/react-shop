@@ -8,6 +8,7 @@ import NavigationService from '../../routes/NavigationService.js';
 import SyncStorage from 'sync-storage';
 import {styles} from '../../containers/Home/home-styles';
 import {LoginManager,LoginButton,AccessToken} from 'react-native-fbsdk';
+import { GoogleSignin, GoogleSigninButton, statusCodes } from 'react-native-google-signin';
 
 
 class UserBlock extends Component {
@@ -52,10 +53,23 @@ class UserBlock extends Component {
       }
     }
   }
-  logout() {
-    LoginManager.logOut();
-    SyncStorage.remove('s-atk');
-    this.props.setUser({ email: null, name: null, photo: null });
+  async logout() {
+    //LoginManager.logOut();
+    //Login.signOut();
+    try {
+      const isSignedIn = await GoogleSignin.isSignedIn();
+      if(isSignedIn){
+        await GoogleSignin.revokeAccess();
+        await GoogleSignin.signOut();
+      }            
+      SyncStorage.remove('s-atk');
+      this.props.setUser({ email: null, name: null, photo: null });
+      NavigationService.navigate("Home");
+    } catch (error) {
+      console.error(error);
+    }
+    // SyncStorage.remove('s-atk');
+    // this.props.setUser({ email: null, name: null, photo: null });
   }
   render() {
     let name = null;
