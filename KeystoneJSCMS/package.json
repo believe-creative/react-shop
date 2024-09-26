@@ -1,0 +1,27 @@
+{
+  "name": "react-shop-admin",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "async": "2.1.4",
+    "dotenv": "4.0.0",
+    "keystone": "^4.1.0",
+    "lodash": "^4.13.1",
+    "node-sass": "4.5.0",
+    "node-sass-middleware": "^0.11.0",
+    "twig": "0.10.3",
+    "underscore": "^1.9.1"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "eslint": "3.15.0",
+    "eslint-config-keystone": "3.0.0",
+    "eslint-plugin-react": "^5.1.1",
+    "mocha": "^6.1.4"
+  },
+  "scripts": {
+    "lint": "eslint .",
+    "start": "node keystone.js",
+    "test": "./node_modules/.bin/mocha tests/init.js tests/unit/**/*.js"
+  }
+}

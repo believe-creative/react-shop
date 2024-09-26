@@ -1,0 +1,488 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MyComponent should render my component 1`] = `
+ShallowWrapper {
+  "complexSelector": ComplexSelector {
+    "buildPredicate": [Function],
+    "childrenOfNode": [Function],
+    "findWhereUnwrapped": [Function],
+  },
+  "length": 1,
+  "node": <div
+    className="home"
+  >
+    <div
+      className="row header_panel"
+    >
+      <ForwardRef(Bootstrap(Container))>
+        <div
+          className="col-md-6"
+        >
+          <h1>
+            Background and development
+          </h1>
+          <h2>
+            Convergent the dictates of the consumer: background and development
+          </h2>
+          <p>
+            <LinkContainer
+              activeClassName="active"
+              className="btn btn-lg"
+              exact={false}
+              replace={false}
+              strict={false}
+              to="/categories"
+            >
+              <a
+                href="/"
+              >
+                View All
+              </a>
+            </LinkContainer>
+          </p>
+        </div>
+      </ForwardRef(Bootstrap(Container))>
+    </div>
+    <ForwardRef(Bootstrap(Container))>
+      <div
+        className="shop_now_panel"
+      >
+        <div
+          className="row product_panel"
+        >
+          <div
+            className="col-md-4 product_img"
+          >
+            <div
+              className="sale"
+            >
+              SALE
+            </div>
+            <img
+              alt="bag.png"
+              src="bag.png"
+            />
+          </div>
+          <div
+            className="col-md-8 shop_now"
+          >
+            <h2>
+              Vera Bradley
+            </h2>
+            <p>
+              Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed.
+            </p>
+            <p>
+              <a
+                className="btn btn-lg"
+                href="/categories"
+              >
+                Shop Now
+              </a>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        className="register_panel"
+      >
+        <div
+          className="row shop_now_panel"
+        >
+          <div
+            className="col-md-4"
+          >
+            <div
+              className="wow_block"
+            >
+              <h1>
+                WOW
+              </h1>
+              <h2
+                className="red"
+              >
+                Check
+              </h2>
+              <h2
+                className="red"
+              >
+                WHAT!
+              </h2>
+            </div>
+            <div
+              className="wow_men_block"
+            >
+              <h1>
+                Men
+              </h1>
+            </div>
+          </div>
+          <div
+            className="col-md-8 "
+          >
+            <div
+              className="game_begin_block"
+            >
+              <img
+                alt="pop_image.png"
+                src="pop_image.png"
+              />
+              <div
+                className="game_sub_block"
+              >
+                <h1>
+                  Let The Game begin
+                </h1>
+                <h2>
+                  Registration is on - get ready for the Open
+                </h2>
+                <p>
+                  <a
+                    className="btn btn-lg"
+                    href="/login"
+                  >
+                    Register
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ForwardRef(Bootstrap(Container))>
+  </div>,
+  "nodes": Array [
+    <div
+      className="home"
+    >
+      <div
+        className="row header_panel"
+      >
+        <ForwardRef(Bootstrap(Container))>
+          <div
+            className="col-md-6"
+          >
+            <h1>
+              Background and development
+            </h1>
+            <h2>
+              Convergent the dictates of the consumer: background and development
+            </h2>
+            <p>
+              <LinkContainer
+                activeClassName="active"
+                className="btn btn-lg"
+                exact={false}
+                replace={false}
+                strict={false}
+                to="/categories"
+              >
+                <a
+                  href="/"
+                >
+                  View All
+                </a>
+              </LinkContainer>
+            </p>
+          </div>
+        </ForwardRef(Bootstrap(Container))>
+      </div>
+      <ForwardRef(Bootstrap(Container))>
+        <div
+          className="shop_now_panel"
+        >
+          <div
+            className="row product_panel"
+          >
+            <div
+              className="col-md-4 product_img"
+            >
+              <div
+                className="sale"
+              >
+                SALE
+              </div>
+              <img
+                alt="bag.png"
+                src="bag.png"
+              />
+            </div>
+            <div
+              className="col-md-8 shop_now"
+            >
+              <h2>
+                Vera Bradley
+              </h2>
+              <p>
+                Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed.
+              </p>
+              <p>
+                <a
+                  className="btn btn-lg"
+                  href="/categories"
+                >
+                  Shop Now
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="register_panel"
+        >
+          <div
+            className="row shop_now_panel"
+          >
+            <div
+              className="col-md-4"
+            >
+              <div
+                className="wow_block"
+              >
+                <h1>
+                  WOW
+                </h1>
+                <h2
+                  className="red"
+                >
+                  Check
+                </h2>
+                <h2
+                  className="red"
+                >
+                  WHAT!
+                </h2>
+              </div>
+              <div
+                className="wow_men_block"
+              >
+                <h1>
+                  Men
+                </h1>
+              </div>
+            </div>
+            <div
+              className="col-md-8 "
+            >
+              <div
+                className="game_begin_block"
+              >
+                <img
+                  alt="pop_image.png"
+                  src="pop_image.png"
+                />
+                <div
+                  className="game_sub_block"
+                >
+                  <h1>
+                    Let The Game begin
+                  </h1>
+                  <h2>
+                    Registration is on - get ready for the Open
+                  </h2>
+                  <p>
+                    <a
+                      className="btn btn-lg"
+                      href="/login"
+                    >
+                      Register
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ForwardRef(Bootstrap(Container))>
+    </div>,
+  ],
+  "options": Object {},
+  "renderer": ReactShallowRenderer {
+    "_context": Object {},
+    "_didScheduleRenderPhaseUpdate": false,
+    "_dispatcher": Object {
+      "readContext": [Function],
+      "useCallback": [Function],
+      "useContext": [Function],
+      "useDebugValue": [Function],
+      "useEffect": [Function],
+      "useImperativeHandle": [Function],
+      "useLayoutEffect": [Function],
+      "useMemo": [Function],
+      "useReducer": [Function],
+      "useRef": [Function],
+      "useState": [Function],
+    },
+    "_element": <Home />,
+    "_firstWorkInProgressHook": null,
+    "_forcedUpdate": false,
+    "_instance": Home {
+      "context": Object {},
+      "props": Object {},
+      "refs": Object {},
+      "state": null,
+      "updater": Updater {
+        "_callbacks": Array [],
+        "_renderer": [Circular],
+      },
+    },
+    "_isReRender": false,
+    "_newState": null,
+    "_numberOfReRenders": 0,
+    "_renderPhaseUpdates": null,
+    "_rendered": <div
+      className="home"
+    >
+      <div
+        className="row header_panel"
+      >
+        <ForwardRef(Bootstrap(Container))>
+          <div
+            className="col-md-6"
+          >
+            <h1>
+              Background and development
+            </h1>
+            <h2>
+              Convergent the dictates of the consumer: background and development
+            </h2>
+            <p>
+              <LinkContainer
+                activeClassName="active"
+                className="btn btn-lg"
+                exact={false}
+                replace={false}
+                strict={false}
+                to="/categories"
+              >
+                <a
+                  href="/"
+                >
+                  View All
+                </a>
+              </LinkContainer>
+            </p>
+          </div>
+        </ForwardRef(Bootstrap(Container))>
+      </div>
+      <ForwardRef(Bootstrap(Container))>
+        <div
+          className="shop_now_panel"
+        >
+          <div
+            className="row product_panel"
+          >
+            <div
+              className="col-md-4 product_img"
+            >
+              <div
+                className="sale"
+              >
+                SALE
+              </div>
+              <img
+                alt="bag.png"
+                src="bag.png"
+              />
+            </div>
+            <div
+              className="col-md-8 shop_now"
+            >
+              <h2>
+                Vera Bradley
+              </h2>
+              <p>
+                Carry the day in the style with this extra-large tote crafted in our chic B.B. Collection textured PVC. Featuring colorful faux leather trim,this tote offers a roomy interior plus just enough perfectly placed.
+              </p>
+              <p>
+                <a
+                  className="btn btn-lg"
+                  href="/categories"
+                >
+                  Shop Now
+                </a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          className="register_panel"
+        >
+          <div
+            className="row shop_now_panel"
+          >
+            <div
+              className="col-md-4"
+            >
+              <div
+                className="wow_block"
+              >
+                <h1>
+                  WOW
+                </h1>
+                <h2
+                  className="red"
+                >
+                  Check
+                </h2>
+                <h2
+                  className="red"
+                >
+                  WHAT!
+                </h2>
+              </div>
+              <div
+                className="wow_men_block"
+              >
+                <h1>
+                  Men
+                </h1>
+              </div>
+            </div>
+            <div
+              className="col-md-8 "
+            >
+              <div
+                className="game_begin_block"
+              >
+                <img
+                  alt="pop_image.png"
+                  src="pop_image.png"
+                />
+                <div
+                  className="game_sub_block"
+                >
+                  <h1>
+                    Let The Game begin
+                  </h1>
+                  <h2>
+                    Registration is on - get ready for the Open
+                  </h2>
+                  <p>
+                    <a
+                      className="btn btn-lg"
+                      href="/login"
+                    >
+                      Register
+                    </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ForwardRef(Bootstrap(Container))>
+    </div>,
+    "_rendering": false,
+    "_updater": Updater {
+      "_callbacks": Array [],
+      "_renderer": [Circular],
+    },
+    "_workInProgressHook": null,
+    "getRenderOutput": [Function],
+    "render": [Function],
+  },
+  "root": [Circular],
+  "unrendered": <Home />,
+}
+`;

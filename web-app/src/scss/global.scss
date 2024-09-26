@@ -1,0 +1,729 @@
+@import "variables.scss";
+
+/*
+
+General Styles
+
+*/
+
+// Fonts
+$default-font: "Open Sans", sans-serif;
+$playfair-display-font: "Playfair Display", serif;
+$montserrat-font: "Montserrat", sans-serif;
+
+// BG Colors
+$bg-black: #2e2e2e;
+$bg-red: #f62f5e;
+$bg-blue: #6eb2fb;
+$bg-orange: #f1ad3d;
+$bg-light: #f7f7f7;
+$bg-teal: #00d3ca;
+$bg-yellow: #effc90;
+$bg-gray: #fafafa;
+
+// Colors
+$black: #2e2e2e;
+$gray-dark: #6c6c6c;
+$gray-light: #b4b4b4;
+$red: #f62f5e;
+$white: #fff;
+$green: #77db77;
+$purple: #9013fe;
+$yellow: #f8e71c;
+
+// Font-weight
+$fw-300: 300;
+$fw-400: 400;
+$fw-500: 500;
+$fw-600: 600;
+$fw-700: 700;
+
+// Font Sizes
+$base-font: 16px;
+$base-font-small: 12px;
+$secondary-font: 15px;
+$heading1: 48px;
+$heading2: 24px;
+$heading3: 16px;
+
+// Lineheight
+$lh-150: 150%;
+$lh-200: 200%;
+$lh-240: 240%;
+
+/*
+
+Mixins for multiple times usage
+
+*/
+
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+  -moz-transition: $transition;
+  -ms-transition: $transition;
+  -o-transition: $transition;
+  transition: $transition;
+}
+@mixin box-shadow($box-shadow...) {
+  -webkit-box-shadow: $box-shadow;
+  -moz-box-shadow: $box-shadow;
+  -ms-box-shadow: $box-shadow;
+  -o-box-shadow: $box-shadow;
+  box-shadow: $box-shadow;
+}
+
+/*
+
+General Styles
+
+*/
+
+body {
+  background: $bg-light;
+  font-family: $default-font;
+  font-size: $base-font;
+  font-weight: $fw-400;
+  color: $gray-dark;
+  line-height: $lh-150;
+}
+
+* focus {
+  outline: none;
+  border: none;
+}
+
+a {
+  color: $red;
+  @include transition(all 0.25s ease);
+  &:hover,
+  &:active {
+    color: $black;
+    text-decoration: none;
+  }
+}
+
+.heading-small {
+  font-size: $base-font-small;
+  line-height: $lh-200;
+}
+
+.top-bar {
+  font-family: $montserrat-font;
+  font-weight: $fw-700;
+  font-size: $secondary-font;
+  line-height: $lh-240;
+  color: $black;
+}
+
+// Heading Styles
+
+h1,
+.h1 {
+  font-family: $playfair-display-font;
+  font-size: $heading1;
+  font-weight: $fw-700;
+  line-height: $lh-150;
+  color: $black;
+  @media (max-width: 767px) {
+    font-size: 36px;
+  }
+}
+
+h2,
+.h2,
+h3,
+.h3 {
+  font-family: $montserrat-font;
+  font-size: $heading2;
+  font-weight: $fw-700;
+  line-height: $lh-150;
+  color: $black;
+  @media (max-width: 767px) {
+    font-size: 22px;
+  }
+}
+
+h3,
+.h3 {
+  font-size: $heading3;
+  @media (max-width: 767px) {
+    font-size: $heading3;
+  }
+}
+
+// Color Styles
+
+.bg-white {
+  background: $white;
+  color: $black;
+}
+.bg-black {
+  background: $bg-black;
+  color: $white;
+}
+.bg-red {
+  background: $bg-red;
+  color: $white;
+}
+.bg-blue {
+  background: $bg-blue;
+  color: $black;
+}
+.bg-orange {
+  background: $bg-orange;
+  color: $black;
+}
+.bg-light {
+  background: $bg-light;
+  color: $black;
+}
+.bg-teal {
+  background: $bg-teal;
+  color: $black;
+}
+.bg-yellow {
+  background: $bg-yellow;
+  color: $black;
+}
+.bg-green {
+  background: $green;
+}
+.bg-purple {
+  background: $purple;
+}
+.bg-yellow-dark {
+  background: $yellow;
+}
+
+.bg-gray {
+  background: $bg-gray;
+}
+
+.black {
+  color: $black;
+}
+.gray-dark {
+  color: $gray-dark;
+}
+.gray-light {
+  color: $gray-light;
+}
+.red {
+  color: $red;
+}
+.white {
+  color: $white;
+}
+
+// Button Styles
+
+.btn {
+  font-family: $montserrat-font;
+  font-weight: $fw-700;
+  background: $bg-red;
+  color: $white;
+  cursor: pointer;
+  @include border-radius(20px);
+  @include transition(all 0.35s ease);
+  &:hover,
+  &:focus {
+    background: $white;
+    color: $red;
+    border: 1px solid $red;
+    outline: none;
+    @include box-shadow(none);
+  }
+  &:focus {
+    background: $red;
+    color: $white;
+    &:hover {
+      background: $white;
+      color: $red;
+    }
+  }
+}
+.btn-white {
+  background: $white;
+  color: $red;
+  border: 1px solid $red;
+  &:hover,
+  &:focus {
+    color: $white;
+    background: $red;
+    border: 1px solid $red;
+  }
+}
+.btn-lg {
+  padding: 0.5rem 2rem;
+}
+.btn-md {
+  font-size: 1rem;
+  padding: 0.5rem 1.5rem;
+}
+.btn-sm {
+  padding: 0.5rem 1rem;
+}
+
+// Form fields Styles
+
+input,
+select,
+textarea {
+  min-height: 50px;
+  margin-bottom: 25px;
+  padding: 0 15px;
+  background: $white;
+  border: 1px solid $gray-light;
+  color: $gray-dark;
+  //min-width: 350px;
+  font-weight: $fw-600;
+  @include border-radius(10px);
+  @media (max-width: 576px) {
+    min-width: 100%;
+  }
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+}
+textarea {
+  padding: 15px;
+  min-height: 150px;
+}
+input.form-control:focus {
+  outline: none;
+  box-shadow: none;
+  border: 1px solid $gray-light;
+}
+.success {
+  border: 1px solid $green;
+}
+.error {
+  border: 1px solid $red;
+}
+
+.sale,
+.pop,
+.hot,
+.time {
+  background: $bg-teal;
+  color: $white;
+  width: auto;
+  min-width: 50px;
+  padding: 5px 10px;
+  display: inline-block;
+}
+.pop {
+  background: $bg-orange;
+}
+.hot {
+  background: $bg-red;
+}
+.time {
+  background: $bg-blue;
+}
+.color-codes {
+  padding: 0;
+  margin: 0px;
+  li {
+    width: 20px;
+    height: 20px;
+    float: left;
+    margin-right: 25px;
+    cursor: pointer;
+    @include border-radius(50%);
+    @media (max-width: 767px) {
+      margin-bottom: 20px;
+    }
+  }
+  & .active {
+    position: relative;
+    &:before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: -5px;
+      z-index: -1;
+      background: $white;
+      width: 30px;
+      height: 30px;
+      border: 2px solid $gray-light;
+      @include border-radius(50%);
+    }
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+.pagination-block {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  .back,
+  .forward {
+    background: $gray-light;
+    @include border-radius(50%);
+    padding-bottom: 2px;
+    &:hover,
+    &:focus {
+      color: $black;
+    }
+  }
+  .last_page {
+    margin-left: 10px;
+  }
+  li.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  li {
+    float: left;
+    margin-right: 30px;
+    color: $black;
+    font-weight: $fw-700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    margin-top: 0px;
+    @media (max-width: 767px) {
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+    }
+    a {
+      color: $black;
+      &:hover,
+      &:focus {
+        color: $black;
+      }
+    }
+  }
+  @media (max-width: 767px) {
+    .forward {
+      margin: 0 25px;
+    }
+    .back {
+      margin: 0 22px 0 10px;
+    }
+  }
+  & .active {
+    background: $red;
+    color: $white;
+
+    @include border-radius(50%);
+    a {
+      color: $white;
+      &:hover,
+      &:focus {
+        color: $white;
+      }
+    }
+  }
+}
+.pagination-circle {
+  padding: 0;
+  margin: 0;
+  li {
+    float: left;
+    width: 23px;
+    height: 23px;
+    margin-right: 10px;
+    background: $bg-light;
+    border: 4px solid $bg-blue;
+    cursor: pointer;
+    @include border-radius(50%);
+    @include transition(all 0.25s ease);
+    &:hover {
+      background: $bg-blue;
+      border: 4px solid $bg-blue;
+    }
+  }
+}
+.starts-block {
+  padding: 0;
+  margin: 0;
+  li {
+    float: left;
+    margin-right: 10px;
+    a {
+      color: $gray-dark;
+      font-size: 30px;
+      &:hover,
+      &:focus {
+        color: $bg-orange;
+      }
+    }
+  }
+  & .active {
+    a {
+      color: $bg-orange;
+    }
+  }
+}
+.radio-checkbox-block {
+  input {
+    opacity: 0;
+    float: left;
+    margin: 0 0 0 -20px;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    z-index: 5;
+    &:checked + span {
+      background: $bg-blue;
+      width: 20px;
+      height: 20px;
+      display: inline-block;
+      cursor: pointer;
+      padding: 0px;
+      float: left;
+      position: relative;
+      border: 1px solid $bg-blue;
+      @include border-radius(5px);
+      &:after {
+        content: "\2713";
+        position: absolute;
+        z-index: 4;
+        left: 3px;
+        top: -3px;
+        width: 10px;
+        height: 10px;
+        color: $white;
+      }
+    }
+  }
+  input[type="radio"] {
+    &:checked + span {
+      &:after {
+        content: "";
+        position: absolute;
+        z-index: 4;
+        left: 5px;
+        top: 5px;
+        width: 8px;
+        height: 8px;
+        color: #fff;
+        background: white;
+        @include border-radius(50%);
+      }
+    }
+  }
+  input[type="radio"] + span {
+    @include border-radius(50%);
+  }
+  span {
+    background: none;
+    border: 1px solid $gray-light;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    cursor: pointer;
+    padding: 0px;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    float: left;
+    @include border-radius(5px);
+  }
+  label {
+    margin: 0 0 0 10px;
+  }
+}
+.button-sizes {
+  padding: 0;
+  margin: 0;
+  li {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    a {
+      background: $gray-light;
+      color: $gray-dark;
+      font-size: 18px;
+      font-weight: fw-500;
+      min-width: 70px;
+      height: 35px;
+      padding: 10px 15px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @include border-radius(5px);
+      &:hover,
+      &:focus {
+        background: $bg-red;
+        color: $white;
+      }
+    }
+  }
+}
+.product-image {
+  div {
+    float: left;
+    background: $gray-light;
+    width: 425px;
+    height: 520px;
+    margin-right: 50px;
+    box-shadow: 0 2px 3px -2px rgba(0, 0, 0, 1);
+    border: 1px solid rgba(158, 158, 158, 1);
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @include transition(all 0.25s ease);
+    @media (max-width: 767px) {
+      margin-bottom: 30px;
+      width: 100%;
+    }
+    &:hover {
+      box-shadow: 0px 10px 50px -5px $black;
+      background: $white;
+    }
+  }
+}
+
+/* Header Styles */
+
+.header {
+  display: flex;
+  .head-inner {
+    position: relative;
+  }
+  .logo_block {
+    width: auto;
+    float: left;
+    margin-top: 10px;
+    a {
+      font-size: 24px;
+      font-weight: $fw-700;
+      letter-spacing: 0.1em;
+      font-family: $montserrat-font;
+      @media (max-width: 560px) {
+        font-size: 18px;
+      }
+    }
+  }
+  nav {
+    float: left;
+    width: 78%;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    @media (max-width: 1199px) {
+      width: 75%;
+    }
+    @media (max-width: 991px) {
+      width: 100%;
+      float: right;
+      display: block;
+    }
+    .navbar-nav {
+      .nav-item.active {
+        .nav-link {
+          color: $red;
+        }
+      }
+      .nav-link {
+        color: $black;
+        font-size: $secondary-font;
+        font-family: $montserrat-font;
+        font-weight: $fw-700;
+        padding: 10px 20px;
+        @media (max-width: 991px) {
+          padding: 10px 0;
+          border-bottom: 1px solid $black;
+        }
+        &:hover {
+          color: $red;
+        }
+      }
+    }
+  }
+  .head-right {
+    width: auto;
+    float: right;
+    margin-top: 8px;
+    @media (max-width: 991px) {
+      position: absolute;
+      right: 35px;
+    }
+    ul {
+      li {
+        float: left;
+        margin-right: 15px;
+        a {
+          color: $black;
+          &:hover,
+          &:focus {
+            color: $red;
+          }
+        }
+      }
+    }
+  }
+  .navbar-toggler {
+    border: none;
+    padding: 12px 0 0 0;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: -35px;
+    @media (max-width: 560px) {
+      top: -33px;
+    }
+    &:hover,
+    &:focus {
+      outline: none;
+      .toggler-icon {
+        background: $red;
+        cursor: pointer;
+      }
+    }
+    .toggler-icon {
+      width: 20px;
+      height: 2px;
+      background: $gray-dark;
+      display: block;
+      margin-bottom: 5px;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+  // this css is for close button no need to remove it.
+  //	& .collapsed{
+  //		.toggler-icon{
+  //			&:nth-child(1){
+  //				position: absolute;
+  //				top: 24px;
+  //				-webkit-transform: rotate(135deg);
+  //				transform: rotate(135deg);
+  //			}
+  //			&:nth-child(2){
+  //				visibility: hidden;
+  //    			background-color: transparent;
+  //			}
+  //			&:nth-child(3){
+  //				position: absolute;
+  //				top: 24px;
+  //				-webkit-transform: rotate(-135deg);
+  //				transform: rotate(-135deg);
+  //			}
+  //		}
+  //	}
+}
+@import "navbar.scss";
+@import "home.scss";
